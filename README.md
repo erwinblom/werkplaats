@@ -2,6 +2,8 @@
 
 Je complete lokale werkomgeving met negen praktische tools. Geen account, installatie, externe database of API-sleutel nodig. Je werkt met je eigen bestanden.
 
+[![Werkplaats-homepagina met negen lokale tools](images/werkplaats-home.png)](https://erwinblom.github.io/gereedschapskist/)
+
 **[Direct gebruiken](https://erwinblom.github.io/gereedschapskist/)** · **[Download voor offline gebruik](https://github.com/erwinblom/gereedschapskist/releases/latest/download/Gereedschapskist.zip)**
 
 Download de ZIP, pak hem volledig uit en open **Begin hier.html**. De online en downloadversie hebben dezelfde bediening en gebruiken dezelfde bestanden. Ze synchroniseren niet automatisch.
