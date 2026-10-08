@@ -1,6 +1,6 @@
-# Gereedschapskist
+# Werkplaats
 
-Negen kleine tools. Geen account, installatie, externe database of API-sleutel nodig. Je werkt met je eigen bestanden.
+Je complete lokale werkomgeving met negen praktische tools. Geen account, installatie, externe database of API-sleutel nodig. Je werkt met je eigen bestanden.
 
 **[Direct gebruiken](https://erwinblom.github.io/gereedschapskist/)** · **[Download voor offline gebruik](https://github.com/erwinblom/gereedschapskist/releases/latest/download/Gereedschapskist.zip)**
 
@@ -17,6 +17,8 @@ Download de ZIP, pak hem volledig uit en open **Begin hier.html**. De online en 
 | Plannen | Projecten, publicaties en activiteiten |
 | Offreren | Voorstellen met prijzen en afspraken |
 | Boekhouden | Inkomsten, uitgaven en bonnen |
+
+Werkplaats staat in deze repository onder het bestaande adres `gereedschapskist`. De website en downloadlinks blijven daardoor bruikbaar.
 
 ## Eerst proberen
 
