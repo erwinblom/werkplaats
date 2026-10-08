@@ -1,4 +1,20 @@
-# Werkplaats v0.35.7 — controle op 8 oktober 2026
+# Werkplaats v0.35.8 — controle op 8 oktober 2026
+
+Deze kleine vervolguitgave verwijdert de knop en trefwoordregels van Deel AI-links in. Bestaande categorieën, subcategorieën en handmatige indeling blijven behouden. Inbox verwerken wordt alleen getoond bij minimaal één bron in Inbox; de knop is ook tijdens het laden standaard verborgen.
+
+## Controles voor 0.35.8
+
+- Schone Master opnieuw gebouwd uit App: 209 bestanden. Website en download bevatten dezelfde gecontroleerde appbestanden.
+- Master-manifest, lokale HTML-links, JavaScript-syntax, privacyuitsluitingen en ZIP-inhoud gecontroleerd.
+- In een schone Chrome-context een lege collectie geopend: geen indelingsknop en geen inboxknop.
+- Via het echte bronformulier een tijdelijke bron toegevoegd in Inbox: Inbox verwerken · 1 verschijnt.
+- Via Inbox verwerken de bron bekeken en handmatig ingedeeld in AI & technologie / Schrijven & tekst: inboxknop verdwijnt.
+- Bewaar alles schrijft de bron en subcategorie naar een afzonderlijke OPFS-testwerkmap. Beide teruggelezen uit de bewaarronde en opnieuw zichtbaar na herladen.
+- Mobiele breedte van 390 pixels gecontroleerd, zonder horizontale overloop. Geen JavaScriptfouten in deze gerichte browsercontrole.
+
+De browsercontrole gebruikt een tijdelijke werkmap in plaats van de native macOS-mapkiezer en geen persoonlijke gegevens. Opslagstructuur en oude categorieën zijn niet gewijzigd. Hieronder staan de bredere controles van de voorafgaande uitgave; die zijn voor deze kleine wijziging niet allemaal herhaald.
+
+## Voorafgaande uitgave 0.35.7 — controle op 8 oktober 2026
 
 Deze uitgave komt uit de opnieuw opgebouwde schone Master. Het importmanifest bevat 209 appbestanden. De website en ZIP gebruiken dezelfde appbestanden; uitsluitend de startpagina van de website heeft een extra melding Werk in uitvoering.
 

@@ -54,6 +54,8 @@ Wil je tussen website en download wisselen? Bewaar eerst, sluit de vorige versie
 
 De losse extensie staat in [extensies/link-bewaren-lokaal](extensies/link-bewaren-lokaal/LEESMIJ.md). Er is geen Google Sheet of aparte opslagserver nodig.
 
+**Inbox verwerken** verschijnt alleen wanneer er bronnen in Inbox staan. Daarmee bekijk je ze één voor één en kies je zelf een categorie en eventuele subcategorie. Na het verwerken van de laatste bron verdwijnt de knop. Gebruik daarna **Bewaar alles**.
+
 ## Bron en uitgave
 
 De dagelijkse ontwikkelapp blijft de enige ontwikkelbron. De vaste Master-builder sluit persoonlijke werkgegevens, privé-sync, persoonlijke feedback, herstelinstellingen en de persoonlijke boekhoudexport uit. Alleen die gecontroleerde Master wordt hier geïmporteerd. Ontwikkel de publiekskopie niet los van de oorspronkelijke App.

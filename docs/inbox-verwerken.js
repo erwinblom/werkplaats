@@ -13,9 +13,9 @@
   connections.onclick=async()=>{try{await ProjectMaterials.chooseSourceLinks(editing);}catch(error){notify(error.message);}};
 
   const skip=document.createElement('button');skip.type='button';I18n.assign(skip,I18n.ui("Volgende (laat in Inbox)",'Volgende (laat in Inbox)'),"textContent");skip.hidden=true;submit.after(skip);
-  const launch=document.createElement('button');launch.type='button';launch.id='inbox-process';I18n.assign(launch,I18n.ui("Inbox verwerken",'Inbox verwerken'),"textContent");$('categories').after(launch);
+  const launch=document.createElement('button');launch.type='button';launch.id='inbox-process';launch.hidden=true;I18n.assign(launch,I18n.ui("Inbox verwerken",'Inbox verwerken'),"textContent");$('categories').after(launch);
   const fields=()=>JSON.stringify([...form.querySelectorAll('input,textarea,select')].map(el=>[el.id,el.value,el.checked]));
-  function count(){const n=data.items.filter(i=>i.category==='Inbox').length;I18n.assign(launch,I18n.ui("Inbox verwerken · {0}",'Inbox verwerken · '+n),"textContent");launch.disabled=!n;}
+  function count(){const n=data.items.filter(i=>i.category==='Inbox').length;I18n.assign(launch,I18n.ui("Inbox verwerken · {0}",'Inbox verwerken · '+n),"textContent");launch.hidden=!n;launch.disabled=!n;}
   const oldRender=render;render=function(...args){oldRender(...args);count();};count();
   let state='idle';
   function stop(){queue=null;state='idle';delete form.dataset.inboxProcessing;bar.hidden=true;skip.hidden=true;$('category').setCustomValidity('');I18n.assign(submit,(editing?I18n.ui("Bewaar",'Bewaar'):I18n.ui("Toevoegen",'Toevoegen')),"textContent");}
@@ -66,7 +66,7 @@
   dialog.addEventListener('close',()=>{if(state==='edit'&&!saving)stop();});
   document.addEventListener('close',event=>{if(event.target.id==='source-detail'&&state==='view')stop();},true);
   document.addEventListener('werkbestand-geopend',()=>{if(queue){$('source-detail')?.close();if(dialog.open)dialog.close();stop();}});
-  const style=document.createElement('style');I18n.assign(style,I18n.ui("#inbox-process{margin:12px 0 20px;padding:10px 16px;font-weight:700}.inbox-review-bar{margin:16px 0 24px;padding:16px 20px;background:#f3f4f5;line-height:1.6}.inbox-review-bar[hidden]{display:none}.inbox-review-bar p{margin:0 0 8px}.inbox-review-bar a{font-weight:700}#form[data-inbox-processing] #delete{display:none}.inbox-view-progress{margin:18px 0 8px;font-size:13px;font-weight:700;color:#555}.inbox-view-next{margin-left:8px}",'#inbox-process{margin:12px 0 20px;padding:10px 16px;font-weight:700}.inbox-review-bar{margin:16px 0 24px;padding:16px 20px;background:#f3f4f5;line-height:1.6}.inbox-review-bar[hidden]{display:none}.inbox-review-bar p{margin:0 0 8px}.inbox-review-bar a{font-weight:700}#form[data-inbox-processing] #delete{display:none}.inbox-view-progress{margin:18px 0 8px;font-size:13px;font-weight:700;color:#555}.inbox-view-next{margin-left:8px}'),"textContent");document.head.append(style);
+  const style=document.createElement('style');I18n.assign(style,I18n.ui("#inbox-process[hidden]{display:none!important}#inbox-process{margin:12px 0 20px;padding:10px 16px;font-weight:700}.inbox-review-bar{margin:16px 0 24px;padding:16px 20px;background:#f3f4f5;line-height:1.6}.inbox-review-bar[hidden]{display:none}.inbox-review-bar p{margin:0 0 8px}.inbox-review-bar a{font-weight:700}#form[data-inbox-processing] #delete{display:none}.inbox-view-progress{margin:18px 0 8px;font-size:13px;font-weight:700;color:#555}.inbox-view-next{margin-left:8px}",'#inbox-process[hidden]{display:none!important}#inbox-process{margin:12px 0 20px;padding:10px 16px;font-weight:700}.inbox-review-bar{margin:16px 0 24px;padding:16px 20px;background:#f3f4f5;line-height:1.6}.inbox-review-bar[hidden]{display:none}.inbox-review-bar p{margin:0 0 8px}.inbox-review-bar a{font-weight:700}#form[data-inbox-processing] #delete{display:none}.inbox-view-progress{margin:18px 0 8px;font-size:13px;font-weight:700;color:#555}.inbox-view-next{margin-left:8px}'),"textContent");document.head.append(style);
  }
  init().catch(error=>console.error('Inbox verwerken:',error));
 })();
