@@ -1,0 +1,64 @@
+html[data-business="off"] [data-business],html[data-business="on"] .business-disabled-note,html[data-business="on"] #business-off-note{display:none!important}
+.tool-layer{margin:20px 0 28px}.tool-layer>h2{font:700 15px/1.4 Arial,sans-serif;letter-spacing:.4px;border-top:2px solid #111;padding:12px 0;margin:0}.tool-layer>h2 span{font-weight:400;color:#555;margin-left:12px}
+.shell .grid{grid-template-columns:repeat(3,minmax(0,1fr))}.card .search-card{display:flex;flex-direction:column;justify-content:space-between;width:100%;height:100%;min-height:190px;padding:17px 20px;gap:12px;text-align:left;background:#111;color:#fff;border:0;cursor:pointer;font:inherit}.search-card:focus-visible{outline:3px solid var(--wp-accent,#e32720);outline-offset:-3px}
+#business-onboarding,#business-off-note{border:1px solid #bbb;padding:16px;margin:16px 0;font:15px/1.5 Arial,sans-serif}#business-onboarding[hidden]{display:none}#business-onboarding p,#business-off-note p{margin:0 0 10px}.suite-navigation{flex-wrap:wrap}#business-onboarding button,#business-off-note button,.shell>header button,.business-disabled-note button{font:700 14px/1.4 Arial,sans-serif;background:#fff;color:#111;border:1px solid #111;padding:10px 14px;cursor:pointer}.my-tools-dialog label{display:block}.my-tools-dialog .business-choice{display:flex;align-items:flex-start;gap:12px;font-weight:bold}.business-choice input{width:20px;height:20px;flex:none;margin-top:3px}.my-tools-dialog input[type=search]{box-sizing:border-box;width:100%;padding:12px;font:inherit;border:1px solid #777}.my-tools-status{font-size:14px;color:#555}.all-search-results{padding:0;list-style:none}.all-search-results li{border-top:1px solid #ccc;padding:12px 0}.all-search-results a{font-weight:bold;color:#111}.all-search-results small{display:block;color:#555}
+.invoice-sections{display:flex;gap:4px;border-bottom:2px solid #111;margin:0 0 20px}.invoice-sections a{padding:12px 20px;text-decoration:none;color:#111;border:1px solid #aaa;border-bottom:0;font-weight:bold}.invoice-sections [aria-current=page]{background:#111;color:#fff}.business-disabled-note{background:#f4f4f4;padding:12px;font-size:14px}
+@media(max-width:760px){.shell .grid{grid-template-columns:1fr}.tool-layer>h2 span{display:block;margin-left:0}.suite-navigation{gap:8px}}
+@media print{.invoice-sections,.business-disabled-note{display:none}}
+
+/* De rijnaam hoort zichtbaar bij de drie gereedschappen eronder. */
+.tool-layer{margin:24px 0 32px}
+.layer-heading{display:flex;align-items:center;justify-content:space-between;gap:12px 24px;background:#f1f2f3;border-top:3px solid #111;padding:14px 16px;margin-bottom:12px}
+.layer-heading h2{display:flex;align-items:center;gap:12px;margin:0;font:800 24px/1.2 Arial,sans-serif;letter-spacing:-.4px;color:#111}
+.layer-heading .layer-number{display:inline-flex;align-items:center;justify-content:center;min-width:32px;height:32px;background:var(--wp-accent,#c51d17);color:#fff;font:700 18px/1 Arial,sans-serif}
+.layer-heading p{margin:0;font:14px/1.4 Arial,sans-serif;color:#454545}
+@media(max-width:760px){.layer-heading{align-items:flex-start;flex-direction:column;gap:8px}.layer-heading h2{font-size:23px}.layer-heading p{margin-left:44px}}
+
+/* Ruime, zelfstandige panelen: schermstijlen mogen de tussenruimte niet inkorten. */
+#my-tools-dialog,#all-search-dialog{line-height:1.6}
+#my-tools-dialog h2,#all-search-
+#my-tools-dialog p,#all-search-dialog p{margin:18px 0;max-width:72ch;line-height:1.6}
+#my-tools-dialog .business-choice{gap:14px;padding:22px 24px;margin:28px 0;background:#f3f4f5;border-radius:8px;line-height:1.6}
+#my-tools-dialog .business-choice input{margin-top:4px}
+#all-search-dialog label{margin:0 0 10px;font-size:15px;font-weight:700}
+#all-search-dialog input[type=search]{display:block;min-height:54px;margin:0;padding:14px 18px;border:1px solid #999;border-radius:6px;font-size:17px;line-height:1.5}
+#all-search-dialog input[type=search]:focus-visible{outline:2px solid var(--wp-accent,#c51d17);outline-offset:3px}
+#all-search-dialog .my-tools-status{margin:20px 0 28px;font-size:14px;line-height:1.6}
+#my-tools-dialog .my-tools-status:empty{display:none}
+#all-search-dialog .all-search-results{margin:24px 0;padding:0;max-height:40vh;overflow:auto}
+#all-search-dialog .all-search-results:empty{display:none}
+#all-search-dialog .all-search-results li{padding:18px 4px}
+#all-search-dialog .all-search-results small{margin-top:6px}
+#my-tools-dialog .context-feedback-button,#all-search-dialog .context-feedback-button{margin:24px 0 0 auto!important;padding:8px 0!important;min-height:36px;border:0!important;background:transparent!important;color:#555!important;font-weight:400!important;text-decoration:underline;text-underline-offset:4px}
+.suite-navigation .my-tools-trigger,.shell>header .my-tools-trigger{padding:12px 20px;min-height:46px;line-height:1.5;white-space:nowrap;border:1px solid #aaa;border-radius:5px;background:#fff;font-size:14px}
+@media(max-width:600px){#my-tools-dialog h2,#all-search-#my-tools-dialog .business-choice{padding:18px 16px}#all-search-dialog input[type=search]{font-size:16px}.suite-navigation .my-tools-trigger{padding:10px 16px}}
+
+#suite-settings{width:min(860px,calc(100vw - 32px));max-width:860px;max-height:calc(100dvh - 48px);padding:32px 40px;border:1px solid #aaa;border-radius:12px;font:16px/1.6 Arial,sans-serif}
+#suite-settings>section{border-top:1px solid #ddd;margin-top:28px;padding-top:20px}#suite-settings h3{font-size:20px;margin:0 0 12px}#suite-settings label{display:block;margin:14px 0 6px}#suite-settings input:not([type=checkbox]),#suite-settings textarea{display:block;box-sizing:border-box;width:100%;padding:10px 12px;font:inherit;border:1px solid #aaa;border-radius:4px}#suite-settings button{font:600 14px/1.5 Arial,sans-serif;padding:10px 16px;border:1px solid #888;background:#fff;color:#111;border-radius:4px;cursor:pointer}#suite-settings [hidden]{display:none!important}#suite-settings summary{cursor:pointer;margin:16px 0}#suite-settings .business-choice{display:flex;gap:12px;align-items:center}#suite-settings .business-choice input{width:20px;height:20px}#suite-settings p{margin:12px 0}#suite-settings details button{margin:6px}@media(max-width:600px){#suite-settings{padding:24px 20px}}
+
+#all-search-dialog .search-excerpt{margin:10px 0 0;font-size:15px;line-height:1.6;color:#444;overflow-wrap:anywhere}#all-search-dialog .search-excerpt mark{background:#fff0b3;color:#111;font-weight:700;padding:0 2px}
+body :is(#my-tools-dialog,#all-search-dialog,#suite-settings):modal{margin:0;border-radius:0}
+
+#personal-tools [hidden],.shell .tool-layer[hidden]{display:none!important}.settings-tool-row{display:flex;align-items:center;gap:8px;border-bottom:1px solid #ddd;padding:10px 0}.my-tools-dialog .settings-tool-row label{display:flex;align-items:center;gap:10px;flex:1;margin:0}.settings-tool-row input{width:20px;height:20px}.settings-tool-row button{padding:6px 12px}.settings-tool-row button:disabled{opacity:.35;cursor:default}#settings-tools select{display:block;box-sizing:border-box;width:100%;padding:10px;margin:8px 0 16px;font:inherit}#settings-tools>label{margin-top:20px;font-weight:bold}.layer-heading button{font:600 14px Arial;padding:10px;border:1px solid #111;background:#fff;cursor:pointer}
+
+.trash-list{max-height:50vh;overflow:auto}.trash-row{display:flex;align-items:center;gap:16px;padding:16px 0;border-bottom:1px solid #ddd}.trash-row>div{flex:1;min-width:0;overflow-wrap:anywhere}.trash-row small{display:block;font-size:13px;color:#666;margin-top:6px}.trash-row button{white-space:nowrap}
+
+
+/* Rustige eerste laag: inrichting en uitleg blijven beschikbaar via Instellingen en Meer. */
+.edition,.suite-badge,#business-onboarding,#business-off-note,.layer-number{display:none!important}
+.layer-heading h2{gap:0}
+html.has-workmap .titlebar .guide{display:none!important}
+html.has-workmap .titlebar{padding-bottom:8px}
+.suite-global-more{position:relative}
+.suite-global-more>.context-actions-panel{min-width:230px}
+.suite-global-more>.context-actions-panel>.my-tools-trigger,
+.suite-global-more>.context-actions-panel>#workspace-help-toggle{width:100%;text-align:left}
+.suite-global-more .workspace-management{width:100%}
+#suite-settings>.settings-section{border-top:1px solid #ddd;margin-top:0;padding:0}
+#suite-settings>.settings-section>summary{box-sizing:border-box;margin:0;padding:18px 0;font:700 20px/1.4 Arial,sans-serif;cursor:pointer}
+#suite-settings>.settings-section[open]{padding-bottom:24px}
+#suite-settings>.settings-section[open]>summary{margin-bottom:4px}
+#suite-settings>.settings-section>summary:focus-visible{outline:2px solid var(--wp-accent,#c51d17);outline-offset:3px}
+@media(max-width:760px){.layer-heading p{margin-left:0}}
+
+.tax-rates{margin:22px 0 14px}.tax-rate-row{display:grid;grid-template-columns:minmax(130px,1fr) minmax(80px,120px) 20px;gap:8px;align-items:center;margin:8px 0}.tax-rate-row input{width:100%}.tax-rate-row span{color:#666}

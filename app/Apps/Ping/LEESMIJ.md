@@ -1,45 +1,28 @@
-# Ping lokaal — facturen
+# Factureren in de Werkplaats
 
-Open Start Ping.html in Chrome of Edge. Werk op één computer, in één Ping-venster en met één actueel gegevensbestand.
+Open `Start Ping.html` in Chrome of Edge. Werk voor je echte administratie met één actuele werkmap of één actueel facturenbestand. Er is geen account, cloudopslag of API-sleutel.
 
-## Een factuur maken
+## Factuur maken
 
-1. Maak een nieuwe factuur. Vul je bedrijfsgegevens, klant, adres en regels in. Contacten kun je overnemen uit een Contacten-bestand of hier toevoegen.
-2. Vul factuurdatum en leverdatum in. Een betaaltermijn is optioneel.
-3. Klik Controleer en maak definitief. Ontbrekende gegevens verschijnen onder het formulier.
-4. Controleer het document en het voorgestelde nummer. Bij de eerste factuur van een jaar kun je het eerste volgnummer kiezen; begin boven de nummers die je elders al gebruikte.
-5. Klik Maak definitief. Pas nu wordt het nummer toegewezen. Annuleren verbruikt geen nummer.
-6. Bewaar je gegevensbestand en bewaar of print de PDF. Je verstuurt de factuur zelf.
+1. Maak een concept. Kies zo nodig een bestaande klant uit **Contact houden**; Factureren heeft geen eigen adressenlijst. Een nieuw contact dat je hier toevoegt, wordt aan datzelfde contactenbestand toegevoegd.
+2. Vul bedrijfsgegevens, klantadres, regels, factuurdatum en leverdatum in. Je kunt een standaard betaaltermijn, btw-tarief, nummerprefix en logo instellen. Bij KOR of een andere vrijstelling staan alle regels op 0%; voor een andere vrijstelling vul je zelf de toelichting in.
+3. Controleer het voorbeeld en kies **Controleer en maak definitief**. Het factuurnummer wordt pas bij bevestiging toegekend.
+4. Bewaar de administratie met **Bewaar bestand** of **Bewaar alles**. Bewaar de factuur via **Afdrukken / PDF bewaren** in het afdrukvenster. Verzenden doe je zelf.
 
-## Wat vaststaat
+Een concept kun je bewerken, dupliceren of verwijderen. Een definitieve factuur staat vast. Je kunt haar als volledig betaald markeren, die status terugzetten of één volledige creditfactuur maken. Een creditfactuur heeft negatieve bedragen, een verwijzing naar het oorspronkelijke nummer en een eigen nummerreeks. Een gecrediteerde oorspronkelijke factuur telt niet meer mee als openstaand. Creditfacturen zijn alleen-lezen. Deelbetalingen verwerk je apart in Boekhouden.
 
-Een definitieve factuur is alleen-lezen in Ping. Nummer, datum, klantgegevens, bedrijfsgegevens, regels en berekende totalen worden samen bewaard. Aanpassingen aan bedrijfsgegevens in een nieuw concept veranderen bestaande definitieve facturen niet. Definitieve facturen zijn niet verwijderbaar of terug te zetten naar concept. Creditnota's en correctiefacturen zijn nog niet ingebouwd.
+Het overzicht toont openstaande, betaalde, verlopen en gecrediteerde bedragen of aantallen. Met de filters vind je facturen per status; **CSV** exporteert de volledige lijst. Een factuur die na haar vervaldatum nog niet betaald is, krijgt automatisch de weergavestatus **Verlopen**. De factuurinhoud verandert daardoor niet.
 
-Per kalenderjaar bestaat een reeks: 2026-001, 2026-002, enzovoort. Ping bewaart de volgende waarde in het gegevensbestand. Een nieuwe jaarreeks begint op 001 tenzij je bij de eerste factuur anders kiest. Een opslagfout verbruikt geen nummer en maakt niets definitief.
+## Bewaren en bescherming
 
-## Bewaren en herstel
+De browser bewaart tussendoor een tijdelijke kopie. Een eigen JSON-bestand is nodig om de administratie tussen browsers of computers mee te nemen. Versie 1 en 2 worden bij openen naar versie 3 omgezet. Bestaande definitieve facturen en creditfacturen kunnen via import of herstel niet verdwijnen of worden gewijzigd. Een achterhaald tweede venster kan geen nummer toekennen. Bewaar na een wijziging altijd de nieuwste werkmap of het nieuwste facturenbestand; een PDF of CSV vervangt dat bestand niet.
 
-Browseropslag is een tussentijdse kopie. Bewaar na definitief maken altijd het actuele JSON-bestand buiten de appmap. Een PDF bevat niet je volledige administratie. Oude bestanden (versie 1) worden als concepten ingelezen; nieuwe uitvoer gebruikt versie 2 en is niet bedoeld voor oudere Ping-versies.
+Deze bescherming werkt binnen de app. JSON is open tekst en geen digitale handtekening. Gebruik de factuurcontrole ook zelf: de app kan KvK-, btw- en adresgegevens niet bij de bron verifiëren.
 
-In dezelfde administratie blokkeert import of herstel een bestand dat definitieve facturen mist of verandert. Een achterhaald tweede venster mag geen nieuw nummer toekennen. Wis je browsergegevens of gebruik je een andere appmap/browser, dan kan Ping alleen weten wat er in het geopende bestand staat. Gebruik dus steeds het meest recente bestand, geen afzonderlijke kopieën van dezelfde administratie.
+## Koppelingen
 
-Alleen-lezen is bescherming binnen de app; JSON is open en niet cryptografisch verzegeld.
+**Contact houden** levert naam, organisatie, e-mail en eventueel factuuradres aan het concept. **Offreren** en **Uren schrijven** kunnen een conceptfactuur aanmaken. Vanuit een definitieve factuur kun je een volledige ontvangst ter controle overdragen aan **Boekhouden**, en overgenomen uren als gefactureerd terugmelden. Een betaalstatus in Factureren boekt niet automatisch iets in Boekhouden.
 
-## Controle en toepassingsgebied
+De tool richt zich op eenvoudige Nederlandse facturen in euro, met 0%, 9% of 21% btw. Buitenlandse btw, deelcreditnota's, deelbetalingen en automatische verzending zijn niet ingebouwd. Het afdrukvenster maakt de PDF; er is geen aparte PDF-downloadknop.
 
-De controle vraagt bedrijfsnaam en adres, KvK-nummer, klantnaam en adres, omschrijving, factuurdatum, leverdatum en omschreven regels. Bij btw wordt een btw-id gevraagd; bij regels zonder btw een toelichting. Ingevulde e-mailadressen en datums worden gecontroleerd. De controle verifieert niet of registratienummers, adressen of de gekozen btw-behandeling inhoudelijk juist zijn.
-
-Deze versie richt zich op eenvoudige Nederlandse facturen in euro. Btw-opties: 0, 9 en 21 procent. Aantallen zijn gehele getallen. Bijzondere regelingen, buitenlandse facturen, creditnota's en automatische verzending zijn niet ingebouwd.
-
-Referentie voor de basisvelden: https://www.belastingdienst.nl/wps/wcm/connect/bldcontentnl/belastingdienst/zakelijk/btw/administratie_bijhouden/facturen_maken/factuureisen/
-
-## Contacten
-
-Kies contact opent een Contacten-bestand. Alleen de gekozen klantgegevens gaan naar de factuur. Het adres wordt leeggemaakt en vul je zelf in. Nieuw contact maakt een bijgewerkt Contacten-bestand als download, inclusief de bestaande contacten en notities. Open de download later in Contacten. Er is geen automatische synchronisatie.
-
-## Getest
-
-Ontbrekende velden, annuleren zonder nummer, instelbaar startnummer, opeenvolgende nummers, jaarwisseling, vaste bedrijfsgegevens, alleen-lezen, JSON en PDF, herladen, oude bestandsversie, import met ontbrekende/gewijzigde/dubbele definitieve facturen, opslagfout en tweede venster. Contacten overnemen en nieuw contact teruglezen blijven getest. Desktop en mobiel zijn visueel bekeken.
-
-KOPPELINGEN
-Uren overnemen maakt een concept met één regel per registratie. Bedragen worden uit exacte minuten berekend. Elke omschrijving noemt tijd en tarief; aantal 1 betekent het berekende bedrag voor die registratie. Na definitief maken: Uren als gefactureerd terugmelden om in Uren schrijven het definitieve nummer vast te leggen. Boek als ontvangen maakt een overdracht voor Boekhouden nadat je betaaldatum en volledige ontvangst bevestigt. Deelbetalingen worden niet door deze koppeling verwerkt. Bewaar steeds je facturenbestand. Bewaar daarna je bijgewerkte gegevensbestand. Met Mijn werkmap staat de overdracht in Exports bij de tool; anders start een download.
+[Factuureisen van de Belastingdienst](https://www.belastingdienst.nl/wps/wcm/connect/bldcontentnl/belastingdienst/zakelijk/btw/administratie_bijhouden/facturen_maken/factuureisen/)

@@ -1,0 +1,157 @@
+/* Blom-OS in de bestaande Werkplaats. Indeling en grafische identiteit blijven lokaal.
+   Zie BLOM-OS-VORMGEVING.md. Deze laag raakt alleen presentatie. */
+@media screen {
+ body,button,input,textarea,select,summary,dialog {font-family:var(--font-ui)!important}
+ body {color:var(--cte-text)}
+
+ /* Graphical-elementen: dezelfde schaal en randen, binnen het bestaande zwart/wit-beeld. */
+ body .shell .titlebar h1 {font-size:var(--size-xxl);line-height:var(--line-xxl);letter-spacing:var(--letter-spacing-xxl);font-weight:var(--weight-brand-heavy)}
+ body .shell .card h2 {font-size:var(--size-xl);line-height:var(--line-xl);letter-spacing:var(--letter-spacing-xl);font-weight:var(--weight-brand-heavy)}
+ body[data-tool] .brand {font-size:var(--size-l)!important;font-weight:var(--weight-brand-heavy);line-height:var(--line-l);letter-spacing:var(--letter-spacing-l)}
+ body :is(.wp-actions,.form-actions,.note-actions,.my-tools-actions,.document-connections-actions) {gap:var(--space-xs)!important}
+ body :is(label,legend) {font-size:var(--size-s);line-height:var(--line-s);font-weight:var(--weight-ui-medium)}
+ body :is(.wp-actions,.form-actions,.note-actions,.my-tools-actions,.document-connections-actions,.organization-actions,.plan-overview-actions,.invoice-edit-actions,.suite-tool-actions,.file-actions,.actions,.workspace-strip,.work-actions,.suite-meta,.opening,.notes-heading-actions,#writing-focus-bar)>button, body :is(button.primary,button.notes-primary,button.action-primary,button.save-btn,button.save,button.add-column,button.my-tools-trigger,.home-work-choice>button,#note-new,#feedback-open), body :is(.context-actions,.file-more,.sidebar-menu,#newMenu,#folderMenu,#export-menu)>summary {font-size:var(--size-s)!important;line-height:var(--line-s)!important;letter-spacing:var(--letter-spacing-s);font-weight:var(--weight-ui-heavy);border:0!important;border-radius:var(--radius-s)!important;padding:var(--space-xs) var(--space-s)!important;box-shadow:var(--blom-edge)!important;background:var(--cte-surface);background-image:none!important;color:var(--cte-text);min-height:var(--wp-action-height)}
+ body :is(button.action-delete,button.delete-file-btn,button.note-delete,#delete,#invoice-delete,[data-delete],[data-remove]) {box-shadow:inset 0 0 0 var(--border-s) var(--cte-text)!important}
+ body :is(button,.context-actions>summary):hover:not(:disabled) {outline-color:var(--cte-border)}
+ body button:disabled {background-image:none;box-shadow:var(--blom-edge)!important}
+ body :is(input,textarea,select):not([type=checkbox],[type=radio],[type=range],[type=color],[type=file],[type=hidden]) {border:0!important;border-radius:var(--radius-s)!important;box-shadow:var(--blom-control-edge)!important;padding:var(--space-xs) var(--space-s)!important;font-size:var(--size-m)!important;line-height:var(--line-m)!important;letter-spacing:var(--letter-spacing-m)}
+ body :is(input,textarea,select)[aria-invalid=true],body :is(input,textarea,select):user-invalid {box-shadow:inset 0 0 0 var(--border-s) var(--error)!important}
+ body dialog {padding:var(--space-l)!important;border:0!important;border-radius:var(--radius-zero)!important;box-shadow:var(--blom-panel-edge)!important}
+ body dialog h2 {font-size:var(--size-l);line-height:var(--line-l);letter-spacing:var(--letter-spacing-l);font-weight:var(--weight-brand-heavy)}
+
+ /* Bestaande omlijsting, afgerond werkvlak en kopgroottes blijven behouden. */
+ body.compact-tools,body>.shell {background:var(--cte-surface)!important;color:var(--cte-text)}
+ body.compact-tools>header,body.compact-tools>.brandbar {background:var(--cte-surface)!important;color:var(--cte-text)}
+ body :is(.workspace-strip,.projectbar,.sidebar-tools,.loose-documents,.work-tabs,.writing-views,.factureren-tabs) {font-family:var(--font-ui)!important;border-color:var(--cte-border)}
+ body :is(.workspace-strip,.sidebar-tools,.toolbar,.tools,.filter-strip) {background:var(--cte-surface-muted)!important;color:var(--cte-text)!important}
+ body .unsaved-marker {color:var(--cte-text)!important}
+ body .notes-board .note-card {background:var(--neutral-3)!important;color:var(--cte-text)!important;border:0!important;box-shadow:var(--blom-card-edge),inset 0 var(--space-xxs) var(--cte-text)!important}
+ body .own-ai .ai-primary {background:var(--neutral-10)!important;color:var(--neutral-1)!important}
+ body .workspace-strip .file-status {color:var(--cte-text)!important}
+ body .sidebar,body .content,body .main,body .welcome,body .notes-board {background:var(--cte-surface)!important;color:var(--cte-text)!important}
+ body :is(.list-summary,#list-summary,.countline,.note-topic,.note-footer,.notes-eyebrow,.notes-save-hint) {font-family:var(--font-ui)!important;font-size:var(--size-xs)!important;line-height:var(--line-xs)!important;color:var(--cte-text-muted)!important}
+ body .suite-tool-actions {display:flex;align-items:center;flex-wrap:wrap;gap:var(--space-xs)}
+ body .suite-tool-actions>button {width:auto!important}
+ /* Zwarte starttegels en hoofdletters horen bij de Werkplaats-identiteit. */
+ body .shell .card.active :is(a,.search-card) {background:var(--neutral-10)!important;color:var(--neutral-1)!important}
+ body .shell .card.active :is(h2,p,span) {color:inherit}
+ body .shell .layer-heading {background:var(--cte-surface-muted);color:var(--cte-text)}
+ /* Bediening is rustig omlijnd; alleen de expliciete hoofdactie krijgt een gevuld vlak. */
+ body :where(button,.contact-mail-choice,.document-view-actions a,.context-actions>summary,.file-more>summary,.sidebar-menu>summary,#newMenu>summary,#folderMenu>summary,#export-menu>summary) {font-family:var(--font-ui)!important;color:var(--cte-text);border-color:var(--cte-border)}
+ body :where(button.primary,button.notes-primary,button.save-btn,button.save,.document-edit-primary,#loose-save,#add,#new-task,#add-contact,#add-plan,#add-entry,#add-subscription,.wp-actions>button[type=submit],#suite-settings button[type=submit]) {background:var(--cte-surface)!important;color:var(--cte-text)!important;border:0!important;box-shadow:var(--blom-edge)!important;background-image:none!important}
+ body :is(button.action-delete,button.delete-file-btn,button.note-delete,#delete,#invoice-delete,[data-delete],[data-remove]) {background:var(--cte-surface)!important;color:var(--cte-text)!important;border-color:var(--cte-text)!important}
+ body button:disabled {opacity:.55}
+ body :is(input,textarea,select,[contenteditable=true]) {font-family:var(--font-ui)!important;caret-color:var(--cte-text);color:var(--cte-text);accent-color:var(--color-1)}
+ body :is(input,textarea,select):not([type=checkbox],[type=radio],[type=range],[type=color],[type=file],[type=hidden]) {background-color:var(--cte-surface)!important;color:var(--cte-text)!important;border-color:var(--cte-border)!important}
+ body :is(input,textarea,select)::placeholder {color:var(--cte-text-muted)}
+ body :is(input,textarea,select):disabled {background-color:var(--cte-surface-muted)!important;color:var(--cte-text-muted)!important}
+ body :is(input,textarea,select)[aria-invalid=true],body :is(input,textarea,select):user-invalid {border-color:var(--error)!important}
+ body :is(button,a,input,textarea,select,summary,[tabindex],[contenteditable]):focus-visible {outline:var(--focus-ring-outline)!important;outline-offset:var(--space-xxs)!important}
+ body :is(dialog,.search-palette,.context-actions-panel,.sidebar-menu-panel,.file-more-panel,.export-popover,.tool-extra-actions,.contact-search-list,.contacts-dropdown,.modal-content,.note-dialog) {background:var(--cte-surface)!important;color:var(--cte-text)!important;font-family:var(--font-ui)!important;border-color:var(--cte-text)!important}
+ body dialog::backdrop {background:var(--wp-dialog-backdrop)}
+ body :is(.optional-filters,.opening,.save-help,.werkmap,.context-help,.example-mode,.work-notice,.banner,.hint-box) {background:var(--cte-surface-muted)!important;color:var(--cte-text)!important;border-color:var(--cte-border)}
+ body :is(.muted,.hint,.storage,.document-information,.file-path,.editor-status,.writing-word-count) {font-family:var(--font-ui);color:var(--cte-text-muted)}
+ body :is(.form-error,#form-error,#error,.notes-error,.overdue,.is-overdue) {color:var(--error)!important}
+ body :is(.attention.soon,.state-likely,.attention.missing) {color:var(--warning)}
+ body :is(.state-paid,.state-active) {color:var(--success)}
+ body table {font-family:var(--font-data);font-variant-numeric:tabular-nums}
+ body :is(.subscription-totals,.totals,.summary,.summary-grid,.stats) {font-family:var(--font-data);font-variant-numeric:tabular-nums}
+ body .tool-select-label {color:var(--cte-text)!important}
+ body :is(.markdown-content,.wysiwyg-editor,.editor-wrapper,.frontmatter) {color:var(--cte-text)!important;background:var(--cte-surface)!important;border-color:var(--cte-border)}
+ body :is(.markdown-content,.wysiwyg-editor) {font-family:var(--font-editorial)!important}
+ body .markdown-content :is(pre,code),body .code-editor {font-family:monospace!important}
+ body .wysiwyg-toolbar {background:var(--cte-surface-muted)!important;border-color:var(--cte-border)}
+ /* De bestaande kleurkeuze blijft leidend voor logo, rode kopstroken en omlijsting. */
+ body .appearance-preview {background:var(--preview-accent,var(--color-1));color:var(--wp-brand-foreground)}
+ html[data-theme=dark] body :is(.brandbar,.projectbar,.workspace-strip,.loose-documents,.markdown-content,.sidebar,.main,.content,.notes-board) {color:var(--cte-text)!important;background:var(--cte-surface)!important}
+ html[data-theme=dark] body :where(button,.context-actions>summary,.file-more>summary,.sidebar-menu>summary,#newMenu>summary,#folderMenu>summary) {background-color:var(--cte-surface)!important;color:var(--cte-text)!important;border-color:var(--cte-border)!important}
+
+ html[data-theme=dark] body :is(.tree-file.active,.file-item.active,.invoice-btn.active,.quote-button.selected) {background:var(--cte-surface-muted)!important;color:var(--cte-text)!important}
+ html[data-theme=dark] body :is(.tree-file.active,.file-item.active) * {color:var(--cte-text)!important}
+ /* Eén expliciete hoofdactie per taakgebied; donker gebruikt het omgekeerde contrastpaar. */
+ body button.action-primary {background:var(--neutral-10)!important;color:var(--neutral-1)!important;border:0!important;box-shadow:var(--blom-edge)!important;background-image:none!important}
+ /* Quiet navigation keeps a clear selection without action-button frames. */
+ body :is(#filters,#categories,.view-switch,.writing-views,.work-tabs,.ledger-nav,.ledger-type) button {
+  border:0!important;border-radius:var(--radius-zero)!important;box-shadow:none!important;
+  background:transparent!important;background-image:none!important;color:var(--cte-text)!important;
+  font:var(--weight-ui-medium) var(--size-s)/var(--line-s) var(--font-ui)!important;
+  letter-spacing:var(--letter-spacing-s);padding:var(--space-xs) var(--space-s)!important;min-height:var(--wp-action-height)
+ }
+ body :is(#filters,#categories,.view-switch,.writing-views,.work-tabs,.ledger-nav,.ledger-type) button:is([aria-pressed=true],[aria-selected=true]) {
+  background:var(--neutral-3)!important;box-shadow:inset 0 calc(-1 * var(--border-l)) var(--cte-text)!important;font-weight:var(--weight-ui-heavy)!important
+ }
+ body :is(#filters,#categories,.view-switch,.writing-views,.work-tabs,.ledger-nav,.ledger-type) button:hover:not(:disabled) {background:var(--neutral-3)!important}
+ body :is(.writing-views,.work-tabs,.ledger-nav,.factureren-tabs) {border:0!important;box-shadow:inset 0 calc(-1 * var(--border-s)) var(--neutral-7)}
+ /* Compact format controls use fixed icon boxes, not text-action padding. */
+ body .wysiwyg-toolbar {gap:var(--space-xxs);padding:var(--space-xs) var(--space-s);border:0!important;box-shadow:inset 0 calc(-1 * var(--border-s)) var(--neutral-7)}
+ body .wysiwyg-toolbar button {border:0!important;border-radius:var(--radius-zero)!important;box-shadow:none!important;background:transparent!important;background-image:none!important;color:var(--cte-text)!important;padding:0 var(--space-xxs)!important;min-width:var(--space-xl);min-height:var(--space-xl)!important;height:var(--space-xl);font:var(--weight-ui-heavy) var(--size-xs)/var(--line-xs) var(--font-ui)!important}
+ body .wysiwyg-toolbar button:is(:hover,.active,[aria-pressed=true]) {background:var(--neutral-4)!important;box-shadow:inset 0 calc(-1 * var(--border-l)) var(--cte-text)!important}
+ body .wysiwyg-toolbar .separator {background:var(--neutral-7);margin:0 var(--space-xxs)}
+ body .note-formatting {display:flex;flex-wrap:wrap;gap:var(--space-xxs)}
+ body .note-formatting button {border:0!important;box-shadow:var(--blom-control-edge)!important;background:var(--cte-surface)!important;color:var(--cte-text)!important;border-radius:var(--radius-zero)!important;padding:var(--space-xxs) var(--space-xs)!important;min-height:var(--space-xl);font:var(--weight-ui-heavy) var(--size-xs)/var(--line-xs) var(--font-ui)!important}
+ /* Popups and menu panels have a complete, visible frame. */
+ body :is(.search-palette,.context-actions-panel,.sidebar-menu-panel,.file-more-panel,.export-popover,.tool-extra-actions,.contact-search-list,.contacts-dropdown,.modal-content,.note-dialog) {border:0!important;box-shadow:var(--blom-panel-edge)!important}
+ body :is(.wp-actions,.form-actions,.note-actions,.document-connections-actions,.my-tools-actions,.organization-actions,.plan-overview-actions,.invoice-edit-actions) {border:0!important;box-shadow:inset 0 var(--border-s) var(--neutral-7)}
+ body dialog>h2,body dialog>form>h2 {padding-bottom:var(--space-s);box-shadow:inset 0 calc(-1 * var(--border-l)) var(--cte-text)}
+ body #suite-settings .settings-section {border:0!important;box-shadow:inset 0 var(--border-s) var(--neutral-7)}
+ /* Cards are pieces of work; priority remains a meaningful color encoding. */
+ body[data-tool] .cards>.card {background:var(--cte-surface)!important;color:var(--cte-text)!important;border:0!important;box-shadow:var(--blom-card-edge),inset 0 var(--space-xxs) var(--cte-text)!important}
+ body[data-tool=Projectbord] .column {background:var(--neutral-3)!important;border:0;box-shadow:var(--blom-card-edge)}
+ body[data-tool=Projectbord] .column-head {background:var(--neutral-10)!important;color:var(--neutral-1)!important}
+ body[data-tool=Projectbord] .column-head :is(p,.count) {color:var(--neutral-1)!important}
+ body[data-tool=Projectbord] .task {--wp-task-priority:var(--neutral-8);border:0;background:var(--cte-surface);box-shadow:var(--blom-card-edge),inset var(--space-xxs) 0 var(--wp-task-priority);height:auto;min-height:calc(2 * var(--space-xl) + var(--space-s));padding:var(--space-xs);margin-bottom:var(--space-xs)}
+ body[data-tool=Projectbord] .task[data-priority=high] {--wp-task-priority:var(--color-1)}
+ body[data-tool=Projectbord] .task[data-priority=normal] {--wp-task-priority:var(--wp-task-priority-normal)}
+ body[data-tool=Projectbord] .task[data-priority=low] {--wp-task-priority:var(--wp-task-priority-low)}
+ body[data-tool=Projectbord] .task-head {grid-template-rows:calc(2 * var(--line-s)) var(--line-xs);row-gap:var(--space-xxs)}
+ body[data-tool=Projectbord] .task-open {border:0!important;box-shadow:none!important;background:transparent!important;background-image:none!important;padding:0!important;height:calc(2 * var(--line-s));color:var(--cte-text)!important}
+ body[data-tool=Projectbord] .task-title {font:var(--weight-ui-heavy) var(--size-s)/var(--line-s) var(--font-ui);max-height:calc(2 * var(--line-s))}
+ body[data-tool=Projectbord] :is(.task-project,.task-meta) {font-size:var(--size-xs);line-height:var(--line-xs);color:var(--cte-text-muted);transform:none}
+ body[data-tool=Projectbord] .task-order button {border:0!important;box-shadow:var(--blom-edge)!important;background:var(--cte-surface)!important;color:var(--cte-text)!important;padding:0 var(--space-xxs)!important;min-width:var(--space-xl);min-height:var(--space-xl)!important;font-size:var(--size-s)!important}
+ body[data-tool=Projectbord] .task.drop-before {box-shadow:var(--blom-card-edge),inset var(--space-xxs) 0 var(--wp-task-priority),inset 0 var(--space-xxs) var(--color-1)}
+ body[data-tool=Projectbord] .task.drop-after {box-shadow:var(--blom-card-edge),inset var(--space-xxs) 0 var(--wp-task-priority),inset 0 calc(-1 * var(--space-xxs)) var(--color-1)}
+ /* Generated invoice rows must keep their status text legible after rendering. */
+ body.compact-tools :is(.invoice-btn,.quote-button) :is(small,.factureren-row-detail) {color:var(--cte-text-muted)!important}
+ body.compact-tools :is(.invoice-btn,.quote-button) .factureren-row-main>strong {color:var(--cte-text)!important}
+ body.compact-tools :is(.invoice-btn,.quote-button) {border:0!important;box-shadow:inset 0 calc(-1 * var(--border-s)) var(--neutral-7)!important}
+ body.compact-tools :is(.invoice-btn.active,.quote-button.selected) {background:var(--neutral-3)!important;box-shadow:inset 0 calc(-1 * var(--border-s)) var(--neutral-7),inset var(--space-xxs) 0 var(--cte-text)!important}
+
+}
+@media screen and (min-width:769px) {
+ body[data-tool=Contacten] #filters button[aria-pressed=true] {box-shadow:inset var(--space-xxs) 0 var(--cte-text)!important}
+}
+@media screen and (max-width:768px) {
+ /* In Notities is de bestandslade verborgen; haar overlay hoort daar niet overheen. */
+ body.writing-notes>.mobile-toggle,body.writing-notes>.overlay {display:none!important}
+}
+@media (prefers-reduced-motion:reduce) {
+ *,*::before,*::after {animation:none!important;transition:none!important;scroll-behavior:auto!important}
+}
+
+@media screen and (max-width:1000px) {
+ body .shell .card h2 {font-size:var(--size-l);line-height:var(--line-l);letter-spacing:var(--letter-spacing-l)}
+}
+@media screen and (max-width:600px) {
+ body .shell .titlebar h1 {font-size:var(--size-xl);line-height:var(--line-xl);letter-spacing:var(--letter-spacing-xl)}
+}
+
+@media screen {
+ body select:not([multiple]):is(:not([size]),[size="1"]):not(#tool-switcher) {
+  appearance:none!important;
+  padding-inline-end:calc(var(--space-l) + var(--space-xs))!important;
+  background-image:linear-gradient(45deg,transparent 50%,currentColor 50%),linear-gradient(135deg,currentColor 50%,transparent 50%)!important;
+  background-position:right calc(var(--space-s) + var(--space-xxs)) center,right var(--space-s) center!important;
+  background-size:var(--space-xxs) var(--space-xxs),var(--space-xxs) var(--space-xxs)!important;
+  background-repeat:no-repeat!important;
+ }
+ body .tool-select-label {padding-inline-end:calc(var(--space-l) + var(--space-xs))}
+ body .tool-select-label::after {right:var(--space-s)}
+ body[data-tool=Bronnenkast] #categories {gap:var(--space-xxs)!important}
+ body[data-tool=Bronnenkast] #categories button {font-size:var(--size-xs)!important;line-height:var(--line-xs)!important;padding:var(--space-xxs)!important;display:flex;gap:0;align-items:center;text-align:left}
+ body[data-tool=Bronnenkast] #categories .category-name {min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+ body[data-tool=Bronnenkast] #categories .category-count {flex-shrink:0;white-space:nowrap}
+ body .document-connections-dialog fieldset[hidden],body .document-source-list > label[hidden],body .note-sources[hidden] {display:none!important}
+}
+@media screen and (forced-colors:active) {
+ body select:not([multiple]):is(:not([size]),[size="1"]):not(#tool-switcher) {appearance:auto!important;background-image:none!important}
+}

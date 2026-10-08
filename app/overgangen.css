@@ -1,0 +1,17 @@
+/* Shared motion for Home, tools, tabs and information windows. */
+@view-transition{navigation:auto}
+@keyframes werkplaats-arrive{from{opacity:.55}to{opacity:1}}
+@keyframes werkplaats-panel{from{opacity:.7}to{opacity:1}}
+@keyframes werkplaats-old{from{opacity:1}to{opacity:0}}
+@keyframes werkplaats-new{from{opacity:0}to{opacity:1}}
+@media(prefers-reduced-motion:no-preference){
+ html[data-werkplaats-motion="local"] body{animation:werkplaats-arrive 180ms ease-out}
+ ::view-transition-old(root){animation:werkplaats-old 220ms ease-in-out both;mix-blend-mode:normal}
+ ::view-transition-new(root){animation:werkplaats-new 220ms ease-in-out both;mix-blend-mode:normal}
+ dialog[open]{animation:werkplaats-panel 150ms ease-out}
+ .notes-board:not([hidden]),.app:not([hidden]),[role="tabpanel"]:not([hidden]){animation:werkplaats-panel 150ms ease-out}
+}
+@media(prefers-reduced-motion:reduce){
+ ::view-transition-old(root),::view-transition-new(root){animation:none!important}
+}
+@media print{body,dialog,.notes-board,.app,[role="tabpanel"]{animation:none!important}}

@@ -1,0 +1,85 @@
+html[data-theme="dark"] {
+  color-scheme: dark;
+  --bg-primary: #171717;
+  --bg-secondary: #202020;
+  --bg-tertiary: #303030;
+  --text-primary: #f5f5f2;
+  --text-secondary: #c9c9c5;
+  --text-muted: #aaa;
+  --accent: #ff746b;
+  --accent-dim: #f15d54;
+  --border: #666;
+  --line: #666;
+  --code-bg: #303030;
+  --link: #ff8c84;
+  --muted: #c9c9c5;
+  background: var(--bg-primary) !important;
+  color: var(--text-primary);
+}
+
+html[data-theme="dark"] body,
+html[data-theme="dark"] .brandbar,
+html[data-theme="dark"] .projectbar,
+html[data-theme="dark"] .sidebar,
+html[data-theme="dark"] .main,
+html[data-theme="dark"] .content,
+html[data-theme="dark"] .welcome,
+html[data-theme="dark"] .content-header,
+html[data-theme="dark"] .folder-tag,
+html[data-theme="dark"] .sidebar-menu-panel,
+html[data-theme="dark"] .file-more-panel,
+html[data-theme="dark"] .save-help,
+html[data-theme="dark"] .loose-documents {
+  background: var(--bg-secondary) !important;
+  color: var(--text-primary) !important;
+  border-color: var(--border);
+}
+
+html[data-theme="dark"] .main,
+html[data-theme="dark"] body {
+  background: var(--bg-primary) !important;
+}
+
+html[data-theme="dark"] :is(button, input, textarea, select, dialog),
+html[data-theme="dark"] .loose-documents button {
+  color: var(--text-primary);
+  border-color: var(--border);
+}
+
+html[data-theme="dark"] :is(input, textarea, select, dialog),
+html[data-theme="dark"] .loose-documents button,
+html[data-theme="dark"] .file-dialog {
+  background: var(--bg-tertiary) !important;
+  color: var(--text-primary) !important;
+}
+
+html[data-theme="dark"] .suite-back,
+html[data-theme="dark"] .brand .tool-symbol,
+html[data-theme="dark"] .markdown-content,
+html[data-theme="dark"] .markdown-content :is(h1, h2, h3, h4, h5, h6),
+html[data-theme="dark"] .save-help :is(summary, p, li),
+html[data-theme="dark"] .loose-documents span {
+  color: var(--text-primary) !important;
+}
+
+html[data-theme="dark"] .tree-file.active,
+html[data-theme="dark"] .file-item.active {
+  background: #404040 !important;
+}
+
+html[data-theme="dark"] .suite-badge,
+html[data-theme="dark"] #newMenu > summary {
+  background: var(--text-primary) !important;
+  color: var(--bg-primary) !important;
+}
+
+html[data-theme="dark"] .frontmatter-tag {
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+}
+
+html[data-theme="dark"] #folderMenu > summary {
+  background: var(--bg-tertiary) !important;
+  color: var(--text-primary) !important;
+  border-color: var(--border);
+}

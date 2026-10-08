@@ -1,0 +1,44 @@
+/* The sheet and its research stay separate, including when printing. */
+#content:has(>.document-materials[open]){display:grid;grid-template-columns:minmax(0,1fr) 280px;column-gap:24px;align-content:start;align-items:start}
+#content:has(>.document-materials[open])>.markdown-content,#content:has(>.document-materials[open])>.editor-container{grid-column:1;grid-row:2;min-width:0}
+#content>.document-materials{box-sizing:border-box;grid-column:2;grid-row:2;border:1px solid var(--border,#ddd);background:var(--bg-secondary,#fafaf8);padding:16px;margin:0;min-width:0}
+.document-materials>summary{font:600 15px/1.4 Arial;cursor:pointer;overflow-wrap:anywhere}
+.material-panel-body{font:13px/1.5 Arial}
+.material-panel-body>p{color:var(--text-secondary,#666)}
+.material-panel-body>button{display:block;margin:8px 0;padding:8px 10px;width:100%;text-align:left;font:600 13px/1.4 Arial;background:var(--bg-primary,#fff);color:var(--text-primary,#222);border:1px solid var(--border,#bbb);cursor:pointer}
+.material-group{border-top:1px solid var(--border,#ddd);margin-top:16px;padding-top:12px}
+.material-group h3{font:600 13px/1.4 Arial;margin:0 0 10px}
+.material-group>p{font:13px/1.5 Arial;color:var(--text-secondary,#777);margin:0}
+.material-group .document-source-open{display:flex;flex-direction:row;align-items:center;gap:10px;width:100%;text-align:left;padding:10px;margin:6px 0;border:1px solid var(--border,#ddd);background:var(--bg-primary,#fff);color:var(--text-primary,#222);font:13px/1.4 Arial;cursor:pointer;overflow-wrap:anywhere}
+.material-group .document-source-open strong{min-width:0;overflow-wrap:anywhere}
+.material-group .document-source-open img{width:48px;height:48px;object-fit:cover;flex-shrink:0}
+.document-material-dialog .material-preview img{display:block;max-width:100%;height:auto;margin:0 auto 16px}
+.document-material-dialog .material-preview{overflow-wrap:anywhere}
+.document-material-dialog .material-preview details{margin-top:16px}
+#content>.document-materials:not([open]){margin-top:24px}
+body.writing-focus #content>.document-materials[open]{display:block!important;position:fixed;top:88px;right:16px;width:min(340px,calc(100vw - 32px));max-height:calc(100dvh - 110px);overflow:auto;z-index:109;box-shadow:0 8px 32px #0003;margin:0}
+body.writing-focus #content:has(>.document-materials){display:block!important}
+@media(max-width:1100px){#content:has(>.document-materials[open]){display:block}#content>.document-materials{margin-top:24px}}
+@media print{#content:has(>.document-materials){display:block!important}#content>.document-materials{display:none!important}}
+
+#content>.document-materials:not([open]){display:none}
+.document-material-toggle{white-space:nowrap}
+@media print{.document-material-toggle{display:none!important}body.writing-focus #content>.document-materials[open]{display:none!important}}
+
+.document-connections-dialog .document-connections-name{font-size:13px;color:var(--text-secondary,#666);margin:0 0 24px;overflow-wrap:anywhere}
+.document-connections-dialog fieldset{min-width:0;margin:0 0 20px;padding:0;border:0}
+.document-connections-dialog legend{font:700 14px/1.4 Arial;padding:0;margin-bottom:8px}
+.document-connections-dialog .document-source-list{max-height:180px;overflow:auto;border:1px solid #ddd;border-radius:6px;padding:4px 12px}
+.document-connections-dialog .document-source-list label{display:flex;align-items:flex-start;gap:10px;padding:10px 0;margin:0;border-bottom:1px solid #eee;font:400 14px/1.5 Arial;overflow-wrap:anywhere;cursor:pointer}
+.document-connections-dialog .document-source-list label:last-child{border-bottom:0}
+.document-connections-dialog input[type=checkbox]{flex:none;width:17px;height:17px;margin:2px 0 0;accent-color:var(--wp-accent,#c51d17)}
+.document-connections-dialog .document-source-list p{font-size:13px;color:#777;margin:8px 0}
+.document-connections-dialog fieldset>button{margin-top:10px}
+.document-connections-workflow{border-top:1px solid #ddd;border-bottom:1px solid #ddd;padding:12px 0;margin:4px 0 16px}
+.document-connections-workflow summary{cursor:pointer;font-weight:600}
+.document-connections-workflow label{display:block;margin:14px 0;font-size:13px}
+.document-connections-workflow select{display:block;box-sizing:border-box;width:100%;padding:9px;margin-top:5px;font:14px Arial;border:1px solid #ccc;background:#fff;color:#222}
+.document-connections-dialog .document-connections-hint{font-size:12px;color:#777;margin:14px 0}
+@media(max-width:600px){}
+
+

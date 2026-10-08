@@ -52,7 +52,7 @@ async function loadIgnoreRules(directoryHandle) {
   const ignoreHandle = await directoryHandle.getFileHandle('.ignore');
   return parseIgnoreRules(await (await ignoreHandle.getFile()).text());
  } catch (error) {
-  if (error?.name !== 'NotFoundError') console.warn('Kon .ignore niet lezen:', error);
+  if (error?.name !== 'NotFoundError') console.warn(I18n.value(I18n.ui("Kon .ignore niet lezen:",'Kon .ignore niet lezen:')), error);
   return [];
  }
 }

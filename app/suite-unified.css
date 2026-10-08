@@ -1,0 +1,19 @@
+/* Consistent navigation and compact search results across the local tools. */
+body>header,body>header.brandbar{position:relative!important;padding-top:65px!important}
+body>header .suite-meta{position:absolute!important;top:10px;right:32px;display:flex;align-items:center;gap:14px}
+body>header .suite-back{white-space:nowrap}
+body[data-tool="Werkbank"]>header .suite-meta{right:24px!important}
+input[type="search"]{min-height:42px;border:1px solid #999;width:100%}
+mark{background:var(--wp-accent,#e32720);color:#fff;padding:0 2px}
+body[data-tool="Offerte"] .workspace{grid-template-columns:minmax(240px,270px) minmax(300px,1fr) minmax(340px,1.1fr)}
+body[data-tool="Offerte"] .quote-button,body[data-tool="Ping"] .invoice-btn{display:block;width:100%;text-align:left;padding:10px 12px!important;margin:0!important;border:1px solid #bbb;border-bottom:0;line-height:1.35}
+body[data-tool="Offerte"] .quote-button:last-child,body[data-tool="Ping"] .invoice-btn:last-child{border-bottom:1px solid #bbb}
+body[data-tool="Offerte"] .quote-button strong,body[data-tool="Ping"] .invoice-btn strong{font-size:14px;line-height:1.3}
+body[data-tool="Offerte"] .quote-button small,body[data-tool="Ping"] .invoice-btn small{color:#555;font-size:11px;line-height:1.35}
+body[data-tool="Offerte"] .quote-button.selected small,body[data-tool="Ping"] .invoice-btn.active small{color:#eee}
+body[data-tool="Offerte"] #list,body[data-tool="Ping"] #list{max-height:72vh;overflow-y:auto;overscroll-behavior:contain}
+.quote-read{font-size:14px;line-height:1.55}.quote-read h3{margin-top:0!important;border:0!important}
+.invoice-read{font-size:14px;line-height:1.55}.invoice-followup{border-top:1px solid #bbb;padding-top:14px;margin-top:16px}.invoice-followup h3{margin:0 0 8px}.invoice-followup p{font-size:14px;margin:0 0 10px}.invoice-followup button{margin:0 8px 8px 0}#link-actions:empty{display:none}
+body[data-tool="Kasboek"] .open-invoice .entry-main small{display:block;color:#555;margin-top:3px}#entry-view .entry-description{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.5}
+@media(max-width:1100px){body[data-tool="Offerte"] .workspace{grid-template-columns:minmax(220px,270px) minmax(0,1fr)}body[data-tool="Offerte"] .preview{grid-column:2}}
+@media(max-width:760px){body>header .suite-meta{right:16px;top:8px;gap:8px}body[data-tool="Werkbank"]>header .suite-meta{right:8px!important}body>header .suite-badge{display:none}body[data-tool="Offerte"] .workspace{display:block}body[data-tool="Offerte"] .preview{margin-top:16px}body[data-tool="Offerte"] #list,body[data-tool="Ping"] #list{max-height:40vh}}

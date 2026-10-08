@@ -1,118 +1,94 @@
-<!doctype html><html lang="nl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Over de Werkplaats</title><meta name="description" content="Wat de Werkplaats is, waarom we hem maken en hoe je de negen lokale, open-source tools gebruikt."><style>*{box-sizing:border-box}body{margin:0;background:#fff;color:#111;font:17px/1.6 Arial,Helvetica,sans-serif}main{max-width:860px;margin:auto;padding:28px 24px 60px}header{border-bottom:5px solid #111;padding-bottom:18px;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}a{color:inherit;text-underline-offset:4px}a:focus-visible{outline:3px solid #e32720;outline-offset:4px}.badge{background:#111;color:#fff;border-left:5px solid #e32720;padding:8px 12px;font-weight:bold;font-size:14px}h1{font-size:clamp(32px,5vw,48px);line-height:1.05;letter-spacing:-1px}h2{margin-top:32px;font-size:24px}li{margin:8px 0}.note{border-left:5px solid #e32720;padding:12px 18px;background:#f5f5f5}table{width:100%;border-collapse:collapse}td,th{text-align:left;border-bottom:1px solid #bbb;padding:10px 8px;vertical-align:top}
-nav{display:flex;gap:12px 24px;flex-wrap:wrap;margin:24px 0}h3{font-size:20px}td{overflow-wrap:anywhere}h1{margin-bottom:12px}h1+h2{font-size:23px;line-height:1.4;margin-top:0}</style><link rel="icon" type="image/svg+xml" href="Symbolen/werkplaats.svg"></head><body><main><header><a href="Begin hier.html">← Werkplaats</a><span class="badge">LOKAAL / OPEN SOURCE</span></header><nav aria-label="Informatie"><a href="Over.html" aria-current="page">Over</a><a href="Uitleg.html">Uitleg en gebruik</a></nav><h1>Over de Werkplaats</h1>
-<h2>Negen tools voor je dagelijkse werk. Je bestanden blijven bij jou.</h2>
-<p>De Werkplaats is een verzameling eenvoudige tools waarmee je kunt schrijven, taken bijhouden, facturen maken en ander dagelijks werk doen. Je opent een tool in je browser en kunt meteen beginnen. Je hebt geen account nodig, hoeft niets te installeren en hoeft geen externe diensten te koppelen.</p>
-<p>Je kunt de Werkplaats op twee manieren gebruiken: via de website of als download op je eigen computer. In beide gevallen bewaar je je werk in je eigen bestanden. Je beheert zelf waar je bestanden staan en met wie je ze deelt. Lees ook onze <a href="PRIVACY.md">privacy-uitleg</a>.</p>
-<p><strong><a href="https://erwinblom.github.io/werkplaats/">Open de Werkplaats</a></strong> · <strong><a href="https://github.com/erwinblom/werkplaats/releases/latest/download/Werkplaats.zip">Download de Werkplaats</a></strong></p>
-<h2>Waarom deze Werkplaats?</h2>
-<p>Voor veel dagelijkse werkzaamheden is een kleine, overzichtelijke tool genoeg. Een takenbord voor een project. Een plek voor gespreksnotities. Een eenvoudige administratie van inkomsten en uitgaven.</p>
-<p>De Werkplaats maakt zulke tools direct toegankelijk, ook voor mensen zonder technische kennis. Je hoeft geen database in te richten, abonnement af te sluiten of toegangssleutels van andere diensten in te voeren.</p>
-<p>Daarbij staan drie keuzes centraal:</p>
+<!doctype html><html lang="nl"><head><script src="taal-woordenboek.js?v=20261007-project-images-1"></script><script src="taal.js?v=20261006-personal-title-1"></script><script src="uiterlijk.js?v=20261006-personal-title-1"></script><link rel="stylesheet" href="uiterlijk.css?v=20261006-personal-title-1"><script src="prullenbak.js?v=20261006-personal-title-1"></script><link rel="stylesheet" href="overgangen.css?v=20261006-personal-title-1"><script src="overgangen.js?v=20261006-personal-title-1"></script><script src="publieksproef-opslag.js?v=20261007-requests-1"></script><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Over de Werkplaats</title><meta name="description" content="Wat de Werkplaats is, waarom we hem maken en hoe je de negen lokale, open-source tools gebruikt."><style>*{box-sizing:border-box}body{margin:0;background:#fff;color:#111;font:17px/1.6 Arial,Helvetica,sans-serif}main{max-width:860px;margin:auto;padding:28px 24px 60px}header{border-bottom:5px solid #111;padding-bottom:18px;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}a{color:inherit;text-underline-offset:4px}a:focus-visible{outline:3px solid var(--wp-accent,#e32720);outline-offset:4px}.badge{background:#111;color:#fff;border-left:5px solid var(--wp-accent,#e32720);padding:8px 12px;font-weight:bold;font-size:14px}h1{font-size:clamp(32px,5vw,48px);line-height:1.05;letter-spacing:-1px}h2{margin-top:32px;font-size:24px}li{margin:8px 0}.note{border-left:5px solid var(--wp-accent,#e32720);padding:12px 18px;background:#f5f5f5}table{width:100%;border-collapse:collapse}td,th{text-align:left;border-bottom:1px solid #bbb;padding:10px 8px;vertical-align:top}
+nav{display:flex;gap:12px 24px;flex-wrap:wrap;margin:24px 0}h3{font-size:20px}td{overflow-wrap:anywhere}h1{margin-bottom:12px}h1+h2{font-size:23px;line-height:1.4;margin-top:0}</style><link rel="icon" type="image/svg+xml" href="Symbolen/gereedschapskist.svg"><link rel="stylesheet" href="acties.css?v=20261006-personal-title-1"><link rel="stylesheet" href="blom-os-tokens.css?v=20261006-vlakken-1"><link rel="stylesheet" href="blom-os-ui.css?v=20261008-select-inset-1"></head><body><main><header><a href="Begin hier.html?home=1"><span data-i18n="← Werkplaats">← Werkplaats</span></a><span class="badge"><span data-i18n="LOKAAL / OPEN SOURCE">LOKAAL / OPEN SOURCE</span></span></header><nav aria-label="Informatie" data-i18n-aria-label="Informatie"><a href="Over.html" aria-current="page"><span data-i18n="Over">Over</span></a><a href="Uitleg.html"><span data-i18n="Uitleg en gebruik">Uitleg en gebruik</span></a></nav><h1><span data-i18n="Over de Werkplaats">Over de Werkplaats</span></h1>
+<h2><span data-i18n="Negen tools voor je dagelijkse werk. Je bestanden blijven bij jou.">Negen tools voor je dagelijkse werk. Je bestanden blijven bij jou.</span></h2>
+<p><span data-i18n="De Werkplaats is een verzameling eenvoudige tools waarmee je kunt schrijven, taken bijhouden, facturen maken en ander dagelijks werk doen. Je opent een tool in je browser en kunt meteen beginnen. Je hebt geen account nodig, hoeft niets te installeren en hoeft geen externe diensten te koppelen.">De Werkplaats is een verzameling eenvoudige tools waarmee je kunt schrijven, taken bijhouden, facturen maken en ander dagelijks werk doen. Je opent een tool in je browser en kunt meteen beginnen. Je hebt geen account nodig, hoeft niets te installeren en hoeft geen externe diensten te koppelen.</span></p>
+<p><span data-i18n="Je kunt de Werkplaats op twee manieren gebruiken: via de website of als download op je eigen computer. In beide gevallen bewaar je je werk in je eigen bestanden. Je beheert zelf waar je bestanden staan en met wie je ze deelt. Lees ook onze">Je kunt de Werkplaats op twee manieren gebruiken: via de website of als download op je eigen computer. In beide gevallen bewaar je je werk in je eigen bestanden. Je beheert zelf waar je bestanden staan en met wie je ze deelt. Lees ook onze</span> <a href="PRIVACY.md"><span data-i18n="privacy-uitleg">privacy-uitleg</span></a>.</p>
+<p><strong><a href="https://erwinblom.github.io/werkplaats/"><span data-i18n="Open de Werkplaats">Open de Werkplaats</span></a></strong> · <strong><a href="https://github.com/erwinblom/werkplaats/releases/latest/download/Werkplaats.zip"><span data-i18n="Download de Werkplaats">Download de Werkplaats</span></a></strong></p>
+<h2><span data-i18n="Waarom deze Werkplaats?">Waarom deze Werkplaats?</span></h2>
+<p><span data-i18n="Voor veel dagelijkse werkzaamheden is een kleine, overzichtelijke tool genoeg. Een takenbord voor een project. Een plek voor gespreksnotities. Een eenvoudige administratie van inkomsten en uitgaven.">Voor veel dagelijkse werkzaamheden is een kleine, overzichtelijke tool genoeg. Een takenbord voor een project. Een plek voor gespreksnotities. Een eenvoudige administratie van inkomsten en uitgaven.</span></p>
+<p><span data-i18n="De Werkplaats maakt zulke tools direct toegankelijk, ook voor mensen zonder technische kennis. Je hoeft geen database in te richten, abonnement af te sluiten of toegangssleutels van andere diensten in te voeren.">De Werkplaats maakt zulke tools direct toegankelijk, ook voor mensen zonder technische kennis. Je hoeft geen database in te richten, abonnement af te sluiten of toegangssleutels van andere diensten in te voeren.</span></p>
+<p><span data-i18n="Daarbij staan drie keuzes centraal:">Daarbij staan drie keuzes centraal:</span></p>
 <ul>
-<li><strong>Meteen aan de slag.</strong> Open de website, kies een tool en begin.</li>
-<li><strong>Zelf je bestanden beheren.</strong> Bewaar je werk op een plek die jij kiest en open het later weer.</li>
-<li><strong>Open techniek.</strong> De broncode is openbaar en de bestanden gebruiken open formaten. Daardoor kun je je gegevens meenemen en kan de software worden bekeken, aangepast en verder ontwikkeld.</li>
+<li><strong><span data-i18n="Meteen aan de slag.">Meteen aan de slag.</span></strong> <span data-i18n="Open de website, kies een tool en begin.">Open de website, kies een tool en begin.</span></li>
+<li><strong><span data-i18n="Zelf je bestanden beheren.">Zelf je bestanden beheren.</span></strong> <span data-i18n="Bewaar je werk op een plek die jij kiest en open het later weer.">Bewaar je werk op een plek die jij kiest en open het later weer.</span></li>
+<li><strong><span data-i18n="Open techniek.">Open techniek.</span></strong> <span data-i18n="De broncode is openbaar en de bestanden gebruiken open formaten. Daardoor kun je je gegevens meenemen en kan de software worden bekeken, aangepast en verder ontwikkeld.">De broncode is openbaar en de bestanden gebruiken open formaten. Daardoor kun je je gegevens meenemen en kan de software worden bekeken, aangepast en verder ontwikkeld.</span></li>
 </ul>
-<p>De webversie is ook praktisch op een werkcomputer waarop je geen software mag installeren. Of bestanden openen en downloaden is toegestaan, hangt wel af van de instellingen van je organisatie.</p>
-<h2>Welke tools zitten erin?</h2>
+<p><span data-i18n="De webversie is ook praktisch op een werkcomputer waarop je geen software mag installeren. Of bestanden openen en downloaden is toegestaan, hangt wel af van de instellingen van je organisatie.">De webversie is ook praktisch op een werkcomputer waarop je geen software mag installeren. Of bestanden openen en downloaden is toegestaan, hangt wel af van de instellingen van je organisatie.</span></p>
+<h2><span data-i18n="Welke tools zitten erin?">Welke tools zitten erin?</span></h2>
 <table>
 <thead>
 <tr>
-<th>Tool</th>
-<th>Wat kun je ermee?</th>
+<th><span data-i18n="Tool">Tool</span></th>
+<th><span data-i18n="Wat kun je ermee?">Wat kun je ermee?</span></th>
 </tr>
 </thead>
 <tbody><tr>
-<td><strong>Schrijven</strong></td>
-<td>Documenten lezen, schrijven en ordenen. Open een los Markdown-bestand of werk, als je browser dat toestaat, met een map documenten.</td>
+<td><strong><span data-i18n="Schrijven">Schrijven</span></strong></td>
+<td><span data-i18n="Documenten lezen, schrijven en ordenen. Open een los Markdown-bestand of werk, als je browser dat toestaat, met een map documenten.">Documenten lezen, schrijven en ordenen. Open een los Markdown-bestand of werk, als je browser dat toestaat, met een map documenten.</span></td>
 </tr>
 <tr>
-<td><strong>Factureren</strong></td>
-<td>Facturen maken met je bedrijfsgegevens, klantgegevens en bedragen. Controleer een factuur en leg die definitief vast met een uniek nummer uit een oplopende reeks. Maak er een PDF van om zelf te versturen.</td>
+<td><strong><span data-i18n="Factureren">Factureren</span></strong></td>
+<td><span data-i18n="Facturen maken met je bedrijfsgegevens, klantgegevens en bedragen. Controleer een factuur en leg die definitief vast met een uniek nummer uit een oplopende reeks. Maak er een PDF van om zelf te versturen.">Facturen maken met je bedrijfsgegevens, klantgegevens en bedragen. Controleer een factuur en leg die definitief vast met een uniek nummer uit een oplopende reeks. Maak er een PDF van om zelf te versturen.</span></td>
 </tr>
 <tr>
-<td><strong>Doen</strong></td>
-<td>Taken verdelen over Te doen, Bezig en Klaar. Houd deadlines en prioriteiten bij.</td>
+<td><strong><span data-i18n="Doen">Doen</span></strong></td>
+<td><span data-i18n="Taken verdelen over Te doen, Bezig en Klaar. Houd deadlines en prioriteiten bij.">Taken verdelen over Te doen, Bezig en Klaar. Houd deadlines en prioriteiten bij.</span></td>
 </tr>
 <tr>
-<td><strong>Verzamelen</strong></td>
-<td>Links, citaten en notities bij elkaar bewaren. Bijvoorbeeld als bronnenverzameling voor een artikel, onderzoek of project.</td>
+<td><strong><span data-i18n="Verzamelen">Verzamelen</span></strong></td>
+<td><span data-i18n="Links, citaten en notities bij elkaar bewaren. Bijvoorbeeld als bronnenverzameling voor een artikel, onderzoek of project.">Links, citaten en notities bij elkaar bewaren. Bijvoorbeeld als bronnenverzameling voor een artikel, onderzoek of project.</span></td>
+</tr>
+
+<tr>
+<td><strong><span data-i18n="Contact houden">Contact houden</span></strong></td>
+<td><span data-i18n="Contactgegevens, gespreksnotities en vervolgacties bewaren. Bewaar ook een optioneel factuuradres voor offertes en facturen.">Contactgegevens, gespreksnotities en vervolgacties bewaren. Bewaar ook een optioneel factuuradres voor offertes en facturen.</span></td>
 </tr>
 <tr>
-<td><strong>Uren schrijven</strong></td>
-<td>Gewerkte tijd per project registreren, je week bekijken en declarabele uren bijhouden. Exporteer een overzicht als CSV.</td>
+<td><strong><span data-i18n="Projecten">Projecten</span></strong></td>
+<td><span data-i18n="Projecten, publicaties, bijeenkomsten en andere activiteiten plannen. Bewaar begin- en einddatums, status, notities en conceptteksten in een lijst of maandkalender.">Projecten, publicaties, bijeenkomsten en andere activiteiten plannen. Bewaar begin- en einddatums, status, notities en conceptteksten in een lijst of maandkalender.</span></td>
 </tr>
 <tr>
-<td><strong>Contact houden</strong></td>
-<td>Contactgegevens, gespreksnotities en vervolgacties bewaren. Bewaar ook een optioneel factuuradres voor offertes en facturen.</td>
+<td><strong><span data-i18n="Offreren">Offreren</span></strong></td>
+<td><span data-i18n="Voorstellen maken met werkzaamheden, prijzen en voorwaarden. Bewaar je offerte en maak een PDF om zelf te delen.">Voorstellen maken met werkzaamheden, prijzen en voorwaarden. Bewaar je offerte en maak een PDF om zelf te delen.</span></td>
 </tr>
 <tr>
-<td><strong>Plannen</strong></td>
-<td>Projecten, publicaties, bijeenkomsten en andere activiteiten plannen. Bewaar begin- en einddatums, status, notities en conceptteksten in een lijst of maandkalender.</td>
+<td><strong><span data-i18n="Boekhouden">Boekhouden</span></strong></td>
+<td><span data-i18n="Inkomsten, uitgaven en bonnen bijhouden. Bekijk totalen en exporteer een overzicht voor jezelf of je boekhouder.">Inkomsten, uitgaven en bonnen bijhouden. Bekijk totalen en exporteer een overzicht voor jezelf of je boekhouder.</span></td>
 </tr>
-<tr>
-<td><strong>Offreren</strong></td>
-<td>Voorstellen maken met werkzaamheden, prijzen en voorwaarden. Bewaar je offerte en maak een PDF om zelf te delen.</td>
-</tr>
-<tr>
-<td><strong>Boekhouden</strong></td>
-<td>Inkomsten, uitgaven en bonnen bijhouden. Bekijk totalen en exporteer een overzicht voor jezelf of je boekhouder.</td>
-</tr>
-</tbody></table>
-<p>Gebruik alleen de tools die je nodig hebt. Je hoeft niet de hele Werkplaats in te richten voordat je kunt beginnen.</p>
-<h2>Eerst proberen</h2>
-<p>Nieuwe gebruikers zien voorbeelden rond de fictieve Buurtwerkplaats De Proeftuin. Met <strong>Naar mijn eigen werk</strong> verlaat je de voorbeelden in alle negen tools tegelijk. Zonder eerder werk begin je leeg. Bestaande eigen gegevens blijven behouden. Via <strong>Bekijk voorbeelden</strong> kun je later opnieuw oefenen, apart van je eigen werk. Oefenfacturen krijgen geen definitief nummer.</p>
-<h2>Zo begin je</h2>
-<h3>Via de website</h3>
+<tr><td><strong><span data-i18n="Abonnementen">Abonnementen</span></strong></td><td><span data-i18n="Houd diensten, kosten, verlengdatums en opzegdatums bij. Herinneringen en opzeggingen blijven handmatig.">Houd diensten, kosten, verlengdatums en opzegdatums bij. Herinneringen en opzeggingen blijven handmatig.</span></td></tr></tbody></table>
+<p><span data-i18n="Gebruik alleen de tools die je nodig hebt. Je hoeft niet de hele Werkplaats in te richten voordat je kunt beginnen.">Gebruik alleen de tools die je nodig hebt. Je hoeft niet de hele Werkplaats in te richten voordat je kunt beginnen.</span></p>
+<h2><span data-i18n="Eerst proberen">Eerst proberen</span></h2>
+<p><span data-i18n="Je begint met je eigen werk. De tools bevatten geen ingevulde projecten, contacten of financiële gegevens. Open een bestaande werkmap of kies een lege map om te beginnen.">Je begint met je eigen werk. De tools bevatten geen ingevulde projecten, contacten of financiële gegevens. Open een bestaande werkmap of kies een lege map om te beginnen.</span></p>
+<h2><span data-i18n="Zo begin je">Zo begin je</span></h2>
+<h3><span data-i18n="Via de website">Via de website</span></h3>
 <ol>
-<li>Ga naar <a href="https://erwinblom.github.io/werkplaats/">de Werkplaats</a>.</li>
-<li>Open de tool die je wilt gebruiken.</li>
-<li>Probeer de voorbeeldgegevens. Kies <strong>Naar mijn eigen werk</strong> om zelf te starten, of <strong>Bestand openen</strong> om verder te gaan met eerder bewaard werk. Bij Schrijven heet dit <strong>Document openen</strong>.</li>
+<li><span data-i18n="Ga naar">Ga naar</span> <a href="https://erwinblom.github.io/werkplaats/"><span data-i18n="de Werkplaats">de Werkplaats</span></a>.</li>
+<li><span data-i18n="Open de tool die je wilt gebruiken.">Open de tool die je wilt gebruiken.</span></li>
+<li><span data-i18n="Kies een werkmap en voeg je eerste document, taak of contact toe. Open een bestaande werkmap om verder te werken.">Kies een werkmap en voeg je eerste document, taak of contact toe. Open een bestaande werkmap om verder te werken.</span></li>
 </ol>
-<p>De website levert de tools; je gegevens worden in je browser verwerkt. Het openen van je administratie in een tool uploadt die niet naar de server van de Werkplaats.</p>
-<p><strong>Alles in één map?</strong> Kies op de startpagina Mijn werkmap. Elke tool krijgt een eigen submap. Bewaar bestand schrijft daar rechtstreeks naartoe, met een herstelkopie voordat een bestaande versie wordt vervangen. Lees <a href="Uitleg.html#mijn-werkmap">hoe Mijn werkmap werkt</a>.</p><h3>Met de downloadversie</h3>
+<p><span data-i18n="De website levert de tools; je gegevens worden in je browser verwerkt. Het openen van je administratie in een tool uploadt die niet naar de server van de Werkplaats.">De website levert de tools; je gegevens worden in je browser verwerkt. Het openen van je administratie in een tool uploadt die niet naar de server van de Werkplaats.</span></p>
+<p><span data-i18n="Kies Nieuw beginnen om een werkmap te maken, of Verder werken om je bestaande werkmap te openen. Met Bewaar alles leg je werk en concepten uit alle tools vast. Lees">Kies Nieuw beginnen om een werkmap te maken, of Verder werken om je bestaande werkmap te openen. Met Bewaar alles leg je werk en concepten uit alle tools vast. Lees</span> <a href="Uitleg.html#mijn-werkmap"><span data-i18n="hoe Mijn werkmap werkt">hoe Mijn werkmap werkt</span></a>.</p><h3><span data-i18n="Met de downloadversie">Met de downloadversie</span></h3>
 <ol>
-<li>Download <a href="https://github.com/erwinblom/werkplaats/releases/latest/download/Werkplaats.zip">de ZIP met alle tools</a>.</li>
-<li>Pak de ZIP volledig uit.</li>
-<li>Open <strong>Begin hier.html</strong> en kies een tool.</li>
+<li><span data-i18n="Download">Download</span> <a href="https://github.com/erwinblom/werkplaats/releases/latest/download/Werkplaats.zip"><span data-i18n="de ZIP met alle tools">de ZIP met alle tools</span></a>.</li>
+<li><span data-i18n="Pak de ZIP volledig uit.">Pak de ZIP volledig uit.</span></li>
+<li><span data-i18n="Open">Open</span> <strong><span data-i18n="Begin hier.html">Begin hier.html</span></strong> <span data-i18n="en kies een tool.">en kies een tool.</span></li>
 </ol>
-<p>Je hoeft niets te installeren. De gedownloade tools werken ook zonder internet. Voor het bezoeken van externe links heb je uiteraard wel verbinding nodig.</p>
-<p>Chrome en Edge op een computer zijn de aanbevolen browsers.</p>
-<h2>Bewaren en de volgende keer verdergaan</h2>
-<p><strong>Ja: je kunt online in Boekhouden werken, je administratie opslaan en die een volgende keer weer openen. Dit principe geldt voor alle negen tools.</strong></p>
-<p>De vaste werkwijze is:</p>
-<ol>
-<li><strong>Werk in de tool.</strong> Voeg bijvoorbeeld boekingen, taken of contacten toe.</li>
-<li><strong>Klik bovenaan op Bewaar bestand.</strong> Zonder werkmap start dit een download. Controleer of je bestand is opgeslagen, meestal in Downloads. De tool kan niet altijd zien of je de download afrondt of annuleert.</li>
-<li><strong>Open de volgende keer dezelfde tool.</strong> Klik op <strong>Bestand openen</strong> (bij Schrijven: <strong>Document openen</strong>), kies je laatst bewaarde bestand en ga verder.</li>
-<li><strong>Bewaar opnieuw na wijzigingen.</strong> Je nieuwe werk staat pas in je eigen bestand nadat je het opnieuw hebt bewaard.</li>
-</ol>
-<p>Bijvoorbeeld: je voert vandaag vijf uitgaven in bij Boekhouden en klikt op <strong>Bewaar bestand</strong>. Morgen open je Boekhouden opnieuw en kies je dat bestand via <strong>Bestand openen</strong>. Je vijf uitgaven staan erin en je kunt nieuwe toevoegen.</p>
-<h3>Wat moet je hierover weten?</h3>
-<ul>
-<li><strong>Een knop zoals Boeking bewaren bewaart de invoer binnen de tool.</strong> Gebruik daarnaast <strong>Bewaar bestand</strong> bovenaan om je administratie als eigen bestand te bewaren.</li>
-<li><strong>De browser kan je werk tussentijds onthouden, maar is geen back-up.</strong> Browsergegevens kunnen verdwijnen. Bewaar daarom regelmatig zelf een bestand.</li>
-<li><strong>Een nieuwe download vervangt niet altijd je vorige bestand.</strong> Je browser kan een extra exemplaar maken, bijvoorbeeld met <code>(1)</code> achter de naam. Gebruik steeds de nieuwste versie. Een vaste map voor je Werkplaats-bestanden helpt daarbij.</li>
-<li><strong>Bewaar je huidige werk voordat je een ander bestand opent.</strong> Ga er niet van uit dat twee bestanden automatisch worden samengevoegd.</li>
-</ul>
-<p>Schrijven bewaart documenten doorgaans als <strong>Markdown (.md)</strong>: tekstbestanden die ook met andere programma’s te lezen zijn. De overige tools bewaren hun volledige gegevens als <strong>JSON (.json)</strong>. Je hoeft dat formaat niet te begrijpen of zelf te bewerken; de tool opent het voor je.</p>
-<p>Een PDF of CSV is een extra uitvoerbestand, bijvoorbeeld om een factuur te versturen of een overzicht te delen. Bewaar daarnaast het volledige bestand via <strong>Bewaar bestand</strong>, zodat je later in de tool verder kunt werken.</p>
-<p>In Schrijven opent <strong>Nieuw document</strong> meteen de editor. <strong>Map openen</strong> geeft in een geschikte browser toegang tot een eigen map. <strong>Opslaan in map</strong> schrijft naar het geopende bestand; <strong>Bewaar bestand</strong> schrijft naar je werkmap als die is gekozen, en maakt anders een aparte download.</p>
-<p>De vaste statusregel toont welk bestand je hebt geopend en of je daarna iets hebt gewijzigd.</p>
-<h2>Online en offline afwisselen</h2>
-<p>De webversie en de downloadversie gebruiken dezelfde bestandsformaten. Je kunt online beginnen, je bestand bewaren en het daarna in de gedownloade tool openen. Andersom kan ook.</p>
-<p><strong>Er is geen automatische synchronisatie.</strong> Neem bij een overstap steeds je meest recente bestand mee. Werk vooral bij Factureren met één actuele administratie op één computer, zodat je factuurnummers en definitieve facturen bij elkaar blijven.</p>
-<h2>Kunnen de tools samenwerken?</h2>
-<p>Je kunt contactgegevens uit <strong>Contact houden</strong> gebruiken in <strong>Offreren</strong> en <strong>Factureren</strong>.</p>
-<p>Bewaar je contactenbestand. Kies vervolgens in een offerte of factuur <strong>Kies contact</strong>, open dat contactenbestand en selecteer de juiste persoon of organisatie. Met <strong>Neem contact over</strong> worden naam, organisatie, e-mail en het eventuele factuuradres ingevuld. Je kunt vanuit die keuze ook een nieuw contact aanmaken.</p>
-<p>Gespreksnotities gaan niet mee naar de offerte of factuur. De overgenomen gegevens zijn een kopie: een latere wijziging in Contact houden verandert een bestaande factuur niet. Maak je hier een nieuw contact, dan krijg je een bijgewerkt contactenbestand dat je daarna in Contact houden kunt openen.</p>
-<p>Ook kun je een geaccepteerde offerte of geselecteerde uren omzetten naar een factuur, ontvangen facturen naar Boekhouden overdragen, taken maken vanuit projecten en vervolgacties, uren registreren bij taken en een schrijfdocument maken van geselecteerde bronnen. Je controleert elke overdracht zelf en bewaart de bijgewerkte bestanden. <a href="Uitleg.html#koppelingen">Lees hoe de koppelingen werken</a>.</p><h2>Wat zijn de grenzen?</h2>
-<p>De Werkplaats is bedoeld voor zelfstandig werken met je eigen bestanden. Samen tegelijk in dezelfde administratie werken, automatische synchronisatie en bankkoppelingen zijn niet ingebouwd.</p>
-<p>De tools hebben ieder een afgebakende taak. Plannen publiceert niet automatisch op sociale media. Factureren verstuurt geen facturen en heeft nog geen creditnotafunctie. Boekhouden is een eenvoudig overzicht van ontvangen en uitgegeven geld, geen volledig boekhoudpakket met btw-aangifte of afschrijvingen. Het verschil tussen inkomsten en uitgaven is niet automatisch je banksaldo of winst.</p>
-<h2>Open source en herkomst</h2>
-<p>De Werkplaats wordt gemaakt door Erwin Blom. De broncode staat openbaar op <a href="https://github.com/erwinblom/werkplaats">GitHub</a>. De eigen code is beschikbaar onder de MIT-licentie. Organisaties kunnen de tools ook op hun eigen website of intranet aanbieden.</p>
-<p>Schrijven bouwt voort op <strong>Markdown Browser van Joost Plattel</strong>. De herkomst en licenties van gebruikte onderdelen zijn in het pakket opgenomen.</p>
-<p>Het uitgangspunt blijft: eenvoudige tools waarmee je direct iets kunt doen, en bestanden waar je zelf over beschikt.</p>
+<p><span data-i18n="Je hoeft niets te installeren. De gedownloade tools werken ook zonder internet. Voor het bezoeken van externe links heb je uiteraard wel verbinding nodig.">Je hoeft niets te installeren. De gedownloade tools werken ook zonder internet. Voor het bezoeken van externe links heb je uiteraard wel verbinding nodig.</span></p>
+<p><span data-i18n="Chrome en Edge op een computer zijn de aanbevolen browsers.">Chrome en Edge op een computer zijn de aanbevolen browsers.</span></p>
+<h2><span data-i18n="Bewaar en de volgende keer verdergaan">Bewaar en de volgende keer verdergaan</span></h2><ol><li><span data-i18n="Werk in de tool en gebruik Bewaar of Sluit om je invoer te verwerken.">Werk in de tool en gebruik Bewaar of Sluit om je invoer te verwerken.</span></li><li><span data-i18n="Kies Bewaar alles om je werk en concepten in je werkmap vast te leggen.">Kies Bewaar alles om je werk en concepten in je werkmap vast te leggen.</span></li><li><span data-i18n="Open de volgende keer Werkplaats, kies Verder werken en selecteer dezelfde werkmap.">Open de volgende keer Werkplaats, kies Verder werken en selecteer dezelfde werkmap.</span></li></ol><p><span data-i18n="De browser onthoudt tussentijdse kopieën. Je werkmap is je blijvende kopie; gebruik regelmatig Bewaar alles en maak zo nodig een back-up.">De browser onthoudt tussentijdse kopieën. Je werkmap is je blijvende kopie; gebruik regelmatig Bewaar alles en maak zo nodig een back-up.</span></p><p><span data-i18n="Zonder maptoegang kun je losse bestanden importeren en exporteren. Controleer na een download zelf of het bestand is opgeslagen.">Zonder maptoegang kun je losse bestanden importeren en exporteren. Controleer na een download zelf of het bestand is opgeslagen.</span></p><p><span data-i18n="Online en download gebruiken dezelfde bestandsformaten, maar synchroniseren niet automatisch. Bewaar je werk voordat je wisselt en open daarna dezelfde werkmap.">Online en download gebruiken dezelfde bestandsformaten, maar synchroniseren niet automatisch. Bewaar je werk voordat je wisselt en open daarna dezelfde werkmap.</span></p><p><span data-i18n="De website en download worden uit dezelfde appbron gemaakt. Een gedownloade versie werkt zichzelf niet bij; download voor verbeteringen een nieuwe versie.">De website en download worden uit dezelfde appbron gemaakt. Een gedownloade versie werkt zichzelf niet bij; download voor verbeteringen een nieuwe versie.</span></p><h2><span data-i18n="Online en offline afwisselen">Online en offline afwisselen</span></h2>
+<p><span data-i18n="De webversie en de downloadversie gebruiken dezelfde bestandsformaten. Je kunt online beginnen, je bestand bewaren en het daarna in de gedownloade tool openen. Andersom kan ook.">De webversie en de downloadversie gebruiken dezelfde bestandsformaten. Je kunt online beginnen, je bestand bewaren en het daarna in de gedownloade tool openen. Andersom kan ook.</span></p>
+<p><strong><span data-i18n="Er is geen automatische synchronisatie.">Er is geen automatische synchronisatie.</span></strong> <span data-i18n="Neem bij een overstap steeds je meest recente bestand mee. Werk vooral bij Factureren met één actuele administratie op één computer, zodat je factuurnummers en definitieve facturen bij elkaar blijven.">Neem bij een overstap steeds je meest recente bestand mee. Werk vooral bij Factureren met één actuele administratie op één computer, zodat je factuurnummers en definitieve facturen bij elkaar blijven.</span></p>
+<h2><span data-i18n="Kunnen de tools samenwerken?">Kunnen de tools samenwerken?</span></h2>
+<p><span data-i18n="Je kunt contactgegevens uit">Je kunt contactgegevens uit</span> <strong><span data-i18n="Contact houden">Contact houden</span></strong> <span data-i18n="gebruiken in">gebruiken in</span> <strong><span data-i18n="Offreren">Offreren</span></strong> <span data-i18n="en">en</span> <strong><span data-i18n="Factureren">Factureren</span></strong>.</p>
+<p><span data-i18n="Bewaar je contactenbestand. Kies vervolgens in een offerte of factuur">Bewaar je contactenbestand. Kies vervolgens in een offerte of factuur</span> <strong><span data-i18n="Kies contact">Kies contact</span></strong><span data-i18n=", open dat contactenbestand en selecteer de juiste persoon of organisatie. Met">, open dat contactenbestand en selecteer de juiste persoon of organisatie. Met</span> <strong><span data-i18n="Neem contact over">Neem contact over</span></strong> <span data-i18n="worden naam, organisatie, e-mail en het eventuele factuuradres ingevuld. Je kunt vanuit die keuze ook een nieuw contact aanmaken.">worden naam, organisatie, e-mail en het eventuele factuuradres ingevuld. Je kunt vanuit die keuze ook een nieuw contact aanmaken.</span></p>
+<p><span data-i18n="Gespreksnotities gaan niet mee naar de offerte of factuur. De overgenomen gegevens zijn een kopie: een latere wijziging in Contact houden verandert een bestaande factuur niet. Maak je hier een nieuw contact, dan krijg je een bijgewerkt contactenbestand dat je daarna in Contact houden kunt openen.">Gespreksnotities gaan niet mee naar de offerte of factuur. De overgenomen gegevens zijn een kopie: een latere wijziging in Contact houden verandert een bestaande factuur niet. Maak je hier een nieuw contact, dan krijg je een bijgewerkt contactenbestand dat je daarna in Contact houden kunt openen.</span></p>
+<p><span data-i18n="Ook kun je een geaccepteerde offerte omzetten naar een factuur, ontvangen facturen naar Boekhouden overdragen, taken maken vanuit projecten en vervolgacties, een schrijfdocument maken van geselecteerde bronnen. Je controleert elke overdracht zelf en bewaart de bijgewerkte bestanden.">Ook kun je een geaccepteerde offerte omzetten naar een factuur, ontvangen facturen naar Boekhouden overdragen, taken maken vanuit projecten en vervolgacties, een schrijfdocument maken van geselecteerde bronnen. Je controleert elke overdracht zelf en bewaart de bijgewerkte bestanden.</span> <a href="Uitleg.html#koppelingen"><span data-i18n="Lees hoe de koppelingen werken">Lees hoe de koppelingen werken</span></a>.</p><h2><span data-i18n="Wat zijn de grenzen?">Wat zijn de grenzen?</span></h2>
+<p><span data-i18n="De Werkplaats is bedoeld voor zelfstandig werken met je eigen bestanden. Samen tegelijk in dezelfde administratie werken, automatische synchronisatie en bankkoppelingen zijn niet ingebouwd.">De Werkplaats is bedoeld voor zelfstandig werken met je eigen bestanden. Samen tegelijk in dezelfde administratie werken, automatische synchronisatie en bankkoppelingen zijn niet ingebouwd.</span></p>
+<p><span data-i18n="De tools hebben ieder een afgebakende taak. Projecten publiceert niet automatisch op sociale media. Factureren verstuurt geen facturen en heeft nog geen creditnotafunctie. Boekhouden is een eenvoudig overzicht van ontvangen en uitgegeven geld, geen volledig boekhoudpakket met btw-aangifte of afschrijvingen. Het verschil tussen inkomsten en uitgaven is niet automatisch je banksaldo of winst.">De tools hebben ieder een afgebakende taak. Projecten publiceert niet automatisch op sociale media. Factureren verstuurt geen facturen en heeft nog geen creditnotafunctie. Boekhouden is een eenvoudig overzicht van ontvangen en uitgegeven geld, geen volledig boekhoudpakket met btw-aangifte of afschrijvingen. Het verschil tussen inkomsten en uitgaven is niet automatisch je banksaldo of winst.</span></p>
+<h2><span data-i18n="Open source en herkomst">Open source en herkomst</span></h2>
+<p><span data-i18n="De Werkplaats wordt gemaakt door Erwin Blom. De broncode staat openbaar op">De Werkplaats wordt gemaakt door Erwin Blom. De broncode staat openbaar op</span> <a href="https://github.com/erwinblom/werkplaats"><span data-i18n="GitHub">GitHub</span></a><span data-i18n=". De eigen code is beschikbaar onder de MIT-licentie. Organisaties kunnen de tools ook op hun eigen website of intranet aanbieden.">. De eigen code is beschikbaar onder de MIT-licentie. Organisaties kunnen de tools ook op hun eigen website of intranet aanbieden.</span></p>
+<p><span data-i18n="Schrijven bouwt voort op">Schrijven bouwt voort op</span> <strong><span data-i18n="Markdown Browser van Joost Plattel">Markdown Browser van Joost Plattel</span></strong><span data-i18n=". De herkomst en licenties van gebruikte onderdelen zijn in het pakket opgenomen.">. De herkomst en licenties van gebruikte onderdelen zijn in het pakket opgenomen.</span></p>
+<p><span data-i18n="Het uitgangspunt blijft: eenvoudige tools waarmee je direct iets kunt doen, en bestanden waar je zelf over beschikt.">Het uitgangspunt blijft: eenvoudige tools waarmee je direct iets kunt doen, en bestanden waar je zelf over beschikt.</span></p>
 <hr>
-<p><em>Deze uitleg beschrijft versie 0.35.3 van de Werkplaats, september 2026.</em></p>
-<nav aria-label="Verder"><a href="Begin hier.html">Open een tool →</a><a href="Uitleg.html">Uitleg en gebruik</a></nav></main></body></html>
+<p><em><span data-i18n="Deze uitleg beschrijft versie 0.35.7 van Werkplaats, 8 oktober 2026.">Deze uitleg beschrijft versie 0.35.7 van Werkplaats, 8 oktober 2026.</span></em></p>
+<nav aria-label="Verder" data-i18n-aria-label="Verder"><a href="Begin hier.html?home=1"><span data-i18n="Open een tool →">Open een tool →</span></a><a href="Uitleg.html"><span data-i18n="Uitleg en gebruik">Uitleg en gebruik</span></a></nav></main></body></html>

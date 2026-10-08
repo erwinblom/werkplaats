@@ -4,6 +4,17 @@
 .start-workspace .primary{background:#111;color:white;border-color:#111;font-weight:700}
 .workspace-name{font-size:13px;color:#555;margin-right:auto}
 .home-more{margin:0 0 16px;font-size:14px}.home-more>summary{cursor:pointer;text-decoration:underline;text-underline-offset:4px}.home-more .werkmap{margin:12px 0!important}
+.home-more>summary{display:inline-block;min-height:42px;padding:10px 14px;border:1px solid #111;background:#fff;color:#111;font-weight:700;text-decoration:none}
+.compact-tools .workspace-strip #workspace-help-toggle{min-height:42px;padding:9px 14px;border:1px solid #111;background:#fff;color:#111;font-weight:700;text-decoration:none}
+.compact-tools .workspace-strip #workspace-help-toggle[aria-expanded=true],.home-more[open]>summary{background:#111;color:#fff}
+.context-help{max-width:760px;padding:4px 0 12px;border-bottom:1px solid #d2d2d2;margin-bottom:12px;color:#111}
+.context-help h2{font:700 19px/1.3 Arial,sans-serif;margin:4px 0 8px}
+.context-help ol{margin:0;padding-left:22px}.context-help li{margin:6px 0;line-height:1.5}
+.optional-filters{margin:10px 0 16px;border:1px solid #d2d2d2;background:#f7f7f7}
+.optional-filters>summary{cursor:pointer;padding:11px 14px;font:600 14px/1.4 Arial,sans-serif}
+.optional-filters>summary:focus-visible{outline:3px solid var(--wp-accent,#e32720);outline-offset:2px}
+.optional-filters>.toolbar{margin:0!important;padding:12px 14px!important;border-top:1px solid #d2d2d2}
+@media print{.optional-filters{display:none!important}}
 .start-workspace~#wm-message{font-size:14px;margin:0 0 8px;max-width:900px}
 #tool-switcher{max-width:190px;min-width:0}
 .compact-tools #wm-backup{white-space:nowrap;background:#fff;color:#111;border:1px solid #777;font:600 14px Arial;padding:10px 14px;min-height:42px}
@@ -11,27 +22,32 @@
 .compact-tools .legacy-imports{font-size:14px;padding:12px 0}.legacy-imports button{display:inline-block;margin:10px 12px 0 0}
 .tool-purpose{font:14px Arial;color:#555;margin:0 0 12px}
 .compact-tools #workspace-help .save-help{margin:12px 0}.compact-tools #workspace-help .save-help-body{font-size:15px}
-#tool-switcher:focus-visible,.start-workspace button:focus-visible{outline:3px solid #e32720;outline-offset:3px}
+#tool-switcher:focus-visible,.start-workspace button:focus-visible{outline:3px solid var(--wp-accent,#e32720);outline-offset:3px}
 @media(max-width:1100px){body[data-tool=Ping] .workspace,body[data-tool=Offerte] .workspace{grid-template-columns:180px minmax(300px,1fr)}body[data-tool=Ping] .preview,body[data-tool=Offerte] .preview{grid-column:2}}
 @media(max-width:700px){#tool-switcher{max-width:100%;flex:1}.start-workspace button{flex:1 1 180px}.workspace-name{flex-basis:100%}.compact-tools .workspace-strip{flex-wrap:wrap}.compact-tools #file-status{flex-basis:100%}body[data-tool=Ping] .workspace,body[data-tool=Offerte] .workspace{display:block}.compact-tools .preview{margin-top:18px}}
 @media print{#tool-switcher,.start-workspace,.home-more,.tool-purpose{display:none!important}}
 
 .shared-reference{display:block;width:fit-content;font:13px/1.5 Arial;color:#454545;margin:6px 0;text-underline-offset:3px}
 
-.document-tabs{display:none}
-@media screen and (max-width:1150px){
-.document-tabs{display:flex;gap:20px;grid-column:2;border-bottom:1px solid #ccc;margin-bottom:12px}
-.document-tabs button{border:0;background:transparent;color:#111;padding:10px 2px;border-bottom:3px solid transparent;font-weight:400}
-.document-tabs button[aria-selected=true]{border-bottom-color:#111}
+@media screen{
+body[data-tool=Ping] .layout,body[data-tool=Offerte] .workspace{display:grid;grid-template-columns:200px minmax(0,1fr);gap:16px 24px;align-items:start}
+body[data-tool=Ping] .layout>.sidebar,body[data-tool=Offerte] .workspace>.sidebar{grid-column:1;grid-row:1 / span 2}
+.document-view-actions{grid-column:2;grid-row:1;display:flex;justify-content:flex-end}
+.document-view-actions button{background:#fff;color:#111;border:1px solid #777;padding:9px 14px;min-height:40px;font:600 14px/1.4 Arial,sans-serif}
+body[data-tool=Ping] .layout>.editor,body[data-tool=Offerte] .workspace>.editor,
+body[data-tool=Ping] .layout>.preview,body[data-tool=Offerte] .workspace>.preview{grid-column:2;grid-row:2;width:100%;box-sizing:border-box;margin-top:0}
+body[data-tool=Ping] .layout>.preview,body[data-tool=Offerte] .workspace>.preview{max-width:850px;justify-self:center}
 body[data-tool=Ping] .layout:not(.show-document-preview)>.preview,body[data-tool=Offerte] .workspace:not(.show-document-preview)>.preview{display:none}
 body[data-tool=Ping] .layout.show-document-preview>.editor,body[data-tool=Offerte] .workspace.show-document-preview>.editor{display:none}
-body[data-tool=Ping] .layout>.editor,body[data-tool=Offerte] .workspace>.editor{grid-column:2}
 }
-@media print{.document-tabs{display:none!important}}
+@media screen and (max-width:700px){body[data-tool=Ping] .layout,body[data-tool=Offerte] .workspace{display:block}.document-view-actions{margin:12px 0}}
+@media print{.document-view-actions{display:none!important}}
 
 /* Only available, relevant actions occupy the ordinary work surface. */
 .compact-tools #undo:disabled,.compact-tools #hours-invoice:disabled,.compact-tools #sources-document:disabled,.compact-tools #save-all-preview{display:none!important}
 body[data-tool=Projectbord] .add-column,body[data-tool=Projectbord] #example{display:none!important}
+body[data-tool=Projectbord] .board .column-head{min-height:100px}
+@media(max-width:650px){body[data-tool=Projectbord] .board .column-head{min-height:0}}
 .compact-tools #print:disabled{display:none!important}
 .tool-extra-actions{margin:0 0 16px;padding:0 0 12px;border-bottom:1px solid #ccc}
 .tool-extra-actions h2{font:600 14px Arial;margin:0 0 8px}
@@ -53,25 +69,574 @@ body[data-tool=Projectbord] .add-column,body[data-tool=Projectbord] #example{dis
 /* Iedere tool: wit werkvlak, zwarte typografie en een vast rood merkaccent. */
 body[data-tool] > header,
 body[data-tool] .brandbar {
- border-top:4px solid #e32720;
+ border-top:4px solid var(--wp-accent,#e32720);
  background:#fff;
  color:#111;
 }
-body[data-tool] .brand .tool-symbol {color:#e32720}
+body[data-tool] .brand .tool-symbol {color:var(--wp-accent,#e32720)}
 @media print {
  body[data-tool] > header,body[data-tool] .brandbar {border-top:0}
 }
 
 /* Een vast kleurvlak maakt de toolidentiteit zichtbaar zonder interactie. */
 body[data-tool] .brand {
- background:#c51d17;
+ background:var(--wp-accent,#c51d17);
  color:#fff;
  padding:10px 14px;
 }
 body[data-tool] .brand .tool-name,
+body[data-tool] .brand .tool-name *,
 body[data-tool] .brand .tool-symbol {color:#fff}
 @media print {
  body[data-tool] .brand {background:#fff;color:#111;padding:0}
  body[data-tool] .brand .tool-name,
+ body[data-tool] .brand .tool-name *,
  body[data-tool] .brand .tool-symbol {color:#111}
 }
+
+/* Shared workspace controls: compact chrome, contextual management, help as explanation. */
+body.compact-tools{margin-top:12px;margin-bottom:12px;min-height:calc(100vh - 24px)}
+body.compact-tools>header,body.compact-tools>.brandbar{height:auto;min-height:64px;padding:10px 24px;gap:12px}
+body.compact-tools .brand{font-size:24px;padding:7px 12px}
+body.compact-tools .brand .tool-symbol{width:24px;height:26px}
+body.compact-tools .workspace-strip{padding:6px 24px;gap:10px;font-size:13px}
+body.compact-tools #file-status{font-size:13px;min-width:180px}
+body.compact-tools .workspace-strip #wm-backup,body.compact-tools .workspace-strip #workspace-help-toggle{min-height:36px;padding:7px 10px;font-size:13px}
+.workspace-management{position:relative;font:13px/1.4 Arial,sans-serif}
+.workspace-management>summary,.context-actions>summary{cursor:pointer;min-height:36px;box-sizing:border-box;padding:8px 12px;border:1px solid #aaa;background:#fff;color:#111;white-space:nowrap}
+.workspace-management>summary:focus-visible,.context-actions>summary:focus-visible{outline:3px solid var(--wp-accent,#e32720);outline-offset:3px}
+.workspace-management>.werkmap{position:absolute;right:0;top:100%;z-index:150;width:min(520px,calc(100vw - 48px));box-sizing:border-box;margin:6px 0;padding:14px;border:1px solid #aaa;background:#fff;box-shadow:0 6px 20px #0002}
+.workspace-management>.werkmap>summary{display:none}
+.context-actions{position:relative;display:inline-block;font:14px/1.4 Arial,sans-serif;margin:0 0 8px}
+.context-actions-panel{position:absolute;right:0;top:100%;z-index:120;width:260px;max-width:calc(100vw - 48px);padding:8px;background:#fff;color:#111;border:1px solid #aaa;box-shadow:0 6px 20px #0002}
+body.compact-tools .context-actions-panel button{display:block;width:100%;text-align:left;margin:0;padding:10px 12px;min-height:40px;border:0;background:#fff;color:#111;text-decoration:none;font:14px/1.4 Arial,sans-serif}
+body.compact-tools .context-actions-panel button:hover{background:#f1f3f5}
+body.compact-tools .context-actions-panel button:focus-visible{outline:3px solid var(--wp-accent,#e32720);outline-offset:-3px}
+body.compact-tools main>.context-actions{margin-left:24px}
+body.compact-tools main>.context-actions .context-actions-panel{left:0;right:auto}
+@media(max-width:700px){body.compact-tools{margin:0;min-height:100vh}body.compact-tools>header,body.compact-tools>.brandbar{padding:10px 16px;flex-wrap:wrap}body.compact-tools>.brandbar{padding-left:60px}body.compact-tools .workspace-strip{padding:6px 16px}.workspace-management>.werkmap{position:fixed;left:16px;right:16px;top:130px;width:auto;max-height:70vh;overflow:auto}.context-actions-panel{left:0;right:auto}}
+@media print{.workspace-management,.context-actions{display:none!important}}
+
+/* Button menus must not inherit the tools' full-width explanatory details styling. */
+body.compact-tools details.workspace-management,
+body.compact-tools details.context-actions{margin:0;padding:0;border:0;background:transparent;align-self:center}
+body.compact-tools details.workspace-management>summary,
+body.compact-tools details.context-actions>summary,
+body.compact-tools .file-more>summary{display:flex;align-items:center;justify-content:center;gap:8px;list-style:none;font:600 14px/1.4 Arial,sans-serif;min-height:40px;box-sizing:border-box;padding:9px 12px;border:1px solid #aaa;border-radius:0;background:#fff;color:#111}
+body.compact-tools .workspace-management>summary::-webkit-details-marker,
+body.compact-tools .context-actions>summary::-webkit-details-marker,
+body.compact-tools .file-more>summary::-webkit-details-marker{display:none}
+body.compact-tools .workspace-management>summary::marker,
+body.compact-tools .context-actions>summary::marker,
+body.compact-tools .file-more>summary::marker{content:''}
+body.compact-tools .workspace-management>summary::after,
+body.compact-tools .context-actions>summary::after,
+body.compact-tools .file-more>summary::after{content:'▾';font-size:12px;line-height:1}
+body.compact-tools .workspace-management[open]>summary::after,
+body.compact-tools .context-actions[open]>summary::after,
+body.compact-tools .file-more[open]>summary::after{transform:rotate(180deg)}
+body.compact-tools .suite-navigation{margin-left:auto;display:flex;align-items:center;justify-content:flex-end;gap:16px;min-width:0}
+body.compact-tools .suite-navigation .suite-meta{margin:0;flex:none}
+body.compact-tools .suite-navigation .suite-back{display:inline-flex;align-items:center;gap:8px}
+body.compact-tools .suite-navigation .suite-home-logo{display:block;width:22px;height:22px;flex:none}
+body.compact-tools .workspace-strip #wm-backup,
+body.compact-tools .workspace-strip #workspace-help-toggle{min-height:40px}
+body[data-tool=Projectbord] .work-actions{justify-content:space-between;align-items:center}
+body[data-tool=Projectbord] .work-actions>.actions{margin-left:auto;align-items:center}
+body[data-tool=Projectbord] .work-actions h1{margin:0!important}
+body[data-tool=Ping] .invoice-list-actions{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:12px 0 16px}
+body[data-tool=Ping] .invoice-list-actions #new{font-size:14px;min-height:40px;padding:9px 12px}
+body[data-tool=Ping] .invoice-list-actions .context-actions-panel{left:0;right:auto}
+body[data-tool=Ping] .work-actions:has(>.actions:empty){display:none}
+@media(max-width:700px){body.compact-tools .suite-navigation{flex-wrap:wrap;gap:8px}body[data-tool=Projectbord] .work-actions>.actions{margin-left:0}}
+
+/* Sidebar button menus follow the same disclosure cue as Meer. */
+body.compact-tools .sidebar-menu>summary{display:flex;align-items:center;justify-content:center;gap:8px;list-style:none}
+body.compact-tools .sidebar-menu>summary::-webkit-details-marker{display:none}
+body.compact-tools .sidebar-menu>summary::marker{content:''}
+body.compact-tools .sidebar-menu>summary::after{content:'▾';font-size:12px;line-height:1}
+body.compact-tools .sidebar-menu[open]>summary::after{transform:rotate(180deg)}
+
+/* The remaining tools share action groups, while retaining their working layouts. */
+body.compact-tools .suite-tool-actions{display:flex;align-items:center;flex-wrap:wrap;gap:8px}
+body.compact-tools .suite-tool-actions>button{margin:0;min-height:40px;font-size:14px;padding:9px 12px}
+body.compact-tools .suite-tool-actions>#new{background:#111;color:#fff;border:1px solid #111;font-weight:700}
+body.compact-tools .suite-collection-heading{justify-content:space-between;align-items:center;gap:16px}
+body.compact-tools .suite-collection-heading h1{margin:0!important}
+body.compact-tools .suite-collection-heading>.suite-tool-actions{margin-left:auto}
+body[data-tool=Uren] .section-head,body[data-tool=Kasboek] .section-head{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+body[data-tool=Uren] .section-head>.actions:empty,body[data-tool=Kasboek] .section-head>.actions:empty{display:none}
+body[data-tool=Offerte] .sidebar>.suite-tool-actions{margin:12px 0 16px}
+body[data-tool=Offerte] .sidebar .context-actions-panel{left:0;right:auto}
+body[data-tool=Offerte] .editor-head{display:flex;align-items:center;flex-wrap:wrap;gap:12px}
+body[data-tool=Offerte] .editor-head>.context-actions{margin-left:auto}
+@media(max-width:700px){body.compact-tools .suite-collection-heading>.suite-tool-actions{margin-left:0}body.compact-tools .suite-tool-actions{max-width:100%}}
+
+/* Menu actions use one row treatment, including formerly underlined utility buttons. */
+body.compact-tools .context-actions-panel{padding:6px;min-width:220px;width:max-content;max-width:calc(100vw - 48px)}
+body.compact-tools .context-actions-panel button,
+body.compact-tools .context-actions-panel #rename,
+body.compact-tools .context-actions-panel #rename-collection,
+body.compact-tools .context-actions-panel #csv,
+body.compact-tools .context-actions-panel button:hover{background:#f1f3f5}
+body[data-tool=Bronnenkast] #receive-local-links{background:#fff;color:#111;border:1px solid #aaa;font-weight:400}
+body[data-tool=Bronnenkast] #link-local-message:empty{display:none}
+body[data-tool=Bronnenkast] #link-local-message{font:14px/1.5 Arial,sans-serif;margin:0 0 12px}
+
+/* Doen: the board shows only a task, deadline and priority stripe. */
+body[data-tool=Projectbord] .task{padding:10px 12px;margin-bottom:8px}
+body[data-tool=Projectbord] .task .task-title{font-size:15px;line-height:1.3;min-height:0;padding:0;margin:0}
+
+/* Contact houden: compact contact information with expandable details. */
+body[data-tool=Contacten] .cards{align-items:start;gap:14px}
+body[data-tool=Contacten] .card{padding:12px 14px}
+body[data-tool=Contacten] .card .card-head{gap:8px;flex-wrap:wrap}
+body[data-tool=Contacten] .card h2{font-size:18px;line-height:1.3;margin:6px 0}
+body[data-tool=Contacten] .card>.source{margin:0 0 4px}
+body[data-tool=Contacten] .card .contact-data{display:flex;flex-wrap:wrap;gap:2px 14px;margin-bottom:8px}
+body[data-tool=Contacten] .card .contact-data p{margin:0;font-size:13px}
+body[data-tool=Contacten] .card .followup{padding:6px 10px;margin:6px 0;display:flex;gap:4px 8px;flex-wrap:wrap;align-items:center}
+body[data-tool=Contacten] .card .followup strong{flex-basis:100%}
+body[data-tool=Contacten] .card .followup p{flex-basis:100%;margin:0 0 2px;font-size:13px;line-height:1.4}
+body[data-tool=Contacten] .card .followup button{margin:0;min-height:32px;padding:4px 8px;font-size:12px}
+body[data-tool=Contacten] .card .contact-details{border:0;background:none;margin:4px 0;padding:0}
+body[data-tool=Contacten] .contact-details>summary{font:400 13px/1.4 Arial,sans-serif;color:#555;padding:6px 0;min-height:30px}
+body[data-tool=Contacten] .contact-detail-body h3{font-size:12px;margin:10px 0 4px}
+body[data-tool=Contacten] .contact-detail-body p{font-size:13px;line-height:1.5;margin:4px 0 8px}
+body[data-tool=Contacten] .contact-detail-body .tags{margin:6px 0}
+body[data-tool=Contacten] .contact-detail-body .tags:empty{display:none}
+body[data-tool=Contacten] .contact-detail-body .conversation-note{margin-top:8px;padding-top:8px}
+body[data-tool=Contacten] .card .card-foot{padding-top:6px;gap:6px;margin-top:4px}
+body[data-tool=Contacten] .card .card-foot button{min-height:34px;padding:5px 8px;font-size:12px}
+body[data-tool=Contacten] .cards.compact .card .contact-data{display:none}
+
+/* Reserve the same space for optional fields on every closed contact card. */
+body[data-tool=Contacten] .cards:not(.compact)>.card{display:grid;grid-template-rows:24px 48px 20px 40px minmax(32px,auto) 44px;align-content:start}
+body[data-tool=Contacten] .cards:not(.compact)>.card>*{min-width:0}
+body[data-tool=Contacten] .cards:not(.compact) .card-head{grid-row:1;flex-wrap:nowrap;align-self:start}
+body[data-tool=Contacten] .cards:not(.compact) .card-head .category{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+body[data-tool=Contacten] .cards:not(.compact) .card-head .attention{flex-shrink:0}
+body[data-tool=Contacten] .cards:not(.compact) .card>h2{grid-row:2;margin:0;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;overflow-wrap:anywhere}
+body[data-tool=Contacten] .cards:not(.compact) .card>.source{grid-row:3;margin:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+body[data-tool=Contacten] .cards:not(.compact) .card>.contact-data{grid-row:4;display:block;margin:0;overflow:auto}
+body[data-tool=Contacten] .cards:not(.compact) .contact-data p{line-height:20px;white-space:nowrap}
+body[data-tool=Contacten] .cards:not(.compact) .card>.contact-details{grid-row:5;margin:0}
+body[data-tool=Contacten] .cards:not(.compact) .contact-details>summary{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+body[data-tool=Contacten] .cards:not(.compact) .card>.card-foot{grid-row:6;margin:0;align-self:end;flex-wrap:nowrap}
+
+/* Uren schrijven: compact totals and registration rows. */
+body[data-tool=Uren] .stats{gap:12px}
+body[data-tool=Uren] .stats>div{padding:10px 14px}
+body[data-tool=Uren] .stats strong{font-size:28px;line-height:1.2;letter-spacing:-1px;margin-top:2px}
+body[data-tool=Uren] .stats span{font-size:10px;line-height:1.3}
+body[data-tool=Uren] .section-head{margin-top:18px}
+body[data-tool=Uren] #count{margin:10px 0}
+body[data-tool=Uren] .entry{grid-template-columns:110px minmax(0,1fr) 66px 174px;gap:12px;padding:10px 0}
+body[data-tool=Uren] .entry-date{font-size:12px}
+body[data-tool=Uren] .entry-date span{margin-top:3px}
+body[data-tool=Uren] .entry-work>strong{font-size:14px;line-height:1.35}
+body[data-tool=Uren] .entry-work>p{font-size:13px;line-height:1.4;margin:2px 0}
+body[data-tool=Uren] .entry .duration{font-size:20px;text-align:right;white-space:nowrap}
+body[data-tool=Uren] .entry>.actions{gap:6px;justify-content:flex-end;flex-wrap:nowrap}
+body[data-tool=Uren] .entry>.actions button{font-size:12px;padding:5px 8px;min-height:34px;margin:0}
+body[data-tool=Uren] .entry .link-select,body[data-tool=Uren] .entry .link-billing{font-size:12px;line-height:1.4;margin:3px 0 0;padding:0;min-height:24px}
+body[data-tool=Uren] .entry .link-select input{width:16px;height:16px;min-height:0;margin:0 6px 0 0;vertical-align:middle}
+body[data-tool=Uren] .breakdowns{margin-top:16px;padding-top:8px;gap:20px}
+body[data-tool=Uren] .group{padding:6px 0;font-size:13px}
+@media(max-width:700px){
+ body[data-tool=Uren] .entry{grid-template-columns:minmax(0,1fr) auto;gap:6px 12px}
+ body[data-tool=Uren] .entry-date{grid-column:1;grid-row:1}
+ body[data-tool=Uren] .entry .duration{grid-column:2;grid-row:1}
+ body[data-tool=Uren] .entry-work{grid-column:1/-1;grid-row:2}
+ body[data-tool=Uren] .entry>.actions{grid-column:1/-1;grid-row:3}
+ body[data-tool=Uren] .stats{gap:8px}
+ body[data-tool=Uren] .stats>div{padding:8px}
+ body[data-tool=Uren] .stats strong{font-size:24px}
+}
+
+/* Boekhouden: concise totals and expandable booking details. */
+body[data-tool=Kasboek] .stats{gap:12px}
+body[data-tool=Kasboek] .stats>div{padding:10px 14px}
+body[data-tool=Kasboek] .stats strong{font-size:28px;line-height:1.2;letter-spacing:-1px;margin-top:2px}
+body[data-tool=Kasboek] .stats span{font-size:10px;line-height:1.3}
+body[data-tool=Kasboek] .section-head{margin-top:18px}
+body[data-tool=Kasboek] #count{margin:10px 0}
+body[data-tool=Kasboek] .entry{grid-template-columns:110px minmax(0,1fr) 145px 90px;gap:12px;padding:10px 0}
+body[data-tool=Kasboek] .entry-date{font-size:12px}
+body[data-tool=Kasboek] .entry-date span{margin-top:3px}
+body[data-tool=Kasboek] .entry-main>strong{font-size:15px;line-height:1.35;margin-top:2px}
+body[data-tool=Kasboek] .entry .money{font-size:20px}
+body[data-tool=Kasboek] .entry>button{font-size:12px;padding:5px 8px;min-height:34px}
+body[data-tool=Kasboek] .booking-details{margin:2px 0 0;padding:0;border:0;background:none}
+body[data-tool=Kasboek] .booking-details>summary{font:400 13px/1.4 Arial,sans-serif;color:#555;padding:4px 0;min-height:28px;cursor:pointer}
+body[data-tool=Kasboek] .booking-details p{font-size:13px;line-height:1.5;margin:4px 0 6px}
+body[data-tool=Kasboek] .category-overview{margin-top:16px;padding-top:8px}
+body[data-tool=Kasboek] .category-row{padding:6px 0;font-size:13px}
+@media(max-width:700px){
+ body[data-tool=Kasboek] .entry{grid-template-columns:minmax(0,1fr) minmax(100px,auto);gap:6px 12px}
+ body[data-tool=Kasboek] .entry-date{grid-column:1;grid-row:1}
+ body[data-tool=Kasboek] .entry .money{grid-column:2;grid-row:1}
+ body[data-tool=Kasboek] .entry-main{grid-column:1/-1;grid-row:2}
+ body[data-tool=Kasboek] .entry>button{grid-column:2;grid-row:3;justify-self:end}
+ body[data-tool=Kasboek] .stats{gap:8px}
+ body[data-tool=Kasboek] .stats>div{padding:8px}
+ body[data-tool=Kasboek] .stats strong{font-size:22px}
+}
+
+/* Search stays visible; secondary filters expand below it. */
+body.compact-tools .suite-search-bar{margin:12px 0;background:#f2f3f4;padding:10px 12px;min-width:0}
+body.compact-tools .suite-search-row{display:flex;gap:8px 12px;align-items:center;flex-wrap:wrap}
+body.compact-tools .suite-search-row>label{font-size:13px;margin:0;font-weight:400}
+body.compact-tools .suite-search-row>input{flex:1;min-width:140px;width:auto;margin:0;padding:8px;font-size:14px}
+body.compact-tools .suite-clear-filters{font-size:12px;min-height:32px;padding:5px 8px;margin:0}
+body.compact-tools .suite-filter-state{font-size:12px;line-height:1.5;margin:6px 0 0;overflow-wrap:anywhere;color:#444}
+body.compact-tools aside .suite-search-row>input{flex-basis:100%;width:100%}
+body.compact-tools aside .suite-search-bar{padding:8px;margin:10px 0}
+
+/* Shared search position and spacing across collection screens. */
+body.compact-tools main>.suite-search-bar{margin:12px 0 16px;width:100%}
+body.compact-tools main>.suite-search-bar+.layout,
+body.compact-tools main>.suite-search-bar+.library-layout{margin-top:0}
+body[data-tool=Uren] main>.section-head,
+body[data-tool=Kasboek] main>.section-head{margin-top:12px}
+body.compact-tools aside .suite-search-row>input{flex-basis:auto;width:auto;min-width:0}
+body.compact-tools aside .suite-search-row>label{flex-basis:100%}
+
+/* One shared search bar anchored below the workmap strip in all nine tools. */
+body.compact-tools .workspace-strip+.suite-search-bar{width:100%;box-sizing:border-box;margin:0;padding:12px 24px;background:#f2f3f4;border-bottom:1px solid #ccc;color:#111}
+body.compact-tools .workspace-strip+.suite-search-bar .suite-search-row{display:grid;grid-template-columns:190px minmax(140px,560px) 100px 100px;gap:8px 12px;align-items:center}
+body.compact-tools .workspace-strip+.suite-search-bar .suite-search-row>label{grid-column:1;font:400 13px/1.4 Arial,sans-serif;margin:0}
+body.compact-tools .workspace-strip+.suite-search-bar .suite-search-row>input{grid-column:2;width:100%;min-width:0;height:38px;box-sizing:border-box;border:1px solid #aaa;border-radius:0;background:#fff;color:#111;font:400 14px/1.4 Arial,sans-serif;padding:8px;margin:0}
+body.compact-tools .workspace-strip+.suite-search-bar .suite-clear-filters{grid-column:4;grid-row:1;height:38px}
+body.compact-tools .writing-search-filters{display:flex;gap:10px;align-items:center;flex-wrap:wrap;font:400 13px/1.4 Arial,sans-serif}
+body.compact-tools .writing-search-filters p{margin:0}
+@media(max-width:760px){
+ body.compact-tools .workspace-strip+.suite-search-bar{padding:10px 16px}
+ body.compact-tools .workspace-strip+.suite-search-bar .suite-search-row{grid-template-columns:minmax(0,1fr) 90px;gap:8px}
+ body.compact-tools .workspace-strip+.suite-search-bar .suite-search-row>label{grid-column:1/-1;grid-row:1}
+ body.compact-tools .workspace-strip+.suite-search-bar .suite-search-row>input{grid-column:1;grid-row:2}
+ body.compact-tools .workspace-strip+.suite-search-bar .suite-clear-filters{grid-column:1/-1;grid-row:4;justify-self:start}
+}
+
+/* Filter contents occupy their own block, never a search-row grid cell. */
+body.compact-tools .workspace-strip+.suite-search-bar .suite-filter-toggle{grid-column:3;grid-row:1;box-sizing:border-box;height:38px;margin:0;padding:8px 10px;border:1px solid #aaa;background:#fff;color:#111;font:400 13px/1.4 Arial,sans-serif;display:flex;align-items:center;justify-content:space-between;gap:8px}
+body.compact-tools .suite-filter-toggle::after{content:'▾'}
+body.compact-tools .suite-filter-toggle[aria-expanded=true]::after{content:'▴'}
+body.compact-tools .suite-filter-panel{margin-top:10px;padding-top:10px;border-top:1px solid #d4d4d4;width:100%;box-sizing:border-box}
+body.compact-tools .suite-filter-panel[hidden]{display:none!important}
+body.compact-tools .suite-filter-panel>div{display:flex;flex-wrap:wrap;align-items:center;gap:10px 16px;width:100%;min-width:0;margin:0;padding:0;border:0;background:none}
+body.compact-tools .suite-filter-panel label{font:400 13px/1.4 Arial,sans-serif;margin:0}
+body.compact-tools .suite-filter-panel select{width:auto;min-width:180px;max-width:100%;height:38px;padding:6px 10px;font:400 14px/1.4 Arial,sans-serif}
+@media(max-width:760px){body.compact-tools .workspace-strip+.suite-search-bar .suite-filter-toggle{grid-column:2;grid-row:2}body.compact-tools .suite-filter-panel select{min-width:0;width:100%}}
+
+/* Override tool-specific minimum heights with one shared control size. */
+body.compact-tools .workspace-strip+.suite-search-bar .suite-search-row>input,
+body.compact-tools .workspace-strip+.suite-search-bar .suite-filter-toggle,
+body.compact-tools .workspace-strip+.suite-search-bar .suite-clear-filters,
+body.compact-tools .workspace-strip+.suite-search-bar .suite-filter-panel select,
+body.compact-tools .workspace-strip+.suite-search-bar .suite-filter-panel input:not([type=checkbox]),
+body.compact-tools .workspace-strip+.suite-search-bar .suite-filter-panel button{box-sizing:border-box;height:38px;min-height:38px;max-height:38px;margin-top:0;margin-bottom:0;padding:8px 10px;border-radius:0;font:400 14px/20px Arial,sans-serif}
+body.compact-tools .workspace-strip+.suite-search-bar .suite-filter-panel>div{align-items:end}
+body.compact-tools .workspace-strip+.suite-search-bar .suite-filter-panel label:has(select),
+body.compact-tools .workspace-strip+.suite-search-bar .suite-filter-panel label:has(input:not([type=checkbox])){display:flex;flex-direction:column;gap:4px;align-items:stretch}
+
+/* Schrijven: compact project navigation and a quiet document header. */
+body[data-tool=Werkbank] .projectbar{min-height:0;padding:8px 24px;gap:4px 16px}
+body[data-tool=Werkbank] .projectbar .project-navigation{gap:10px;flex:1}
+body[data-tool=Werkbank] .project-navigation button{width:34px;height:34px;min-height:34px;font-size:20px}
+body[data-tool=Werkbank] .project-navigation select{font-size:18px;min-width:180px;padding:4px 8px}
+body[data-tool=Werkbank] .projectbar .project-help{font-size:12px;line-height:1.3;margin:0}
+body[data-tool=Werkbank] #content .file-path-heading{flex:1 1 200px;width:auto;height:auto;line-height:1.4;margin:0;gap:2px}
+body[data-tool=Werkbank] #content .document-name{font-size:15px}
+body[data-tool=Werkbank] #content .document-folder{font-size:12px}
+body[data-tool=Werkbank] #content .document-save-status{flex-basis:100%;font-size:12px;line-height:1.4;margin:0;color:var(--text-secondary)}
+@media(max-width:768px){body[data-tool=Werkbank] .projectbar{padding:8px 16px}body[data-tool=Werkbank] .project-navigation select{min-width:0}}
+body[data-tool=Werkbank] #content .file-path-heading{grid-row:1;display:flex!important;flex-direction:row;flex-wrap:wrap;align-items:center;gap:3px 12px;min-width:0;white-space:normal;overflow:visible}
+body[data-tool=Werkbank] #content .document-name{flex-basis:100%;font-size:18px;line-height:1.25}
+body[data-tool=Werkbank] #content .document-folder{font-size:12px;line-height:1.5}
+body[data-tool=Werkbank] #content .document-project{display:inline-flex;align-items:center;min-width:0;max-width:min(320px,100%);padding:0;border:0;background:transparent;color:#666;font:400 12px/1.5 Arial,Helvetica,sans-serif}
+body[data-tool=Werkbank] #content .document-project a{display:block;min-width:0;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;text-decoration-thickness:1px;text-underline-offset:2px}
+body[data-tool=Werkbank] #content .document-save-status{grid-row:3;width:auto;min-width:0;margin:0}
+
+/* The same confirmation and destination action after each transfer. */
+body.compact-tools .link-result .transfer-open{display:inline-block;padding:7px 12px;min-height:36px;box-sizing:border-box;border:1px solid #999;background:#fff;color:#111;font:600 14px/20px Arial,sans-serif;text-decoration:none}
+body.compact-tools .link-result .transfer-open:hover{border-color:#111;text-decoration:underline}
+body.compact-tools .link-result .transfer-open:focus-visible{outline:2px solid var(--wp-accent,#e32720);outline-offset:3px}
+body.compact-tools #suite-search-bar[hidden]{display:none!important}
+body.compact-tools .workspace-strip>#suite-search-toggle{font:600 14px/20px Arial,sans-serif;min-height:38px;padding:8px 12px;border:1px solid #aaa;background:#fff;color:#111;margin:0}
+body.compact-tools .workspace-strip>#suite-search-toggle[aria-expanded=true]{background:#f2f3f4;border-color:#111}
+
+/* Workmap: daily choices first, exceptional management one level deeper. */
+body.compact-tools .workspace-management>.werkmap{width:min(360px,calc(100vw - 32px));max-height:70vh;overflow:auto;padding:8px}
+body.compact-tools .workspace-management .wm-actions{display:flex;flex-direction:column;gap:2px}
+body.compact-tools .workspace-management .wm-actions>button,
+body.compact-tools .workspace-more-management>button{display:block;width:100%;text-align:left;margin:0;padding:9px 10px;min-height:38px;border:0;background:#fff;font:400 14px/20px Arial,sans-serif}
+body.compact-tools .workspace-management .wm-actions>button:hover,
+body.compact-tools .workspace-more-management>button:hover{background:#f2f3f4}
+body.compact-tools .workspace-more-management{border:0;border-top:1px solid #ddd;margin:6px 0 0;padding:6px 0 0}
+body.compact-tools .workspace-more-management>summary{padding:9px 10px;min-height:38px;cursor:pointer;font:400 14px/20px Arial,sans-serif}
+body.compact-tools .workspace-more-management p{font-size:12px;padding:0 10px}
+body.compact-tools .workspace-more-management .legacy-imports{padding:8px 10px}
+
+/* Make conflict recovery the primary action next to its explanation. */
+#save-conflict-action{box-sizing:border-box;margin:12px 24px 20px;padding:18px 20px;border:1px solid #ccc;border-left:4px solid var(--wp-accent,#e32720);background:#f2f3f4}
+#save-conflict-action #resolve-save-conflict{display:inline-block;max-width:100%;min-height:48px;margin:0;padding:12px 20px;background:#111;color:#fff;border:2px solid #111;border-radius:0;font:700 16px/1.4 Arial,sans-serif;text-align:left;white-space:normal;cursor:pointer}
+#save-conflict-action #resolve-save-conflict:hover{background:#333;border-color:#333}
+#save-conflict-action #resolve-save-conflict:focus-visible{outline:3px solid var(--wp-accent,#e32720);outline-offset:4px}
+#save-conflict-action #resolve-save-conflict:disabled{opacity:.6;cursor:wait}
+#save-conflict-action p{margin:10px 0 0;font:400 14px/1.5 Arial,sans-serif;color:#444}
+@media(max-width:600px){#save-conflict-action{margin:10px 16px 16px;padding:14px}#save-conflict-action #resolve-save-conflict{width:100%;text-align:center}}
+
+body.compact-tools #wm-message.save-success:not(:empty){border-left:0;padding:4px 0;color:#555;font-size:13px;background:transparent}
+
+body.compact-tools #workspace-help.invoice-help{padding:24px;background:#f5f5f5}
+.invoice-help-guide,.invoice-help-resources{max-width:1100px;margin-inline:auto}
+.invoice-help .help-heading{display:block;padding:0;border:0;background:transparent;margin:0 0 20px}
+.invoice-help .help-heading h2{font:700 24px/1.25 Arial,sans-serif;margin:0 0 6px}
+.invoice-help .help-heading p{margin:0;color:#555}
+.invoice-help .help-steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;list-style:none;padding:0;margin:0 0 24px}
+.invoice-help .help-steps li{background:#fff;border-top:3px solid #111;padding:18px;margin:0}
+.invoice-help .help-steps strong{font-size:16px}
+.invoice-help p,.invoice-help dd{font:400 14px/1.6 Arial,sans-serif}
+.invoice-help .help-steps p{margin:10px 0 0}
+.invoice-help .help-reference-grid{display:grid;grid-template-columns:1fr 1fr;gap:32px;margin-bottom:20px}
+.invoice-help h3{font:700 16px/1.4 Arial,sans-serif;margin:0 0 12px}
+.invoice-help dl{margin:0}.invoice-help dt{font-weight:700;font-size:14px;margin-top:12px}.invoice-help dd{margin:3px 0 0;color:#444}
+.invoice-help .help-shortcuts{display:grid;grid-template-columns:max-content 1fr;gap:12px 18px;align-items:baseline}
+.invoice-help .help-shortcuts dt,.invoice-help .help-shortcuts dd{margin:0}
+.invoice-help kbd{display:inline-block;background:#fff;border:1px solid #ccc;border-radius:3px;padding:2px 5px;font:13px/1.4 Arial,sans-serif}
+.invoice-help .help-note{color:#666;margin-top:16px}
+.invoice-help .help-tool-shortcuts,.context-help .help-tool-shortcuts{font:13px/1.7 Arial,sans-serif;color:#444;margin:12px 0 0;max-width:650px}
+.invoice-help .help-search,.invoice-help .invoice-help-resources{border:0;border-top:1px solid #ccc;padding:14px 0;background:transparent}
+.invoice-help summary{font:600 14px/1.5 Arial,sans-serif;cursor:pointer}
+.invoice-help a{color:#111;text-underline-offset:3px}
+@media(max-width:760px){.invoice-help .help-steps,.invoice-help .help-reference-grid{grid-template-columns:1fr}.invoice-help .help-reference-grid{gap:22px}body.compact-tools #workspace-help.invoice-help{padding:20px 16px}}
+
+/* Context menus stay reachable near the bottom and edges of the viewport. */
+body.compact-tools .viewport-menu{position:fixed!important;right:auto!important;bottom:auto!important;box-sizing:border-box;overflow:auto;z-index:10000!important;margin:0!important}
+
+body.compact-tools .document-heading{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:16px;border-bottom:1px solid #111;padding-bottom:12px}
+body.compact-tools .document-heading>h2{margin:0;border:0;padding:0}
+
+.project-tasks{margin-top:12px;font-size:14px}.project-tasks>summary{cursor:pointer;font-weight:600}.project-tasks ul{padding-left:20px;margin:8px 0}.project-tasks li{margin:4px 0}.project-tasks .shared-reference{display:inline-block;margin-top:8px}
+
+/* Plan overview: compact reading hierarchy, with actions beside their subject. */
+body.compact-tools dialog.plan-overview{border-top:4px solid #111}
+#plan-overview .plan-overview-kind{margin:0 0 8px;color:#c91c16;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase}
+#plan-overview h2{margin:0 0 12px;font-size:24px;line-height:1.2;letter-spacing:-.025em;overflow-wrap:anywhere}
+#plan-overview .plan-overview-meta{display:flex;align-items:center;flex-wrap:wrap;gap:8px 12px;color:#666;font-size:13px}
+#plan-overview .plan-status{padding:3px 8px;background:#f0f1f2;border-radius:4px;color:#333;font-weight:600}
+#plan-overview section{margin:20px 0}#plan-overview h3{display:flex;align-items:baseline;justify-content:space-between;gap:12px;font-size:15px;margin:0 0 10px}
+#plan-overview .plan-overview-text{white-space:pre-wrap;overflow-wrap:anywhere;margin:0;color:#444}
+#plan-overview .plan-overview-tasks{border-top:1px solid #e2e2e2;padding-top:16px}
+#plan-overview .plan-task-count{font-size:12px;font-weight:400;color:#666;white-space:nowrap}
+#plan-overview ul{list-style:none;padding:0;margin:0;background:#f7f7f8;border:1px solid #e8e8e8;border-radius:5px;overflow:hidden}
+#plan-overview li{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:10px 12px;border-bottom:1px solid #e8e8e8}#plan-overview li:last-child{border-bottom:0}
+#plan-overview li>span:first-child{overflow-wrap:anywhere;min-width:0}
+#plan-overview .badge{white-space:nowrap;font-size:11px;line-height:1.4;padding:3px 7px;background:#e9eaec;border-radius:4px;color:#555}
+#plan-overview .task-state-doing{background:#fff0d5;color:#78510d}#plan-overview .task-state-done{background:#e6efe7;color:#345b3c}
+#plan-overview .plan-task-actions a{font-size:13px;color:#333;text-underline-offset:3px}
+#plan-overview button{font:600 13px/1.4 Arial,sans-serif;min-height:36px;padding:8px 12px;margin:0;border:1px solid #bbb;border-radius:3px;background:#fff;color:#111}
+#plan-overview button:focus-visible,#plan-overview a:focus-visible{outline:2px solid var(--wp-accent,#e32720);outline-offset:3px}
+#plan-overview .project-materials{border-top:1px solid #e2e2e2;padding-top:16px}
+#plan-overview .project-dossier-group{margin:14px 0}
+#plan-overview .project-dossier-group h4{font-size:13px;line-height:1.4;margin:0 0 7px;color:#555}
+#plan-overview .project-dossier-group li{display:block}
+#plan-overview .project-dossier-group a{display:block;overflow-wrap:anywhere;color:#222;text-underline-offset:3px}
+#result-sources{margin:12px 0;border:1px solid #d9d9d9;padding:10px 12px}
+#result-sources legend{font-weight:700;font-size:13px}
+#plan-source-list{max-height:180px;overflow:auto}
+#plan-source-list label{display:flex;align-items:flex-start;gap:8px;padding:5px 0;font-size:13px;font-weight:400}
+#plan-source-list input{flex:none;margin:2px 0 0}
+@media(max-width:480px){#plan-overview h2{font-size:21px}#plan-overview li{align-items:flex-start;gap:8px}}
+
+/* Compact planning rows, sharing the visual language of the overview. */
+body[data-tool=Publicatieplanner] .publication{grid-template-columns:118px minmax(0,1fr) auto;gap:12px 20px;align-items:start;padding:20px 0}
+body[data-tool=Publicatieplanner] .pub-date{font:12px/1.6 Arial,sans-serif;color:#666;padding-top:3px}
+body[data-tool=Publicatieplanner] .pub-date>span{display:block;white-space:nowrap}
+body[data-tool=Publicatieplanner] .pub-title{font-size:20px;line-height:1.3;margin:4px 0 6px;padding:0;letter-spacing:-.3px}
+body[data-tool=Publicatieplanner] .pub-main .channel{font-size:10px;letter-spacing:.08em;color:#777}
+body[data-tool=Publicatieplanner] .snippet:empty{display:none}
+body[data-tool=Publicatieplanner] .publication>span:empty{display:none}
+body[data-tool=Publicatieplanner] .publication>.visit{grid-column:2;margin:0;font-size:13px}
+body[data-tool=Publicatieplanner] .pub-main [data-plan-tasks]{font-size:12px;margin:6px 0;padding:0;min-height:28px}
+body[data-tool=Publicatieplanner] .project-tasks{max-width:680px;margin-top:10px;border:1px solid #e6e6e6;border-radius:5px;background:#f7f7f8;padding:0}
+body[data-tool=Publicatieplanner] .project-tasks>summary{font:600 12px/1.5 Arial,sans-serif;padding:9px 12px;cursor:pointer}
+body[data-tool=Publicatieplanner] .project-tasks ul{list-style:none;margin:0;padding:0 12px}
+body[data-tool=Publicatieplanner] .project-tasks li{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:0;padding:8px 0;border-top:1px solid #e5e5e5;font-size:13px;line-height:1.4}
+body[data-tool=Publicatieplanner] .project-tasks li>span:first-child{min-width:0;overflow-wrap:anywhere}
+body[data-tool=Publicatieplanner] .project-task-status{font-size:11px;white-space:nowrap;border-radius:3px;padding:3px 7px;background:#e9eaec;color:#555}
+body[data-tool=Publicatieplanner] .project-task-status.task-state-doing{background:#fff0d5;color:#78510d}
+body[data-tool=Publicatieplanner] .project-task-status.task-state-done{background:#e6efe7;color:#345b3c}
+body[data-tool=Publicatieplanner] .project-tasks .shared-reference{font-size:12px;margin:8px 12px 12px;color:#444;text-underline-offset:3px}
+body[data-tool=Publicatieplanner] .project-tasks>p{margin:0 12px 8px;font-size:13px;color:#666}
+@media(max-width:600px){body[data-tool=Publicatieplanner] .publication{grid-template-columns:minmax(0,1fr) auto;gap:8px}body[data-tool=Publicatieplanner] .pub-main{grid-column:1/-1;grid-row:2}body[data-tool=Publicatieplanner] .pub-date>span{display:inline;margin-right:6px}body[data-tool=Publicatieplanner] .pub-title{font-size:18px}body[data-tool=Publicatieplanner] .publication>.visit{grid-column:1/-1}}
+
+body[data-tool=Publicatieplanner] .project-task-check{display:flex;align-items:center;gap:9px;margin:0;font:inherit;font-weight:400;cursor:pointer;min-width:0;flex:1}
+body[data-tool=Publicatieplanner] .project-task-check input{width:16px;height:16px;min-height:0;margin:0;flex:0 0 16px;accent-color:#111}
+body[data-tool=Publicatieplanner] .project-task-check span{overflow-wrap:anywhere}
+body[data-tool=Publicatieplanner] .project-task-check input:checked+span{text-decoration:line-through;color:#777}
+
+/* Calendar-like date anchor, with full dates retained in time elements. */
+body[data-tool=Publicatieplanner] .pub-date{padding-top:0}
+body[data-tool=Publicatieplanner] .pub-date>.plan-date-block{display:flex;flex-direction:column;align-items:flex-start;gap:3px;width:108px;box-sizing:border-box;padding:11px 12px;margin:0;background:#f3f4f5;border:1px solid #e8e8e8;border-radius:6px;white-space:normal}
+body[data-tool=Publicatieplanner] .plan-date-start{font:700 19px/1.2 Arial,sans-serif;text-transform:uppercase;letter-spacing:-.3px;color:#222}
+body[data-tool=Publicatieplanner] .plan-date-end{font:13px/1.4 Arial,sans-serif;color:#555;white-space:nowrap}
+body[data-tool=Publicatieplanner] .plan-date-year{font:11px/1.4 Arial,sans-serif;color:#777}
+body[data-tool=Publicatieplanner] .pub-date>.plan-date-empty{font:13px/1.4 Arial,sans-serif;color:#777}
+body[data-tool=Publicatieplanner] .pub-date>.due{display:block;margin:7px 0 0;font-size:11px;white-space:normal}
+
+/* Writing file actions are menu rows, not a stack of oversized buttons. */
+body[data-tool=Werkbank] #content .file-more-panel{gap:0;padding:5px;min-width:230px;width:max-content;max-width:calc(100vw - 24px);border:1px solid var(--border,#ccc);border-radius:5px;box-shadow:0 8px 24px #0002}
+body[data-tool=Werkbank] #content .file-more-panel>button{display:block;box-sizing:border-box;width:100%;min-height:36px;margin:0;padding:8px 11px;border:0;border-radius:3px;background:transparent;color:var(--text-primary,#222);font:400 13px/1.4 Arial,sans-serif;text-align:left;white-space:normal;cursor:pointer;box-shadow:none}
+body[data-tool=Werkbank] #content .file-more-panel>button:hover{background:var(--bg-tertiary,#f1f2f3)}
+body[data-tool=Werkbank] #content .file-more-panel>button:focus-visible{outline:2px solid var(--accent,var(--wp-accent,#e32720));outline-offset:-2px}
+body[data-tool=Werkbank] #content .file-more-panel>.delete-file-btn{margin-top:5px;padding-top:10px;border-top:1px solid var(--border,#ddd);border-radius:0;color:var(--accent,#d9231c)}
+
+/* Raise the sidebar's stacking context while its menu overlaps the editor. */
+body[data-tool=Werkbank] .sidebar:has(.sidebar-menu[open]){z-index:200}
+
+body[data-tool=Werkbank] #folderMenu .manage-clear>summary{cursor:pointer;font-size:13px;font-weight:600;padding:6px 0}
+body[data-tool=Werkbank] #folderMenu .browser-clear-help{font-size:12px;line-height:1.5;color:var(--text-secondary,#666);margin:8px 0;white-space:normal}
+body[data-tool=Werkbank] #folderMenu .clear-db-btn{color:var(--accent,#d9231c)}
+
+.project-materials{border-top:1px solid #e2e2e2;padding-top:16px}.project-materials h3:not(:first-child){margin-top:20px!important}.project-materials a{color:inherit;text-underline-offset:3px;overflow-wrap:anywhere}.file-dialog #document-project{display:block;width:100%;margin:8px 0 16px}
+.project-materials .project-hours-summary{border-left:3px solid var(--wp-accent,#e32720);background:#f6f6f6;padding:9px 12px;font:600 13px/1.6 Arial,Helvetica,sans-serif;overflow-wrap:anywhere}
+
+body[data-tool=Publicatieplanner] .plan-date-ongoing{font-weight:600;color:#555}
+
+/* Keep the native menu and keyboard behavior; its closed face shows only the current tool. */
+.tool-select-control{position:relative;display:inline-flex;max-width:100%;min-width:0}
+.tool-select-control #tool-switcher{color:transparent!important;text-shadow:none!important;appearance:none;padding-right:32px;width:190px}
+.tool-select-control #tool-switcher option{color:#111;background:#fff}
+.tool-select-label{position:absolute;inset:1px;display:flex;align-items:center;padding:10px 32px 10px 12px;pointer-events:none;font:14px/1.4 Arial,sans-serif;color:#111;white-space:nowrap;overflow:hidden}
+.tool-select-label::after{content:'⌄';position:absolute;right:12px}
+@media print{.tool-select-control{display:none!important}}
+
+body[data-tool=Contacten] .contact-tasks{margin:12px 0;overflow-wrap:anywhere}
+body[data-tool=Contacten] .contact-tasks ul{list-style:none;padding:0}
+
+#wm-organization-dialog p{line-height:1.5;color:#555}
+#wm-organization-dialog label{display:block;font-weight:700;margin:14px 0}
+#wm-organization-dialog input,#wm-organization-dialog textarea{box-sizing:border-box;display:block;width:100%;min-width:0;margin-top:6px;padding:9px;border:1px solid #aaa;font:inherit}
+#wm-organization-dialog .organization-actions button{min-height:42px}
+#wm-organization-dialog .organization-message{color:#b21b15}
+#wm-organization-dialog .organization-message:empty{display:none}
+@media print{#wm-organization-dialog{display:none!important}}
+
+body[data-tool=Offerte] #quote-recovery{margin:12px 0;padding:12px;border-left:4px solid var(--wp-accent,#e32720);background:#f7f7f7}
+body[data-tool=Offerte] #quote-recovery[hidden]{display:none}
+body[data-tool=Offerte] #quote-recovery strong{display:block;margin-bottom:8px}
+body[data-tool=Offerte] #quote-recovery button{display:block;width:100%;margin-top:6px;text-align:left;background:#fff}
+
+/* Project overview and its linked task progress. */
+.project-overview-group{margin:0 0 20px}.project-overview-group>h2{font:700 18px/1.4 Arial,sans-serif;margin:0;padding:9px 0;border-bottom:2px solid #111}.project-overview-group>h2>span{font-weight:400;color:#666}
+.project-task-summary{display:flex;align-items:center;gap:10px;font:13px/1.4 Arial,sans-serif;margin-top:8px;color:#444}.project-task-summary progress{width:80px;height:8px;accent-color:#23744d}.week-strip .project-task-summary{color:inherit;font-size:11px;flex-wrap:wrap}.week-strip .project-task-summary progress{width:55px}
+
+/* Compact, useful project signals; urgency is also expressed in text. */
+.publication .project-task-summary{display:flex;flex-direction:column;align-items:flex-start;gap:9px;margin-top:14px;font:13px/1.5 Arial,sans-serif;color:#555}
+.project-task-counts{display:flex;gap:7px;flex-wrap:wrap}.project-task-chip{display:inline-flex;align-items:baseline;gap:4px;padding:5px 9px;border-radius:5px;background:#f1f3f5;color:#333;white-space:nowrap}.project-task-chip strong{font-size:18px;line-height:1.2}.project-task-chip.is-open{background:#eaf0f7;color:#214d78}.project-task-chip.is-done{background:#eaf4ed;color:#276040}.project-task-chip.is-overdue{background:#fbe9e7;color:#a52b20}.project-task-chip.is-today{background:#fff2d8;color:#815408}
+.project-task-progress{display:flex;align-items:center;gap:9px;flex-wrap:wrap}.publication .project-task-summary progress{width:125px;height:9px;accent-color:#327a53}.project-task-deadline{overflow-wrap:anywhere;max-width:100%}.project-task-empty{color:#777;font-style:italic}
+.week-strip .project-task-summary{display:flex;flex-direction:column;align-items:flex-start;gap:3px}.week-strip .project-task-chip{padding:1px 4px;font-size:10px}.week-strip .project-task-chip strong{font-size:11px}.week-strip .project-task-progress,.week-strip .project-task-deadline{display:none}
+
+.project-source-summary{margin-top:10px;font-size:14px}.project-source-summary .project-task-chip{display:inline-flex;align-items:center;padding:5px 9px;background:#eef1f3;color:#333;border-radius:4px}
+
+/* Compacte projectkaarten; kalender en publicaties behouden hun eigen indeling. */
+body[data-tool=Publicatieplanner] .project-card-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:10px 0 20px}
+body[data-tool=Publicatieplanner] .project-card-grid .publication{display:grid;grid-template-columns:1fr auto;align-content:start;align-items:start;gap:8px;padding:14px;border:1px solid #ccc;border-top:3px solid #111;min-width:0}
+body[data-tool=Publicatieplanner] .project-card-grid .pub-date{grid-column:1;grid-row:1;font:13px/1.4 Arial,sans-serif}
+body[data-tool=Publicatieplanner] .project-card-grid .plan-date-block{display:inline-flex;flex-wrap:wrap;gap:4px;align-items:baseline;padding:4px 7px;min-width:0;min-height:0;font-size:11px}
+body[data-tool=Publicatieplanner] .project-card-grid .publication>.state{grid-column:2;grid-row:1;justify-self:end}
+body[data-tool=Publicatieplanner] .project-card-grid .pub-main{grid-column:1/-1;grid-row:2;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px;min-width:0}
+body[data-tool=Publicatieplanner] .project-card-grid .channel{display:none}
+body[data-tool=Publicatieplanner] .project-card-grid .pub-title{grid-column:1/-1;grid-row:1;font-size:20px;line-height:1.2;margin:0;padding:0}
+body[data-tool=Publicatieplanner] .project-card-grid .snippet{grid-column:1/-1;grid-row:2;margin:0;font-size:13px;line-height:1.35}
+body[data-tool=Publicatieplanner] .project-card-grid .project-task-summary{display:contents}
+body[data-tool=Publicatieplanner] .project-card-grid .project-task-counts,body[data-tool=Publicatieplanner] .project-card-grid .project-task-empty{grid-column:1;grid-row:3;align-self:center;font-size:13px}
+body[data-tool=Publicatieplanner] .project-card-grid .project-source-summary{grid-column:2;grid-row:3;margin:0;align-self:center;font-size:13px}
+body[data-tool=Publicatieplanner] .project-card-grid .project-task-chip{font-size:12px;padding:3px 6px}
+body[data-tool=Publicatieplanner] .project-card-grid .project-task-chip strong{font-size:14px}
+body[data-tool=Publicatieplanner] .project-card-grid .project-task-progress{grid-column:1/-1;grid-row:4;font-size:12px}
+body[data-tool=Publicatieplanner] .project-card-grid .project-next-tasks{grid-column:1/-1;grid-row:5;font-size:13px;border-top:1px solid #ddd;padding-top:6px}
+.project-next-tasks>strong{font-size:12px;color:#555}.project-card-grid .project-next-tasks>strong{display:none}.project-next-tasks ul{list-style:disc outside;padding:0 0 0 18px;margin:2px 0 0}.project-next-tasks li{margin:0;padding:2px 0;line-height:1.35;overflow-wrap:anywhere}.project-next-tasks small{display:inline-block;margin:0 0 0 6px;font-size:11px;font-weight:400;color:#666;vertical-align:baseline}.project-next-tasks small::before{content:"· ";}.project-next-tasks .is-overdue{color:#a52b20}
+body[data-tool=Publicatieplanner] .project-card-grid [data-plan-tasks]{grid-column:1/-1;grid-row:6;justify-self:start;margin:1px 0 0;min-height:30px;padding:3px 0;font-size:12px}
+body[data-tool=Publicatieplanner] .project-card-grid .publication>.visit{grid-column:1/-1;font-size:13px}
+.week-strip .project-next-tasks{display:none}
+@media(max-width:900px){body[data-tool=Publicatieplanner] .project-card-grid{grid-template-columns:1fr}}
+@media(max-width:480px){body[data-tool=Publicatieplanner] .project-card-grid .publication{padding:12px}.project-card-grid .project-task-counts{flex-wrap:wrap}}
+
+/* Let task titles use the whole card width and grow without truncation. */
+body[data-tool=Projectbord] .board .column{padding:12px}
+body[data-tool=Projectbord] .board .column-head{min-height:0;margin:-12px -12px 12px;padding:12px 14px}
+body[data-tool=Projectbord] .board .column-head h2{justify-content:flex-start;gap:8px;font-size:14px;line-height:1.4}
+body[data-tool=Projectbord] .board .column-head .count::before{content:'· ';}
+body[data-tool=Projectbord] .board .column-head p{display:none}
+body[data-tool=Projectbord] .board .task{padding:10px;border-left-width:3px}
+body[data-tool=Projectbord] .board .task-head{display:block}
+body[data-tool=Projectbord] .board .task-open{width:100%}
+body[data-tool=Projectbord] .board .task .task-title{display:block;-webkit-line-clamp:unset;line-clamp:unset;overflow:visible;white-space:normal;overflow-wrap:anywhere;font-size:14px;line-height:1.45;letter-spacing:0;font-weight:600}
+body[data-tool=Projectbord] .task-priority{display:block;margin-top:7px;font-size:11px;font-weight:400;color:#555}
+body[data-tool=Projectbord] .board .task-order{justify-content:flex-end;margin-top:6px;opacity:1}
+
+body[data-tool=Projectbord] .task-project{display:block;margin-top:5px;font-size:12px;line-height:1.4;font-weight:400;color:#555;overflow-wrap:anywhere}body[data-tool=Projectbord] a.task-project{text-decoration:underline;text-underline-offset:3px}body[data-tool=Projectbord] a.task-project:hover{color:#b72e27}
+
+/* Dezelfde leeshiërarchie voor bronkaarten en taken. */
+body[data-tool=Bronnenkast] #cards > .source-card{height:184px;min-height:184px;padding:12px 14px;display:flex;flex-direction:column;overflow:hidden}
+body[data-tool=Bronnenkast] .source-open strong{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:3;line-clamp:3;height:4.35em;min-height:0;overflow:hidden;overflow-wrap:anywhere;font-size:14px;line-height:1.45;font-weight:600;letter-spacing:0}
+body[data-tool=Bronnenkast] .source-open span{font-size:12px;line-height:1.4;margin-top:5px}
+body[data-tool=Bronnenkast] .source-card-links{font-size:12px;line-height:1.4;color:#555;margin-top:10px;white-space:normal;overflow-wrap:anywhere}
+body[data-tool=Bronnenkast] .source-card .category{font-size:11px;line-height:1.4;letter-spacing:.5px}
+
+body[data-tool=Bronnenkast] .source-card-links{margin-top:auto;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex-shrink:0}
+body[data-tool=Bronnenkast] .source-card .card-head,body[data-tool=Bronnenkast] .source-open{flex-shrink:0}
+
+#plan-overview .project-dossier-group .project-linked-row{display:flex;align-items:center;justify-content:space-between;gap:12px}
+#plan-overview .project-dossier-group .project-linked-row a{min-width:0;flex:1}
+#plan-overview .project-unlink{flex:none;font-size:12px;font-weight:400;min-height:30px;padding:4px 8px;color:#555}
+#plan-overview .plan-overview-tasks li .project-unlink{margin-left:auto}
+@media(max-width:600px){#plan-overview .project-dossier-group .project-linked-row{align-items:flex-start;flex-wrap:wrap}#plan-overview .project-linked-row .project-unlink{margin-left:auto}}
+
+.file-dialog .project-document-choices{display:grid;gap:8px;max-height:min(54vh,430px);overflow:auto;margin:18px 0 8px;padding:2px}
+.file-dialog .project-document-choices label{display:flex;align-items:flex-start;gap:12px;padding:12px 14px;border:1px solid #d1d1d1;border-radius:4px;cursor:pointer;margin:0}
+.file-dialog .project-document-choices label:has(input:checked){border-color:#111;background:#f3f4f5}
+.file-dialog .project-document-choices label:focus-within{outline:2px solid var(--wp-accent,#e32720);outline-offset:2px}
+.file-dialog .project-document-choices input{width:auto;flex:none;margin:4px 0 0;accent-color:#111}
+.file-dialog .project-document-choices strong,.file-dialog .project-document-choices small{display:block;overflow-wrap:anywhere}
+.file-dialog .project-document-choices strong{font-size:15px;line-height:1.4;font-weight:700}
+.file-dialog .project-document-choices small{margin-top:3px;font-size:12px;line-height:1.4;color:#666}
+
+body[data-tool=Publicatieplanner] .project-card-grid .project-document-summary{grid-column:1/-1;grid-row:5;min-width:0;margin:0;border-top:1px solid #ddd;padding-top:10px;font-size:13px;line-height:1.45;color:#555;overflow-wrap:anywhere;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;line-clamp:2;overflow:hidden}
+body[data-tool=Publicatieplanner] .project-card-grid .pub-main:has(.project-document-summary) .project-next-tasks{grid-row:6}
+body[data-tool=Publicatieplanner] .project-card-grid .pub-main:has(.project-document-summary) [data-plan-tasks]{grid-row:7}
+
+/* Taken, bronnen en documenten delen een vaste informatierij op de projectkaart. */
+body[data-tool=Publicatieplanner] .project-card-grid .pub-main{grid-template-columns:repeat(3,minmax(0,1fr))}
+body[data-tool=Publicatieplanner] .project-card-grid .project-task-counts{grid-column:1;grid-row:3;align-self:start}
+body[data-tool=Publicatieplanner] .project-card-grid .project-source-summary{grid-column:2;grid-row:3;align-self:start}
+body[data-tool=Publicatieplanner] .project-card-grid .project-document-summary{grid-column:3;grid-row:3;display:block;min-width:0;margin:0;padding:0;border:0;overflow:visible}
+body[data-tool=Publicatieplanner] .project-card-grid .project-task-chip.is-open,body[data-tool=Publicatieplanner] .project-card-grid .project-source-summary .project-task-chip{background:#f1f3f5;color:#333;align-items:baseline}
+body[data-tool=Publicatieplanner] .project-card-grid .project-document-names{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;line-clamp:2;overflow:hidden;margin-top:6px;font-size:12px;line-height:1.4;color:#555;overflow-wrap:anywhere}
+body[data-tool=Publicatieplanner] .project-card-grid .pub-main:has(.project-document-summary) .project-next-tasks{grid-row:5}
+body[data-tool=Publicatieplanner] .project-card-grid .pub-main:has(.project-document-summary) [data-plan-tasks]{grid-row:6}
+@media(max-width:650px){body[data-tool=Publicatieplanner] .project-card-grid .pub-main{grid-template-columns:repeat(2,minmax(0,1fr))}body[data-tool=Publicatieplanner] .project-card-grid .project-document-summary{grid-column:1/-1;grid-row:4}body[data-tool=Publicatieplanner] .project-card-grid .project-task-progress{grid-row:5}body[data-tool=Publicatieplanner] .project-card-grid .project-next-tasks,body[data-tool=Publicatieplanner] .project-card-grid .pub-main:has(.project-document-summary) .project-next-tasks{grid-row:6}body[data-tool=Publicatieplanner] .project-card-grid [data-plan-tasks],body[data-tool=Publicatieplanner] .project-card-grid .pub-main:has(.project-document-summary) [data-plan-tasks]{grid-row:7}}
+
+/* Empty action menus stay hidden even before asynchronous UI setup finishes. */
+details.context-actions:has(> .context-actions-panel:empty){display:none!important}
+
+@media screen{.factureren-detail-grid:not(.show-document-preview)>.preview,.factureren-detail-grid.show-document-preview>.editor{display:none}.factureren-detail-grid>.document-view-actions{grid-column:1/-1;grid-row:auto}.factureren-detail-grid>.editor,.factureren-detail-grid>.preview{grid-column:1/-1}}
+
+/* Compacte projectacties op dezelfde vaste rij. */
+body[data-tool=Publicatieplanner] .pub-main [data-plan-edit]{width:fit-content;min-height:30px;padding:3px 0;border:0;background:transparent;color:#555;font-size:12px;font-weight:400;text-decoration:underline;text-underline-offset:4px;justify-self:end}
+body[data-tool=Publicatieplanner] .project-card-grid [data-plan-edit]{grid-column:3;grid-row:6;margin:1px 0 0}
+body[data-tool=Publicatieplanner] .project-card-grid [data-plan-tasks]{grid-column:1/3}
+body[data-tool=Publicatieplanner] .pub-main [data-plan-edit]:hover{color:#111;text-decoration-thickness:2px}
+@media(max-width:650px){body[data-tool=Publicatieplanner] .project-card-grid [data-plan-edit]{grid-column:2;grid-row:7}body[data-tool=Publicatieplanner] .project-card-grid [data-plan-tasks]{grid-column:1}}
+
+/* Compact first-use route; existing workspace and theme roles. */
+.quick-start{flex-basis:100%;color:var(--cte-text);padding:var(--space-m);box-shadow:inset 0 0 0 var(--border-s) var(--cte-border)}
+.quick-start summary{cursor:pointer;font-weight:700}
+.quick-start ol{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--space-m);padding-left:var(--space-m);margin-bottom:0}
+.quick-start li{padding-left:var(--space-xs)}
+.quick-start p{margin:var(--space-xs) 0}
+.quick-start button:disabled{cursor:default;opacity:.5}
+@media(max-width:600px){.quick-start ol{grid-template-columns:1fr}}

@@ -1,0 +1,16 @@
+@media screen{
+ .shell .wordmark,.suite-back{overflow-wrap:anywhere}
+ .shell .titlebar h1{overflow-wrap:anywhere;max-width:100%}
+ .shell .titlebar{flex-wrap:wrap}
+ .suite-back{max-width:260px;white-space:normal!important}
+ .suite-back,.wordmark{text-transform:none!important}body.compact-tools :is(.primary,.save-btn),body.compact-tools :is(.notes-board,.note-dialog) .notes-primary,#suite-settings button[type=submit]{background:var(--wp-accent,#c51d17);border-color:var(--wp-accent,#c51d17);color:#fff}
+}
+#settings-appearance fieldset{border:0;padding:0;margin:18px 0}
+#settings-appearance legend{font-weight:700}
+#settings-appearance .appearance-colors{display:flex;gap:10px 18px;flex-wrap:wrap}
+#suite-settings #settings-appearance .appearance-colors label{display:flex;align-items:center;gap:8px;margin:8px 0;cursor:pointer}
+#suite-settings #settings-appearance input[type=radio]{width:20px;height:20px;margin:0;accent-color:var(--wp-accent,#c51d17)}
+.appearance-swatch{width:20px;height:20px;display:inline-block;border:1px solid #0003}
+.appearance-preview{padding:16px;background:var(--preview-accent,var(--wp-accent,#c51d17));color:#fff;font-weight:700;overflow-wrap:anywhere}
+
+button [data-i18n],a [data-i18n],summary [data-i18n]{pointer-events:none}

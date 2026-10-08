@@ -49,10 +49,10 @@ Klik op **+ Project toevoegen** en kies deze meegeleverde map **Werkbank**. De d
 - Voeg gewone links, links naar documenten, afbeeldingen en YouTube-links in.
 - **Opslaan** bewaart Markdown en keert terug naar de leesweergave. Zonder wijzigingen is de knop grijs.
 - **Annuleren** vraagt bevestiging als je niet-opgeslagen wijzigingen weggooit.
-- Extra documentgegevens bovenaan een bestand blijven behouden bij opslaan en worden niet in de Werkbank getoond.
+- Extra documentgegevens bovenaan een bestand zijn in de leesweergave uitklapbaar en blijven behouden bij opslaan.
 - Documentlinks zijn aanklikbaar; terugverwijzingen staan onderaan het document.
 
-**Sneltoetsen:** ⌘/Ctrl+B vet, ⌘/Ctrl+I cursief, ⌘/Ctrl+S opslaan, ⌘/Ctrl+E bewerken, ⌘/Ctrl+K zoeken. Escape sluit zoeken of annuleert bewerken.
+**Sneltoetsen:** ⌘/Ctrl+B vet, ⌘/Ctrl+I cursief, ⌘/Ctrl+S Bewaar alles, ⌘/Ctrl+E bewerken, ⌘/Ctrl+K zoeken. Escape sluit het bovenste menu, zoekpaneel of venster; tekstbewerking blijft open.
 
 ## Meer, Focus en mappen
 
@@ -110,6 +110,8 @@ De ZIP bevat slechts drie ingangen: **▶ Begin hier.html**, **Werkbank** en **O
 
 ## Opslagplek en mappen in de lijst
 
-Een los geopend document is een browserkopie; de oorspronkelijke bestandslocatie is daarbij niet gekoppeld. Na bewaren in Mijn werkmap wordt het echte bestand geopend onder Schrijven. Meer is ook zichtbaar bij losse documenten, met Download kopie. Bij gekoppelde bestanden staan daar ook Hernoemen, Verplaatsen, Vorige versie herstellen en Verwijderen.
+Een los geopend document is een browserkopie; de oorspronkelijke bestandslocatie is daarbij niet gekoppeld. Na bewaren in Mijn werkmap wordt het echte bestand geopend onder Schrijven. Onder **Meer** staan bij beide soorten documenten **Hernoemen**, **Verplaatsen** en **Verwijderen**. Bij een browserkopie kun je ook **Download kopie** kiezen. Verplaatsen vraagt om een geopende doelmap; voorbeeldinhoud blijft apart van je eigen werk. Bij een gekoppeld bestand is **Vorige versie herstellen** beschikbaar.
 
-Opslaan in map en Bewaar bestand schrijven een gekoppeld document terug naar zijn eigen map, ook als Mijn werkmap op een andere plek staat. De opslagplek blijft naast de documentnaam zichtbaar. Het kruisje naast een gekoppelde hoofdmap verwijdert die map alleen uit de lijst; de map en bestanden blijven op de computer staan.
+**Brief**, **Artikel** en **Gespreksverslag** zijn bewerkbare startsjablonen onder + Nieuw. Brief gebruikt het briefhoofd uit Werkmap → Mijn organisatie. Elk sjabloon maakt een gewoon Markdown-document; bestaande documenten blijven ongemoeid. **Nieuw document** vraagt eerst om een bestandsnaam. **Bewaar bestand** bewaart een nieuw document als `.md` in de map Schrijven van je werkmap; daarna werk je rechtstreeks in dat bestand. **Bewaar alles** legt daarnaast een herstelbare kopie van alle tools en onvoltooide invoer vast.
+
+Opslaan en Bewaar bestand schrijven een gekoppeld document terug naar zijn eigen map, ook als Mijn werkmap op een andere plek staat. De opslagplek blijft naast de documentnaam zichtbaar. Het kruisje naast een gekoppelde hoofdmap verwijdert die map alleen uit de lijst; de map en bestanden blijven op de computer staan.

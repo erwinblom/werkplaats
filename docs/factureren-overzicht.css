@@ -1,0 +1,63 @@
+/* Kasboek-like overview hierarchy for Facturen, Offertes and Uren. */
+.factureren-tabs{display:flex;gap:30px;overflow-x:auto;border-bottom:1px solid #b9b9b9;margin:0 0 24px}
+.factureren-tabs a{padding:10px 3px;font:700 17px Arial,sans-serif;border-bottom:3px solid transparent;margin-bottom:-1px}
+.factureren-tabs a[aria-current=page]{border-bottom-color:#111}
+.factureren-section-title{margin:0;font:800 15px/1.3 Arial,sans-serif;letter-spacing:1px;text-transform:uppercase}
+body.compact-tools[data-tool="Ping"] .work-actions,body.compact-tools[data-tool="Offerte"] .work-actions,body.compact-tools[data-tool="Uren"] .work-actions{justify-content:space-between;border:0;padding:10px 0 20px!important}
+body.compact-tools[data-tool="Ping"] .work-actions #new,body.compact-tools[data-tool="Offerte"] .work-actions #new,body.compact-tools[data-tool="Uren"] .work-actions #new{background:#111;color:#fff;border:1px solid #111;font-weight:700}
+body.compact-tools[data-tool="Ping"] .work-actions #take-quote{background:#fff;color:#111;border:1px solid #b9b9b9;font-weight:400}
+body.compact-tools[data-tool="Ping"] .layout,body.compact-tools[data-tool="Offerte"] .workspace{display:block;margin-top:10px}
+body.compact-tools[data-tool="Ping"] .layout>.sidebar,body.compact-tools[data-tool="Offerte"] .workspace>.sidebar{background:#fff;border:0;border-bottom:1px solid #b9b9b9;padding:0 0 14px;max-width:none;margin:0}
+body.compact-tools[data-tool="Ping"] .layout>.sidebar>h2,body.compact-tools[data-tool="Offerte"] .workspace>.sidebar>h2{font-size:15px;letter-spacing:1px;margin:0 0 12px;text-transform:uppercase}
+.factureren-overview-tools{display:flex;gap:10px;align-items:end;flex-wrap:wrap;margin:0 0 14px}
+.factureren-overview-search{flex:1;min-width:220px}
+.factureren-overview-tools label{display:block;margin:0 0 5px;font-size:12px;color:#555;font-weight:600}
+.factureren-overview-tools input,.factureren-overview-tools select{width:100%;max-width:none;background:#fff;border:1px solid #b9b9b9;min-height:42px;padding:8px 10px;margin:0;font-size:14px}
+.factureren-overview-tools .list-tools{display:flex;gap:8px;align-items:end;margin:0}
+.factureren-overview-tools .list-tools label{min-width:170px;margin:0}
+.factureren-overview-tools .list-tools button{min-height:42px}
+body.compact-tools[data-tool="Offerte"] .factureren-overview-tools .filter-strip{background:#fff;border:0;padding:0;margin:0;min-width:180px;align-items:end}
+.factureren-overview-count{font:12px/1.5 'Courier New',monospace;color:#666;margin:0 0 10px}
+body.compact-tools[data-tool="Ping"] #list,body.compact-tools[data-tool="Offerte"] #list{max-height:none;overflow:visible;border-top:1px solid #b9b9b9}
+body.compact-tools[data-tool="Ping"] .invoice-btn,body.compact-tools[data-tool="Offerte"] .quote-button{display:grid;width:100%;grid-template-columns:120px minmax(0,1fr) minmax(140px,190px) 95px;gap:14px;align-items:center;text-align:left;padding:19px 0!important;margin:0!important;border:0;border-bottom:1px solid #b9b9b9;background:#fff;color:#111;min-height:86px;line-height:1.3}
+body.compact-tools[data-tool="Ping"] .invoice-btn:hover,body.compact-tools[data-tool="Offerte"] .quote-button:hover{background:#f5f5f5;color:#111}
+body.compact-tools[data-tool="Ping"] .invoice-btn.active,body.compact-tools[data-tool="Offerte"] .quote-button.selected{background:#f1f3f5;color:#111;border:0;border-bottom:1px solid #999;box-shadow:inset 4px 0 #111;padding-left:12px!important}
+.factureren-row-date{font:13px/1.4 'Courier New',monospace;color:#555}
+.factureren-row-date small{display:block;margin-top:5px;font:12px/1.4 Arial,sans-serif;color:#666}
+.factureren-row-main{min-width:0;overflow-wrap:anywhere}
+.factureren-row-main>small{display:block;color:#666;font-size:11px;font-weight:700;letter-spacing:.6px;text-transform:uppercase}
+body.compact-tools .factureren-row-main>strong{display:block;font-size:22px;line-height:1.2;letter-spacing:-.5px;margin:4px 0;color:#111}
+.factureren-row-main .factureren-row-detail{display:block;color:#555;font-size:13px;font-weight:400;letter-spacing:0;text-transform:none;margin-top:5px}
+.factureren-row-amount{text-align:right;font:800 23px/1.2 Arial,sans-serif;letter-spacing:-.5px;font-variant-numeric:tabular-nums;white-space:nowrap}
+.factureren-row-open{text-align:center;padding:9px 12px;border:1px solid #b9b9b9;font:14px/1.3 Arial,sans-serif;background:#fff}
+body.compact-tools[data-tool="Ping"] .invoice-summary{display:flex;gap:0;flex-wrap:wrap;border-top:1px solid #ddd;border-bottom:1px solid #ddd;margin:0 0 18px}
+body.compact-tools[data-tool="Ping"] .invoice-summary>div{border:0;border-right:1px solid #ddd;padding:9px 18px 9px 0;margin-right:18px;min-width:130px}
+body.compact-tools[data-tool="Ping"] .invoice-summary small{font-size:11px;color:#666}
+body.compact-tools[data-tool="Ping"] .invoice-summary strong{font-size:18px;font-weight:700}
+.factureren-detail-head{position:sticky;top:0;z-index:2;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:12px 20px;background:#fff;border-bottom:1px solid #b9b9b9}
+.factureren-detail-head strong{font-size:17px}
+.factureren-detail-head button{min-height:40px}
+.factureren-detail-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px;padding:20px;align-items:start}
+dialog.factureren-detail .editor,dialog.factureren-detail .preview{position:static;width:auto;max-width:none;min-width:0;margin:0;border:1px solid #b9b9b9;border-top:3px solid #111;background:#fff}
+.factureren-back{border:0;background:#fff;padding:0 0 12px;min-height:30px;color:#555;text-decoration:underline;text-underline-offset:3px;font-size:13px;font-weight:400}
+
+body.compact-tools[data-tool="Uren"] main>label[for="suite-search"]{display:block;font-size:12px;color:#555;margin:0 0 5px}
+body.compact-tools[data-tool="Uren"] #suite-search{max-width:540px}
+body.compact-tools[data-tool="Uren"] main>.toolbar{background:#fff;border:0;border-bottom:1px solid #ddd;padding:16px 0;margin:0;gap:12px}
+body.compact-tools[data-tool="Uren"] .stats{display:flex;gap:0;flex-wrap:wrap;border-bottom:1px solid #ddd;margin:0 0 16px}
+body.compact-tools[data-tool="Uren"] .stats>div{background:#fff;color:#111;padding:13px 24px 13px 0;margin-right:24px;min-width:130px}
+body.compact-tools[data-tool="Uren"] .stats span{display:block;color:#666;font-size:11px}
+body.compact-tools[data-tool="Uren"] .stats strong{font-size:23px;letter-spacing:-.5px}
+body.compact-tools[data-tool="Uren"] .section-head{margin-top:12px}
+body.compact-tools[data-tool="Uren"] .entry{grid-template-columns:120px minmax(0,1fr) 150px 150px;gap:16px;padding:20px 0}
+body.compact-tools[data-tool="Uren"] .entry-work>strong{font-size:21px;line-height:1.2;letter-spacing:-.4px}
+body.compact-tools[data-tool="Uren"] .duration{text-align:right;font-size:23px;font-weight:800}
+body.compact-tools[data-tool="Uren"] .entry .actions{justify-content:flex-end}
+body.compact-tools[data-tool="Uren"] .entry [data-edit]{border:1px solid #b9b9b9;background:#fff;padding:9px 12px;min-height:40px;text-decoration:none;color:#111;font-size:14px}
+body.compact-tools[data-tool="Uren"] .entry [data-copy]{font-size:12px}
+body.compact-tools[data-tool="Uren"] #entry-detail{width:min(660px,calc(100vw - 32px))}
+body.compact-tools[data-tool="Uren"] #entry-detail h2{margin:0 0 12px;font-size:26px;line-height:1.2;overflow-wrap:anywhere}
+body.compact-tools[data-tool="Uren"] #entry-detail .entry-detail-description{white-space:pre-wrap;overflow-wrap:anywhere;border-top:1px solid #ddd;padding-top:18px;line-height:1.55}
+@media(max-width:980px){.factureren-detail-grid{grid-template-columns:1fr}.factureren-row-amount{font-size:19px}}
+@media(max-width:680px){.factureren-tabs{gap:20px}.factureren-tabs a{font-size:15px}.factureren-section-title{width:100%}body.compact-tools[data-tool="Ping"] .invoice-btn,body.compact-tools[data-tool="Offerte"] .quote-button{grid-template-columns:minmax(0,1fr) auto;gap:8px;padding:15px 0!important}.factureren-row-date{grid-column:1/-1}.factureren-row-main{grid-column:1}.factureren-row-amount{grid-column:2;grid-row:2}.factureren-row-open{grid-column:1/-1;grid-row:3;width:max-content}.factureren-overview-search{flex-basis:100%}body.compact-tools[data-tool="Uren"] .entry{grid-template-columns:1fr auto;gap:9px}body.compact-tools[data-tool="Uren"] .entry-work{grid-column:1/-1;grid-row:2}body.compact-tools[data-tool="Uren"] .duration{grid-column:2;grid-row:1}body.compact-tools[data-tool="Uren"] .entry .actions{grid-column:1/-1;grid-row:3;justify-content:flex-start}}
+@media print{body.compact-tools[data-tool="Ping"] main>*:not(dialog.factureren-detail),body.compact-tools[data-tool="Offerte"] main>*:not(dialog.factureren-detail){display:none!important}.factureren-detail-head{display:none!important}dialog.factureren-detail{display:block!important}dialog.factureren-detail .factureren-detail-grid{display:block;padding:0}dialog.factureren-detail .preview{display:block!important;border:0;padding:0}}

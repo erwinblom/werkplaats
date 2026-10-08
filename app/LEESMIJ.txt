@@ -8,7 +8,7 @@ Gebruik Chrome of Edge op je computer voor je werkmap.
 3. Klik op Bewaar alles. Je werk en concepten uit alle tools gaan mee.
 4. Kies een volgende keer Verder werken om alles terug te halen.
 
-Bekijk voorbeelden is een aparte oefenruimte. Je eigen werk blijft apart.
+Schrijven begint met drie mappen: Inbox, In bewerking en Klaar. Iedere map bevat één startdocument met uitleg. De andere tools zijn leeg.
 
 Voor maptoegang gebruik je Chrome of Edge op een computer. De browser kan
 opnieuw om toestemming vragen. Zonder maptoegang blijven losse import en
@@ -21,5 +21,10 @@ schrijfmappen en nog niet ontvangen extensielinks staan apart.
 Lees Uitleg.html voor de koppelingen, herstel en uitzonderingen.
 Je hebt geen account, externe database of API-sleutel nodig.
 
-VOORBEELDEN
-Bij je eerste bezoek tonen alle negen tools hetzelfde fictieve project: Buurtwerkplaats De Proeftuin. Naar mijn eigen werk schakelt alle geopende tools terug naar eigen werk. Zonder eerder werk begin je leeg; bestaande gegevens en conceptinvoer blijven behouden. Via Meer & uitleg > Bekijk voorbeelden start je later een verse oefenronde. Voorbeelden blijven buiten je eigen werkmap.
+VASTE BEDIENINGSREGEL
+Een bestaand item openen is altijd lezen. Een kaart, rij of zoekresultaat opent
+eerst een rustige detailweergave. Bewerken begint pas na een afzonderlijke,
+duidelijke knop Bewerken. Alleen Nieuw of Toevoegen opent direct een formulier.
+
+BEGINNEN
+Kies een werkmap en voeg je eigen documenten en gegevens toe. Gebruik Bewaar alles om verder te kunnen werken.

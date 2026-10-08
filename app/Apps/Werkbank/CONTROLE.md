@@ -25,3 +25,9 @@ De browserproef gebruikt gesimuleerde maphandles. De echte toestemmingsdialoog, 
 De nulmeting voor netwerkverkeer geldt voor de proef. Webafbeeldingen en het bewust afspelen van YouTube kunnen wel verbinding maken; zie PRIVACY.md.
 
 De toestemming van Joost Plattel is op 13 september 2026 verwerkt: de applicatie krijgt MIT met naamsvermelding; bibliotheken houden hun eigen licenties. Zie HERKOMST.md. Dit pakket is voorbereid voor publicatie en nog niet openbaar gepubliceerd.
+
+## Aanvulling 26 september 2026
+
+Schrijven is opnieuw vergeleken met de live Werkbank. Uitklapbare documentgegevens, een zichtbare donkerestand en de overgang van kop naar alinea zijn toegevoegd. De mobiele Dropbox-koppeling en AI-functies horen bewust niet bij deze deelbare offline versie; er is geen API-sleutel nodig.
+
+De code- en pakketcontrole, opslagproef en herstelproef zijn geslaagd. Een nieuwe visuele browserproef van het lokale HTML-bestand kon in deze omgeving niet worden uitgevoerd. Controleer voor publicatie met de meegeleverde demomap of documentgegevens, donkerestand en Enter na een kop zichtbaar werken.

@@ -1,76 +1,84 @@
 # Werkplaats
 
-Je complete lokale werkomgeving met negen praktische tools. Geen account, installatie, externe database of API-sleutel nodig. Je werkt met je eigen bestanden.
+Een lokale werkplek voor schrijven, bronnen, projecten en administratie. Zonder account, externe database of API-sleutels. Je werk blijft op je eigen computer.
 
-[![Werkplaats-homepagina met negen lokale tools](images/werkplaats-home.png)](https://erwinblom.github.io/werkplaats/)
+[![Werkplaats Home](images/werkplaats-home.png)](https://erwinblom.github.io/werkplaats/)
 
-**[Direct gebruiken](https://erwinblom.github.io/werkplaats/)** · **[Download voor offline gebruik](https://github.com/erwinblom/werkplaats/releases/latest/download/Werkplaats.zip)**
+**[Open Werkplaats in je browser](https://erwinblom.github.io/werkplaats/)** · **[Download voor offline gebruik](https://github.com/erwinblom/werkplaats/releases/latest/download/Werkplaats.zip)**
 
-Download de ZIP, pak hem volledig uit en open **Begin hier.html**. De online en downloadversie hebben dezelfde bediening en gebruiken dezelfde bestanden. Ze synchroniseren niet automatisch.
+Download de ZIP, pak hem volledig uit en open **Werkplaats → Begin hier.html**. Alle overige bestanden staan in **Bestanden**; laat die map intact.
 
-| Tool | Waarvoor? |
+Website en download worden uit dezelfde gecontroleerde Master gemaakt. Een gedownloade versie werkt zichzelf niet bij: download voor verbeteringen de nieuwe uitgave. Je werk wordt niet automatisch gesynchroniseerd tussen versies of browsers.
+
+## Beginnen
+
+Je begint met je eigen werk. Er is geen voorbeeldstand met fictieve projecten, contacten of financiële gegevens.
+
+1. Kies **Nieuw beginnen** om een werkmap te maken, of **Verder werken** om je bestaande werkmap te openen.
+2. Met **Begin in drie stappen** kun je direct je eerste notitie maken en in je werkmap bewaren.
+3. Gebruik **Bewaar alles** om werk en concepten uit alle tools vast te leggen. Open de volgende keer dezelfde werkmap.
+
+Gebruik Chrome of Edge op je computer voor maptoegang. Zonder maptoegang kun je losse bestanden importeren en exporteren. Controleer zelf of een download is opgeslagen. Browseropslag is een tijdelijke werkkopie; je werkmap en back-ups zijn de blijvende kopieën.
+
+Bestaande gebruikers: bewaar eerst je actuele werk in de oude versie. Open na de update dezelfde werkmap via Verder werken; vertrouw niet op een nog aanwezige browserkopie.
+
+## Wat zit erin?
+
+| Onderdeel | Gebruik |
 |---|---|
-| Schrijven | Markdown-documenten lezen, schrijven en ordenen |
-| Factureren | Facturen maken en definitief vastleggen |
+| Verzamelen | Links, citaten, bronnen en bestanden bewaren |
+| Schrijven | Notities en documenten; gekoppelde bronnen, afbeeldingen en ander materiaal |
+| Zoeken | Je eigen werk doorzoeken |
+| Projecten | Tijdelijke en doorlopende projecten met gekoppeld materiaal |
 | Doen | Taken, deadlines en prioriteiten |
-| Verzamelen | Links, citaten en notities |
-| Uren schrijven | Gewerkte tijd bijhouden |
-| Contact houden | Contactgegevens, gesprekken en vervolgacties |
-| Plannen | Projecten, publicaties en activiteiten |
-| Offreren | Voorstellen met prijzen en afspraken |
-| Boekhouden | Inkomsten, uitgaven en bonnen |
+| Contacten | Contactgegevens, gesprekken en vervolgacties |
+| Factureren | Facturen, offertes en uren; zelf controleren en delen |
+| Abonnementen | Kosten, verlengdatums en opzegdatums bijhouden |
+| Boekhouden | Inkomsten, uitgaven, bonnen en export |
 
-## Eerst proberen
+Via **Instellingen** kies je welke onderdelen zichtbaar zijn, hun volgorde en je starttool. Verborgen onderdelen behouden hun gegevens. De interface ondersteunt Nederlands en Engels; je eigen inhoud blijft in zijn oorspronkelijke taal.
 
-Nieuwe gebruikers beginnen met voorbeelden rond de fictieve Buurtwerkplaats De Proeftuin. Kies Begin met mijn eigen werk voor een lege eigen werkruimte. Bestaande eigen gegevens blijven behouden. Met Bekijk voorbeelden kun je later opnieuw oefenen, apart van je eigen werk. Voorbeeldfacturen krijgen geen definitief nummer. Gedownloade JSON-voorbeelden hebben voorbeeld in de bestandsnaam en kunnen niet als eigen administratie worden geopend. Bewaar je eigen werk altijd zelf in een bestand.
+[Uitleg en gebruik](https://erwinblom.github.io/werkplaats/Uitleg.html) · [Over Werkplaats](https://erwinblom.github.io/werkplaats/Over.html) · [Privacy](app/PRIVACY.md)
 
-## Bediening en uitleg
+## Bewaren, herstel en overstappen
 
-[Uitleg en gebruik](https://erwinblom.github.io/werkplaats/Uitleg.html) beschrijft alle tools en het verschil tussen openen, browseropslag en downloaden. Elke tool toont een vaste bestandsstatus. Gewijzigde formulieren waarschuwen bij sluiten. Een downloadmelding bevestigt alleen dat de download is gestart; controleer zelf of het bestand is opgeslagen.
+**Bewaar** of **Sluit** verwerkt je invoer in de betreffende tool. **Bewaar alles** schrijft de hele werkruimte naar je werkmap, inclusief concepten, met een actuele bewaarronde en een vorige herstelkopie. Bij **Verder werken** haal je die werkruimte terug. Een document in een externe map blijft bij zijn oorspronkelijke bestand.
 
-## Bewaar je werk
+**Download back-up** maakt een ZIP van de laatst bewaarde werkmap. Gebruik eerst Bewaar alles. Losse JSON-, Markdown-, CSV- en PDF-exports staan bij de betreffende tool. Verwijderacties gebruiken waar beschikbaar de Prullenbak om terugzetten mogelijk te houden.
 
-**Mijn werkmap** bewaart alles in één gekozen map, met negen toolmappen. **Bewaar bestand** schrijft dan rechtstreeks naar het vaste gegevensbestand. Bij Schrijven komt een nieuw los document in de submap Schrijven en blijft daarna gekoppeld aan dat bestand. Een document uit een andere geopende map wordt altijd in zijn eigen map opgeslagen. Bij overschrijven wordt eerst een herstelkopie gemaakt. Kies een volgende keer **Open uit werkmap**. CSV, bonnen en overdrachten komen in Exports; bij PDF kies je de map in het afdrukvenster.
+Wil je tussen website en download wisselen? Bewaar eerst, sluit de vorige versie en open dezelfde werkmap. Gebruik één actuele administratie; werk niet onafhankelijk in meerdere kopieën.
 
-Zonder werkmap downloadt **Bewaar bestand** je werk. Kies de volgende keer **Bestand openen** en selecteer je laatst bewaarde bestand. Bewaar opnieuw na wijzigingen. Browseropslag is geen back-up. Bewaar het actuele bestand voordat je overstapt tussen online en offline. Vooral bij Factureren gebruik je steeds één actuele administratie; werk niet onafhankelijk in meerdere kopieën.
+## Link Bewaren
 
-Chrome en Edge op een computer zijn de aanbevolen browsers. Organisatiebeleid kan bestandskeuze, downloaden of maptoegang beperken. Schrijven kan ook losse Markdown-bestanden openen zonder toestemming voor een hele map. De downloadversie werkt zonder netwerk; de website vraagt verbinding bij het openen.
+[Link Bewaren — lokaal](https://erwinblom.github.io/werkplaats/Link-bewaren.html) is een optionele Chrome-/Edge-extensie voor Verzamelen. Links blijven lokaal; via **Importeer links** haal je ze naar Werkplaats. Voor lokaal gebruik zet je in de browser **Toegang tot bestands-URL's toestaan** aan. De actuele extensie ondersteunt de website en de downloadindeling met Bestanden.
 
-[Privacy](app/PRIVACY.md) · [Gebruiksaanwijzing](app/LEESMIJ.txt)
+De losse extensie staat in [extensies/link-bewaren-lokaal](extensies/link-bewaren-lokaal/LEESMIJ.md). Er is geen Google Sheet of aparte opslagserver nodig.
 
-## Koppelingen
+## Bron en uitgave
 
-Bij Offreren en Boekhouden kies je **Zoek in Contacten** om op naam, organisatie of e-mail te zoeken. Met Mijn werkmap leest de kiezer het bewaarde bestand in Contact houden. Bewaar wijzigingen in Contact houden eerst met Bewaar bestand. Zonder werkmap gebruikt de online versie beschikbare browsercontacten; je kunt ook zelf een Contacten-bestand openen. De gekozen gegevens worden alleen in het open formulier ingevuld.
+De dagelijkse ontwikkelapp blijft de enige ontwikkelbron. De vaste Master-builder sluit persoonlijke werkgegevens, privé-sync, persoonlijke feedback, herstelinstellingen en de persoonlijke boekhoudexport uit. Alleen die gecontroleerde Master wordt hier geïmporteerd. Ontwikkel de publiekskopie niet los van de oorspronkelijke App.
 
-Gegevens overnemen werkt met lokale overdrachtsbestanden: uren naar facturen, ontvangen facturen naar Boekhouden, geplande projecten en contactacties naar taken, taken naar uren en geselecteerde bronnen naar een Markdown-document. Geaccepteerde offertes kunnen ook naar Factureren; contactgegevens kunnen naar Offreren en Factureren.
+- `app/`: gecontroleerde publieksbron uit de Master.
+- `release/master-bestanden.json`: controlecodes en uitsluitingen van die import.
+- `docs/`: gegenereerde GitHub Pages-website.
+- `dist/Werkplaats.zip`: gegenereerde download, buiten Git opgeslagen.
 
-Open steeds eerst het actuele bestand in de ontvangende tool en gebruik daarna de specifieke overneemknop. Controleer en bewaar je bijgewerkte administratie. Uren zijn eerst Klaargezet; na definitief factureren geef je het factuurnummer terug via Uren als gefactureerd terugmelden / Factuurstatus bijwerken. Ontvangsten ondersteunen één volledige betaling per factuur. Dubbele overdrachten worden binnen dezelfde actuele administratie herkend. Dit is geen automatische synchronisatie.
-
-Zie [stappen per koppeling](https://erwinblom.github.io/werkplaats/Uitleg.html#koppelingen) en [het open overdrachtsformaat](app/koppelingen/FORMAAT.md).
-
-## Ontwerp
-
-[De gedeelde ontwerpregels](ONTWERPREGELS.md) gelden voor alle tools en nieuwe functies: het werk krijgt aandacht, bediening ondersteunt en uitleg blijft op de achtergrond.
-
-## Ontwikkeling
-
-`app/` is de enige bron voor de tools. `docs/` is de gegenereerde website voor GitHub Pages. Bewerk `app/` en voer daarna uit:
+Na het maken van de schone Master:
 
 ```sh
+python3 scripts/import-master.py /pad/naar/Master
 python3 scripts/build.py
 python3 scripts/check.py
 ```
 
-Dat maakt ook `dist/Werkplaats.zip`. Publiceer de ZIP en SHA256SUMS.txt bij dezelfde release als de website. GitHub Pages gebruikt `main` → `/docs`. Voor het bouwen zijn geen Node-pakketten of builddiensten nodig. De optionele browsertests in tests/ gebruiken Playwright en Chrome.
+Importeren controleert eerst de Master tegen het manifest. Bouwen maakt website en ZIP uit dezelfde bestanden, zonder een tweede versie van de appcode te onderhouden. GitHub Pages gebruikt `main` → `/docs`. Publiceer de ZIP en SHA256SUMS.txt bij dezelfde uitgave als de website; alleen een Git-push werkt de release-download niet bij.
 
-De bestaande technische mapnamen zijn behouden voor compatibiliteit; de zichtbare appnaam is bijvoorbeeld Schrijven en Plannen.
+De browserproef voor deze uitgave staat in [tests/publieke-uitgave.cjs](tests/publieke-uitgave.cjs). Gebruik een bestaande Playwright-installatie via NODE_PATH. Zie [de controles en grenzen](release/CONTROLE.md). Oudere tests in tests/ stammen deels uit de vorige interface en zijn geen actuele acceptatieclaim.
 
 ## Herkomst en licenties
 
-Eigen code: MIT, zie [LICENSE](LICENSE). Schrijven bouwt voort op **Markdown Browser van Joost Plattel**. Zie [herkomst](app/Apps/Werkbank/HERKOMST.md) en [licenties van gebruikte bibliotheken](app/Apps/Werkbank/THIRD_PARTY_NOTICES.md). Bijdragen zijn welkom via issues en pull requests.
+Schrijven bouwt voort op Markdown Browser van Joost Plattel. Zie [herkomst](app/Apps/Werkbank/HERKOMST.md) en [licenties van gebruikte onderdelen](app/Apps/Werkbank/THIRD_PARTY_NOTICES.md).
 
-## Gezamenlijke werkruimte
+De eigen code is beschikbaar onder de [MIT-licentie](LICENSE). Organisaties kunnen Werkplaats ook op een eigen website of intranet aanbieden.
 
-De gewone bewaaractie is `Bewaar alles`: complete bewaarronden inclusief concepten, één actuele verwijzing en één vorige herstelkopie. `Open werkmap` hydrateert alle bewaarde tools, ook bij lege browseropslag. Een ZIP is een optionele back-up. Interne koppelingen gebruiken gedeelde lokale sessies; losse import/export blijft beschikbaar. De bestaande werkbestanden worden niet gewist.
-
-Controles voor deze ronde: `tests/bewaar-alles.cjs`, `tests/samenwerken.cjs` en `tests/werkruimte-ui.cjs`. De tests gebruiken een eigen browserprofiel en fictieve data; de mapkiezer wordt vervangen door een echte browserbestandssysteemmap. Een handmatige proef met de native mapkiezer blijft nodig voor browser- en organisatiebeleid.
+Gemaakt door [Erwin Blom](https://github.com/erwinblom).

@@ -1,0 +1,14 @@
+<!doctype html>
+<html lang="nl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="referrer" content="strict-origin-when-cross-origin"><title>Video afspelen</title><style>html,body{margin:0;height:100%;background:#000;color:#fff;font-family:system-ui}iframe{display:block;width:100%;height:100%;border:0}p{padding:1rem}</style><link rel="stylesheet" href="../../acties.css?v=20261006-personal-title-1"><link rel="stylesheet" href="../../blom-os-tokens.css?v=20261006-vlakken-1"><link rel="stylesheet" href="../../blom-os-ui.css?v=20261008-select-inset-1"></head><body><script>
+const id=new URLSearchParams(location.search).get('v');
+if(/^[A-Za-z0-9_-]{11}$/.test(id||'')){
+ const frame=document.createElement('iframe');
+ frame.src='https://www.youtube-nocookie.com/embed/'+id+'?autoplay=1';
+ I18n.assign(frame,I18n.ui("YouTube-video",'YouTube-video'),"title");
+ frame.allow='autoplay; encrypted-media; picture-in-picture; fullscreen';
+ frame.allowFullscreen=true;
+ frame.referrerPolicy='strict-origin-when-cross-origin';
+ document.body.append(frame);
+ window.parent.postMessage({channel:'werkplaats-youtube-player-ready',id},'*');
+}else{const message=document.createElement('p');I18n.assign(message,I18n.ui("Deze videolink is ongeldig.",'Deze videolink is ongeldig.'),"textContent");document.body.append(message);}
+</script><script>document.addEventListener('taal-gewijzigd',()=>{if(typeof render==='function')render();});</script></body></html>

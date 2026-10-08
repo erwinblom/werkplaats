@@ -33,3 +33,6 @@ Naam, organisatie en e-mail worden als eigen kopie in de offerte bewaard. Bij ov
 
 NIEUW CONTACT VANUIT OFFERTE
 Klik op Kies contact en daarna + Nieuw contact. Open eerst je bestaande Contacten-bestand als het nieuwe contact daaraan moet worden toegevoegd. Vul naam, organisatie en e-mail in en klik Contact toevoegen en gebruiken. Een bijgewerkt Contacten-bestand wordt gedownload; bestaande contacten en notities blijven behouden. Zonder geopend bestand begin je een nieuwe verzameling. Controleer je downloadmap en open het bijgewerkte bestand later in Contacten. De oorspronkelijke bestanden worden niet overschreven. Bewaar daarnaast je offerte.
+
+Uitgebreide beschrijving
+Bovenaan de offerte kies je Voeg document toe. Selecteer een document uit Schrijven of een lokaal Markdown-bestand. De offerte bewaart een vaste kopie; bewerken in Schrijven verandert de offerte niet. Document bijwerken opent de documentkeuze opnieuw. Kies daarna Bewaren en Bewaar alles. Afdrukken / PDF bewaren toont eerst de beschrijving en daarna de prijsopgave op een nieuwe pagina. Controleer de PDF voordat je verstuurt. Afbeeldingen worden in deze eerste versie niet overgenomen.

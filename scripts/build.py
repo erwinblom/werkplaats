@@ -1,33 +1,34 @@
 #!/usr/bin/env python3
-"""Build the website and download from the same app source. Python standard library only."""
+"""Maak website en eenvoudige download uit dezelfde gecontroleerde publieksbron."""
 from pathlib import Path
-import shutil,re,zipfile,hashlib,subprocess,sys
-ROOT=Path(__file__).resolve().parent.parent
-subprocess.run([sys.executable,str(ROOT/'scripts/build-link-bewaren.py')],check=True)
+import shutil, zipfile, hashlib, subprocess, sys
+ROOT=Path(__file__).resolve().parents[1]
 source=ROOT/'app';web=ROOT/'docs';dist=ROOT/'dist'
+# The imported Master contains the checked extension ZIP. Do not replace it
+# with a separately developed extension or alter the app storage namespace.
 if web.exists():shutil.rmtree(web)
 shutil.copytree(source,web,ignore=shutil.ignore_patterns('.DS_Store'))
-# GitHub Pages project sites share an origin. Namespace the website cache to
-# avoid accidental collisions with other Erwin Blom tools; JSON stays portable.
-keys=['ping-local-v1','projectbord-v1','bronnenkast-v1','uren-v1','contacten-v1','publicatieplanner-v1','offerte-v1','kasboek-v1','MarkdownWerkbankLocalV2','converterFiles','theme','lastOpenFile','sidebarWidth','mw-project','mw-folders-','mw-document-','mw-start-','ping-finalize-v2']
-for file in web.rglob('*'):
- if file.suffix not in ('.html','.js') or 'vendor' in file.parts:continue
- text=file.read_text()
- for key in keys:
-  for quote in ["'",'"']:
-   text=text.replace(quote+key+quote,quote+'gereedschapskist:'+key+quote)
- file.write_text(text)
-# Keep the development notice on the website, outside the offline download.
 homepage=web/'Begin hier.html'
 notice_style='<style>.work-notice{margin:18px 0 0;padding:14px 18px;border-left:6px solid #e32720;background:#111;color:#fff;font:16px/1.5 Arial,Helvetica,sans-serif}.work-notice strong{display:block;font-size:20px;text-transform:uppercase;letter-spacing:.4px}</style>'
 notice='<aside class="work-notice" aria-label="Werk in uitvoering"><strong>Werk in uitvoering!</strong>Aan deze site wordt nog voortdurend gesleuteld.</aside>'
 homepage.write_text(homepage.read_text().replace('</head>',notice_style+'</head>').replace('<main>','<main>'+notice,1))
-(web/'index.html').write_text(homepage.read_text())
-(web/'.nojekyll').touch()
+(web/'index.html').write_text(homepage.read_text());(web/'.nojekyll').touch()
+launcher='''<!doctype html>
+<html lang="nl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Werkplaats openen</title></head>
+<body><p><a href="Bestanden/Begin%20hier.html">Open Werkplaats →</a></p>
+<script>
+const destination=new URL('Bestanden/Begin%20hier.html',location.href);
+destination.search=location.search;destination.hash=location.hash;
+location.replace(destination.href);
+</script></body></html>
+'''
 dist.mkdir(exist_ok=True)
 with zipfile.ZipFile(dist/'Werkplaats.zip','w',zipfile.ZIP_DEFLATED) as archive:
+ def add(name,content):
+  info=zipfile.ZipInfo(name,date_time=(2026,10,8,0,0,0));info.compress_type=zipfile.ZIP_DEFLATED;archive.writestr(info,content)
+ add('Werkplaats/Begin hier.html',launcher.encode())
  for file in sorted(source.rglob('*')):
-  if file.is_file() and file.name!='.DS_Store':archive.write(file,Path('Werkplaats')/file.relative_to(source))
+  if file.is_file() and file.name!='.DS_Store':add('Werkplaats/Bestanden/'+str(file.relative_to(source)),file.read_bytes())
 with zipfile.ZipFile(dist/'Werkplaats.zip') as archive:assert archive.testzip() is None
 (dist/'SHA256SUMS.txt').write_text(hashlib.sha256((dist/'Werkplaats.zip').read_bytes()).hexdigest()+'  Werkplaats.zip\n')
-print('Gebouwd: docs/ en dist/Werkplaats.zip')
+print('Gebouwd: docs/ en dist/Werkplaats.zip; één startbestand en Bestanden/.')

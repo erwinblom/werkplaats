@@ -1,0 +1,55 @@
+/* Shared action blocks and native popup frames. Order comes from source markup. */
+:root{--wp-action-height:40px;--wp-action-gap:10px;--wp-dialog-width:640px;--wp-dialog-padding:28px}
+body dialog{box-sizing:border-box;width:min(var(--wp-dialog-width),calc(100vw - 32px));max-width:calc(100vw - 32px);max-height:calc(100dvh - 32px);margin:auto;padding:var(--wp-dialog-padding);border:1px solid var(--border,#bbb);border-radius:0;background:var(--bg-primary,#fff);color:var(--text-primary,#222);font:15px/1.5 Arial,sans-serif;overflow:auto;box-shadow:0 18px 60px #0004}
+body dialog:modal{position:fixed;top:50%;left:50%;right:auto;bottom:auto;transform:translate(-50%,-50%);margin:0}
+body dialog::backdrop{background:#0008}
+body dialog h2{margin:0 0 16px;font:700 25px/1.25 Arial,sans-serif;overflow-wrap:anywhere}
+body :is(.wp-actions,.form-actions,.note-actions,.document-connections-actions,.my-tools-actions,.organization-actions,.plan-overview-actions,.invoice-edit-actions){display:flex;align-items:center;justify-content:flex-end;gap:var(--wp-action-gap);flex-wrap:wrap;margin:20px 0 0;padding:16px 0 0;border-top:1px solid var(--border,#ddd)}
+body :is(.suite-tool-actions,.file-actions){display:flex;align-items:center;gap:var(--wp-action-gap);flex-wrap:wrap;margin:0;padding:0}
+body :is(.wp-actions,.form-actions,.note-actions,.document-connections-actions,.my-tools-actions,.organization-actions,.plan-overview-actions,.invoice-edit-actions,.suite-tool-actions,.file-actions)>button,body dialog button,body .file-more>summary,body #writing-focus-bar button{box-sizing:border-box;min-height:var(--wp-action-height);padding:9px 14px;border:1px solid var(--border,#bbb);border-radius:0;background:var(--bg-primary,#fff);color:var(--text-primary,#222);font:600 14px/1.4 Arial,sans-serif;cursor:pointer;text-decoration:none}
+body :is(.wp-actions,.form-actions,.note-actions,.document-connections-actions,.my-tools-actions,.organization-actions,.plan-overview-actions,.invoice-edit-actions)>:is(.primary,.notes-primary,.action-primary),body .suite-tool-actions>.primary,body .file-actions>.document-edit-primary,body .file-actions>#editorSaveButton,body .file-actions>#loose-save,body #writing-focus-bar [data-focus-save]{background:var(--wp-accent,#c51d17);color:#fff;border-color:var(--wp-accent,#c51d17)}
+body :is(.wp-actions,.form-actions,.note-actions,.document-connections-actions,.my-tools-actions,.organization-actions,.plan-overview-actions,.invoice-edit-actions)>:is(.action-delete,#delete,#invoice-delete,[data-delete],[data-remove]){margin-right:auto}
+body button:is(.action-delete,.delete-file-btn,#delete,#invoice-delete,[data-delete],[data-remove]){border:1px solid #c7aaa7;background:var(--bg-primary,#fff);color:#a32620;text-decoration:none}
+body :is(.wp-actions,.form-actions,.note-actions,.file-actions,.suite-tool-actions,#writing-focus-bar,dialog) button:disabled{opacity:.5;cursor:default}
+body :is(.wp-actions,.form-actions,.note-actions,.file-actions,.suite-tool-actions,#writing-focus-bar,dialog) button:focus-visible{outline:2px solid var(--wp-accent,#c51d17);outline-offset:3px}
+body #content .content-header{display:flex;flex-direction:column;align-items:stretch;gap:12px;margin:0 0 28px;padding:0 0 16px;border:0;border-bottom:1px solid var(--border,#eee)}
+body #content .document-information{font:13px/1.5 Arial,sans-serif;color:var(--text-secondary,#666)}
+body #content .document-information>summary{display:list-item;cursor:pointer;font-weight:400;padding:4px 0}
+body #content .document-information .file-path-heading{display:block;margin-top:12px}
+body #content .document-information .document-name{display:block;font-size:14px;font-weight:600;overflow-wrap:anywhere}
+body #content .document-information :is(.document-folder,.document-save-status){display:block;margin:6px 0;font-size:12px}
+body #content .file-actions{justify-content:flex-start}
+body #content .file-actions>.document-focus{margin-left:auto}
+body #content .editor-actions #editorModified{flex-basis:100%;font-size:12px;color:var(--text-secondary,#666)}
+body .writing-word-count{margin-left:auto;color:var(--text-secondary,#666);font:400 13px/1.4 Arial,sans-serif;white-space:nowrap;font-variant-numeric:tabular-nums}
+body #writing-focus-bar{display:flex;align-items:center;gap:var(--wp-action-gap);position:fixed;inset:0 0 auto;min-height:64px;box-sizing:border-box;padding:10px 24px;background:var(--bg-primary,#fff);color:var(--text-primary,#222);border-bottom:1px solid var(--border,#ddd);z-index:110;font:13px/1.4 Arial,sans-serif}
+body #writing-focus-bar[hidden]{display:none}
+body #writing-focus-bar .focus-name{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:24vw}
+body #writing-focus-bar .focus-status{color:var(--text-secondary,#666)}
+body #writing-focus-bar [data-focus-close]{margin-left:auto}
+@media(max-width:650px){:root{--wp-dialog-padding:20px}body #writing-focus-bar{gap:6px;padding:8px 12px;flex-wrap:wrap}body #writing-focus-bar .focus-name{display:none}body #writing-focus-bar button{padding:8px 10px}body #content .file-actions>.document-focus{margin-left:0}body .writing-word-count{flex-basis:100%;margin-left:0}}
+@media print{body dialog,body :is(.wp-actions,.form-actions,.note-actions,.file-actions,.suite-tool-actions,#writing-focus-bar){display:none!important}}
+
+body .wp-actions:not(:has(.primary,.notes-primary,.action-primary))>button[type=submit]{background:var(--wp-accent,#c51d17);color:#fff;border-color:var(--wp-accent,#c51d17)}
+
+/* Focus uses the same action primitives; only the writing sheet changes layout. */
+body.writing-focus{background:var(--bg-primary,#fff)}
+body.writing-focus .brandbar,body.writing-focus .projectbar,body.writing-focus .save-help,body.writing-focus .suite-navigation,body.writing-focus .suite-tool-actions,body.writing-focus #werkmap,body.writing-focus .workspace-management,body.writing-focus .mobile-toggle,body.writing-focus .overlay,body.writing-focus .suite-help,body.writing-focus .workspace-help{display:none!important}
+body.writing-focus #app{display:block!important;min-height:calc(100dvh - 80px);padding:0!important;margin-top:80px!important}
+body.writing-focus #sidebar,body.writing-focus #focusPanel{display:none!important}
+body.writing-focus .main{padding:0!important;max-width:none!important;width:100%}
+body.writing-focus #content{box-sizing:border-box;max-width:760px!important;width:100%;margin:0 auto!important;padding:40px 28px 120px!important;border:0!important;box-shadow:none!important;background:transparent}
+body.writing-focus #content .content-header,body.writing-focus .editor-status,body.writing-focus .backlinks-section{display:none!important}
+body.writing-focus .editor-wrapper{border:0!important;box-shadow:none!important;background:transparent}
+body.writing-focus .markdown-content,body.writing-focus .wysiwyg-editor{font-size:19px;line-height:1.8;padding:0!important;outline:none;min-height:65vh}
+body.writing-focus .markdown-content h1{font-size:32px;line-height:1.25;margin-top:0}
+body.writing-focus #kladblok-panel{top:80px}
+@media(max-width:650px){body.writing-focus #content{padding:28px 20px 80px!important}body.writing-focus .markdown-content{font-size:18px}}
+body.writing-focus .workspace-strip,body.writing-focus #workspace-help,body.writing-focus .workspace-context{display:none!important}
+
+body.writing-focus .wysiwyg-toolbar{margin-bottom:24px;background:transparent;border:0;border-bottom:1px solid var(--border,#ddd);padding:8px 0;gap:4px}
+
+@media(max-width:650px){body.writing-focus #app{margin-top:140px!important}}
+
+body.writing-focus :is(.writing-views,#writing-first-start,#writing-access-prompt,#wm-message){display:none!important}
+@media(max-width:650px){body #writing-focus-bar{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));align-items:center}body #writing-focus-bar .focus-status{grid-column:1/-1}body #writing-focus-bar button{min-width:0;font-size:13px;padding:8px 6px}body #writing-focus-bar .writing-word-count{margin:0;min-width:0;font-size:12px}body #writing-focus-bar [data-focus-close]{grid-column:3;margin-left:0}}

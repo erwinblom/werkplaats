@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html lang="nl" data-theme="light">
-<head>
+<head><script src="../../taal-woordenboek.js?v=20261008-startroute-1"></script><script src="../../taal.js?v=20261006-personal-title-1"></script><script src="../../uiterlijk.js?v=20261006-personal-title-1"></script><link rel="stylesheet" href="../../uiterlijk.css?v=20261006-personal-title-1"><script src="../../prullenbak.js?v=20261006-personal-title-1"></script><link rel="stylesheet" href="../../overgangen.css?v=20261006-personal-title-1"><script src="../../overgangen.js?v=20261006-personal-title-1"></script><script src="../../publieksproef-opslag.js?v=20261007-requests-1"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self' file:; script-src 'self' file: 'unsafe-inline'; style-src 'self' file: 'unsafe-inline'; img-src 'self' file: data: blob: https: http:; connect-src 'none'; frame-src https://www.youtube-nocookie.com; object-src 'none'; base-uri 'none'">
+    <meta http-equiv="Content-Security-Policy" content="default-src &#x27;self&#x27; file:; script-src &#x27;self&#x27; file: &#x27;unsafe-inline&#x27;; style-src &#x27;self&#x27; file: &#x27;unsafe-inline&#x27;; img-src &#x27;self&#x27; file: data: blob: https: http:; connect-src &#x27;none&#x27;; frame-src https://www.youtube-nocookie.com; object-src &#x27;none&#x27;; base-uri &#x27;none&#x27;">
 <title>Schrijven</title>
-    <script src="../../werkruimte-keuze.js"></script><script src="../../voorbeelden.js"></script><script src="../../voorbeeldstand.js" data-tool="Werkbank" data-key="converterFiles"></script><script src="../../werkstatus.js"></script><script src="../../werkmap.js"></script><link rel="stylesheet" href="../../verbeteringen.css">
-    <script src="Onderdelen/projects.js"></script>
-    <script src="Onderdelen/ignore-rules.js"></script>
+    <script src="../../werkruimte-keuze.js?v=20261006-personal-title-1"></script><script src="../../voorbeelden.js?v=20261006-personal-title-1"></script><script src="../../voorbeeldstand.js?v=20261006-personal-title-1" data-tool="Werkbank" data-key="converterFiles"></script><script src="../../werkstatus.js?v=20261006-personal-title-1"></script><script src="../../startwerkmap.js?v=20261008-remember-workmap-1"></script><script src="../../werkmap.js?v=20261008-remember-workmap-1"></script><link rel="stylesheet" href="../../verbeteringen.css?v=20261006-personal-title-1">
+    <script src="Onderdelen/projects.js?v=20261006-personal-title-1"></script>
+    <script src="Onderdelen/ignore-rules.js?v=20261006-personal-title-1"></script>
     <script src="Onderdelen/vendor/marked.min.js"></script>
-    <script src="Onderdelen/internal-links.js"></script>
-    <link rel="stylesheet" href="Onderdelen/internal-links.css">
+    <script src="Onderdelen/internal-links.js?v=20261007-button-roles-1"></script>
+    <link rel="stylesheet" href="Onderdelen/internal-links.css?v=20261006-personal-title-1">
     <script src="Onderdelen/vendor/purify.min.js"></script>
     <script src="Onderdelen/vendor/turndown.js"></script>
     <script src="Onderdelen/vendor/turndown-plugin-gfm.js"></script>
@@ -1277,17 +1277,6 @@
             color: var(--text-muted);
         }
 
-        /* Editor styles */
-        .content-header {
-            position: fixed;
-            top: 16px;
-            right: 24px;
-            z-index: 50;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
         .edit-btn, .save-btn, .cancel-btn {
             padding: 8px 16px;
             font-family: 'JetBrains Mono', monospace;
@@ -1752,40 +1741,34 @@
         }
     </style>
 <meta name="description" content="Je eigen Markdown-bestanden lezen, doorzoeken en bewerken in Schrijven.">
-<link rel="stylesheet" href="Onderdelen/style.css">
+<link rel="stylesheet" href="Onderdelen/style.css?v=20261006-personal-title-1">
 <style>
 /* Werkplaats: shared white, black and red visual system. */
-:root,[data-theme="light"],[data-theme="dark"]{color-scheme:light;--bg-primary:#fff;--bg-secondary:#fff;--bg-tertiary:#f3f3f3;--text-primary:#111;--text-secondary:#595959;--text-muted:#666;--accent:#e32720;--accent-dim:#c51d17;--red:#e32720;--border:#b9b9b9;--line:#b9b9b9;--code-bg:#f3f3f3;--link:#c51d17;--muted:#595959;background:#fff;color:#111}
+:root,[data-theme="light"]{color-scheme:light;--bg-primary:#fff;--bg-secondary:#fff;--bg-tertiary:#f3f3f3;--text-primary:#111;--text-secondary:#595959;--text-muted:#666;--accent:var(--wp-accent,#e32720);--accent-dim:var(--wp-accent,#c51d17);--red:var(--wp-accent,#e32720);--border:#b9b9b9;--line:#b9b9b9;--code-bg:#f3f3f3;--link:var(--wp-accent,#c51d17);--muted:#595959;background:#fff;color:#111}
 html,body{background:#fff!important;color:#111;font-family:Arial,Helvetica,sans-serif}
 button,input,textarea,select{font-family:Arial,Helvetica,sans-serif;border-radius:0!important;box-shadow:none!important}
-button{min-height:42px}button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible,summary:focus-visible{outline:3px solid #e32720;outline-offset:3px}
+button{min-height:42px}button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible,summary:focus-visible{outline:3px solid var(--wp-accent,#e32720);outline-offset:3px}
 header:not(.content-header),.brandbar{background:#fff;border-bottom:5px solid #111;padding:20px 32px;height:auto;min-height:86px;flex-wrap:wrap}
 .brand{font-size:32px;font-weight:900;letter-spacing:-1.3px;text-transform:uppercase;line-height:1.15}
-.brand span,.local-mark{color:#e32720}
+.brand span,.local-mark{color:var(--wp-accent,#e32720)}
 .suite-meta{display:flex;gap:14px;align-items:center;flex-wrap:wrap}
 .suite-back{font-size:11px;font-weight:700;color:#111;text-decoration:none;text-transform:uppercase;letter-spacing:.8px;border-bottom:1px solid #111;padding:8px 0}
-.suite-badge{display:inline-block;font-size:12px;line-height:1.2;font-weight:800;letter-spacing:.7px;background:#111;color:#fff;border-left:5px solid #e32720;padding:12px 14px;white-space:nowrap}
-.primary,.save,.save-btn,.folder-btn,.start-folder,.add-project{background:#111!important;color:#fff!important;border-color:#111!important;font-weight:700}
-.primary:hover,.save:hover,.save-btn:hover,.folder-btn:hover,.start-folder:hover,.add-project:hover{background:#e32720!important;border-color:#e32720!important;color:#fff!important}
+.suite-badge{display:inline-block;font-size:12px;line-height:1.2;font-weight:800;letter-spacing:.7px;background:#111;color:#fff;border-left:5px solid var(--wp-accent,#e32720);padding:12px 14px;white-space:nowrap}
+
+.primary:hover,.save:hover,.save-btn:hover,.folder-btn:hover,.start-folder:hover,.add-project:hover{background:var(--wp-accent,#e32720)!important;border-color:var(--wp-accent,#e32720)!important;color:#fff!important}
 input,textarea,select{background:#fff;color:#111;border-color:#b9b9b9}
 @media(max-width:700px){header:not(.content-header),.brandbar{padding:16px;gap:14px}.brand{font-size:27px}.suite-badge{font-size:11px;padding:10px 12px}.suite-meta{gap:12px}}
 @media print{.suite-meta{display:none!important}}
 
-.brandbar{gap:20px;justify-content:space-between}.brandbar .suite-meta{margin-left:auto}.brandbar .brand{font-size:28px;white-space:normal}.projectbar,.sidebar,.main,.content,.welcome{background:#fff}.projectbar{border-bottom:1px solid #111}.content{border:1px solid #111;border-top:4px solid #111}.sidebar{border-right:1px solid #111}.sidebar-header h1{font-size:13px;font-weight:800;letter-spacing:1px}.tree-file.active,.file-item.active{background:#111!important;color:#fff!important;border-left:4px solid #e32720}.tree-file.active *,.file-item.active *{color:#fff!important}.welcome h2{font-weight:900;text-transform:uppercase;letter-spacing:-2px;font-size:clamp(34px,4.5vw,60px)}.welcome p{font-family:Arial,Helvetica,sans-serif;font-size:16px}.markdown-content{font-family:Arial,Helvetica,sans-serif}.markdown-content h1,.markdown-content h2,.markdown-content h3{font-weight:800}.content-header .editor-actions .save-btn:not(:disabled){background:#111;color:#fff;border-color:#111}.content-header .editor-actions .save-btn:not(:disabled):hover{background:#e32720;border-color:#e32720}.focus-panel{background:#111}.focus-panel>.eyebrow,.focus-panel label{color:#fff}.theme-toggle{display:none!important}.folder-tag{background:#fff}.app{min-height:calc(100dvh - 180px)}
+.brandbar{gap:20px;justify-content:space-between}.brandbar .suite-meta{margin-left:auto}.brandbar .brand{font-size:28px;white-space:normal}.projectbar,.sidebar,.main,.content,.welcome{background:#fff}.projectbar{border-bottom:1px solid #111}.content{border:1px solid #111;border-top:4px solid #111}.sidebar{border-right:1px solid #111}.sidebar-header h1{font-size:13px;font-weight:800;letter-spacing:1px}.tree-file.active,.file-item.active{background:#111!important;color:#fff!important;border-left:4px solid var(--wp-accent,#e32720)}.tree-file.active *,.file-item.active *{color:#fff!important}.welcome h2{font-weight:900;text-transform:uppercase;letter-spacing:-2px;font-size:clamp(34px,4.5vw,60px)}.welcome p{font-family:Arial,Helvetica,sans-serif;font-size:16px}.markdown-content{font-family:Arial,Helvetica,sans-serif}.markdown-content h1,.markdown-content h2,.markdown-content h3{font-weight:800}.focus-panel{background:#111}.focus-panel>.eyebrow,.focus-panel label{color:#fff}.folder-tag{background:#fff}.app{min-height:calc(100dvh - 180px)}
 @media(max-width:700px){.brandbar .brand{font-size:23px}.brandbar .suite-meta{margin-left:0}.content{padding:18px}}
-</style><style>
-/* Gedeelde symbolenfamilie, versie 0.12. */
-.tool-symbol{width:32px;height:34px;display:inline-block;flex:none;color:inherit;vertical-align:middle}
-.brand{display:flex;align-items:center;gap:12px;min-width:0}
-.brand .tool-name{color:inherit;min-width:0}
-.brand .tool-symbol{color:#111}
-@media(max-width:480px){.brand{gap:9px}.brand .tool-symbol{width:28px;height:30px}.brand .tool-name{font-size:clamp(20px,6.3vw,27px);overflow-wrap:normal}}
-</style><link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2032%2034%22%20fill%3D%22none%22%20stroke%3D%22%23111%22%20stroke-width%3D%222.4%22%20stroke-linecap%3D%22square%22%20stroke-linejoin%3D%22miter%22%20role%3D%22img%22%20aria-label%3D%22Schrijven%22%3E%3Crect%20x%3D%220%22%20y%3D%220%22%20width%3D%2232%22%20height%3D%2234%22%20fill%3D%22white%22%20stroke%3D%22none%22%2F%3E%3Cpath%20d%3D%22M7%203h12l6%206v20H7z%20M19%203v7h6%20M11%2015h10%20M11%2020h10%22%2F%3E%3C%2Fsvg%3E"></head>
-<body data-tool="Werkbank">
-<header class="brandbar"><div class="brand"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 34" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="square" stroke-linejoin="miter" class="tool-symbol" aria-hidden="true" focusable="false"><path d="M7 3h12l6 6v20H7z M19 3v7h6 M11 15h10 M11 20h10 M11 25h6"/></svg><span class="tool-name">SCHRIJVEN</span></div><button class="focus-toggle" id="focusToggle" hidden aria-expanded="false" aria-controls="focusPanel" onclick="toggleFocus()">Inhoud tonen</button><div class="suite-meta"><a class="suite-back" href="../../Begin hier.html">← Werkplaats</a><span class="suite-badge">LOKAAL / OPEN SOURCE</span></div></header><style>.save-help{margin:14px 32px;border:1px solid #bbb;border-left:4px solid #e32720;padding:12px 16px;font:14px/1.55 Arial,Helvetica,sans-serif;color:#111;background:#fff}.save-help summary{cursor:pointer;font-weight:bold}.save-help .save-help-body{max-width:780px}.save-help ol{padding-left:22px}.save-help li{margin:8px 0}.save-help p{margin:10px 0}.save-help summary:focus-visible{outline:3px solid #e32720;outline-offset:4px}@media(max-width:600px){.save-help{margin:12px 16px}}@media print{.save-help{display:none!important}}</style><details class="save-help"><summary>Bewaren en later verdergaan</summary><div class="save-help-body"><ol><li><strong>Klaar voor nu?</strong> Klik bovenaan op <strong>Bewaar bestand</strong>. Je browser downloadt je werk. Het bestand staat meestal in Downloads, tenzij je zelf een andere plek kiest.</li><li><strong>Volgende keer:</strong> open deze tool, klik op <strong>Document openen</strong> en kies je laatst bewaarde bestand. Je kunt meteen verderwerken.</li><li><strong>Weer iets gewijzigd?</strong> Klik opnieuw op <strong>Bewaar bestand</strong>. Gebruik voortaan die nieuwste versie.</li></ol><p>Bij Schrijven bewaar je het geopende document als Markdown-bestand (.md). Als je rechtstreeks in een projectmap werkt, slaat de editor wijzigingen in die map op. Bewaar bestand maakt ook dan een aparte download.</p><p><strong>Bewaar je huidige werk voordat je een ander bestand opent.</strong> Er is geen account of automatische synchronisatie. Je browser kan werk tijdelijk onthouden, maar die kopie kan verdwijnen. Je eigen bestand is wat je bewaart en meeneemt, ook tussen de web- en downloadversie.</p></div></details>
-<div class="projectbar"><span class="eyebrow">PROJECT</span><div class="project-navigation"><button id="previousProject" aria-label="Vorig project" onclick="stepProject(-1)">←</button><select id="projectSelect" aria-label="Actief project" onchange="switchProject(this.value)"><option value="all">Alle bestanden</option></select><button id="nextProject" aria-label="Volgend project" onclick="stepProject(1)">→</button></div><button id="addProject" class="add-project" onclick="addFolder(true)">+ Map toevoegen</button><span id="workspaceTitle" hidden></span><p class="project-help">Een project is een map op je computer. Je kunt meerdere mappen toevoegen.</p></div>
-    <button aria-label="Bestanden tonen of verbergen" class="mobile-toggle" onclick="toggleSidebar()">
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+</style><link rel="stylesheet" href="Onderdelen/theme.css?v=20261006-personal-title-1"><link rel="icon" type="image/svg+xml" href="../../Symbolen/gereedschapskist.svg"><link rel="stylesheet" href="../../suite-unified.css?v=20261006-personal-title-1"><link rel="stylesheet" href="Onderdelen/notities.css?v=20261007-neutral-links-1">
+<link rel="stylesheet" href="../../werkruimte-ui.css?v=20261008-startroute-1"><link rel="stylesheet" href="../../tool-gedeeld.css?v=20261006-tool-slim-1"><link rel="stylesheet" href="../../acties.css?v=20261006-personal-title-1"><link rel="stylesheet" href="../../blom-os-tokens.css?v=20261006-vlakken-1"><link rel="stylesheet" href="../../blom-os-ui.css?v=20261008-select-inset-1"></head>
+<body data-tool="Werkbank" class="compact-tools">
+<header class="brandbar"><div class="brand"><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 32 34" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="square" stroke-linejoin="miter" class="tool-symbol" aria-hidden="true" focusable="false"><path d="M7 3h12l6 6v20H7z M19 3v7h6 M11 15h10 M11 20h10 M11 25h6"/></svg><span class="tool-name"><span data-i18n="SCHRIJVEN">SCHRIJVEN</span></span></div><div class="suite-meta"><a class="suite-back" href="../../Begin hier.html?home=1"><span data-i18n="← Werkplaats">← Werkplaats</span></a><span class="suite-badge"><span data-i18n="LOKAAL / OPEN SOURCE">LOKAAL / OPEN SOURCE</span></span></div></header><details class="save-help"><summary><span data-i18n="Bewaar en later verdergaan">Bewaar en later verdergaan</span></summary><div class="save-help-body"><ol><li><strong><span data-i18n="Klaar voor nu?">Klaar voor nu?</span></strong> <span data-i18n="Klik bovenaan op">Klik bovenaan op</span> <strong><span data-i18n="Bewaar">Bewaar</span></strong><span data-i18n=". Je browser downloadt je werk. Het bestand staat meestal in Downloads, tenzij je zelf een andere plek kiest.">. Je browser downloadt je werk. Het bestand staat meestal in Downloads, tenzij je zelf een andere plek kiest.</span></li><li><strong><span data-i18n="Volgende keer:">Volgende keer:</span></strong> <span data-i18n="open deze tool, klik op">open deze tool, klik op</span> <strong><span data-i18n="Document openen">Document openen</span></strong> <span data-i18n="en kies je laatst bewaarde bestand. Je kunt meteen verderwerken.">en kies je laatst bewaarde bestand. Je kunt meteen verderwerken.</span></li><li><strong><span data-i18n="Weer iets gewijzigd?">Weer iets gewijzigd?</span></strong> <span data-i18n="Klik opnieuw op">Klik opnieuw op</span> <strong><span data-i18n="Bewaar">Bewaar</span></strong><span data-i18n=". Gebruik voortaan die nieuwste versie.">. Gebruik voortaan die nieuwste versie.</span></li></ol><p><span data-i18n="Bewaar werkt het document bij in zijn map. Zonder gekoppelde map maakt Bewaar een download. Meer → Exporteren maakt een losse kopie.">Bewaar werkt het document bij in zijn map. Zonder gekoppelde map maakt Bewaar een download. Meer → Exporteren maakt een losse kopie.</span></p><p><strong><span data-i18n="Bewaar je huidige werk voordat je een ander bestand opent.">Bewaar je huidige werk voordat je een ander bestand opent.</span></strong> <span data-i18n="Er is geen account of automatische synchronisatie. Je browser kan werk tijdelijk onthouden, maar die kopie kan verdwijnen. Je eigen bestand is wat je bewaart en meeneemt, ook tussen de web- en downloadversie.">Er is geen account of automatische synchronisatie. Je browser kan werk tijdelijk onthouden, maar die kopie kan verdwijnen. Je eigen bestand is wat je bewaart en meeneemt, ook tussen de web- en downloadversie.</span></p></div></details>
+<div class="projectbar"><span class="eyebrow"><span data-i18n="MAP">MAP</span></span><div class="project-navigation"><button id="previousProject" aria-label="Vorige map" onclick="stepProject(-1)" data-i18n-aria-label="Vorige map">←</button><select id="projectSelect" aria-label="Actieve map" onchange="switchProject(this.value)" data-i18n-aria-label="Actieve map"><option value="all" data-i18n="Alle bestanden">Alle bestanden</option></select><button id="nextProject" aria-label="Volgende map" onclick="stepProject(1)" data-i18n-aria-label="Volgende map">→</button></div><span id="workspaceTitle" hidden></span><p class="project-help"><span data-i18n="Kies een computermap of bekijk alle bestanden.">Kies een computermap of bekijk alle bestanden.</span></p></div>
+    <button aria-label="Bestanden tonen of verbergen" class="mobile-toggle" onclick="toggleSidebar()" data-i18n-aria-label="Bestanden tonen of verbergen">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <line x1="3" y1="6" x2="21" y2="6"></line>
             <line x1="3" y1="12" x2="21" y2="12"></line>
             <line x1="3" y1="18" x2="21" y2="18"></line>
@@ -1798,27 +1781,27 @@ input,textarea,select{background:#fff;color:#111;border-color:#b9b9b9}
     <div class="search-palette-overlay" id="searchPaletteOverlay" onclick="closeSearchPalette(event)">
         <div class="search-palette" onclick="event.stopPropagation()">
             <div class="search-palette-input-wrapper">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <circle cx="11" cy="11" r="8"></circle>
                     <path d="m21 21-4.35-4.35"></path>
                 </svg>
-                <input aria-label="Zoek in bestanden en inhoud" type="text" class="search-palette-input" id="searchPaletteInput" placeholder="Zoek in bestanden en inhoud…" autocomplete="off">
-                <span class="search-palette-shortcut">ESC</span>
+                <input aria-label="Zoek in bestanden en inhoud" type="text" class="search-palette-input" id="searchPaletteInput" placeholder="Zoek in bestanden en inhoud…" autocomplete="off" data-i18n-aria-label="Zoek in bestanden en inhoud" data-i18n-placeholder="Zoek in bestanden en inhoud…">
+                <span class="search-palette-shortcut"><span data-i18n="ESC">ESC</span></span>
             </div>
             <div class="search-palette-results" id="searchPaletteResults">
                 <div class="search-palette-empty">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
                         <circle cx="11" cy="11" r="8"></circle>
                         <path d="m21 21-4.35-4.35"></path>
                     </svg>
-                    <p>Typ om je bestanden te doorzoeken…</p>
+                    <p><span data-i18n="Typ om je bestanden te doorzoeken…">Typ om je bestanden te doorzoeken…</span></p>
                 </div>
             </div>
             <div class="search-palette-footer">
                 <div class="search-palette-footer-hint">
-                    <span><kbd>↑</kbd><kbd>↓</kbd> Navigeren</span>
-                    <span><kbd>↵</kbd> Open</span>
-                    <span><kbd>ESC</kbd> Sluiten</span>
+                    <span><kbd>↑</kbd><kbd>↓</kbd> <span data-i18n="Navigeren">Navigeren</span></span>
+                    <span><kbd>↵</kbd> <span data-i18n="Open">Open</span></span>
+                    <span><kbd><span data-i18n="ESC">ESC</span></kbd> <span data-i18n="Sluit">Sluit</span></span>
                 </div>
                 <span class="search-palette-stats" id="searchPaletteStats"></span>
             </div>
@@ -1830,83 +1813,68 @@ input,textarea,select{background:#fff;color:#111;border-color:#b9b9b9}
             <div class="sidebar-wrapper">
                 <div class="sidebar-header">
                     <div class="sidebar-header-top">
-                        <h1>BESTANDEN</h1>
+                        <h1><span data-i18n="BESTANDEN">BESTANDEN</span></h1>
                         <div class="header-buttons">
-                            <button class="header-btn search-btn" onclick="openSearchPalette()" title="Zoeken (⌘K)">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <button class="header-btn search-btn" onclick="openSearchPalette()" title="Zoeken (⌘K)" data-i18n-title="Zoeken (⌘K)">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                     <circle cx="11" cy="11" r="8"></circle>
                                     <path d="m21 21-4.35-4.35"></path>
                                 </svg>
                             </button>
-                            <button class="header-btn theme-toggle" hidden onclick="toggleTheme()" title="Wissel lichte en donkere weergave">
-                                <svg class="moon-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-                                </svg>
-                                <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <circle cx="12" cy="12" r="5"></circle>
-                                    <line x1="12" y1="1" x2="12" y2="3"></line>
-                                    <line x1="12" y1="21" x2="12" y2="23"></line>
-                                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-                                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-                                    <line x1="1" y1="12" x2="3" y2="12"></line>
-                                    <line x1="21" y1="12" x2="23" y2="12"></line>
-                                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-                                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-                                </svg>
-                            </button>
+
                         </div>
                     </div>
                     <p id="sidebarProjectName" class="sidebar-project-name" aria-live="polite"></p>
                     <div class="sidebar-tools">
-                    <details class="sidebar-menu" id="newMenu"><summary>＋ Nieuw</summary><div class="sidebar-menu-panel">                    <label id="newItemTargetLabel" class="new-target" hidden>Nieuw item in<select id="newItemTarget" aria-label="Map voor nieuw item"></select></label><label id="rememberDestinationLabel" class="remember-destination" hidden><input type="checkbox" id="saveStartFolder"> <span>Onthoud deze bestemming</span></label>
-                    <button class="new-file-btn" id="newFileBtn" onclick="createNewFile({folderPath: document.getElementById('newItemTarget').value})" disabled>
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <details class="sidebar-menu" id="newMenu"><summary><span data-i18n="＋ Nieuw">＋ Nieuw</span></summary><div class="sidebar-menu-panel">                    <label id="newItemTargetLabel" class="new-target" hidden><span data-i18n="Nieuw item in">Nieuw item in</span><select id="newItemTarget" aria-label="Map voor nieuw item" data-i18n-aria-label="Map voor nieuw item"></select></label><label id="rememberDestinationLabel" class="remember-destination" hidden><input type="checkbox" id="saveStartFolder"> <span><span data-i18n="Onthoud deze bestemming">Onthoud deze bestemming</span></span></label>
+                    <button class="new-file-btn" id="newFileBtn" onclick="createNewFile({folderPath: document.getElementById(&#x27;newItemTarget&#x27;).value})" disabled>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
                             <polyline points="14 2 14 8 20 8"></polyline>
                             <line x1="12" y1="18" x2="12" y2="12"></line>
                             <line x1="9" y1="15" x2="15" y2="15"></line>
                         </svg>
-                        Nieuw bestand
+                        <span data-i18n="Nieuw document">Nieuw document</span>
                     </button>
-                    <button class="new-file-btn" id="newFolderBtn" onclick="createNewFolder()" disabled>＋ Nieuwe map</button>
+                    <button class="new-file-btn" id="newLetterBtn" data-template="brief" type="button" disabled><span data-i18n="Nieuwe brief">Nieuwe brief</span></button>
+                    <button class="new-file-btn" id="newArticleBtn" data-template="artikel" type="button" disabled><span data-i18n="Nieuw artikel">Nieuw artikel</span></button>
+                    <button class="new-file-btn" id="newNewsletterBtn" data-template="nieuwsbrief" type="button" disabled><span data-i18n="Nieuwe nieuwsbrief">Nieuwe nieuwsbrief</span></button>
+                    <button class="new-file-btn" id="newReportBtn" data-template="gespreksverslag" type="button" disabled><span data-i18n="Nieuw gespreksverslag">Nieuw gespreksverslag</span></button>
+                    <button class="new-file-btn" id="newFolderBtn" onclick="createNewFolder()" disabled><span data-i18n="＋ Nieuwe map">＋ Nieuwe map</span></button>
 </div></details>
-                    <details class="sidebar-menu" id="folderMenu"><summary>Mappen</summary><div class="sidebar-menu-panel">                    <div class="folder-actions">
-                        <button class="folder-btn" onclick="addFolder()">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
-                            </svg>
-                            Open map
-                        </button>
+                    <details class="sidebar-menu" id="folderMenu"><summary><span data-i18n="Beheer">Beheer</span></summary><div class="sidebar-menu-panel">                    <div class="folder-actions">
+
                         
-                        <button class="refresh-btn" id="refreshBtn" onclick="refreshFolders()" disabled title="Mappen vernieuwen">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <button class="refresh-btn" type="button" onclick="addFolder()" title="Koppel een bestaande documentmap" data-i18n-title="Koppel een bestaande documentmap"><span data-i18n="Open map">Open map</span></button>
+                        <button class="refresh-btn" id="refreshBtn" onclick="refreshFolders()" disabled title="Mappen vernieuwen" data-i18n-title="Mappen vernieuwen"><span data-i18n="Mappen vernieuwen">Mappen vernieuwen</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <polyline points="23 4 23 10 17 10"></polyline>
                                 <polyline points="1 20 1 14 7 14"></polyline>
                                 <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
                             </svg>
                         </button>
                     </div>
-                    <div class="folder-list" id="folderList"></div>
-                <div class="manage-clear">
-                    <button class="clear-db-btn" onclick="clearIndexedDB()" title="Vergeet gekoppelde mappen en verwijder lokale conversies">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <div class="folder-list" id="folderList"></div><button class="new-file-btn" onclick="toggleTheme()"><span data-i18n="Lichte / donkere weergave">Lichte / donkere weergave</span></button>
+                <details class="manage-clear"><summary><span data-i18n="Meer beheer">Meer beheer</span></summary><p class="browser-clear-help"><span data-i18n="Verwijdert losse documenten uit deze browser en vergeet de gekoppelde mappen. Bewaar eerst je werk. Bestanden op je computer blijven staan.">Verwijdert losse documenten uit deze browser en vergeet de gekoppelde mappen. Bewaar eerst je werk. Bestanden op je computer blijven staan.</span></p>
+                    <button class="clear-db-btn" onclick="clearIndexedDB()" title="Wis browserwerk; bestanden op je computer blijven staan" data-i18n-title="Wis browserwerk; bestanden op je computer blijven staan">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <polyline points="3 6 5 6 21 6"></polyline>
                             <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
                         </svg>
-                        Schrijven leegmaken
+                        <span data-i18n="Browserwerk wissen…">Browserwerk wissen…</span>
                     </button>
-                </div>
+                </details>
 </div></details></div>
                     <!-- <div class="current-folder" id="currentFolder"></div> -->
                 </div>
                 <div class="loader-container" id="loader">
                     <div class="loader"></div>
-                    <div class="loader-text">Mappen doorzoeken…</div>
+                    <div class="loader-text"><span data-i18n="Mappen doorzoeken…">Mappen doorzoeken…</span></div>
                     <div class="loader-count" id="loaderCount"></div>
                 </div>
                 <div class="file-list" id="fileList">
                     <div class="empty-state">
-                        Nog geen map geopend.<br>Kies ‘Mappen’ → ‘Open map’ om je bestanden te bekijken.
+                        <span data-i18n="Nog geen bestanden.">Nog geen bestanden.</span><br><span data-i18n="Kies ‘Nieuw’ om te beginnen of ‘Document openen’ om verder te werken.">Kies ‘Nieuw’ om te beginnen of ‘Document openen’ om verder te werken.</span>
                     </div>
                 </div>
                 <div class="sidebar-resize" id="sidebarResize"></div>
@@ -1915,16 +1883,16 @@ input,textarea,select{background:#fff;color:#111;border-color:#b9b9b9}
 
         <main class="main">
             <div class="content" id="content">
-<!-- introduction:start --><article class="markdown-content"><p class="eyebrow">BEGIN HIER</p><h1>Schrijf en lees je documenten.</h1><p>Kies <strong>Nieuw document</strong> om te beginnen of <strong>Document openen</strong> om verder te werken. Via <strong>Map openen</strong> kun je ook een eigen map openen.</p><p>Bewaar je werk met <strong>Bewaar bestand</strong>. Via <strong>Bekijk voorbeelden</strong> kun je eerst oefenen met een projectplan en gespreksnotities.</p></article><!-- introduction:end -->
+<!-- introduction:start --><article class="markdown-content"><p class="eyebrow"><span data-i18n="BEGIN HIER">BEGIN HIER</span></p><h1><span data-i18n="Schrijf en lees je documenten.">Schrijf en lees je documenten.</span></h1><p><span data-i18n="Kies">Kies</span> <strong><span data-i18n="＋ Nieuw → Nieuw document">＋ Nieuw → Nieuw document</span></strong> <span data-i18n="om te beginnen, of een van de sjablonen">om te beginnen, of een van de sjablonen</span> <strong><span data-i18n="Brief">Brief</span></strong>, <strong><span data-i18n="Artikel">Artikel</span></strong> <span data-i18n="en">en</span> <strong><span data-i18n="Gespreksverslag">Gespreksverslag</span></strong><span data-i18n=". Brief gebruikt het briefhoofd uit Mijn organisatie. Met">. Brief gebruikt het briefhoofd uit Mijn organisatie. Met</span> <strong><span data-i18n="Document openen">Document openen</span></strong> <span data-i18n="werk je verder. Via">werk je verder. Via</span> <strong><span data-i18n="＋ Nieuw → Nieuwe map">＋ Nieuw → Nieuwe map</span></strong> <span data-i18n="maak je een submap binnen de gekozen map.">maak je een submap binnen de gekozen map.</span></p><p><span data-i18n="Bewaar je werk met">Bewaar je werk met</span> <strong><span data-i18n="Bewaar">Bewaar</span></strong>.</p></article><!-- introduction:end -->
             </div>
         </main>
-    <aside class="focus-panel" id="focusPanel" hidden aria-label="In dit document"><span class="eyebrow">IN DIT DOCUMENT</span><nav id="documentOutline" aria-label="Inhoudsopgave"></nav></aside>
+    <aside class="focus-panel" id="focusPanel" hidden aria-label="In dit document" data-i18n-aria-label="In dit document"><span class="eyebrow"><span data-i18n="IN DIT DOCUMENT">IN DIT DOCUMENT</span></span><nav id="documentOutline" aria-label="Inhoudsopgave" data-i18n-aria-label="Inhoudsopgave"></nav></aside>
     </div>
 
-    <script src="Onderdelen/recovery.js"></script><script src="Onderdelen/app.js"></script>
-<script src="Onderdelen/workspace.js"></script>
-<script src="Onderdelen/media.js"></script><script src="Onderdelen/losse-documenten.js"></script>
+    <script src="Onderdelen/recovery.js?v=20261006-personal-title-1"></script><script src="Onderdelen/kladblok.js?v=20261006-personal-title-1"></script><script src="Onderdelen/app.js?v=20261008-creation-date-1"></script><script src="Onderdelen/export-document.js?v=20261006-personal-title-1"></script>
+<script src="Onderdelen/workspace.js?v=20261007-button-roles-1"></script>
+<script src="Onderdelen/media.js?v=20261007-button-roles-1"></script><script src="../../schrijfsjablonen.js?v=20261006-personal-title-1"></script><script src="Onderdelen/losse-documenten.js?v=20261008-creation-date-1"></script><script src="../../eigen-sjablonen.js?v=20261007-button-roles-1"></script>
 
 
-<script src="../../compact.js"></script></body>
+<script src="../../compact.js?v=20261006-blom-os-1"></script><link rel="stylesheet" href="../../document-materials.css?v=20261006-personal-title-1"><script src="../../document-materials.js?v=20261007-button-roles-1"></script><script src="../../project-materials.js?v=20261007-project-images-1"></script><script src="Onderdelen/notities.js?v=20261008-startroute-1"></script><link rel="stylesheet" href="Onderdelen/rustig-schrijven.css?v=20261006-personal-title-1"><script src="Onderdelen/rustig-schrijven.js?v=20261006-personal-title-1"></script></body>
 </html>

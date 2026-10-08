@@ -1,0 +1,1 @@
+Voor UI-werk: volg GUI.md en gebruik graphical-ui, graphical-convert of graphical-audit waar passend. Blom-OS is de basis. Behoud de bestaande Werkplaats-vormgeving, indeling, routes en opslag; controleer BLOM-OS-VORMGEVING.md voor de bewuste lokale keuzes.

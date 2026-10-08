@@ -1,0 +1,7 @@
+/* Gedeelde symbolenfamilie, versie 0.12. */
+.tool-symbol{width:32px;height:34px;display:inline-block;flex:none;color:inherit;vertical-align:middle}
+.brand{display:flex;align-items:center;gap:12px;min-width:0}
+.brand .tool-name{color:inherit;min-width:0}
+.brand .tool-symbol{color:#111}
+@media(max-width:480px){.brand{gap:9px}.brand .tool-symbol{width:28px;height:30px}.brand .tool-name{font-size:clamp(20px,6.3vw,27px);overflow-wrap:normal}}
+.save-help{margin:14px 32px;border:1px solid #bbb;border-left:4px solid var(--wp-accent,#e32720);padding:12px 16px;font:14px/1.55 Arial,Helvetica,sans-serif;color:#111;background:#fff}.save-help summary{cursor:pointer;font-weight:bold}.save-help .save-help-body{max-width:780px}.save-help ol{padding-left:22px}.save-help li{margin:8px 0}.save-help p{margin:10px 0}.save-help summary:focus-visible{outline:3px solid var(--wp-accent,#e32720);outline-offset:4px}@media(max-width:600px){.save-help{margin:12px 16px}}@media print{.save-help{display:none!important}}

@@ -8,7 +8,7 @@ Bewaar collectie downloadt alle bronnen als JSON, ook bij een actief filter. Ope
 
 Ongedaan maken herstelt één wijziging. Onder de uitleg onderaan kun je de vorige browserversie herstellen, de startcollectie terugzetten of leeg beginnen. Maak eerst een bestandskopie wanneer je de huidige collectie wilt behouden.
 
-De app werkt offline. Voor Open bron heb je internet nodig; de originele pagina opent in een apart tabblad. Er worden geen pagina's of afbeeldingen automatisch opgehaald. Alleen de bewaarde tekst en links zitten in de collectie.
+De app werkt offline. Voor Open bron heb je internet nodig; de originele pagina opent in een apart tabblad. Bij een YouTube-videolink kun je in de bronpopup op Video afspelen klikken. De video wordt pas dan geladen en vereist internet. Er worden geen pagina's of afbeeldingen automatisch opgehaald. Alleen de bewaarde tekst en links zitten in de collectie.
 
 STARTCOLLECTIE
 Tien primaire bronnen geraadpleegd op 16 september 2026. Samenvattingen zijn eigen parafrases, onderzoeksvragen zijn redactionele suggesties. Dit is geen onafhankelijke beoordeling van effectiviteit. Geen letterlijke citaten meegeleverd. Bewerk je een startbron, dan vervalt de raadpleegdatum om oude verificatie niet aan nieuwe tekst toe te schrijven. De volledige collectie staat ook in Startcollectie.json.

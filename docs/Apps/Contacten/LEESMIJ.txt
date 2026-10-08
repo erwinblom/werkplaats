@@ -4,7 +4,7 @@ Pak uit en open Start Contacten.html. Geen installatie, account, internet of API
 
 Bewaar naam, organisatie, rol, e-mail, telefoon, labels en achtergrondnotities. Voeg aparte gespreksnotities met datum toe. Zoek ook in de inhoud van notities. Filter op label en vervolgafspraak.
 
-Een vervolgactie heeft een omschrijving en optioneel een datum. Een datum vereist een omschrijving. Aandacht nodig toont acties met datum vandaag of eerder. Gepland toont latere datums. Zonder datum toont contacten zonder actiedatum, ook als er wel een actieomschrijving is. Actie afgerond maakt een gedateerde gespreksnotitie en wist de vervolgactie. De app stuurt geen berichten of herinneringen en koppelt niet aan een agenda.
+Contacttaken worden gemaakt via Maak taak en staan ook in Doen. Titel, datum, project en status komen uit dezelfde taak. Aandacht nodig toont contacten met open taken met datum vandaag of eerder; Gepland toont contacten waarvan de eerstvolgende taak later valt. Zonder datum toont contacten zonder gedateerde open taken. Taak afgerond en Taak heropenen werken door in Doen. De app stuurt geen berichten of herinneringen.
 
 Bewaar contactenbestand downloadt ALLE contacten inclusief notities, ook bij een actief filter. Open het bestand later via Contacten openen. Import vervangt het huidige bestand na bevestiging. Houd één venster open en maak eigen back-ups. Browseropslag is alleen tussentijds; bestanden staan leesbaar en niet versleuteld op je computer.
 
@@ -29,4 +29,4 @@ NIEUW CONTACT VANUIT OFFERTE
 Klik op Kies contact en daarna + Nieuw contact. Open eerst je bestaande Contacten-bestand als het nieuwe contact daaraan moet worden toegevoegd. Vul naam, organisatie en e-mail in en klik Contact toevoegen en gebruiken. Een bijgewerkt Contacten-bestand wordt gedownload; bestaande contacten en notities blijven behouden. Zonder geopend bestand begin je een nieuwe verzameling. Controleer je downloadmap en open het bijgewerkte bestand later in Contacten. De oorspronkelijke bestanden worden niet overschreven. Bewaar daarnaast je offerte.
 
 KOPPELINGEN
-Maak taak staat bij een vervolgactie. Controleer titel, project en datum. Open de overdracht in Doen via Taken overnemen. De contactpersoon en actie staan in de taaknotities. De oorspronkelijke vervolgactie blijft staan. Bewaar daarna je bijgewerkte gegevensbestand. Met Mijn werkmap staat de overdracht in Exports bij de tool; anders start een download.
+Maak taak staat op iedere contactkaart. Kies titel, project en datum. De taak verschijnt direct in Doen en onder Details bij het contact. Bestaande vervolgacties worden bij openen eenmalig overgenomen; de oude invoer wordt pas na een geslaagde overdracht leeggemaakt. Bewaar alles legt taken en contacten samen vast in de werkmap.

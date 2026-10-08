@@ -23,3 +23,5 @@ Import valideert de hele verzameling voordat iets wordt vervangen en neemt allee
 ## Contactovername
 
 Optionele velden per offerte: `contactPerson` (tekst, maximaal 160 tekens) en `sourceContactId` (tekst, maximaal 100 tekens). Oudere bestanden zonder deze velden blijven geldig; ontbrekende waarden worden lege tekst. De broncode is alleen een verwijzing en veroorzaakt geen synchronisatie. Een offerte bewaart altijd een zelfstandige kopie. Oudere appversies kunnen deze nieuwe velden bij import laten vervallen; gebruik deze versie of nieuwer.
+
+`projectId` is een optionele verwijzing (maximaal 100 tekens) naar de vaste projectcode in Plannen. De koppeling blijft bij offerte-naar-factuur bewaard; oude offertes zonder projectcode blijven geldig.

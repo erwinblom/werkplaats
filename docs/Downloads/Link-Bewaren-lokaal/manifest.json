@@ -1,0 +1,49 @@
+{
+  "manifest_version": 3,
+  "name": "Link Bewaren — lokaal",
+  "description": "Bewaar links op je computer en ontvang ze in Verzamelen van de Werkplaats. Zonder account of Google Sheets.",
+  "version": "0.2.5",
+  "minimum_chrome_version": "116",
+  "permissions": [
+    "activeTab",
+    "scripting",
+    "storage",
+    "sidePanel",
+    "contextMenus"
+  ],
+  "action": {
+    "default_title": "Link Bewaren — lokaal",
+    "default_icon": {
+      "16": "icon16.png",
+      "32": "icon32.png",
+      "48": "icon48.png",
+      "128": "icon128.png"
+    }
+  },
+  "side_panel": {
+    "default_path": "sidepanel.html"
+  },
+  "icons": {
+    "16": "icon16.png",
+    "48": "icon48.png",
+    "128": "icon128.png"
+  },
+  "background": {
+    "service_worker": "worker.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://erwinblom.github.io/gereedschapskist/Apps/Bronnenkast/*",
+        "file:///*/Gereedschapskist/Apps/Bronnenkast/*",
+        "file:///*/Werkplaats/App/Apps/Bronnenkast/*",
+        "https://erwinblom.github.io/werkplaats/Apps/Bronnenkast/*",
+        "file:///*/Werkplaats/Bestanden/Apps/Bronnenkast/*"
+      ],
+      "js": [
+        "bridge.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ]
+}

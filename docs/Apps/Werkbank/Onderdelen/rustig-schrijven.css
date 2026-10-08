@@ -1,0 +1,22 @@
+
+body.calm-writing .brandbar{min-height:0;padding-top:18px;padding-bottom:18px;border-bottom:1px solid #ddd}
+body.calm-writing .workspace-strip{border-bottom:1px solid #ddd}
+body.calm-writing .sidebar{border-right:1px solid #ddd}
+body.calm-writing .sidebar-header{padding:18px}
+body.calm-writing .sidebar-header-top,body.calm-writing .sidebar-project-name,body.calm-writing .sidebar-open-document{display:none}
+body.calm-writing .sidebar .projectbar{display:block;padding:0 0 16px;margin:0;background:transparent;border:0;min-height:0}
+body.calm-writing .projectbar>.eyebrow,body.calm-writing .project-help{display:none}
+body.calm-writing .project-navigation{display:flex;gap:4px;width:100%}
+body.calm-writing .project-navigation select{min-width:0;flex:1;font-size:15px;padding:8px;border:1px solid #ddd;background:#fff}
+body.calm-writing .project-navigation button{padding:5px;width:28px;min-width:28px;border:0;background:transparent;color:#666}
+body.calm-writing .sidebar-tools{display:flex;gap:8px}
+body.calm-writing .sidebar-menu>summary{padding:9px 12px;font-size:14px;border:1px solid #ddd}
+body.calm-writing #folderMenu>summary{background:white;color:#444}
+body.calm-writing #loose-open{font-size:14px;text-align:left;padding:10px;border:0;width:100%}
+body.calm-writing .content{border:0!important;box-shadow:none;padding:24px 32px;max-width:1000px;margin:0 auto}
+body.calm-writing .markdown-content>h1:first-child{margin-top:0}
+body.calm-writing .file-more-panel .edit-btn{width:100%;text-align:left}
+@media(max-width:700px){body.calm-writing .content{padding:20px 16px}}
+
+.search-palette-overlay.visible{align-items:center;padding:16px}
+.search-palette{max-height:calc(100dvh - 32px);border-radius:0}

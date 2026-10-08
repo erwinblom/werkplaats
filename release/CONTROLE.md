@@ -1,0 +1,29 @@
+# Werkplaats v0.35.7 — controle op 8 oktober 2026
+
+Deze uitgave komt uit de opnieuw opgebouwde schone Master. Het importmanifest bevat 209 appbestanden. De website en ZIP gebruiken dezelfde appbestanden; uitsluitend de startpagina van de website heeft een extra melding Werk in uitvoering.
+
+## Uitgevoerde controles
+
+- Alle lokale HTML-links, JavaScript-syntax, privacyuitsluitingen en appbestanden tegen het Master-manifest gecontroleerd.
+- ZIP-integriteit en ieder bestand in Bestanden gecontroleerd tegen de publieksbron; de buitenste downloadmap bevat alleen Begin hier.html en Bestanden.
+- Tien toolschermen geopend in een schone Chrome-testomgeving, zonder fictieve werkgegevens, voorbeeldknoppen of persoonlijke feedback. Mobiele breedte op 390 pixels zonder horizontale overloop.
+- Eerste werkmap aangemaakt en via de startroute een notitie gemaakt. Titel en tekst teruggelezen uit de actuele bewaarronde. Na herladen en na het verwijderen van de tijdelijke browsercaches via Verder werken dezelfde notitie teruggelezen uit de testwerkmap.
+- De uitgepakte ZIP met uitgeschakeld netwerk geopend via het buitenste startbestand. Parameters en anker behouden; Schrijven, lege Notities en actuele Uitleg geopend. Geen JavaScriptfouten in deze browserproef.
+- Zeventien bronproeven geslaagd: documentkeuze, extensieontvangst, belastingtarieven, boekhoudexport en documentmateriaal. De materiaalproef bewaart en heropent gekoppeld materiaal en een herstelkopie via echte tijdelijke bestanden.
+
+De browserproef staat in [tests/publieke-uitgave.cjs](../tests/publieke-uitgave.cjs). Gebruik Chrome en een bestaande Playwright-installatie via NODE_PATH. De proef gebruikt verminderde beweging en een afzonderlijke browsercontext; de mapkiezer is vervangen door een tijdelijke OPFS-testwerkmap. De native macOS-mapkiezer is daarmee niet opnieuw getest. De aparte bronproef voor materiaal schrijft wel naar echte tijdelijke bestanden op schijf.
+
+De gebundelde Chromium-testbrowser bleef na een paginaovergang wachten. Dezelfde volledige proef slaagde in de geïnstalleerde Chrome-versie. De test heeft geen persoonlijke browserprofielen of werkgegevens gebruikt.
+
+## Hersteld tijdens deze uitgave
+
+- De openbare uitgave liep achter op Master; fictieve voorbeeldstand en achterhaalde uitleg zijn vervangen door de huidige App-versie.
+- Een oude stylesheet verborg de nieuwe startroute zodra een werkmap was gekozen. De regel is in de ontwikkelbron gecorrigeerd en alle uitgaven zijn opnieuw afgeleid.
+- De extensie-downloadlink gebruikte een onjuiste bestandsnaam. Extensie 0.2.5 ondersteunt de hernoemde website en de nieuwe downloadmap Bestanden, met behoud van bestaande routes.
+- Een bronproef gebruikte een verouderde werkmapstub. Alleen de ontbrekende recall-methode in die teststub is toegevoegd; daarna slaagden alle oorspronkelijke veertien proeven.
+
+## Grenzen
+
+Dit is geen volledige nieuwe acceptatieronde voor iedere handeling in alle tools. Native maptoestemming, alle financiële scenario's, externe websites en een installatie van de extensie in een gebruikersprofiel zijn niet opnieuw beproefd. Oudere browsertests bevatten deels selectors uit de vorige interface.
+
+Open na een upgrade je laatst bewaarde werkmap via Verder werken. De app wist de eerdere browseropslag niet; de actuele Master gebruikt een eigen browserwerkruimte. Browserkopieën uit de vorige openbare versie worden niet stilzwijgend naar die werkruimte overgezet. Bewaar daarom eerst je werk in de vorige versie. Een nieuwe appdownload bevat geen gebruikersgegevens.
