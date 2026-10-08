@@ -1,6 +1,6 @@
 # Privacy en je bestanden
 
-De Gereedschapskist werkt zonder account, externe database, analytics of API-sleutels. Documenten die je kiest worden in je browser verwerkt; de apps versturen ze niet naar een opslagserver. Browseropslag is een tijdelijke werkkopie. Bewaar zelf bestanden en back-ups.
+De Werkplaats werkt zonder account, externe database, analytics of API-sleutels. Documenten die je kiest worden in je browser verwerkt; de apps versturen ze niet naar een opslagserver. Browseropslag is een tijdelijke werkkopie. Bewaar zelf bestanden en back-ups.
 
 Bij online gebruik levert GitHub Pages de appbestanden. GitHub kan daarbij gewone verbindingsgegevens ontvangen, zoals IP-adres en browserinformatie. Dat is niet hetzelfde als documentopslag.
 

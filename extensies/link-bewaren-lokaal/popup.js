@@ -1,5 +1,5 @@
 'use strict';
-const $=id=>document.getElementById(id),HOME='https://erwinblom.github.io/gereedschapskist/Apps/Bronnenkast/Start%20Bronnenkast.html?werkruimte=eigen';
+const $=id=>document.getElementById(id),HOME='https://erwinblom.github.io/werkplaats/Apps/Bronnenkast/Start%20Bronnenkast.html?werkruimte=eigen';
 async function request(type,extra={}){const r=await chrome.runtime.sendMessage({type,...extra});if(!r?.ok)throw Error(r?.error||'Geen antwoord. Probeer opnieuw.');return r}
 async function status(){const r=await request('status');$('count').textContent=`${r.pending} klaar voor Verzamelen · ${r.total} lokaal bewaard`;}
 function error(e){$('message').textContent=e.message}

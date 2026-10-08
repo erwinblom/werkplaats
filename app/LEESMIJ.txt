@@ -1,9 +1,9 @@
-GEREEDSCHAPSKIST — LOKAAL / OPEN SOURCE
+WERKPLAATS — LOKAAL / OPEN SOURCE
 
 Begin met Begin hier.html, of gebruik de online versie.
 Gebruik Chrome of Edge op je computer voor je werkmap.
 
-1. Kies Nieuw beginnen en kies een opslagplek. De app maakt Mijn Gereedschapskist met negen submappen. Blokkeert de browser de plek? Kies de handmatige optie: maak en selecteer zelf een lege hoofdmap.
+1. Kies Nieuw beginnen en kies een opslagplek. De app maakt Mijn Werkplaats met negen submappen. Blokkeert de browser de plek? Kies de handmatige optie: maak en selecteer zelf een lege hoofdmap.
 2. Gebruik de tools. Via de keuzelijst bovenaan wissel je van tool.
 3. Klik op Bewaar alles. Je werk en concepten uit alle tools gaan mee.
 4. Kies een volgende keer Verder werken om alles terug te halen.

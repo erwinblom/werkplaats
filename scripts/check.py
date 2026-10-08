@@ -20,9 +20,9 @@ for directory in [root/'app',root/'docs']:
 for p in (root/'docs/Apps').glob('*/*.html'):
  if p.parent.name!='Werkbank':assert "KEY='gereedschapskist:" in p.read_text(),p
 assert "'gereedschapskist:MarkdownWerkbankLocalV2'" in (root/'docs/Apps/Werkbank/Onderdelen/app.js').read_text()
-with zipfile.ZipFile(root/'dist/Gereedschapskist.zip') as z:
+with zipfile.ZipFile(root/'dist/Werkplaats.zip') as z:
  assert z.testzip() is None
- assert 'Gereedschapskist/Begin hier.html' in z.namelist()
+ assert 'Werkplaats/Begin hier.html' in z.namelist()
  for p in (root/'app').rglob('*'):
-  if p.is_file() and p.name!='.DS_Store':assert z.read('Gereedschapskist/'+str(p.relative_to(root/'app')))==p.read_bytes()
+  if p.is_file() and p.name!='.DS_Store':assert z.read('Werkplaats/'+str(p.relative_to(root/'app')))==p.read_bytes()
 print('OK: alle lokale HTML-links, 9 tools, eigen webopslag en ZIP gelijk aan bron.')

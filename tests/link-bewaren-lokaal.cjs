@@ -1,5 +1,5 @@
 const {chromium}=require('playwright'),assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path'),os=require('node:os');
-const root=path.resolve(__dirname,'..'),ext=path.join(root,'extensies/link-bewaren-lokaal'),home='https://erwinblom.github.io/gereedschapskist/',profile=fs.mkdtempSync(path.join(os.tmpdir(),'gk-links-'));
+const root=path.resolve(__dirname,'..'),ext=path.join(root,'extensies/link-bewaren-lokaal'),home='https://erwinblom.github.io/werkplaats/',profile=fs.mkdtempSync(path.join(os.tmpdir(),'gk-links-'));
 (async()=>{
  const context=await chromium.launchPersistentContext(profile,{channel:'chromium',headless:true,args:[`--disable-extensions-except=${ext}`,`--load-extension=${ext}`]});
  const errors=[];try{

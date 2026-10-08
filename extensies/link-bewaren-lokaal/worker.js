@@ -1,7 +1,7 @@
 'use strict';
-const HOME='https://erwinblom.github.io/gereedschapskist/Apps/Bronnenkast/Start%20Bronnenkast.html';
+const HOME='https://erwinblom.github.io/werkplaats/Apps/Bronnenkast/Start%20Bronnenkast.html';
 const KEY='link-bewaren-lokaal-v1';
-function receiver(url){try{const u=new URL(url);return u.origin==='https://erwinblom.github.io'&&decodeURIComponent(u.pathname)==='/gereedschapskist/Apps/Bronnenkast/Start Bronnenkast.html'}catch{return false}}
+function receiver(url){try{const u=new URL(url);return u.origin==='https://erwinblom.github.io'&&decodeURIComponent(u.pathname)==='/werkplaats/Apps/Bronnenkast/Start Bronnenkast.html'}catch{return false}}
 function clean(v,n){if(typeof v!=='string'||v.length>n)throw Error('Een veld ontbreekt of is te lang.');return v.trim()}
 function item(input){const url=new URL(clean(input.url,2000));if(!['http:','https:'].includes(url.protocol)||url.username||url.password)throw Error('Gebruik een gewone web-link zonder inloggegevens.');const title=clean(input.title,180);if(!title)throw Error('Vul een titel in.');return {id:'link-'+crypto.randomUUID(),title,url:url.href,source:url.hostname,category:'Inbox',tags:[],summary:'',quote:clean(input.quote,10000),notes:clean(input.notes,10000),favorite:false,checked:''}}
 async function read(){const state=(await chrome.storage.local.get(KEY))[KEY]||{version:1,entries:[]};if(state.version!==1||!Array.isArray(state.entries))throw Error('Lokale opslag is niet leesbaar. Verwijder de extensie niet.');return state}

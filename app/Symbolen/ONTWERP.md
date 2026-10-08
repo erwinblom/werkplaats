@@ -1,4 +1,4 @@
-# Symbolenfamilie — Gereedschapskist 0.12
+# Symbolenfamilie — Werkplaats 0.12
 
 Negen goedgekeurde hoekige lijnsymbolen. Zwart op wit, wit op zwart; rood blijft het accent voor actieve bediening. De naam blijft zichtbaar naast het symbool.
 

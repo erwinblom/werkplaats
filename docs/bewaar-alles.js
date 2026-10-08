@@ -130,7 +130,7 @@
      manifest.sessions.push({tool:value.tool,name:value.name,folder,source:openTools.has(value.tool)?'actueel venster':'laatst bewaard in browser'});
     }
     if((await Werkmap.allAccess(false)).revision!==meta.revision)throw Error('De werkmap is tijdens het bewaren gewijzigd. Probeer opnieuw.');
-    await write(roundDir,'LEESMIJ.txt','Deze bewaarronde bevat actuele gegevens en herstelbare formulierconcepten. Open de Gereedschapskist, kies de werkmap en kies Open bewaard werk. Gegevens.json is ook los in de betreffende tool te openen. Facturen zijn niet automatisch definitief gemaakt. Bestanden buiten de werkmap en niet geopende schrijfmappen zijn niet inbegrepen.\n');
+    await write(roundDir,'LEESMIJ.txt','Deze bewaarronde bevat actuele gegevens en herstelbare formulierconcepten. Open de Werkplaats, kies de werkmap en kies Open bewaard werk. Gegevens.json is ook los in de betreffende tool te openen. Facturen zijn niet automatisch definitief gemaakt. Bestanden buiten de werkmap en niet geopende schrijfmappen zijn niet inbegrepen.\n');
     await write(roundDir,'bewaar-alles.json',JSON.stringify(manifest,null,2));
     let previous=null;
     try{previous=JSON.parse(await(await(await rounds.getFileHandle('actueel.json')).getFile()).text());}catch(e){if(e.name!=='NotFoundError')throw Error('De verwijzing naar bewaard werk is beschadigd. Het eerdere werk blijft staan.');}

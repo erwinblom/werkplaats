@@ -25,9 +25,9 @@ homepage.write_text(homepage.read_text().replace('</head>',notice_style+'</head>
 (web/'index.html').write_text(homepage.read_text())
 (web/'.nojekyll').touch()
 dist.mkdir(exist_ok=True)
-with zipfile.ZipFile(dist/'Gereedschapskist.zip','w',zipfile.ZIP_DEFLATED) as archive:
+with zipfile.ZipFile(dist/'Werkplaats.zip','w',zipfile.ZIP_DEFLATED) as archive:
  for file in sorted(source.rglob('*')):
-  if file.is_file() and file.name!='.DS_Store':archive.write(file,Path('Gereedschapskist')/file.relative_to(source))
-with zipfile.ZipFile(dist/'Gereedschapskist.zip') as archive:assert archive.testzip() is None
-(dist/'SHA256SUMS.txt').write_text(hashlib.sha256((dist/'Gereedschapskist.zip').read_bytes()).hexdigest()+'  Gereedschapskist.zip\n')
-print('Gebouwd: docs/ en dist/Gereedschapskist.zip')
+  if file.is_file() and file.name!='.DS_Store':archive.write(file,Path('Werkplaats')/file.relative_to(source))
+with zipfile.ZipFile(dist/'Werkplaats.zip') as archive:assert archive.testzip() is None
+(dist/'SHA256SUMS.txt').write_text(hashlib.sha256((dist/'Werkplaats.zip').read_bytes()).hexdigest()+'  Werkplaats.zip\n')
+print('Gebouwd: docs/ en dist/Werkplaats.zip')

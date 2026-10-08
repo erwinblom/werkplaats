@@ -2,9 +2,9 @@
 
 Je complete lokale werkomgeving met negen praktische tools. Geen account, installatie, externe database of API-sleutel nodig. Je werkt met je eigen bestanden.
 
-[![Werkplaats-homepagina met negen lokale tools](images/werkplaats-home.png)](https://erwinblom.github.io/gereedschapskist/)
+[![Werkplaats-homepagina met negen lokale tools](images/werkplaats-home.png)](https://erwinblom.github.io/werkplaats/)
 
-**[Direct gebruiken](https://erwinblom.github.io/gereedschapskist/)** · **[Download voor offline gebruik](https://github.com/erwinblom/gereedschapskist/releases/latest/download/Gereedschapskist.zip)**
+**[Direct gebruiken](https://erwinblom.github.io/werkplaats/)** · **[Download voor offline gebruik](https://github.com/erwinblom/werkplaats/releases/latest/download/Werkplaats.zip)**
 
 Download de ZIP, pak hem volledig uit en open **Begin hier.html**. De online en downloadversie hebben dezelfde bediening en gebruiken dezelfde bestanden. Ze synchroniseren niet automatisch.
 
@@ -20,15 +20,13 @@ Download de ZIP, pak hem volledig uit en open **Begin hier.html**. De online en 
 | Offreren | Voorstellen met prijzen en afspraken |
 | Boekhouden | Inkomsten, uitgaven en bonnen |
 
-Werkplaats staat in deze repository onder het bestaande adres `gereedschapskist`. De website en downloadlinks blijven daardoor bruikbaar.
-
 ## Eerst proberen
 
 Nieuwe gebruikers beginnen met voorbeelden rond de fictieve Buurtwerkplaats De Proeftuin. Kies Begin met mijn eigen werk voor een lege eigen werkruimte. Bestaande eigen gegevens blijven behouden. Met Bekijk voorbeelden kun je later opnieuw oefenen, apart van je eigen werk. Voorbeeldfacturen krijgen geen definitief nummer. Gedownloade JSON-voorbeelden hebben voorbeeld in de bestandsnaam en kunnen niet als eigen administratie worden geopend. Bewaar je eigen werk altijd zelf in een bestand.
 
 ## Bediening en uitleg
 
-[Uitleg en gebruik](https://erwinblom.github.io/gereedschapskist/Uitleg.html) beschrijft alle tools en het verschil tussen openen, browseropslag en downloaden. Elke tool toont een vaste bestandsstatus. Gewijzigde formulieren waarschuwen bij sluiten. Een downloadmelding bevestigt alleen dat de download is gestart; controleer zelf of het bestand is opgeslagen.
+[Uitleg en gebruik](https://erwinblom.github.io/werkplaats/Uitleg.html) beschrijft alle tools en het verschil tussen openen, browseropslag en downloaden. Elke tool toont een vaste bestandsstatus. Gewijzigde formulieren waarschuwen bij sluiten. Een downloadmelding bevestigt alleen dat de download is gestart; controleer zelf of het bestand is opgeslagen.
 
 ## Bewaar je werk
 
@@ -48,7 +46,7 @@ Gegevens overnemen werkt met lokale overdrachtsbestanden: uren naar facturen, on
 
 Open steeds eerst het actuele bestand in de ontvangende tool en gebruik daarna de specifieke overneemknop. Controleer en bewaar je bijgewerkte administratie. Uren zijn eerst Klaargezet; na definitief factureren geef je het factuurnummer terug via Uren als gefactureerd terugmelden / Factuurstatus bijwerken. Ontvangsten ondersteunen één volledige betaling per factuur. Dubbele overdrachten worden binnen dezelfde actuele administratie herkend. Dit is geen automatische synchronisatie.
 
-Zie [stappen per koppeling](https://erwinblom.github.io/gereedschapskist/Uitleg.html#koppelingen) en [het open overdrachtsformaat](app/koppelingen/FORMAAT.md).
+Zie [stappen per koppeling](https://erwinblom.github.io/werkplaats/Uitleg.html#koppelingen) en [het open overdrachtsformaat](app/koppelingen/FORMAAT.md).
 
 ## Ontwerp
 
@@ -63,7 +61,7 @@ python3 scripts/build.py
 python3 scripts/check.py
 ```
 
-Dat maakt ook `dist/Gereedschapskist.zip`. Publiceer de ZIP en SHA256SUMS.txt bij dezelfde release als de website. GitHub Pages gebruikt `main` → `/docs`. Voor het bouwen zijn geen Node-pakketten of builddiensten nodig. De optionele browsertests in tests/ gebruiken Playwright en Chrome.
+Dat maakt ook `dist/Werkplaats.zip`. Publiceer de ZIP en SHA256SUMS.txt bij dezelfde release als de website. GitHub Pages gebruikt `main` → `/docs`. Voor het bouwen zijn geen Node-pakketten of builddiensten nodig. De optionele browsertests in tests/ gebruiken Playwright en Chrome.
 
 De bestaande technische mapnamen zijn behouden voor compatibiliteit; de zichtbare appnaam is bijvoorbeeld Schrijven en Plannen.
 

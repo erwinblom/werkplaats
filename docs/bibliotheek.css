@@ -1,4 +1,4 @@
-/* Library structure from Link Bewaren, with the shared Gereedschapskist hierarchy. */
+/* Library structure from Link Bewaren, with the shared Werkplaats hierarchy. */
 body[data-tool=Bronnenkast] .library-layout{display:block;margin-top:20px}
 body[data-tool=Bronnenkast] #categories{display:flex;gap:20px;flex-wrap:wrap;margin-bottom:0;border-bottom:1px solid #ccc}
 body[data-tool=Bronnenkast] #categories button{border:0;border-bottom:3px solid transparent;padding:10px 2px;background:transparent;font-weight:400}

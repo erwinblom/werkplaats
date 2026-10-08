@@ -54,11 +54,11 @@ try{
 // The actual ZIP is the offline deliverable: test it with network disconnected.
  const os=require('node:os'),{execFileSync}=require('node:child_process'),{pathToFileURL}=require('node:url');
  const extracted=fs.mkdtempSync(path.join(os.tmpdir(),'gereedschapskist-test-'));
- try{execFileSync('unzip',['-q',path.resolve(__dirname,'../dist/Gereedschapskist.zip'),'-d',extracted]);
+ try{execFileSync('unzip',['-q',path.resolve(__dirname,'../dist/Werkplaats.zip'),'-d',extracted]);
  for(const [folder,[key,collection]] of Object.entries(tools)){
   const c=await browser.newContext({offline:true}),p=await c.newPage();const errors=[];p.on('pageerror',e=>errors.push(e.message));
   const filename=folder==='Werkbank'?'▶ Begin hier.html':`Start ${folder}.html`;
-  await p.goto(pathToFileURL(path.join(extracted,'Gereedschapskist/Apps',folder,filename)).href);
+  await p.goto(pathToFileURL(path.join(extracted,'Werkplaats/Apps',folder,filename)).href);
   await p.waitForSelector('#workspace-switch',{state:'attached'});assert.equal(await p.evaluate(()=>GereedschapskistMode.example),true,folder+' offline examples');
   if(collection)assert(await p.evaluate(k=>data[k].length>0,collection));else await p.waitForSelector('.tree-file');
   await p.locator('#workspace-switch').click();await p.waitForSelector('.example-mode.own',{state:'attached'});

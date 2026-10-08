@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Link Bewaren — lokaal",
-  "description": "Bewaar links op je computer en ontvang ze in Verzamelen van de Gereedschapskist. Zonder account of Google Sheets.",
+  "description": "Bewaar links op je computer en ontvang ze in Verzamelen van de Werkplaats. Zonder account of Google Sheets.",
   "version": "0.1.0",
   "permissions": [
     "activeTab",
@@ -29,7 +29,7 @@
   "content_scripts": [
     {
       "matches": [
-        "https://erwinblom.github.io/gereedschapskist/Apps/Bronnenkast/*"
+        "https://erwinblom.github.io/werkplaats/Apps/Bronnenkast/*"
       ],
       "js": [
         "bridge.js"

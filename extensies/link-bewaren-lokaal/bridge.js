@@ -1,5 +1,5 @@
 'use strict';
-if(window===window.top&&decodeURIComponent(location.pathname)==='/gereedschapskist/Apps/Bronnenkast/Start Bronnenkast.html'){
+if(window===window.top&&decodeURIComponent(location.pathname)==='/werkplaats/Apps/Bronnenkast/Start Bronnenkast.html'){
  window.addEventListener('message',async event=>{
   const m=event.data;
   if(event.source!==window||event.origin!==location.origin||m?.channel!=='gk-link-local-request'||typeof m.id!=='string'||m.id.length>80||!['status','pending','ack'].includes(m.type))return;

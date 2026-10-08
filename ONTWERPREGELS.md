@@ -1,4 +1,4 @@
-# Ontwerpregels Gereedschapskist
+# Ontwerpregels Werkplaats
 
 Het werk krijgt de meeste aandacht, de bediening ondersteunt en uitleg blijft op de achtergrond. Deze regel geldt voor alle negen tools en voor nieuwe functies.
 

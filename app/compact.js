@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded',()=>{
  if(banner){if(GereedschapskistMode.example&&switcher)strip.insertBefore(switcher,toggle);panel.append(banner);}
  const help=document.querySelector('.save-help');if(help)panel.append(help);
  const badge=document.querySelector('.suite-badge');if(badge)panel.append(badge);
- const links=document.createElement('p');links.innerHTML='<a href="../../Uitleg.html">Uitleg en gebruik</a> · <a href="../../Over.html">Over de Gereedschapskist</a>';panel.append(links);
+ const links=document.createElement('p');links.innerHTML='<a href="../../Uitleg.html">Uitleg en gebruik</a> · <a href="../../Over.html">Over de Werkplaats</a>';panel.append(links);
  function placeWorkmap(){const map=document.getElementById('werkmap');if(!map||panel.contains(map))return;panel.prepend(map);map.open=true;
  const saveAll=document.getElementById('wm-backup');
  if(GereedschapskistMode.example){const preview=document.createElement('button');preview.id='save-all-preview';preview.type='button';preview.textContent='Bewaar alles';preview.disabled=true;preview.title='Kies Naar mijn eigen werk om je eigen werk te bewaren.';strip.insertBefore(preview,toggle);}
