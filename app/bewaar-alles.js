@@ -40,12 +40,16 @@
  }
  function saySavedRound(count,roundName,directory,receiptCount){
   const path='Bewaard werk/'+roundName+'/';
-  say(I18n.ui("Alles bewaard.{0}{1}",'Alles bewaard.'+(receiptCount?' '+receiptCount+' bon'+(receiptCount===1?'':'nen')+' als los bestand onder Boekhouden / Bonnen.':'')+(count?' '+count+' afwijkende vensterversie(s) apart behouden.':'')));
-  const targets=[document.getElementById('wm-message'),...document.querySelectorAll('dialog[open] .all-dialog-status')].filter(Boolean);
+  say(I18n.ui("Alles bewaard.{0}{1}",'Alles bewaard.'+(receiptCount?' '+I18n.value(I18n.ui(receiptCount===1?'{0} bon als los bestand onder Boekhouden / Bonnen.':'{0} bonnen als losse bestanden onder Boekhouden / Bonnen.',receiptCount+' bon'+(receiptCount===1?'':'nen')+' als los'+(receiptCount===1?' bestand':'se bestanden')+' onder Boekhouden / Bonnen.')):'')+(count?' '+count+' afwijkende vensterversie(s) apart behouden.':'')));
+  const storage=document.getElementById('settings-storage');
+  let target=document.getElementById('saved-round-location');
+  if(storage&&!target){target=document.createElement('p');target.id='saved-round-location';storage.append(target);}
+  if(target)target.replaceChildren();
+  const targets=target?[target]:[];
   for(const target of targets){
    const link=document.createElement('a');link.href='#';link.textContent=path;
    link.onclick=event=>{event.preventDefault();browseSavedDirectory(directory,path.replace(/\/$/,''));};
-   target.append(' Je vindt de bewaarkopie in ',link,'.');
+   target.append(I18n.node(' Je vindt de bewaarkopie in '),link,'.');
   }
  }
  const clone=x=>JSON.parse(JSON.stringify(x));
@@ -106,7 +110,7 @@
   await Werkmap.ready;await ready;
   if(own&&tool){await Werkmap.adapterReady;await hydrate();}
   if(own&&tool){
-   const add=()=>{for(const actions of document.querySelectorAll('dialog .form-actions')){if(actions.querySelector('.gk-save-all'))continue;const button=document.createElement('button');button.type='button';button.className='gk-save-all';I18n.assign(button,I18n.ui("Bewaar alles",'Bewaar alles'),"textContent");button.onclick=async()=>{button.disabled=true;try{await saveAll()}catch(e){say(I18n.ui("Niet alles bewaard: {0}",'Niet alles bewaard: '+e.message))}finally{button.disabled=false}};actions.append(button);const status=document.createElement('p');status.className='all-dialog-status';status.setAttribute('role','status');actions.after(status);}};
+   const add=()=>{for(const actions of document.querySelectorAll('dialog .form-actions')){if(actions.querySelector('.gk-save-all'))continue;const button=document.createElement('button');button.type='button';button.className='gk-save-all';I18n.assign(button,I18n.ui("Bewaar alles",'Bewaar alles'),"textContent");button.onclick=async()=>{button.disabled=true;try{await saveWithStatus()}catch(e){say(I18n.ui("Niet alles bewaard: {0}",'Niet alles bewaard: '+e.message))}finally{button.disabled=false}};const more=document.createElement('details');more.className='context-actions dialog-save-more';const title=document.createElement('summary');I18n.assign(title,I18n.ui('Meer','Meer'),'textContent');const panel=document.createElement('div');panel.className='context-actions-panel';panel.append(button);more.append(title,panel);actions.append(more);const status=document.createElement('p');status.className='all-dialog-status';status.setAttribute('role','status');actions.after(status);}};
    add();new MutationObserver(add).observe(document.body,{childList:true,subtree:true});
   }
 
@@ -188,7 +192,7 @@
   const button=document.createElement('button');button.id='resolve-save-conflict';button.type='button';button.className='primary action-primary';
   I18n.assign(button,I18n.ui("Bewaar huidig werk als actuele versie",'Bewaar huidig werk als actuele versie'),"textContent");
   I18n.assign(button,I18n.ui("Bewaart je huidige werk. De bestaande bewaarkopie blijft als vorige versie behouden.",'Bewaart je huidige werk. De bestaande bewaarkopie blijft als vorige versie behouden.'),"title");
-  button.onclick=async()=>{button.disabled=true;try{await saveAll({revision,current});box.remove();}catch(error){say(error.message);}finally{button.disabled=false;}};
+  button.onclick=async()=>{button.disabled=true;try{await saveWithStatus({revision,current});box.remove();}catch(error){say(error.message);}finally{button.disabled=false;}};
   const hint=document.createElement('p');hint.id='save-conflict-hint';I18n.assign(hint,I18n.ui("Je huidige werk wordt de actuele versie. De bestaande bewaarkopie blijft als vorige versie behouden.",'Je huidige werk wordt de actuele versie. De bestaande bewaarkopie blijft als vorige versie behouden.'),"textContent");button.setAttribute('aria-describedby',hint.id);
   box.append(button,hint);document.getElementById('wm-message')?.after(box);
  }
@@ -216,6 +220,16 @@
    }
   }
   return result;
+ }
+ async function saveWithStatus(resolution=null){
+  window.Werkstatus?.saving?.();
+  try{return await saveAll(resolution);}
+  catch(error){
+   window.Werkstatus?.failed?.(error);
+   say(I18n.ui('Bewaren mislukt: {0} Controleer via Instellingen en hulp → Werkmap de maptoegang en probeer opnieuw.',
+    (error.saveCommitted?'Werkmap bewaard; browserkopie niet bijgewerkt. ':'Bewaren mislukt. ')+error.message+' Controleer via Instellingen en hulp → Werkmap de maptoegang en probeer opnieuw.'));
+   throw error;
+  }
  }
  async function saveAll(resolution=null){
   await registration;
@@ -311,7 +325,7 @@
     const extra=snapshots.reduce((n,item)=>n+(item.value.windowVersions?.length||0),0);
     const receiptCount=snapshots.find(item=>item.value.tool==='Kasboek')?.value.data?.entries?.filter(entry=>entry.receipt).length||0;
     saySavedRound(extra,roundName,roundDir,receiptCount);
-   }catch(e){if(!pointerStarted&&roundDir)try{await rounds.removeEntry(roundName,{recursive:true});}catch{}e.message=(committed?'Je werk is bewaard, maar de browserkopie kon niet worden bijgewerkt. ':pointerStarted?'De nieuwe bewaarkopie kon niet worden bevestigd. De vorige complete kopie blijft beschikbaar voor herstel. ':'De vorige bewaarkopie blijft actief. ')+e.message;say(e.message);throw e;}
+   }catch(e){e.saveCommitted=committed;if(!pointerStarted&&roundDir)try{await rounds.removeEntry(roundName,{recursive:true});}catch{}e.message=(committed?'Je werk is bewaard, maar de browserkopie kon niet worden bijgewerkt. ':pointerStarted?'De nieuwe bewaarkopie kon niet worden bevestigd. De vorige complete kopie blijft beschikbaar voor herstel. ':'De vorige bewaarkopie blijft actief. ')+e.message;say(e.message);throw e;}
    finally{freeze(false);channel.postMessage({type:'release',saved:committed});schedule();}
   });
  }
@@ -383,7 +397,7 @@
  }
  async function hydrate(){
   let s=await storedSession(tool);
-  if(!s&&Werkmap.active){const {root,revision}=await Werkmap.allAccess(false);if(await root.queryPermission({mode:'readwrite'})!=='granted')return;const round=await readRound(root);s=round?.values.find(v=>v.tool===tool);if(s)s={...s,revision};}
+  if(!s&&Werkmap.active){const {root,revision}=await Werkmap.allAccess(false);if(await root.queryPermission({mode:'readwrite'})!=='granted')return;const round=await readRound(root,false,tool);s=round?.values.find(v=>v.tool===tool);if(s)s={...s,revision};}
   if(s){await applySession(s);if(s.fromDisk)Werkstatus.allWritten();say(Werkmap.active?I18n.ui("Werkmap geopend. Je werk en eventuele conceptinvoer staan klaar.",'Werkmap geopend. Je werk en eventuele conceptinvoer staan klaar.'):I18n.ui("Je eigen werk en eventuele conceptinvoer zijn hersteld uit deze browser. Gebruik Bewaar alles om ze in een map vast te leggen.",'Je eigen werk en eventuele conceptinvoer zijn hersteld uit deze browser. Gebruik Bewaar alles om ze in een map vast te leggen.'));}
  }
  async function restore(previous=false){
@@ -396,7 +410,7 @@
   if(!confirm(I18n.value(I18n.ui("De {0} werkruimte openen? Je huidige browserwerk wordt vervangen. Bewaar eerst als je dat wilt houden.",'De '+(previous?'vorige':'bewaarde')+' werkruimte openen? Je huidige browserwerk wordt vervangen. Bewaar eerst als je dat wilt houden.'))))return false;
   await rememberRound(round,revision,false,previous?await currentRoundName(root):round.name||null);
   if(tool){const s=round.values.find(v=>v.tool===tool)||{data:tool==='Werkbank'?null:emptyData(tool),documents:[],draft:null};for(const d of document.querySelectorAll('dialog[open]'))d.close();await applySession({...s,revision,restoreSavedVersions:previous});Werkstatus.allWritten();}
-  say(I18n.ui("Werkmap {0} geopend. Alle {1} bewaarde tools staan klaar, inclusief concepten.",'Werkmap '+root.name+' geopend. Alle '+round.values.length+' bewaarde tools staan klaar, inclusief concepten.'));
+  say(I18n.ui("Werkmap geopend. Alle {0} bewaarde tools staan klaar, inclusief concepten.",'Werkmap geopend. Alle '+round.values.length+' bewaarde tools staan klaar, inclusief concepten.'));
   return true;
  }
  async function rememberRound(round,revision,otherWorkspace=false,current=round.name||null){
@@ -428,7 +442,7 @@
  async function mutation(fn){const {revision}=await Werkmap.allInfo();return navigator.locks.request('gereedschapskist-bewaar-alles:'+revision,fn);}
  async function readShared(){
   if(!own)return structuredClone(GereedschapskistExampleShared());
-  await ready;const meta=await Werkmap.allInfo(),record=(await records()).find(r=>r.id===scope+':shared'&&(!r.revision||r.revision===meta.revision));
+  await ready;const meta=await Werkmap.allInfo(),saved=await transact('readonly',store=>store.get(scope+':shared')),record=saved&&(!saved.revision||saved.revision===meta.revision)?saved:null;
   if(record)return record.shared;
   if(Werkmap.active){const {root}=await Werkmap.allAccess(false);return (await readRound(root))?.shared||{};}
   return {};
@@ -466,7 +480,7 @@
   const live=await askTool(t);if(live)return live;
   let session=await storedSession(t);if(session)return clone(session);
   const {revision}=await Werkmap.allInfo();
-  if(Werkmap.active){const {root}=await Werkmap.allAccess();session=(await readRound(root))?.values.find(s=>s.tool===t);if(session)return {...session,revision};}
+  if(Werkmap.active){const {root}=await Werkmap.allAccess();session=(await readRound(root,false,t))?.values.find(s=>s.tool===t);if(session)return {...session,revision};}
   const raw=keys[t]?GereedschapskistMode.storage.getItem(keys[t]):null;
   return {format:'gereedschapskist-werksessie',version:1,tool:t,name:names[t],data:raw?JSON.parse(raw):t==='Werkbank'?null:emptyData(t),documents:t==='Werkbank'?[]:undefined,draft:null,revision};
  }
@@ -484,5 +498,5 @@
    return next;
   }));
  }
- window.BewaarAlles={startEmpty,readTool,updateTool,readShared,updateShared,flush:async()=>{await registration;await cache(false,true);},isToolOpen:async t=>{await registration;const online=await peers(),known=await records();return known.some(r=>r.tool===t&&online.includes(r.id));},canChoose:async()=>!channel||!(await peers()).some(peer=>peer!==id),save:saveAll,restore,readRound,openChosen,downloadBackup,ready:registration,session:storedSession};
+ window.BewaarAlles={startEmpty,readTool,updateTool,readShared,updateShared,flush:async()=>{await registration;await cache(false,true);},isToolOpen:async t=>{await registration;const online=await peers(),known=await records();return known.some(r=>r.tool===t&&online.includes(r.id));},canChoose:async()=>!channel||!(await peers()).some(peer=>peer!==id),save:saveWithStatus,restore,readRound,openChosen,downloadBackup,ready:registration,session:storedSession};
 })();

@@ -44,7 +44,7 @@ window.Samenwerken=(()=>{
    await BewaarAlles.updateTool('Ping',d=>{if(d.invoices.some(i=>i.sourceQuoteId===q.id))return;created++;const issuer=completeDraftBusiness({...q.business,iban:q.business.iban||''},profile||d.business);d.invoices.unshift({id:K.uid(),sourceQuoteId:q.id,sourceQuoteState:q.state,projectId:q.projectId||'',state:'draft',title:[q.title,q.reference].filter(Boolean).join(' — '),date:K.today(),deliveryDate:'',due:'',customer:q.customer,contactPerson:q.contactPerson||'',address:q.address,email:q.email,sourceContactId:q.sourceContactId||'',note:'Volgens offerte '+(q.reference||q.title),draftBusiness:issuer,lines:q.lines.map(l=>({description:l.description,quantity:l.quantity100/100,cents:l.cents,vat:l.vat}))});});
   }else throw Error(I18n.value(I18n.ui("Onbekende koppeling.",'Onbekende koppeling.')));
   const messages={
-   taken:created?`${created} ${created===1?'taak aangemaakt':'taken aangemaakt'} in Doen, gekoppeld aan de bron.`:'Deze taken staan al in Doen. Er zijn geen dubbele taken aangemaakt.',
+   taken:created?I18n.value(I18n.ui(created===1?'{0} taak aangemaakt in Doen, gekoppeld aan de bron.':'{0} taken aangemaakt in Doen, gekoppeld aan de bron.',`${created} ${created===1?'taak aangemaakt':'taken aangemaakt'} in Doen, gekoppeld aan de bron.`)):I18n.t('Deze taken staan al in Doen. Er zijn geen dubbele taken aangemaakt.'),
    'uren-factuur':created?'Conceptfactuur aangemaakt in Factureren met de geselecteerde uren. De uren staan klaar voor facturering.':'Deze uren staan al op de bestaande conceptfactuur. Er is geen tweede factuur aangemaakt.',
    'factuur-ontvangst':created?'Ontvangen betaling overgenomen als inkomstenboeking in Boekhouden, gekoppeld aan de factuur.':'Deze betaling stond al in Boekhouden. Er is geen tweede boeking gemaakt.',
    'factuur-boekhouding':created?'Factuur of credit toegevoegd aan het factuuroverzicht in Boekhouden. Betalingen en terugbetalingen blijven aparte boekingen.':'Deze factuur staat al in Boekhouden. Er is geen tweede exemplaar toegevoegd.',
@@ -52,7 +52,7 @@ window.Samenwerken=(()=>{
    'taak-uren':'Taak klaargezet in Uren schrijven. Kies daar Uren bij '+body.title+' en vul de duur in. Er zijn nog geen uren geregistreerd.',
    'offerte-factuur':created?'Offerte overgenomen als conceptfactuur in Factureren. De offerte blijft behouden.':'Deze offerte heeft al een conceptfactuur in Factureren. Er is geen tweede factuur aangemaakt.'
   };
-  return {message:messages[kind],created};
+  return {message:I18n.t(messages[kind]),created};
  }
  let contactMigration;
  async function migrateContactActions(){

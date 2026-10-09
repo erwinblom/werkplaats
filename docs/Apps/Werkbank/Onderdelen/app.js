@@ -369,7 +369,7 @@
 
         function showWritingAccessRequired(){
             const list=document.getElementById('fileList');list.replaceChildren();
-            const message=document.createElement('p');message.textContent=I18n.t('Geef toegang om je schrijfmappen te openen.')+' ('+Werkmap.name+')';message.style.cssText='font:14px/1.5 Arial;margin:0 0 12px;overflow-wrap:anywhere';
+            const message=document.createElement('p');message.textContent=I18n.t('Geef toegang om je schrijfmappen te openen.');message.style.cssText='font:14px/1.5 Arial;margin:0 0 12px;overflow-wrap:anywhere';
             const button=document.createElement('button');button.type='button';button.className='edit-btn';button.style.cssText='font:600 14px Arial;padding:10px 14px;border:1px solid #bbb;background:#fff;color:#222;cursor:pointer';button.textContent=I18n.t('Open schrijfmappen');
             button.onclick=async()=>{button.disabled=true;message.textContent=I18n.t('Toegang controleren…');try{await Werkmap.requestReadAccess();message.textContent=I18n.t('Schrijfmappen openen…');const access=await Werkmap.allAccess(false);const writing=await access.root.getDirectoryHandle('Schrijven');directoryHandles=[writing];selectedProject='Schrijven';activeFile=null;await loadFiles({skipRestore:true});for(const path of folderHandlesByPath.keys())if(path==='Schrijven'||path.startsWith('Schrijven/'))expandedFolders.add(path);renderFileList();}catch(error){message.textContent=error.message;message.setAttribute('role','alert');}finally{button.disabled=false;}};
             const choose=document.createElement('button');choose.type='button';choose.className='edit-btn';choose.textContent=I18n.t('Schrijven-map opnieuw koppelen');choose.style.cssText=button.style.cssText+';margin-top:10px';
@@ -717,6 +717,22 @@
             return tree;
         }
 
+
+        function documentListTitle(file) {
+            const content = fileContents.get(file.relativePath) || '';
+            let fence = '', previous = '';
+            for (const line of content.split(/\r?\n/)) {
+                const marker = line.match(/^\s{0,3}(`{3,}|~{3,})/);
+                if (marker) { if (!fence) fence = marker[1][0]; else if (marker[1][0] === fence) fence = ''; previous = ''; continue; }
+                if (fence) continue;
+                const heading = line.match(/^\s{0,3}#{1,6}\s+(.+?)\s*#*\s*$/);
+                if (heading?.[1].trim()) return heading[1].trim();
+                if (previous && /^\s{0,3}(?:=+|-+)\s*$/.test(line)) return previous;
+                previous = line.trim();
+            }
+            return file.name;
+        }
+
         function renderTree(tree, path = '') {
             let html = '';
 
@@ -733,7 +749,7 @@
             // Then render files
             for (const { file, index } of tree.files) {
                 const activeClass = index === activeFileIndex ? 'active' : '';
-                const fileName = file.name;
+                const fileName = documentListTitle(file);
 
                 html += "\n                    <div role=\"button\" tabindex=\"0\" class=\"tree-file "+(activeClass)+"\" data-index=\""+(index)+"\" onclick=\"selectFile("+(index)+")\">\n                        <svg xmlns=\"http://www.w3.org/2000/svg\" viewbox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\">\n                            <path d=\"M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z\"></path>\n                            <polyline points=\"14 2 14 8 20 8\"></polyline>\n                        </svg>\n                        <span class=\"file-name\">"+(escapeHtml(fileName))+"</span>\n                    </div>\n                ";
             }
@@ -773,6 +789,7 @@
                     const namesOnly = document.getElementById('writing-search-scope')?.value === 'names';
                     searchResults = projectFiles().filter(file =>
                         file.relativePath.toLocaleLowerCase('nl').includes(query) ||
+                        documentListTitle(file).toLocaleLowerCase('nl').includes(query) ||
                         (!namesOnly && (fileContents.get(file.relativePath) || '').toLocaleLowerCase('nl').includes(query))
                     ).map(file => ({file, matchPreview:null}));
                 }
@@ -794,10 +811,10 @@
                     const activeClass = index === activeFileIndex ? 'active' : '';
 
                     if (result.matchPreview) {
-                        return "\n                            <div class=\"file-item has-match "+(activeClass)+"\" data-index=\""+(index)+"\" onclick=\"selectFile("+(index)+")\">\n                                <div class=\"file-name-row\">\n                                    <svg xmlns=\"http://www.w3.org/2000/svg\" viewbox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\">\n                                        <path d=\"M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z\"></path>\n                                        <polyline points=\"14 2 14 8 20 8\"></polyline>\n                                    </svg>\n                                    "+(highlightText(result.file.relativePath, currentSearchQuery))+"\n                                </div>\n                                <span class=\"match-preview\">"+(result.matchPreview)+"</span>\n                            </div>\n                        ";
+                        return "\n                            <div class=\"file-item has-match "+(activeClass)+"\" data-index=\""+(index)+"\" onclick=\"selectFile("+(index)+")\">\n                                <div class=\"file-name-row\">\n                                    <svg xmlns=\"http://www.w3.org/2000/svg\" viewbox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\">\n                                        <path d=\"M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z\"></path>\n                                        <polyline points=\"14 2 14 8 20 8\"></polyline>\n                                    </svg>\n                                    "+(highlightText(documentListTitle(result.file), currentSearchQuery))+"\n                                </div>\n                                <span class=\"match-preview\">"+(result.matchPreview)+"</span>\n                            </div>\n                        ";
                     }
 
-                    return "\n                        <div class=\"file-item "+(activeClass)+"\" data-index=\""+(index)+"\" onclick=\"selectFile("+(index)+")\">\n                            <svg xmlns=\"http://www.w3.org/2000/svg\" viewbox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\">\n                                <path d=\"M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z\"></path>\n                                <polyline points=\"14 2 14 8 20 8\"></polyline>\n                            </svg>\n                            "+(highlightText(result.file.relativePath, currentSearchQuery))+"\n                        </div>\n                    ";
+                    return "\n                        <div class=\"file-item "+(activeClass)+"\" data-index=\""+(index)+"\" onclick=\"selectFile("+(index)+")\">\n                            <svg xmlns=\"http://www.w3.org/2000/svg\" viewbox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\">\n                                <path d=\"M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z\"></path>\n                                <polyline points=\"14 2 14 8 20 8\"></polyline>\n                            </svg>\n                            "+(highlightText(documentListTitle(result.file), currentSearchQuery))+"\n                        </div>\n                    ";
                 }).join('');
             } else {
                 // Tree view for normal browsing
@@ -1369,7 +1386,7 @@
             if (!activeFile) return '';
             const editingControls = isEditMode ? "<button id=\"markdownSourceToggle\" class=\"edit-btn\" title=\"De Markdown-brontekst bewerken\" onclick=\"toggleMarkdownSource()\" aria-pressed=\"false\" data-i18n-title=\"De Markdown-brontekst bewerken\"><span data-i18n=\"Markdown\">Markdown</span></button>" : "";
             const extra = activeFile.isVirtual ? '' : "<button class=\"edit-btn\" onclick=\"openRecoveryDialog()\"><span data-i18n=\"Vorige versie herstellen\">Vorige versie herstellen</span></button>";
-            return "<details class=\"file-more\"><summary class=\"edit-btn\"><span data-i18n=\"Meer\">Meer</span></summary><div class=\"file-more-panel\" onclick=\"this.closest(&#x27;details&#x27;).open=false\">"+(editingControls)+"<button class=\"edit-btn\" onclick=\"Kladblok.toggle()\"><span data-i18n=\"Kladblok\">Kladblok</span></button><button class=\"edit-btn\" onclick=\"openDocumentExport()\"><span data-i18n=\"Exporteren…\">Exporteren…</span></button><button class=\"edit-btn\" onclick=\"ProjectMaterials.chooseDocument().catch(error=&gt;showNotification(error.message,&#x27;error&#x27;))\"><span data-i18n=\"Koppelingen…\">Koppelingen…</span></button><button class=\"edit-btn\" onclick=\"openRenameFileDialog()\"><span data-i18n=\"Hernoemen\">Hernoemen</span></button><button class=\"edit-btn\" onclick=\"openMoveFileDialog()\"><span data-i18n=\"Verplaatsen\">Verplaatsen</span></button>"+(extra)+"<button class=\"edit-btn\" id=\"focusToggle\" hidden aria-expanded=\"false\" aria-controls=\"focusPanel\" onclick=\"toggleFocus()\"><span data-i18n=\"Inhoudsopgave\">Inhoudsopgave</span></button><button class=\"edit-btn delete-file-btn\" onclick=\"openDeleteFileDialog()\"><span data-i18n=\"Verwijder\">Verwijder</span></button></div></details>";
+            return "<details class=\"file-more\"><summary class=\"edit-btn\" aria-label=\"Documentacties\" data-i18n-aria-label=\"Documentacties\"><span data-i18n=\"Meer\">Meer</span></summary><div class=\"file-more-panel\" onclick=\"this.closest(&#x27;details&#x27;).open=false\">"+(editingControls)+"<button class=\"edit-btn\" onclick=\"Kladblok.toggle()\"><span data-i18n=\"Kladblok\">Kladblok</span></button><button class=\"edit-btn\" onclick=\"openDocumentExport()\"><span data-i18n=\"Exporteren…\">Exporteren…</span></button><button class=\"edit-btn\" onclick=\"ProjectMaterials.chooseDocument().catch(error=&gt;showNotification(error.message,&#x27;error&#x27;))\"><span data-i18n=\"Koppelingen…\">Koppelingen…</span></button><button class=\"edit-btn\" onclick=\"openRenameFileDialog()\"><span data-i18n=\"Hernoemen\">Hernoemen</span></button><button class=\"edit-btn\" onclick=\"openMoveFileDialog()\"><span data-i18n=\"Verplaatsen\">Verplaatsen</span></button>"+(extra)+"<button class=\"edit-btn\" id=\"focusToggle\" hidden aria-expanded=\"false\" aria-controls=\"focusPanel\" onclick=\"toggleFocus()\"><span data-i18n=\"Inhoudsopgave\">Inhoudsopgave</span></button><button class=\"edit-btn delete-file-btn\" onclick=\"openDeleteFileDialog()\"><span data-i18n=\"Verwijder\">Verwijder</span></button></div></details>";
         }
 
         function renderDocumentMetadata() {
@@ -1378,7 +1395,7 @@
         }
 
         function fileActions() {
-            return "<div class=\"file-actions\" role=\"group\" aria-label=\"Bestandsacties\" data-i18n-aria-label=\"Bestandsacties\">\n                <button class=\"edit-btn document-edit-primary\" onclick=\"toggleEditMode()\"><span data-i18n=\"Bewerk\">Bewerk</span></button>\n                <button type=\"button\" class=\"edit-btn document-material-toggle\" aria-controls=\"document-material-panel\" aria-expanded=\"false\" onclick=\"DocumentMaterials.togglePanel().catch(error=&gt;showNotification(error.message,&#x27;error&#x27;))\"><span data-i18n=\"Koppel\">Koppel</span></button>"+(fileMoreActions())+"\n                    "+(documentFocusButton())+"\n            </div>";
+            return "<div class=\"file-actions\" role=\"group\" aria-label=\"Bestandsacties\" data-i18n-aria-label=\"Bestandsacties\">\n                <button class=\"edit-btn document-edit-primary action-primary\" onclick=\"toggleEditMode()\"><span data-i18n=\"Bewerk\">Bewerk</span></button>\n                <button type=\"button\" class=\"edit-btn document-material-toggle\" aria-controls=\"document-material-panel\" aria-expanded=\"false\" onclick=\"DocumentMaterials.togglePanel().catch(error=&gt;showNotification(error.message,&#x27;error&#x27;))\"><span data-i18n=\"Koppel\">Koppel</span></button>"+(fileMoreActions())+"\n                    "+(documentFocusButton())+"\n            </div>";
         }
 
         async function saveAndCloseEditor() {
@@ -1404,7 +1421,7 @@
             const backlinks = getBacklinks(activeFile);
             const backlinksHtml = renderBacklinks(backlinks);
 
-            document.getElementById('content').innerHTML = "\n                <div class=\"content-header\"><details class=\"document-information\"><summary data-i18n=\"Documentgegevens\">Documentgegevens</summary><span class=\"file-path-heading\" title=\""+(escapeHtml(activeFile?.relativePath || ""))+"\" data-i18n-title=\"{0}\"><span class=\"document-name\">"+(escapeHtml(activeFile?.name || activeFile?.relativePath?.split("/").pop() || ""))+"</span><span class=\"document-folder\">"+(activeFile?.isVirtual?I18n.t("Los document · browserkopie"): "Map: "+escapeHtml(activeFile?.relativePath?.split("/").slice(0, -1).join(" / ") || I18n.t("Geen map")))+"</span></span>"+(renderDocumentMetadata())+"</details>\n                    "+(fileActions(false))+"<span class=\"document-save-status\">"+(activeFile?.isVirtual?(window.Werkmap?.active?escapeHtml(I18n.value(I18n.ui("Bewaar schrijft dit document naar {0} / Schrijven","Bewaar schrijft dit document naar "+Werkmap.name+" / Schrijven"))):I18n.t("Bewaar downloadt dit document naar je computer")):escapeHtml(I18n.value(I18n.ui("Opgeslagen in {0}","Opgeslagen in "+activeFile.relativePath))))+"</span>\n                </div>\n                <div class=\"markdown-content\">\n                    \n                    "+(html)+"\n                    "+(backlinksHtml)+"\n                </div>\n            ";
+            document.getElementById('content').innerHTML = "\n                <div class=\"content-header\"><details class=\"document-information\"><summary data-i18n=\"Documentgegevens\">Documentgegevens</summary><span class=\"file-path-heading\" title=\""+(escapeHtml(activeFile?.relativePath || ""))+"\" data-i18n-title=\"{0}\"><span class=\"document-name\">"+(escapeHtml(activeFile?.name || activeFile?.relativePath?.split("/").pop() || ""))+"</span><span class=\"document-folder\">"+(activeFile?.isVirtual?I18n.t("Los document · browserkopie"): "Map: "+escapeHtml(activeFile?.relativePath?.split("/").slice(0, -1).join(" / ") || I18n.t("Geen map")))+"</span></span>"+(renderDocumentMetadata())+"</details>\n                    "+(fileActions(false))+"<span class=\"document-save-status\">"+(activeFile?.isVirtual?(window.Werkmap?.active?I18n.t("Bewaar schrijft dit document naar je werkmap"):I18n.t("Bewaar downloadt dit document naar je computer")):escapeHtml(I18n.value(I18n.ui("Opgeslagen in {0}","Opgeslagen in "+activeFile.relativePath))))+"</span>\n                </div>\n                <div class=\"markdown-content\">\n                    \n                    "+(html)+"\n                    "+(backlinksHtml)+"\n                </div>\n            ";
             window.ProjectMaterials?.showDocumentProject(activeFile);
             renderYouTubePlayers(document.querySelector("#content .markdown-content"));
         }
@@ -1926,12 +1943,13 @@
 
                 // Update cached content
                 fileContents.set(activeFile.relativePath, newContent);
+                renderFileList();
                 currentRawContent = newContent;
                 originalRawContent = newContent;
                 wysiwygDirty = false;
 
                 updateWysiwygModifiedState();
-                const savedMessage = activeFile.isVirtual ? 'Download gestart; controleer je bestand.' : 'Opgeslagen in '+activeFile.relativePath;
+                const savedMessage = activeFile.isVirtual ? I18n.t('Download gestart; controleer je bestand.') : I18n.value(I18n.ui('Opgeslagen in {0}','Opgeslagen in '+activeFile.relativePath));
                 const modifiedEl = document.getElementById('editorModified');
                 if (modifiedEl) modifiedEl.textContent = savedMessage;
                 if(!activeFile.isVirtual){

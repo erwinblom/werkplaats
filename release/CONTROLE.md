@@ -1,4 +1,24 @@
-# Werkplaats v0.35.8 — controle op 8 oktober 2026
+# Werkplaats v0.35.9 — controle op 9 oktober 2026
+
+Deze uitgave brengt de actuele Master naar website en download. De gedeelde bediening is bijgewerkt, met Nieuw/Meer bij de tooloverzichten, verdiepende filters en beheer onder Instellingen. De eerste klik na wisselen van tool wordt niet langer door een browserovergang geblokkeerd.
+
+Documenten in Schrijven tonen hun kop in de lijst, met de bestandsnaam als terugval. Bestandsnamen en paden blijven behouden. Factureren heeft een doorzoekbare contactkiezer met apart contactvoorbeeld. Knoppen in actierijen zijn uitgelijnd; Verzamelen gebruikt het label Koppelingen. Boekhoudselecties en exports volgen dezelfde selectie; taakfilters kunnen worden gewist; compacte contacten behouden zichtbare contactgegevens.
+
+## Controles voor 0.35.9
+
+- 210 publieke appbestanden geïmporteerd vanuit de schone Master; bronmanifest, website, downloadinhoud, JavaScript, HTML-links en persoonlijke uitsluitingen gecontroleerd.
+- 18 bestaande bronproeven geslaagd, inclusief documentmateriaal, opslag, selectie/export, gedeelde bediening en taalregels.
+- Lokale Master in Chrome gecontroleerd met uitsluitend fictieve gegevens en een afzonderlijke werkmap. Documentkop gewijzigd, bewaard en heropend; ongewijzigde bestandsnaam op schijf bevestigd.
+- Contactzoeker: resultaat, geen resultaat, selectie en overnemen in een fictief concept. Bewaar alles en heropenen gecontroleerd, evenals klant, contactpersoon, e-mail en contact-ID in de bewaarkopie op schijf.
+- Gelijke knoppenhoogte en verticale positie gemeten bij bron/project aanmaken en bewerken, Boekhouden, Contacten, Abonnementen en Doen.
+- Contactkiezer Nederlands/Engels en breedte 390 pixels gecontroleerd zonder horizontale overloop. Aanvullende codeproef voor titelterugval, codeblokken en onderstreepte koppen.
+- Eerder in deze Masterronde: 24/24 eerste klikken na wisselen van tool, alle negen onderdelen op smal scherm, herstel uit lege appopslag en factuur-/credit-PDF-proeven met fictieve gegevens.
+
+## Grenzen van deze ronde
+
+Herstel vanuit een volledig nieuw browserprofiel en echte ontvangst van de Verzamelen-extensie op een ondersteunde geïsoleerde route zijn nog niet bewezen. Niet alle Engelse foutscenario's zijn opnieuw doorlopen. Dit is geen volledige herhaling van iedere handeling in alle tools. Persoonlijke gegevens zijn niet gebruikt of opgenomen.
+
+## Voorafgaande uitgave v0.35.8 — controle op 8 oktober 2026
 
 Deze kleine vervolguitgave verwijdert de knop en trefwoordregels van Deel AI-links in. Bestaande categorieën, subcategorieën en handmatige indeling blijven behouden. Inbox verwerken wordt alleen getoond bij minimaal één bron in Inbox; de knop is ook tijdens het laden standaard verborgen.
 

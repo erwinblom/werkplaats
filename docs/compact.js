@@ -24,9 +24,9 @@ document.addEventListener('DOMContentLoaded',()=>{
  const main=document.querySelector('main'),heading=main?.querySelector(':scope>.heading,:scope>.intro');
  if(heading){
   heading.classList.add('work-actions');
-  if(!heading.querySelector('#board-name,#collection-name')){const brand=header.querySelector('.brand');if(brand){brand.setAttribute('role','heading');brand.setAttribute('aria-level','1');}}
+  if(!heading.querySelector('#board-name,#collection-name,#subscription-name')){const brand=header.querySelector('.brand');if(brand){brand.setAttribute('role','heading');brand.setAttribute('aria-level','1');}}
   const intro=heading.firstElementChild;
-  if(intro&&!intro.querySelector('#board-name,#collection-name')){intro.classList.add('compact-intro');panel.append(intro);}
+  if(intro&&!intro.querySelector('#board-name,#collection-name,#subscription-name')){intro.classList.add('compact-intro');panel.append(intro);}
   else if(intro){for(const p of intro.querySelectorAll('.eyebrow,p.intro'))panel.append(p);}
   const actions=document.getElementById('link-actions');if(actions){const group=heading.querySelector('.actions');if(group){while(actions.firstChild)group.prepend(actions.lastChild);actions.remove();}else heading.append(actions);}
  }
@@ -36,5 +36,5 @@ document.addEventListener('DOMContentLoaded',()=>{
   if(detail.classList.contains('help')||/^Bewaar|^Hoe werkt bewaren/.test(title))panel.append(detail);
  }
  const preview=document.querySelector('body[data-tool=Ping] .preview');if(preview){const actions=document.createElement('div');actions.className='link-actions';for(const id of ['invoice-bookkeeping','invoice-received','invoice-hours-receipt']){const b=document.getElementById(id);if(b)actions.append(b);}preview.append(actions);}
- const style=document.createElement('link');style.rel='stylesheet';style.href='../../compact.css?v=20261006-personal-title-1';document.head.insertBefore(style,document.querySelector('link[href*="blom-os-tokens.css"]'));
+ if(!document.querySelector('link[href*="compact.css"]')){const style=document.createElement('link');style.rel='stylesheet';style.href='../../compact.css?v=20261008-stabiel-1';document.head.insertBefore(style,document.querySelector('link[href*="blom-os-tokens.css"]'));}
 });

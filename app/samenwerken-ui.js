@@ -68,7 +68,7 @@ function summarizeProjectTasks(list,day){
    }
   }
   if(tool==='Publicatieplanner'){
-   const old=render;render=function(){const projects=$('kind-filter').value==='project';$('channel-filter').closest('label').hidden=projects;if(projects)$('channel-filter').value='';for(const option of $('status-filter').options)option.hidden=projects&&option.value==='published';if(projects&&$('status-filter').value==='published')$('status-filter').value='';old();};$('kind-filter').onchange=()=>render();render();
+   const old=render;render=function(){const projects=true;$('channel-filter').closest('label').hidden=projects;if(projects)$('channel-filter').value='';for(const option of $('status-filter').options)option.hidden=projects&&option.value==='published';if(projects&&$('status-filter').value==='published')$('status-filter').value='';old();};$('kind-filter').onchange=()=>render();render();
   }
  }
  run().catch(e=>window.Koppelingen?.notice(I18n.value(I18n.ui("Samenwerking niet beschikbaar: {0}",'Samenwerking niet beschikbaar: '+e.message))));
@@ -79,7 +79,7 @@ function summarizeProjectTasks(list,day){
  const tool=document.querySelector('script[data-tool]')?.dataset.tool,K=Koppelingen;
  if(GereedschapskistMode.example&&!['Contacten','Projectbord'].includes(tool))return;
  const href=(folder,file,params)=>{const u=new URL('../'+folder+'/'+file,location.href);u.searchParams.set('werkruimte',GereedschapskistMode.example?'voorbeeld':'eigen');const tour=new URL(location.href).searchParams.get('rondleiding');if(GereedschapskistMode.example&&tour)u.searchParams.set('rondleiding',tour);for(const [key,value]of Object.entries(params))u.searchParams.set(key,value);return u.href;};
- function link(text,url){const a=document.createElement('a');a.className='shared-reference';a.textContent=text;a.href=url;return a;}
+ function link(text,url){const a=document.createElement('a');a.className='shared-reference';I18n.assign(a,I18n.ui(text,text),'textContent');a.href=url;return a;}
  if(tool==='Projectbord'){
   await Samenwerken.migrateContactActions();
   if(GereedschapskistMode.example){data=validate((await BewaarAlles.readTool('Projectbord')).data);lastRaw=GereedschapskistMode.storage.getItem(KEY);render();}
@@ -109,14 +109,14 @@ function summarizeProjectTasks(list,day){
      const disclosure=row.querySelector('.contact-details'),summary=disclosure?.querySelector('summary'),body=disclosure?.querySelector('.contact-detail-body');
      if(!summary||!body)continue;
      if(summary.dataset.baseText===undefined)summary.dataset.baseText=summary.textContent;
-     const summaryText=summary.dataset.baseText+(list.length?' · '+list.length+' '+(list.length===1?'taak':'taken'):'');
+     const summaryText=summary.dataset.baseText+(list.length?' · '+list.length+' '+I18n.t(list.length===1?'taak':'taken'):'');
      if(summary.textContent!==summaryText)summary.textContent=summaryText;
      let details=row.querySelector('.contact-tasks');
      if(!list.length){details?.remove();continue;}
      const signature=JSON.stringify([list,projects]);if(details?.dataset.signature===signature)continue;
      if(!details){details=document.createElement('section');details.className='contact-tasks project-tasks';body.prepend(details);}
      details.dataset.signature=signature;details.replaceChildren();
-     const heading=document.createElement('strong');I18n.assign(heading,I18n.ui("{0} {1} · {2} klaar",list.length+' '+(list.length===1?'taak':'taken')+' · '+list.filter(t=>t.state==='done').length+' klaar'),"textContent");details.append(heading);
+     const heading=document.createElement('strong');I18n.assign(heading,I18n.ui("{0} {1} · {2} klaar",list.length+' '+I18n.t(list.length===1?'taak':'taken')+' · '+list.filter(t=>t.state==='done').length+' klaar'),"textContent");details.append(heading);
      const ul=document.createElement('ul');
      for(const task of list){
       const li=document.createElement('li'),title=document.createElement('p'),meta=document.createElement('p');
@@ -124,7 +124,7 @@ function summarizeProjectTasks(list,day){
       const date=document.createElement('strong');I18n.assign(date,(task.due?task.due.split('-').reverse().join('-'):I18n.ui("Zonder datum",'Zonder datum')),"textContent");
       title.textContent=task.title;
       const project=projects.find(p=>p.id===task.projectId)?.name||task.project;
-      meta.textContent=[{inbox:'Inbox',todo:'Te doen',doing:'Bezig',done:'Klaar'}[task.state]||task.state,project?'Project: '+project:'Geen project'].filter(Boolean).join(' · ');
+      meta.textContent=[I18n.t({inbox:'Inbox',todo:'Te doen',doing:'Bezig',done:'Klaar'}[task.state]||task.state),project?I18n.t('Project:')+' '+project:I18n.t('Geen project')].filter(Boolean).join(' · ');
       const done=document.createElement('button');done.type='button';I18n.assign(done,(task.state==='done'?I18n.ui("Taak heropenen",'Taak heropenen'):I18n.ui("Taak afgerond",'Taak afgerond')),"textContent");
       done.onclick=async()=>{done.disabled=true;try{await Samenwerken.setTaskDone(task.id,task.state!=='done');}catch(e){K.notice(e.message);}finally{done.disabled=false;}};
       li.append(date,title,meta,done);ul.append(li);
@@ -147,7 +147,7 @@ function summarizeProjectTasks(list,day){
     badge.dataset.value=signature;badge.replaceChildren();
     if(!stats.total){const counts=document.createElement('span'),chip=document.createElement('span'),number=document.createElement('strong');counts.className='project-task-counts';chip.className='project-task-chip';number.textContent='0';chip.append(number,I18n.node(' taken'));counts.append(chip);badge.append(counts);continue;}
     const counts=document.createElement('span');counts.className='project-task-counts';
-    function chip(value,label,kind){const box=document.createElement('span');box.className='project-task-chip '+kind;const number=document.createElement('strong');number.textContent=value;box.append(number,document.createTextNode(' '+label));counts.append(box);}
+    function chip(value,label,kind){const box=document.createElement('span');box.className='project-task-chip '+kind;const number=document.createElement('strong');number.textContent=value;box.append(number,I18n.node(' '+label));counts.append(box);}
     chip(stats.open,stats.open===1?'open taak':'open taken','is-open');
     if(stats.overdue)chip(stats.overdue,'te laat','is-overdue');
     badge.append(counts);
@@ -160,7 +160,7 @@ function summarizeProjectTasks(list,day){
      const rows=document.createElement('ul');
      for(const task of upcoming){const li=document.createElement('li'),name=document.createElement('span'),meta=document.createElement('small');name.textContent=task.title;
       const date=task.due?new Date(task.due+'T12:00:00').toLocaleDateString(I18n.locale(),{day:'numeric',month:'short'}):'';
-      meta.textContent=[task.due&&task.due<day?'Te laat':'',task.priority==='high'?'Hoge prioriteit':'',date].filter(Boolean).join(' · ');
+      meta.textContent=[task.due&&task.due<day?I18n.t('Te laat'):'',task.priority==='high'?I18n.t('Hoge prioriteit'):'',date].filter(Boolean).join(' · ');
       if(task.due&&task.due<day)meta.className='is-overdue';li.append(name);if(meta.textContent)li.append(meta);rows.append(li);
      }preview.append(rows);
     }else I18n.assign(preview,I18n.ui("Alle taken afgerond",'Alle taken afgerond'),"textContent");
@@ -195,7 +195,7 @@ function summarizeProjectTasks(list,day){
    const label=state==='loading'?'Bronnen laden…':state==='error'?'Aantal bronnen niet beschikbaar':count+' '+(count===1?'bron':'bronnen');
    if(badge.dataset.value===label)continue;
    badge.dataset.value=label;badge.replaceChildren();const chip=document.createElement('span');chip.className='project-task-chip';
-   if(state==='ready'){const number=document.createElement('strong');number.textContent=count;chip.append(number,document.createTextNode(' '+(count===1?'bron':'bronnen')));}else chip.textContent=label;
+   if(state==='ready'){const number=document.createElement('strong');number.textContent=count;chip.append(number,I18n.node(' '+(count===1?'bron':'bronnen')));}else chip.textContent=label;
    badge.append(chip);
   }
  }
@@ -223,7 +223,7 @@ function summarizeProjectTasks(list,day){
    if(line?.dataset.value===label)continue;
    if(!line){line=document.createElement('div');line.className='project-document-summary';host.append(line);}
    line.dataset.value=label;line.replaceChildren();const chip=document.createElement('span');chip.className='project-task-chip';
-   if(state==='ready'){const number=document.createElement('strong');number.textContent=linked.length;chip.append(number,document.createTextNode(' '+(linked.length===1?'document':'documenten')));}
+   if(state==='ready'){const number=document.createElement('strong');number.textContent=linked.length;chip.append(number,I18n.node(' '+(linked.length===1?'document':'documenten')));}
    else chip.textContent=label;
    line.append(chip);
    if(state==='ready'&&linked.length){const titles=document.createElement('small');titles.className='project-document-names';titles.textContent=names.slice(0,2).join(' · ')+(names.length>2?' · +'+(names.length-2):'');line.append(titles);line.title=names.join(' · ');}else line.removeAttribute('title');

@@ -126,3 +126,86 @@ De meeste bediening gebruikt een wit vlak, zwarte tekst en een zwarte kaderrand.
 De gedeelde stijllaag gebruikt `action-primary` als expliciete hoofdactierol. Een oude `primary`-klasse of `type=submit` maakt een knop niet meer automatisch zwart. De concrete formulieren en maakacties dragen de rol zelf; aanvullende acties en herhaalde lege-lijstknoppen blijven secundair. Zwarte starttegels, kaartinhoud, tabs, filters en opmaakbediening behouden hun eigen visuele rol.
 
 In donker volgt dezelfde hiërarchie de bestaande tokens: donkere secundaire vlakken met lichte tekst/rand, een licht gevuld vlak voor de hoofdactie. De lichte modus is wit/zwart. Bestaande hover-, focus-, disabled- en bewaarlogica blijven behouden.
+
+
+## Eén Werkplaats: werkrollen — 8 oktober 2026
+
+Dit is het gezamenlijke contract bij de stapsgewijze beoordeling van alle tools. Schrijven, Verzamelen en Doen zijn de eerste drie toepassingen. De andere tools worden op dezelfde rollen beoordeeld; hun eigen taakindeling blijft behouden.
+
+1. **Overzicht:** titel brand-heavy, xl/40 op desktop en l/32 op smalle schermen. Eén dominante aanmaakactie bij het overzicht. Zoeken en filters bij de inhoud; een subcategorie verschijnt bij haar hoofdcategorie, op een eigen regel en met dezelfde uitlijning.
+2. **Kaarten:** titel UI-heavy s/20; korte inhoud UI-regular s/20; context en status xs/16. Neutrale vlakken, heldere grafische randen, geen wisselende decoratieve kaartkleuren. Notities tonen meer inhoud dan taken of bronnen, met dezelfde typografische rollen.
+3. **Bestaand item:** openen begint in lezen. Bewerk is de dominante actie om inhoud te wijzigen. Koppelen, kopiëren, uitwerken en sluiten blijven herkenbaar secundair. Documenten behouden hun volledige schrijf- en leesruimte en eigen inhoudsstructuur.
+4. **Verdieping:** eerst titel en inhoud; aanvullende gegevens en koppelingen hebben concrete labels. Meer verzamelt aanvullende itemacties; Hulp legt uit; Werkmap beheert opslag. Geen functie verwijderen of onvindbaar maken. Bestaande selecties en koppelingen blijven leesbaar.
+5. **Bewaren:** Bewaar verwerkt een handmatige wijziging; Bewaar alles legt de hele werkruimte vast. Notities blijven automatisch in de browser bijgewerkt en benoemen dat zichtbaar. Documenten uit externe mappen worden op hun eigen plek bewaard. De gedeelde uitstraling verandert deze opslagverschillen niet.
+
+De gedeelde presentatie staat in blom-os-ui.css. Opslagcodes, bestanden, routes, editorfuncties, sjablonen, gekoppeld materiaal, focus en herstel blijven behouden. Deze ronde is gecontroleerd op broncode en gerichte functionele proeven; visuele browseracceptatie is nog open.
+
+
+### Zoeken en Meer — 8 oktober 2026
+
+Zoeken staat bij alle tien toolpagina's in de gedeelde werkbalk onder de kop, naast Bewaar alles. De zoekbalk opent direct onder die balk, ook bij Schrijven wanneer je wisselt tussen Notities en Documenten. Zoeken en sluiten behouden invoer en filters; Wis filters reset de selectie. Abonnementen gebruikt dezelfde bediening. Meer is de vaste naam voor aanvullende lijst- en itemacties; bestaande acties behouden hun gedrag.
+
+### Zoeken als gereedschap — 8 oktober
+
+De centrale zoekdialoog gebruikt dezelfde kop, rechte invoervelden, typografische rollen en neutrale kleuren als de andere gereedschappen. Sluit staat bij de kop. Resultaten tonen titel, gereedschap en passage; meer dan honderd resultaten blijven bereikbaar via Meer resultaten. Laden, geen resultaten en fouten blijven zichtbaar. Zoekinhoud en bestemmingen blijven behouden. Visuele browsercontrole staat nog open.
+
+### Projecten — 8 oktober
+
+Projecttitels, groepen, metadata en leesvensters volgen de gedeelde typografische rollen. Bewerk in het leesvenster is de primaire actie; directe kaartacties blijven compact. Titel, status, looptijd en tekst blijven in de eerste formulierlaag. Notities en link staan onder Meer, automatisch open bij bestaande inhoud. Kalender, koppelingen, taken, bronnen, documenten en opslag blijven behouden. Visuele browsercontrole staat nog open.
+
+### Doen — 8 oktober
+
+Taakgegevens staan vóór de koppelingen. Project blijft direct zichtbaar; contact zoeken en kiezen staan onder Meer, automatisch open bij een gekoppeld contact. Het leesvenster volgt dezelfde titel-, metadata- en tekstrollen als de andere tools. Prioriteitskleuren, sortering, slepen, deadlines, archief en herstel blijven behouden. Visuele browsercontrole staat nog open.
+
+### Stabiele navigatie en eerste beeld — 8 oktober
+
+Toolnamen gebruiken overal brand l; toolkiezer en navigatielinks gebruiken ui s, met expliciete lettertype-, gewicht-, maat-, regelhoogte- en letterafstandwaarden. Gedeelde stijlen staan in de head vóór het eerste beeld. De pagina wordt zichtbaar nadat de gedeelde indeling, zoekbediening en lettertypes klaarstaan; er wordt geen vaste wachttijd gebruikt. Fouten geven de pagina vrij. Visuele browsercontrole staat nog open.
+
+### Bindende plaatsingsregel voor opslag
+
+Werkmapnaam en opslaglocatie staan uitsluitend in Instellingen → Opslag. Geen werkmapnaam op Home of in toolkoppen/statusrijen. Bewaarstatus, gewijzigde invoer en fouten blijven zichtbaar; een neutrale lege status wordt verborgen. Deze regel geldt voor alle tools.
+
+### Bindende tekstrollen voor alle tools
+
+`data-wp-type` kent gelijkwaardige onderdelen expliciet dezelfde rol toe: tool-title (24/32), page-title (36/40 desktop, 24/32 smal), control (14/20), item-title (14/20). Alle rollen gebruiken dezelfde Graphical-lettertypefamilie, dikte en letterafstand; ingesloten tekst neemt dezelfde rol over. Oude toolstijlen bepalen deze maten niet. Zoeken staat naast Bewaar alles in de gedeelde balk; Meer staat bij de aanmaakactie van het overzicht. Functies en verschillen in inhoud blijven behouden. De menucontrole behandelt de onzichtbare opbouwfase niet als verborgen functionaliteit.
+
+### Contacten — 8 oktober
+
+Contactnamen volgen de gedeelde kaarttitelrol. In het leesvenster is Bewerk de primaire actie; Sluit is zichtbaar gelabeld. Naam, organisatie, e-mail, telefoon en achtergrond blijven direct in het formulier. Factuuradres en labels staan onder Meer, automatisch open bij bestaande inhoud. Lijst/Kaarten, gesprekken, taken, koppelingen, zoekinhoud en opslag blijven behouden. Visuele browsercontrole staat nog open.
+
+## Gedeelde detailvensters
+
+- Eén rustige leesruimte: maximaal 760px breed en 65 tekens leeslengte; op mobiel 16px marge, scroll binnen het venster.
+- Titel brand l/32, sectiekoppen ui s/20 in gewone schrijfwijze, tekst editorial m/24, metadata ui s/20 in neutrale kleur.
+- Sluit staat bij de titel; één primaire Bewerk-actie in de actierij. Contextacties zoals Notitie staan ernaast. Vermijd dubbele Sluit-knoppen.
+- Contactgegevens staan als gelabelde gegevens; geen herhaling van de naam. Alleen aanwezige velden tonen, zonder inhoud te verliezen.
+- Inhoud, gesprekken, taken en koppelingen vormen afzonderlijke secties met vast witruimteritme. Feedback is een kleine tekstactie, geen concurrerende hoofdknop.
+- Het leesvenster opent vóór bewerken. Sluiten, bewerken, notities en koppelingen behouden hun bestaande handlers en opslag.
+
+Toegepast op Contactdetails en de gedeelde detailbasis voor Verzamelen, Schrijven, Projecten en Doen. Visuele browsercontrole van de gewijzigde vensters staat nog open.
+
+Doorvoering detailregels: Verzamelen, Notities in Schrijven, Projecten en Doen verplaatsen de bestaande Sluit-knop met behoud van handler naar de gedeelde titelrij. Zoeken gebruikt zijn bestaande titelrij, dezelfde vensterbreedte en compacte resultaatmetadata. Documenten in Schrijven behouden het volledige leeswerkvlak met hun bestaande Bewerk/Koppel/Meer-actierij. Invoervensters en autosave worden niet omgebouwd.
+
+Lijstregel: scheid opeenvolgende rijen met één dunne neutrale lijn (border-s). Gebruik geen herhaald zwart kaartaccent in een doorlopende lijst. Behoud een duidelijke kolomkop en betekenisvolle aandachtmarkering. Toegepast op Contacten in Lijst; Kaarten behoudt zijn kaartbegrenzing.
+
+### Factureren, Abonnementen en Boekhouden — 8 oktober
+
+De drie administratietools delen de tekstrollen, Zoeken in de gedeelde balk en dunne neutrale rijlijnen. Abonnementen heeft Meer naast toevoegen, met alle bestaande import- en exportacties. Abonnement- en boekingsdetails volgen de titelrij, gelabelde metadata en leesmaat; Bewerk is primair. Factureren behoudt de expliciete route bewerken → voorbeeld, inclusief definitief maken, creditnota, btw en print/PDF. Berekeningen, nummering, betalingen, bonnen en exports blijven inhoudelijk ongewijzigd. Visuele browsercontrole staat nog open.
+
+### Toolovergangen en opstartsnelheid
+
+De subtiele infade (240 ms) start pas wanneer de opgebouwde pagina wordt vrijgegeven. De uitfade loopt gelijktijdig met flush en voegt geen afzonderlijke wachttijd toe vóór navigatie. Bewaren blijft een harde voorwaarde voor navigatie. Menucontroles worden gebundeld per beeldframe. Systeemlettertypes vereisen geen aparte fontlaadbarrière. Verminderde beweging blijft gerespecteerd. Werkelijke laadtijd in Chrome en visueel verloop zijn nog niet gemeten.
+
+### Detailvensters: verplichte controle
+Alle leesdetails delen maximaal 760px breedte, 24px binnenruimte, een titel van 24/32px, gelabelde kerngegevens, tekst van 16/24px en rustige sectiekoppen van 14/20px. Eén Sluit-knop staat in de kop; contextacties en Bewerk staan samen onderaan. Ook dynamisch opgebouwde vensters en Uren (#entry-detail) vallen hieronder. Document- en factuurvoorbeelden behouden hun functionele werkruimte. Een broncontrole is geen visuele eindcontrole; rapporteer die afzonderlijk.
+
+### Toolhomes: dagelijkse bediening en verdieping
+Eén hoofdactie en Meer horen bij het overzicht. Zoeken en Bewaar alles staan op dezelfde plek; filters verschijnen op verzoek en actieve criteria blijven herkenbaar. Import/export en naam wijzigen staan onder Meer. Herstel en leeg beginnen staan onder Instellingen → Back-up en herstel. Factureren opent een werkruimte per factuur; Schrijven gebruikt één Meer voor beheer; Boekhouden toont de periode rechtstreeks bij de totalen. Projectkaarten tonen compacte kerngegevens, objectacties staan in details. Persoonlijke Bugs en Requests blijft altijd bereikbaar; publieke feedback staat onder Hulp met een gescheiden opslag. Visuele verificatie van alle negen tools wordt afzonderlijk gerapporteerd.
+
+
+## Controle na click-film — 8 oktober 2026
+- Tijdens veilig bewaren vóór een toolwissel blijft het huidige scherm volledig zichtbaar. Het opstartscherm gebruikt het gedeelde werkvlak; geen zichtbare diepere bediening. Een lokale bestandsnavigatie vervangt het document: een blijvend oud scherm is zonder aangepaste navigatie niet gegarandeerd.
+- Opstarten leest alleen de benodigde toolwerksessie. Bewaar alles, export en herstel blijven de volledige gegevens behandelen.
+- Leesdetails gebruiken één actierij met Bewerk en Meer; koppelen, kopiëren en afgeleide objecten maken blijven onder Meer bereikbaar. Contextuele inhoud en fouten blijven zichtbaar.
+- Abonnementen gebruikt dezelfde titel-/actiepositie en marges als de andere toolhomes. Zoekfilters gebruiken dezelfde veldrollen.
+- Een geslaagde broncode- of opslagtest is geen visuele eindcontrole. Meld die bewijsvormen afzonderlijk.

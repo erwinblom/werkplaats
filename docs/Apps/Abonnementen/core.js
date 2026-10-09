@@ -23,7 +23,7 @@
   if(i.cancelBy){const days=daysUntil(i.cancelBy,now);if(days<0)return {kind:'overdue',label:'Opzegdatum verstreken · controleer verlenging',rank:0};if(days===0)return {kind:'soon',label:'Vandaag uiterlijk opzeggen',rank:0};if(days<=30)return {kind:'soon',label:`Nog ${days} dagen om op te zeggen`,rank:1};}
   if(i.renewal&&daysUntil(i.renewal,now)<0)return {kind:'overdue',label:'Verlengdatum verstreken · werk datums bij',rank:0};
   if(i.status==='uncertain')return {kind:'missing',label:'Status en opzegdatum controleren',rank:2};
-  if(!i.cancelBy)return {kind:'missing',label:i.status==='likely'?'Vermoedelijk lopend · opzegdatum ontbreekt':'Opzegdatum ontbreekt',rank:2};
+  if(!i.cancelBy)return {kind:'missing',label:'Opzegdatum ontbreekt',rank:2};
   return {kind:'ok',label:'Geen actie op korte termijn',rank:3};
  }
  function totals(items){const ongoing=items.filter(i=>['active','likely'].includes(i.status)),yearCents=ongoing.reduce((sum,i)=>sum+i.amountCents*periods[i.period].perYear,0);return {count:ongoing.length,yearCents,monthCents:Math.round(yearCents/12)};}

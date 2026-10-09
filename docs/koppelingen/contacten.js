@@ -9,7 +9,7 @@
    K.fresh();
    const defaultProject=projects.find(p=>p.name===contact.organization);
    const choices=projects.map(p=>"<option value=\""+(K.esc(p.id))+"\" "+(p.id===defaultProject?.id?' selected':'')+">"+(K.esc(p.name))+"</option>").join('');
-   K.dialog('Taak voor '+contact.name,
+   K.dialog(I18n.ui('Taak voor {0}','Taak voor '+contact.name),
     "<p><span data-i18n=\"Deze taak verschijnt in Doen en blijft aan dit contact gekoppeld.\">Deze taak verschijnt in Doen en blijft aan dit contact gekoppeld.</span></p><label><span data-i18n=\"Taak\">Taak</span><input name=\"title\" maxlength=\"160\" required value=\""+(K.esc(''))+"\"></label><label><span data-i18n=\"Project (optioneel)\">Project (optioneel)</span><select name=\"projectId\"><option value=\"\" data-i18n=\"Geen project\">Geen project</option>"+(choices)+"</select></label><label><span data-i18n=\"Deadline (optioneel)\">Deadline (optioneel)</span><input type=\"date\" name=\"due\" value=\""+(K.esc(''))+"\"></label>",
     async form=>{
      K.fresh();

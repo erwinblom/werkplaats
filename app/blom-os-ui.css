@@ -155,3 +155,294 @@
 @media screen and (forced-colors:active) {
  body select:not([multiple]):is(:not([size]),[size="1"]):not(#tool-switcher) {appearance:auto!important;background-image:none!important}
 }
+
+@media screen {
+ body[data-tool=Bronnenkast] #cards>.source-card {height:auto;min-height:184px;padding:var(--space-s) var(--space-m);overflow:visible}
+ body[data-tool=Bronnenkast] .source-open {color:var(--cte-text)}
+ body[data-tool=Bronnenkast] :is(.source-open span,.source-card-links,.source-card .category,#categories button) {font-family:var(--font-ui);font-weight:var(--weight-ui-regular);font-size:var(--size-xs)!important;line-height:var(--line-xs)!important;letter-spacing:var(--letter-spacing-xs);color:var(--cte-text-muted)}
+ body[data-tool=Bronnenkast] #categories button {padding:var(--space-xs)!important;align-items:flex-start;gap:var(--space-xxs)}
+ body[data-tool=Bronnenkast] #categories .category-name {overflow:visible;text-overflow:clip;white-space:normal;overflow-wrap:anywhere}
+ body[data-tool=Bronnenkast] .source-card .category {text-transform:none;overflow-wrap:anywhere}
+ body[data-tool=Bronnenkast] #source-detail h2,body[data-tool=Bronnenkast] #form-title {font-family:var(--font-brand);font-weight:var(--weight-brand-heavy);font-size:var(--size-l);line-height:var(--line-l);letter-spacing:var(--letter-spacing-l)}
+ body[data-tool=Bronnenkast] #source-detail :is(section p,blockquote),body[data-tool=Bronnenkast] #form :is(input,textarea,select) {font-family:var(--font-editorial);font-weight:var(--weight-editorial-regular);font-size:var(--size-m);line-height:var(--line-m);letter-spacing:var(--letter-spacing-m);color:var(--cte-text)}
+ body[data-tool=Bronnenkast] #source-detail :is(.source-detail-maker,section h3,.tag) {font-family:var(--font-ui);font-weight:var(--weight-ui-medium);font-size:var(--size-s);line-height:var(--line-s);letter-spacing:var(--letter-spacing-s);color:var(--cte-text-muted)}
+ body[data-tool=Bronnenkast] #source-more {margin-top:var(--space-m);padding-block:var(--space-s);border:0;box-shadow:inset 0 var(--border-s) var(--cte-border)}
+ body[data-tool=Bronnenkast] #source-more>summary {cursor:pointer;font-family:var(--font-ui);font-weight:var(--weight-ui-heavy);font-size:var(--size-s);line-height:var(--line-s);letter-spacing:var(--letter-spacing-s);color:var(--cte-text)}
+}
+
+@media screen {
+ body[data-tool=Bronnenkast] #categories .source-subcategories {display:flex;flex:0 0 100%;flex-wrap:wrap;gap:var(--space-xxs);padding-top:var(--space-xs);border:0;box-shadow:inset 0 var(--border-s) var(--cte-border)}
+ body[data-tool=Bronnenkast] .library-subcategory-row {display:flex;flex:0 0 100%;grid-column:1 / -1;align-items:center;flex-wrap:wrap;gap:var(--space-xs)}
+ body[data-tool=Bronnenkast] #subcategory-field {grid-column:1 / -1}
+}
+
+/* Gedeelde werkrollen: Schrijven, Verzamelen en Doen gebruiken dezelfde schaal. */
+@media screen {
+ body[data-tool] :is(.heading,.notes-heading) h1 {font-family:var(--font-brand);font-weight:var(--weight-brand-heavy);font-size:var(--size-xl)!important;line-height:var(--line-xl)!important;letter-spacing:var(--letter-spacing-xl);color:var(--cte-text)}
+ body[data-tool] :is(.source-open strong,.task-title,.note-card h2) {font-family:var(--font-ui);font-weight:var(--weight-ui-heavy);font-size:var(--size-s);line-height:var(--line-s);letter-spacing:var(--letter-spacing-s);color:var(--cte-text)}
+ body[data-tool=Bronnenkast] .source-open strong {height:calc(3 * var(--line-s))}
+ body[data-tool] .note-card h2 {margin:var(--space-s) 0 var(--space-xs);max-height:calc(2 * var(--line-s))}
+ body[data-tool] .note-card p {font-family:var(--font-ui);font-weight:var(--weight-ui-regular);font-size:var(--size-s);line-height:var(--line-s);letter-spacing:var(--letter-spacing-s);max-height:calc(3 * var(--line-s));margin:0 0 var(--space-m)}
+ body[data-tool] .note-card :is(.note-topic,.note-footer) {font-family:var(--font-ui);font-weight:var(--weight-ui-regular);font-size:var(--size-xs);line-height:var(--line-xs);letter-spacing:var(--letter-spacing-xs);color:var(--cte-text-muted);text-transform:none}
+ body[data-tool] .notes-grid {gap:var(--space-m)}
+ body[data-tool] .notes-board .note-card {padding:var(--space-m);height:auto;min-height:220px;transition:background-color var(--motion-duration) var(--motion-easing)}
+ body[data-tool] .notes-board .note-card:hover {transform:none;box-shadow:var(--blom-card-edge),inset 0 var(--space-xxs) var(--cte-text)}
+ body[data-tool] .note-dialog>h2 {font-family:var(--font-brand);font-weight:var(--weight-brand-heavy);font-size:var(--size-l);line-height:var(--line-l);letter-spacing:var(--letter-spacing-l)}
+ body[data-tool] .note-full-text {font-family:var(--font-editorial);font-weight:var(--weight-editorial-regular);font-size:var(--size-m);line-height:var(--line-m);letter-spacing:var(--letter-spacing-m);color:var(--cte-text)}
+ body[data-tool] .note-full-text :is(h1,h2,h3) {font-family:var(--font-editorial);font-weight:var(--weight-editorial-heavy)}
+ body[data-tool] .note-full-text h1 {font-size:var(--size-xl);line-height:var(--line-xl);letter-spacing:var(--letter-spacing-xl)}
+ body[data-tool] .note-full-text h2 {font-size:var(--size-l);line-height:var(--line-l);letter-spacing:var(--letter-spacing-l)}
+ body[data-tool] .note-full-text h3 {font-size:var(--size-m);line-height:var(--line-m);letter-spacing:var(--letter-spacing-m)}
+ body[data-tool] .note-sources h3 {font-family:var(--font-ui);font-weight:var(--weight-ui-heavy);font-size:var(--size-s);line-height:var(--line-s);letter-spacing:var(--letter-spacing-s);text-transform:none}
+ body[data-tool] .note-dialog>[role=status] {font-family:var(--font-ui);font-weight:var(--weight-ui-regular);font-size:var(--size-xs);line-height:var(--line-xs);letter-spacing:var(--letter-spacing-xs);color:var(--cte-text-muted)}
+ body[data-tool] .note-dialog :is(input,textarea):not([type=checkbox]) {font-family:var(--font-ui);font-weight:var(--weight-ui-regular);font-size:var(--size-m)!important;line-height:var(--line-m)!important;letter-spacing:var(--letter-spacing-m)}
+ body[data-tool] .note-edit-sources {margin:var(--space-s) 0;background:var(--cte-surface);border:0;box-shadow:inset 0 var(--border-s) var(--cte-border)}
+ body[data-tool] .note-edit-sources>summary {font-family:var(--font-ui);font-weight:var(--weight-ui-heavy);font-size:var(--size-s);line-height:var(--line-s);letter-spacing:var(--letter-spacing-s);padding:var(--space-s) 0;color:var(--cte-text)}
+ body[data-tool] .note-edit-sources[open]>summary {border:0}
+ body[data-tool] .note-edit-source-panel {padding:0 0 var(--space-s)}
+ body[data-tool] .note-source-copy strong {font-family:var(--font-ui);font-weight:var(--weight-ui-heavy);font-size:var(--size-s);line-height:var(--line-s);letter-spacing:var(--letter-spacing-s)}
+ body[data-tool] .note-source-meta {font-family:var(--font-ui);font-weight:var(--weight-ui-regular);font-size:var(--size-xs);line-height:var(--line-xs);letter-spacing:var(--letter-spacing-xs)}
+ body[data-tool] .note-dialog .note-source-open,body[data-tool] .note-source-card a {background:var(--neutral-3);color:var(--cte-text);border:0;box-shadow:var(--blom-card-edge);padding:var(--space-s) var(--space-m);gap:var(--space-s)}
+}
+@media screen and (max-width:650px) {
+ body[data-tool] :is(.heading,.notes-heading) h1 {font-size:var(--size-l)!important;line-height:var(--line-l)!important;letter-spacing:var(--letter-spacing-l)}
+}
+
+@media screen {
+ body.compact-tools .suite-search-bar {background:var(--cte-surface-muted);color:var(--cte-text);padding:var(--space-s) var(--space-l);border:0;box-shadow:inset 0 calc(-1 * var(--border-s)) var(--cte-border)}
+ body.compact-tools .suite-search-bar .suite-search-row {grid-template-columns:190px minmax(140px,560px) auto auto;gap:var(--space-xs) var(--space-s)}
+ body.compact-tools .suite-search-bar .suite-search-row>input {font-family:var(--font-ui);font-weight:var(--weight-ui-regular);font-size:var(--size-m);line-height:var(--line-m);letter-spacing:var(--letter-spacing-m);height:auto;min-height:var(--wp-action-height);max-height:none}
+ body.compact-tools .suite-search-bar :is(.suite-filter-toggle,.suite-clear-filters) {font-family:var(--font-ui);font-weight:var(--weight-ui-heavy);font-size:var(--size-s);line-height:var(--line-s);letter-spacing:var(--letter-spacing-s);border:0;box-shadow:var(--blom-edge);background:var(--cte-surface);color:var(--cte-text);height:auto;min-height:var(--wp-action-height);max-height:none;padding:var(--space-xs) var(--space-s)}
+}
+@media screen and (max-width:760px) {
+ body.compact-tools .suite-search-bar {padding:var(--space-s) var(--space-m)}
+ body.compact-tools .suite-search-bar .suite-search-row {grid-template-columns:minmax(0,1fr) auto}
+}
+
+@media screen {
+ body[data-tool=Werkbank] .sidebar-tools {display:flex;align-items:flex-start;gap:var(--space-xs)}
+ body[data-tool=Werkbank] .sidebar-tools>.sidebar-menu {flex:1 1 max-content;min-width:max-content}
+ body[data-tool=Werkbank] .sidebar-tools>.sidebar-menu>summary {display:flex;align-items:center;justify-content:center;white-space:nowrap;box-sizing:border-box;height:var(--wp-action-height);min-height:var(--wp-action-height);gap:var(--space-xs);margin:0}
+ body[data-tool=Werkbank] .sidebar-tools>.sidebar-menu>summary>span {white-space:nowrap}
+ body[data-tool=Werkbank] #newMenu>summary {background:var(--neutral-10)!important;color:var(--neutral-1)!important}
+ body[data-tool=Werkbank] #folderMenu>summary {background:var(--cte-surface)!important;color:var(--cte-text)!important}
+}
+
+/* Zoeken volgt dezelfde kop, bediening en leeshiërarchie als de Werkplaats. */
+@media screen {
+ body #all-search-dialog {box-sizing:border-box;width:min(860px,calc(100vw - 32px));max-width:860px;max-height:calc(100dvh - 32px);padding:var(--space-l);border:var(--border-s) solid var(--cte-text);background:var(--cte-surface);color:var(--cte-text);font-family:var(--font-ui);font-weight:var(--weight-ui-regular);font-size:var(--size-m);line-height:var(--line-m);letter-spacing:var(--letter-spacing-m)}
+ body #all-search-dialog:modal {margin:auto}
+ #all-search-dialog .all-search-heading {display:flex;align-items:center;justify-content:space-between;gap:var(--space-m);margin-bottom:var(--space-l)}
+ #all-search-dialog .all-search-heading h2 {margin:0;font-family:var(--font-brand);font-weight:var(--weight-brand-heavy);font-size:var(--size-l);line-height:var(--line-l);letter-spacing:var(--letter-spacing-l)}
+ #all-search-dialog .my-tools-actions {margin:0;padding:0}
+ #all-search-dialog label {margin:0 0 var(--space-xs);font-family:var(--font-ui);font-weight:var(--weight-ui-heavy);font-size:var(--size-s);line-height:var(--line-s);letter-spacing:var(--letter-spacing-s)}
+ #all-search-dialog input[type=search] {height:var(--wp-action-height);min-height:var(--wp-action-height);padding:var(--space-xs) var(--space-s);border:var(--border-s) solid var(--cte-border);border-radius:0;background:var(--cte-surface);color:var(--cte-text);font-family:var(--font-ui);font-weight:var(--weight-ui-regular);font-size:var(--size-m);line-height:var(--line-m);letter-spacing:var(--letter-spacing-m)}
+ #all-search-dialog .my-tools-status {margin:var(--space-s) 0;font-family:var(--font-ui);font-weight:var(--weight-ui-regular);font-size:var(--size-s);line-height:var(--line-s);letter-spacing:var(--letter-spacing-s);color:var(--cte-text-muted)}
+ #all-search-dialog .all-search-results {margin:var(--space-m) 0;max-height:50dvh}
+ #all-search-dialog .all-search-results li {padding:var(--space-m) 0;border-color:var(--cte-border);overflow-wrap:anywhere}
+ #all-search-dialog .all-search-results a {font-family:var(--font-ui);font-weight:var(--weight-ui-heavy);font-size:var(--size-m);line-height:var(--line-m);letter-spacing:var(--letter-spacing-m);color:var(--cte-text);text-underline-offset:3px}
+ #all-search-dialog .all-search-results small {margin-top:var(--space-xxs);font-family:var(--font-ui);font-weight:var(--weight-ui-regular);font-size:var(--size-xs);line-height:var(--line-xs);letter-spacing:var(--letter-spacing-xs);color:var(--cte-text-muted)}
+ #all-search-dialog .search-excerpt {margin:var(--space-xs) 0 0;font-family:var(--font-editorial);font-weight:var(--weight-editorial-regular);font-size:var(--size-s);line-height:var(--line-s);letter-spacing:var(--letter-spacing-s);color:var(--cte-text)}
+ #all-search-dialog .search-excerpt mark {background:var(--cte-surface-muted,var(--neutral-3));color:var(--cte-text);font-weight:var(--weight-ui-heavy);text-decoration:underline;text-decoration-color:var(--wp-accent);text-underline-offset:3px}
+ #all-search-dialog .all-search-more[hidden] {display:none}
+}
+@media screen and (max-width:600px) {body #all-search-dialog {padding:var(--space-m)}#all-search-dialog .all-search-heading {align-items:flex-start}}
+
+/* Projecten deelt de lees- en actierollen met Schrijven, Verzamelen en Doen. */
+@media screen {
+ body[data-tool=Publicatieplanner] :is(.pub-title,.calendar-item strong,.week-strip strong) {font-family:var(--font-ui);font-weight:var(--weight-ui-heavy);font-size:var(--size-s);line-height:var(--line-s);letter-spacing:var(--letter-spacing-s);color:var(--cte-text)}
+ body[data-tool=Publicatieplanner] :is(.project-overview-group>h2,.undated-heading,.month-nav h2) {font-family:var(--font-ui);font-weight:var(--weight-ui-heavy);font-size:var(--size-m);line-height:var(--line-m);letter-spacing:var(--letter-spacing-m);color:var(--cte-text)}
+ body[data-tool=Publicatieplanner] :is(.snippet,.project-next-tasks,.plan-overview-meta,.plan-task-actions a) {font-family:var(--font-ui);font-weight:var(--weight-ui-regular);font-size:var(--size-s);line-height:var(--line-s);letter-spacing:var(--letter-spacing-s);color:var(--cte-text)}
+ body[data-tool=Publicatieplanner] :is(.channel,.pub-date,.count,.due,.plan-date-year,.plan-date-end,.plan-task-count,.project-document-names,.plan-overview-kind) {font-family:var(--font-ui);font-weight:var(--weight-ui-regular);font-size:var(--size-xs);line-height:var(--line-xs);letter-spacing:var(--letter-spacing-xs);color:var(--cte-text-muted)}
+ body[data-tool=Publicatieplanner] :is(#plan-overview h2,#form-title) {font-family:var(--font-brand);font-weight:var(--weight-brand-heavy);font-size:var(--size-l);line-height:var(--line-l);letter-spacing:var(--letter-spacing-l);color:var(--cte-text)}
+ body[data-tool=Publicatieplanner] :is(#plan-overview h3,#plan-overview h4,#plan-more>summary) {font-family:var(--font-ui);font-weight:var(--weight-ui-heavy);font-size:var(--size-s);line-height:var(--line-s);letter-spacing:var(--letter-spacing-s);color:var(--cte-text)}
+ body[data-tool=Publicatieplanner] :is(.plan-overview-text,#form input,#form textarea,#form select) {font-family:var(--font-editorial);font-weight:var(--weight-editorial-regular);font-size:var(--size-m);line-height:var(--line-m);letter-spacing:var(--letter-spacing-m);color:var(--cte-text)}
+ body[data-tool=Publicatieplanner] #plan-more {margin-block:var(--space-m);padding-block:var(--space-s);border-top:var(--border-s) solid var(--cte-border)}
+ body[data-tool=Publicatieplanner] #plan-more>summary {cursor:pointer}
+ body[data-tool=Publicatieplanner] #plan-overview :is(ul,.plan-status,.badge) {border-radius:0;background:var(--cte-surface);color:var(--cte-text);border-color:var(--cte-border)}
+ body[data-tool=Publicatieplanner] #plan-overview .task-state-doing {border-left:var(--border-m) solid var(--wp-accent)}
+ body[data-tool=Publicatieplanner] #plan-overview .task-state-done {font-weight:var(--weight-ui-heavy)}
+ body[data-tool=Publicatieplanner] #plan-overview :is(section,.project-materials,li) {border-color:var(--cte-border)}
+ body[data-tool=Publicatieplanner] #plan-overview .plan-task-actions {display:flex;align-items:center;gap:var(--space-xs);flex-wrap:wrap}
+ body[data-tool=Publicatieplanner] .project-card-grid {gap:var(--space-m)}
+}
+
+/* Doen gebruikt dezelfde leeshiërarchie en herkenbare verdieping. */
+@media screen {
+ body[data-tool=Projectbord] :is(#task-view h2,#dialog-title,#name-dialog h2) {font-family:var(--font-brand);font-weight:var(--weight-brand-heavy);font-size:var(--size-l);line-height:var(--line-l);letter-spacing:var(--letter-spacing-l);color:var(--cte-text)}
+ body[data-tool=Projectbord] #task-view .task-view-notes {white-space:pre-wrap;overflow-wrap:anywhere;margin:var(--space-l) 0;font-family:var(--font-editorial);font-weight:var(--weight-editorial-regular);font-size:var(--size-m);line-height:var(--line-m);letter-spacing:var(--letter-spacing-m);color:var(--cte-text)}
+ body[data-tool=Projectbord] #task-view>p:not(.task-view-notes) {font-family:var(--font-ui);font-weight:var(--weight-ui-regular);font-size:var(--size-s);line-height:var(--line-s);letter-spacing:var(--letter-spacing-s);color:var(--cte-text-muted)}
+ body[data-tool=Projectbord] #task-form :is(input,textarea,select) {font-family:var(--font-ui);font-weight:var(--weight-ui-regular);font-size:var(--size-m);line-height:var(--line-m);letter-spacing:var(--letter-spacing-m);background:var(--cte-surface);color:var(--cte-text)}
+ body[data-tool=Projectbord] :is(#task-form label,#task-more>summary,.column-head h2) {font-family:var(--font-ui);font-weight:var(--weight-ui-heavy);font-size:var(--size-s);line-height:var(--line-s);letter-spacing:var(--letter-spacing-s)}
+ body[data-tool=Projectbord] #task-more {margin-block:var(--space-m);padding-block:var(--space-s);border-top:var(--border-s) solid var(--cte-border)}
+ body[data-tool=Projectbord] #task-more>summary {cursor:pointer}
+ body[data-tool=Projectbord] :is(.task-priority,.priority-legend,.task-search-context,.task-search-note,.archive-row p,.column-head .count) {font-family:var(--font-ui);font-weight:var(--weight-ui-regular);font-size:var(--size-xs);line-height:var(--line-xs);letter-spacing:var(--letter-spacing-xs)}
+ body[data-tool=Projectbord] .task-title {overflow-wrap:anywhere}
+ body[data-tool=Projectbord] .board.searching .task-open {height:auto}
+ body[data-tool=Projectbord] .board.searching .task-title {max-height:none}
+ body[data-tool=Projectbord] #name-form label {font-family:var(--font-ui);font-weight:var(--weight-ui-heavy);font-size:var(--size-s);line-height:var(--line-s);letter-spacing:var(--letter-spacing-s)}
+}
+
+
+/* Eén bindende schaal voor gelijkwaardige onderdelen in alle gereedschappen. */
+@media screen {
+ html body[data-tool] [data-wp-type="tool-title"],html body[data-tool] [data-wp-type="tool-title"] * {
+  font-family:var(--font-brand)!important;font-weight:var(--weight-brand-heavy)!important;font-size:var(--size-l)!important;line-height:var(--line-l)!important;letter-spacing:var(--letter-spacing-l)!important;
+ }
+ html body[data-tool] [data-wp-type="page-title"],html body[data-tool] [data-wp-type="page-title"] * {
+  font-family:var(--font-brand)!important;font-weight:var(--weight-brand-heavy)!important;font-size:var(--size-xl)!important;line-height:var(--line-xl)!important;letter-spacing:var(--letter-spacing-xl)!important;
+ }
+ html body[data-tool] [data-wp-type="control"],html body[data-tool] [data-wp-type="control"] :is(span,option) {
+  font-family:var(--font-ui)!important;font-weight:var(--weight-ui-heavy)!important;font-size:var(--size-s)!important;line-height:var(--line-s)!important;letter-spacing:var(--letter-spacing-s)!important;
+ }
+ html body[data-tool] [data-wp-type="item-title"],html body[data-tool] [data-wp-type="item-title"] * {
+  font-family:var(--font-ui)!important;font-weight:var(--weight-ui-heavy)!important;font-size:var(--size-s)!important;line-height:var(--line-s)!important;letter-spacing:var(--letter-spacing-s)!important;
+ }
+}
+@media screen and (max-width:760px) {
+ html body[data-tool] [data-wp-type="page-title"],html body[data-tool] [data-wp-type="page-title"] * {font-size:var(--size-l)!important;line-height:var(--line-l)!important;letter-spacing:var(--letter-spacing-l)!important}
+}
+
+/* Contacten deelt de invoer- en leesrollen met de andere gereedschappen. */
+@media screen {
+ body[data-tool=Contacten] :is(#form-title,#conversation h2,.record-detail-dialog h2) {font-family:var(--font-brand);font-weight:var(--weight-brand-heavy);font-size:var(--size-l);line-height:var(--line-l);letter-spacing:var(--letter-spacing-l);color:var(--cte-text)}
+ body[data-tool=Contacten] :is(#form,#conversation-form) :is(input,textarea,select) {font-family:var(--font-ui);font-weight:var(--weight-ui-regular);font-size:var(--size-m);line-height:var(--line-m);letter-spacing:var(--letter-spacing-m);color:var(--cte-text);background:var(--cte-surface)}
+ body[data-tool=Contacten] :is(.record-detail-meta,.record-detail-address,.contact-data,.card .category,.card .source) {font-family:var(--font-ui);font-weight:var(--weight-ui-regular);font-size:var(--size-s);line-height:var(--line-s);letter-spacing:var(--letter-spacing-s);color:var(--cte-text-muted)}
+ body[data-tool=Contacten] .contact-detail-body>p {white-space:pre-wrap;font-family:var(--font-editorial);font-weight:var(--weight-editorial-regular);font-size:var(--size-m);line-height:var(--line-m);letter-spacing:var(--letter-spacing-m);color:var(--cte-text)}
+ body[data-tool=Contacten] #contact-more {margin-block:var(--space-m);padding-block:var(--space-s);border-top:var(--border-s) solid var(--cte-border)}
+ body[data-tool=Contacten] #contact-more>summary {cursor:pointer;font-family:var(--font-ui);font-weight:var(--weight-ui-heavy);font-size:var(--size-s);line-height:var(--line-s);letter-spacing:var(--letter-spacing-s)}
+ body[data-tool=Contacten] .record-detail-close {font-family:var(--font-ui)!important;font-weight:var(--weight-ui-heavy)!important;font-size:var(--size-s)!important;line-height:var(--line-s)!important;letter-spacing:var(--letter-spacing-s);min-height:var(--wp-action-height);width:auto}
+}
+
+/* Detailvensters: dezelfde rustige leesruimte, secties en acties. */
+@media screen {
+ body :is(.record-detail-dialog,#source-detail,#task-view,#plan-overview,.note-dialog:not(:has(form))) {box-sizing:border-box;width:min(760px,calc(100vw - 32px));max-width:760px;max-height:calc(100dvh - 48px);overflow:auto;background:var(--cte-surface);color:var(--cte-text)}
+ body :is(.record-detail-dialog,#source-detail,#task-view,#plan-overview,.note-dialog:not(:has(form))) h2 {margin:0 0 var(--space-m);font-family:var(--font-brand)!important;font-weight:var(--weight-brand-heavy)!important;font-size:var(--size-l)!important;line-height:var(--line-l)!important;letter-spacing:var(--letter-spacing-l)!important;overflow-wrap:anywhere}
+ body :is(.record-detail-dialog,#source-detail,#task-view,#plan-overview,.note-dialog:not(:has(form))) h3 {margin:var(--space-l) 0 var(--space-xs);font-family:var(--font-ui)!important;font-weight:var(--weight-ui-heavy)!important;font-size:var(--size-s)!important;line-height:var(--line-s)!important;letter-spacing:var(--letter-spacing-s)!important;text-transform:none}
+ body :is(.record-detail-dialog,#source-detail,#task-view,#plan-overview,.note-dialog:not(:has(form))) .wp-actions {display:flex;justify-content:flex-end;align-items:center;flex-wrap:wrap;gap:var(--space-xs);margin-top:var(--space-l);padding-top:var(--space-m)}
+ body :is(.record-detail-dialog,#source-detail,#task-view,#plan-overview,.note-dialog:not(:has(form))) .context-feedback-button {min-height:0!important;padding:var(--space-xs) 0!important;border:0!important;box-shadow:none!important;background:transparent!important;color:var(--cte-text-muted)!important;font-size:var(--size-xs)!important;line-height:var(--line-xs)!important;font-weight:var(--weight-ui-regular)!important;text-decoration:underline;text-underline-offset:3px}
+ body[data-tool=Contacten] .record-detail-heading {display:flex;justify-content:space-between;align-items:flex-start;gap:var(--space-m);margin-bottom:var(--space-m)}
+ body[data-tool=Contacten] .record-detail-heading h2 {margin:0;flex:1}
+ body[data-tool=Contacten] .record-detail-close {min-height:var(--wp-action-height);padding:var(--space-xs) var(--space-s)!important;flex:none}
+ body[data-tool=Contacten] .detail-facts {display:grid;grid-template-columns:minmax(100px,max-content) minmax(0,1fr);gap:var(--space-xs) var(--space-m);margin:0 0 var(--space-m);padding-block:var(--space-m);border-block:var(--border-s) solid var(--cte-border)}
+ body[data-tool=Contacten] .detail-facts dt {font-family:var(--font-ui);font-weight:var(--weight-ui-regular);font-size:var(--size-s);line-height:var(--line-s);letter-spacing:var(--letter-spacing-s);color:var(--cte-text-muted)}
+ body[data-tool=Contacten] .detail-facts dd {margin:0;font-family:var(--font-ui);font-weight:var(--weight-ui-regular);font-size:var(--size-m);line-height:var(--line-m);letter-spacing:var(--letter-spacing-m);overflow-wrap:anywhere}
+ body[data-tool=Contacten] .record-detail-dialog .contact-detail-body>p,body[data-tool=Contacten] .record-detail-dialog .conversation-note p {max-width:65ch;font-family:var(--font-editorial);font-weight:var(--weight-editorial-regular);font-size:var(--size-m);line-height:var(--line-m);letter-spacing:var(--letter-spacing-m);margin:var(--space-xs) 0 var(--space-m);color:var(--cte-text)}
+ body[data-tool=Contacten] .record-detail-dialog .record-detail-address {white-space:pre-wrap;margin:var(--space-m) 0}
+}
+@media screen and (max-width:480px) {body[data-tool=Contacten] .detail-facts {grid-template-columns:1fr;gap:var(--space-xxs)}body[data-tool=Contacten] .detail-facts dd {margin-bottom:var(--space-xs)}}
+
+@media screen {
+ body :is(.wp-detail-heading,.all-search-heading) {display:flex;justify-content:space-between;align-items:flex-start;gap:var(--space-m);margin-bottom:var(--space-m)}
+ body .wp-detail-heading h2 {flex:1;margin:0!important}
+ body .wp-detail-close {flex:none;font-family:var(--font-ui)!important;font-weight:var(--weight-ui-heavy)!important;font-size:var(--size-s)!important;line-height:var(--line-s)!important;letter-spacing:var(--letter-spacing-s)!important;min-height:var(--wp-action-height);padding:var(--space-xs) var(--space-s)}
+ body #all-search-dialog {width:min(760px,calc(100vw - 32px));max-width:760px}
+ body #source-detail :is(section p,blockquote),body #task-view .task-view-notes,body #plan-overview .plan-overview-text {max-width:65ch;font-family:var(--font-editorial);font-weight:var(--weight-editorial-regular);font-size:var(--size-m);line-height:var(--line-m);letter-spacing:var(--letter-spacing-m)}
+ body #plan-overview .plan-overview-header {margin-bottom:var(--space-m)}
+ body #source-detail .source-detail-head:empty {display:none}
+}
+
+/* Een lijst gebruikt rustige rijlijnen; kaartaccenten horen bij losse kaarten. */
+@media screen {
+ body[data-tool=Contacten] #cards.compact>.card {border:0!important;box-shadow:inset 0 calc(-1 * var(--border-s)) var(--cte-border)!important}
+ body[data-tool=Contacten] #cards.compact>.card.needs-attention {box-shadow:inset 0 calc(-1 * var(--border-s)) var(--cte-border),inset var(--space-xxs) 0 var(--wp-accent)!important}
+}
+
+/* De administratietools delen dezelfde bediening, rijlijnen en detailrollen. */
+@media screen {
+ body:is([data-tool=Ping],[data-tool=Kasboek],[data-tool=Abonnementen]) :is(.hint,.count,.entry-meta,.subscription-row small,.factureren-row-detail,.subscription-totals span) {font-family:var(--font-ui);font-weight:var(--weight-ui-regular);font-size:var(--size-xs);line-height:var(--line-xs);letter-spacing:var(--letter-spacing-xs);color:var(--cte-text-muted)}
+ body:is([data-tool=Ping],[data-tool=Kasboek],[data-tool=Abonnementen]) :is(.editor h2,#form-title) {font-family:var(--font-brand);font-weight:var(--weight-brand-heavy);font-size:var(--size-l);line-height:var(--line-l);letter-spacing:var(--letter-spacing-l)}
+ body:is([data-tool=Ping],[data-tool=Kasboek],[data-tool=Abonnementen]) :is(.invoice-btn,.subscription-row,#rows .entry) {box-shadow:inset 0 calc(-1 * var(--border-s)) var(--cte-border);border-color:var(--cte-border);background:var(--cte-surface);color:var(--cte-text)}
+ body[data-tool=Kasboek] #rows .entry {border:0!important;box-shadow:inset 0 calc(-1 * var(--border-s)) var(--cte-border)!important}
+ body[data-tool=Abonnementen] .subscription-row {border:0;box-shadow:inset 0 calc(-1 * var(--border-s)) var(--cte-border)}
+ body[data-tool=Abonnementen] .subscription-totals strong {font-family:var(--font-data);font-weight:var(--weight-ui-heavy);font-size:var(--size-l);line-height:var(--line-l);letter-spacing:var(--letter-spacing-l);font-variant-numeric:tabular-nums}
+ body[data-tool=Abonnementen] #subscription-detail,body[data-tool=Kasboek] #entry-view {box-sizing:border-box;width:min(760px,calc(100vw - 32px));max-height:calc(100dvh - 48px);overflow:auto;background:var(--cte-surface);color:var(--cte-text)}
+ body[data-tool=Abonnementen] #detail-body dl {display:grid;grid-template-columns:minmax(100px,max-content) minmax(0,1fr);gap:var(--space-xs) var(--space-m);padding-block:var(--space-m);border-block:var(--border-s) solid var(--cte-border)}
+ body[data-tool=Abonnementen] #detail-body dt {font-family:var(--font-ui);font-weight:var(--weight-ui-regular);font-size:var(--size-s);line-height:var(--line-s);letter-spacing:var(--letter-spacing-s);color:var(--cte-text-muted)}
+ body[data-tool=Abonnementen] #detail-body dd {margin:0;font-family:var(--font-ui);font-weight:var(--weight-ui-regular);font-size:var(--size-m);line-height:var(--line-m);letter-spacing:var(--letter-spacing-m)}
+ body:is([data-tool=Kasboek],[data-tool=Abonnementen]) :is(.entry-description,.booking-details>p,.subscription-notes) {max-width:65ch;white-space:pre-wrap;font-family:var(--font-editorial);font-weight:var(--weight-editorial-regular);font-size:var(--size-m);line-height:var(--line-m);letter-spacing:var(--letter-spacing-m)}
+}
+@media screen and (max-width:480px) {body[data-tool=Abonnementen] #detail-body dl {grid-template-columns:1fr}}
+
+@media screen {
+ body:is([data-tool=Ping],[data-tool=Kasboek],[data-tool=Abonnementen]) :is(.factureren-section-title,.factureren-detail-head>strong) {font-family:var(--font-brand);font-weight:var(--weight-brand-heavy);font-size:var(--size-l);line-height:var(--line-l);letter-spacing:var(--letter-spacing-l)}
+ body[data-tool=Ping] .factureren-detail-head {display:flex;justify-content:space-between;align-items:center;gap:var(--space-m);padding-bottom:var(--space-m);border-color:var(--cte-border)}
+}
+
+/* Gedeeld detailcontract: onafhankelijk van de oorspronkelijke toolstijl. */
+@media screen {
+ html body :is(.record-detail-dialog,#source-detail,#task-view,#plan-overview,#subscription-detail,#entry-view,#entry-detail,.note-dialog:not(:has(form))) {box-sizing:border-box;width:min(760px,calc(100vw - 32px))!important;max-width:760px!important;max-height:calc(100dvh - 48px);padding:24px!important;border:1px solid var(--cte-text)!important;box-shadow:none!important;overflow:auto;background:var(--cte-surface);color:var(--cte-text)}
+ html body :is(.record-detail-heading,.wp-detail-heading,.all-search-heading) {display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin:0 0 20px!important}
+ html body :is(.record-detail-dialog,#source-detail,#task-view,#plan-overview,#subscription-detail,#entry-view,#entry-detail,.note-dialog:not(:has(form))) h2 {margin:0!important;font:700 24px/32px var(--font-brand)!important;letter-spacing:var(--letter-spacing-l)!important;overflow-wrap:anywhere}
+ html body :is(.record-detail-dialog,#source-detail,#task-view,#plan-overview,#subscription-detail,#entry-view,#entry-detail,.note-dialog:not(:has(form))) h3 {margin:20px 0 8px!important;font:700 14px/20px var(--font-ui)!important;text-transform:none!important}
+ html body :is(.record-detail-dialog,#source-detail,#task-view,#plan-overview,#subscription-detail,#entry-view,#entry-detail,.note-dialog:not(:has(form))) p {max-width:65ch;margin:8px 0 16px;font:400 16px/24px var(--font-editorial);overflow-wrap:anywhere}
+ html body :is(.record-detail-close,.wp-detail-close) {position:static!important;flex:none;min-height:40px!important;padding:8px 12px!important;border:1px solid var(--cte-border)!important;background:transparent!important;color:var(--cte-text)!important;font:700 14px/20px var(--font-ui)!important}
+ html body .detail-facts {display:grid;grid-template-columns:minmax(90px,max-content) minmax(0,1fr);gap:8px 20px;margin:0 0 20px;padding:16px 0;border-block:1px solid var(--cte-border)}
+ html body .detail-facts dt {color:var(--cte-text-muted);font:400 14px/20px var(--font-ui)}
+ html body .detail-facts dd {margin:0;font:400 16px/24px var(--font-ui);overflow-wrap:anywhere}
+ html body :is(.record-detail-dialog,#source-detail,#task-view,#plan-overview,#subscription-detail,#entry-view,#entry-detail,.note-dialog:not(:has(form))) .wp-actions {display:flex;justify-content:flex-end;align-items:center;flex-wrap:wrap;gap:8px;margin:20px 0 0!important;padding:16px 0 0!important;border-top:1px solid var(--cte-border)}
+ html body :is(.record-detail-dialog,#source-detail,#task-view,#plan-overview,#subscription-detail,#entry-view,#entry-detail,.note-dialog:not(:has(form))) button {font:700 14px/20px var(--font-ui);min-height:40px}
+}
+@media screen and (max-width:480px){html body .detail-facts{grid-template-columns:1fr;gap:4px}html body .detail-facts dd{margin-bottom:8px}}
+
+@media screen {
+ body .home-period {display:flex;align-items:flex-end;flex-wrap:wrap;gap:var(--space-m);margin:var(--space-m) 0}
+ body .home-period label {font:var(--weight-ui-heavy) var(--size-s)/var(--line-s) var(--font-ui)}
+ body .home-period :is(input,select){display:block;margin-top:var(--space-xxs);font:var(--weight-ui-regular) var(--size-s)/var(--line-s) var(--font-ui);min-height:var(--wp-action-height)}
+ body .home-attention {margin:var(--space-xs) 0}
+ body .context-actions-panel .view-switch {margin:0;display:flex;gap:var(--space-xs)}
+ body .home-new>summary {background:var(--cte-text);color:var(--cte-surface)}
+}
+
+@media screen {body .all-search-filters {margin:var(--space-s) 0}body .all-search-filters label {display:block;margin:var(--space-xs) 0}body .all-search-scope {font:var(--weight-ui-regular) var(--size-s)/var(--line-s) var(--font-ui);color:var(--cte-text-muted)}}
+
+@media screen {html body #invoice-new-menu>summary {background:var(--cte-text)!important;color:var(--cte-surface)!important}body .invoice-home-heading {display:flex;align-items:center;justify-content:space-between;gap:var(--space-m);flex-wrap:wrap;margin-bottom:var(--space-m)}body .invoice-home-heading h2 {margin:0!important}}
+
+@media screen {body[data-tool=Publicatieplanner] .project-card-grid :is(.snippet,.project-next-tasks,.project-document-names){display:none}body #settings-advanced .manage-clear{margin:var(--space-s) 0}}
+
+/* Click-film corrections: common home roles and compact detail controls. */
+html body[data-tool=Abonnementen] main{max-width:none;width:auto;margin:0;padding:var(--space-l)}
+html body .subscriptions-heading.suite-collection-heading{display:flex!important;justify-content:space-between!important;align-items:center!important;gap:var(--space-m);width:100%}
+html body .subscriptions-heading>.suite-tool-actions{margin-left:auto;display:flex;gap:var(--space-xs);flex-wrap:wrap}
+html body .all-search-filters[open]{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--space-s)}
+html body .all-search-filters>summary{grid-column:1/-1}
+html body .all-search-filters label{min-width:0;margin:0;display:flex;flex-direction:column;gap:var(--space-xs)}
+html body .all-search-filters select{width:100%;min-height:var(--wp-action-height);margin:0}
+html body .invoice-home-heading h2,html body #cash-panel>.section-head h2{text-transform:none!important}
+html body .invoice-due{color:var(--cte-text-muted);font:var(--weight-ui-regular) var(--size-xs)/var(--line-xs) var(--font-ui)}
+html body #plan-overview .plan-detail-more-panel .wp-actions{margin:0!important;padding:0!important;border:0!important;justify-content:flex-start}
+html body #plan-overview .plan-detail-more-panel button,html body #plan-overview .plan-detail-more-panel a{width:100%;text-align:left}
+html body .notes-sync-bar{width:fit-content;max-width:100%;margin:var(--space-xs) 0;padding:0;background:transparent;box-shadow:none}
+html body .notes-sync-bar[data-tone=error]{padding:var(--space-xs) var(--space-s);background:var(--cte-surface-muted)}
+html body .notes-sync-body{min-width:min(540px,70vw)}
+@media(max-width:650px){html body .all-search-filters[open]{grid-template-columns:1fr}html body .subscriptions-heading.suite-collection-heading{flex-wrap:wrap}}
+
+html body #plan-overview[aria-busy=true]>.plan-overview-tasks,html body #plan-overview[aria-busy=true]>.project-materials{display:none!important}
+html body #plan-overview[aria-busy=true] .plan-detail-more{visibility:hidden}
+html body .factureren-detail{max-height:calc(100dvh - 48px);overflow:auto}
+html body .factureren-detail>.factureren-detail-head{position:sticky;top:0;z-index:2;background:var(--cte-surface)}
+html body dialog .context-feedback-button{display:block!important;min-height:0!important;padding:var(--space-xs) 0!important;border:0!important;box-shadow:none!important;background:transparent!important;color:var(--cte-text-muted)!important;font:var(--weight-ui-regular) var(--size-xs)/var(--line-xs) var(--font-ui)!important;text-decoration:underline}
+
+html body .all-search-heading h2 .tool-symbol{display:inline-block;vertical-align:middle;margin-right:var(--space-xs);width:var(--size-l);height:var(--size-l)}
+
+@media screen {
+ /* All peers in an action row share a box, including native details summaries. */
+ html body :is(.wp-actions,.form-actions,.note-actions,.document-connections-actions,.my-tools-actions,.organization-actions,.plan-overview-actions,.invoice-edit-actions,.suite-tool-actions,.file-actions,.actions,.picker-footer){align-items:center}
+ html body :is(.wp-actions,.form-actions,.note-actions,.document-connections-actions,.my-tools-actions,.organization-actions,.plan-overview-actions,.invoice-edit-actions,.suite-tool-actions,.file-actions,.actions,.picker-footer)>:is(button,details){margin-top:0!important;margin-bottom:0!important;align-self:center}
+ html body :is(.wp-actions,.form-actions,.note-actions,.document-connections-actions,.my-tools-actions,.organization-actions,.plan-overview-actions,.invoice-edit-actions,.suite-tool-actions,.file-actions,.actions,.picker-footer)>details{border:0!important;padding:0!important;height:var(--wp-action-height);min-height:var(--wp-action-height)}
+ html body :is(.wp-actions,.form-actions,.note-actions,.document-connections-actions,.my-tools-actions,.organization-actions,.plan-overview-actions,.invoice-edit-actions,.suite-tool-actions,.file-actions,.actions,.picker-footer)>button,
+ html body :is(.wp-actions,.form-actions,.note-actions,.document-connections-actions,.my-tools-actions,.organization-actions,.plan-overview-actions,.invoice-edit-actions,.suite-tool-actions,.file-actions,.actions,.picker-footer)>details>summary{box-sizing:border-box;height:var(--wp-action-height);min-height:var(--wp-action-height);margin:0!important;display:inline-flex;align-items:center;justify-content:center}
+ body #contact-picker .picker-results{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.8fr);gap:var(--space-m);margin-top:var(--space-m)}
+ body #contact-picker .picker-intro,body #contact-picker .picker-note{color:var(--cte-text-muted);font-size:var(--size-s);line-height:var(--line-s);margin:var(--space-xs) 0 var(--space-m)}
+ body #contact-picker .picker-tools{display:flex;align-items:center;justify-content:space-between;gap:var(--space-xs);flex-wrap:wrap;margin-bottom:var(--space-m)}
+ body #contact-picker .picker-source{font-size:var(--size-xs);color:var(--cte-text-muted);overflow-wrap:anywhere}
+ body #contact-picker .picker-list{max-height:310px;min-height:180px;overflow:auto;box-shadow:var(--blom-control-edge)}
+ body #contact-picker .picker-item{display:block;width:100%;box-sizing:border-box;text-align:left;white-space:normal;overflow-wrap:anywhere;margin:0;padding:var(--space-s)!important;border:0;border-radius:0;box-shadow:inset 0 calc(-1 * var(--border-s)) var(--cte-border)!important;background:var(--cte-surface);color:var(--cte-text)}
+ body #contact-picker .picker-item[aria-pressed=true]{background:var(--cte-surface-muted);box-shadow:inset var(--space-xxs) 0 var(--color-1),inset 0 calc(-1 * var(--border-s)) var(--cte-border)!important}
+ body #contact-picker .picker-item-name{display:block;font-size:var(--size-s);line-height:var(--line-s);font-weight:var(--weight-ui-heavy)}
+ body #contact-picker .picker-item-meta{display:block;font-size:var(--size-xs);line-height:var(--line-xs);color:var(--cte-text-muted);margin-top:var(--space-xxs)}
+ body #contact-picker .picker-preview{padding:var(--space-s);background:var(--cte-surface-muted);box-shadow:var(--blom-control-edge);min-width:0}
+ body #contact-picker #contact-preview{border:0;margin:var(--space-xs) 0;padding:0;font-size:var(--size-s);line-height:var(--line-s)}
+ body #contact-picker .picker-footer{display:flex;justify-content:flex-end;gap:var(--space-xs);flex-wrap:wrap;padding-top:var(--space-m);margin-top:var(--space-m);box-shadow:inset 0 var(--border-s) var(--cte-border)}
+ @media(max-width:650px){body #contact-picker .picker-results{grid-template-columns:minmax(0,1fr)}}
+}

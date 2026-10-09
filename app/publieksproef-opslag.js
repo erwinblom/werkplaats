@@ -28,3 +28,5 @@
 
 // Persoonlijke uitbreiding; de bewaarde publieksrelease blijft ongewijzigd.
 
+
+(()=>{const script=document.createElement('script');script.src=new URL('feedback.js?v=20261008-homes-1',document.currentScript.src).href;document.head.append(script);})();

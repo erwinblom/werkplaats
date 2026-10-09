@@ -9,7 +9,7 @@
   const bar=document.createElement('div');bar.className='inbox-review-bar';bar.hidden=true;
   const progress=document.createElement('p');progress.setAttribute('role','status');
   const link=document.createElement('a');link.target='_blank';link.rel='noopener noreferrer';I18n.assign(link,I18n.ui("Open oorspronkelijke bron ↗",'Open oorspronkelijke bron ↗'),"textContent");bar.append(progress,link);$('form-title').after(bar);
-  const connections=document.createElement('button');connections.type='button';I18n.assign(connections,I18n.ui("Koppelingen wijzigen",'Koppelingen wijzigen'),"textContent");bar.append(connections);
+  const connections=document.createElement('button');connections.type='button';I18n.assign(connections,I18n.ui("Koppelingen",'Koppelingen'),"textContent");bar.append(connections);
   connections.onclick=async()=>{try{await ProjectMaterials.chooseSourceLinks(editing);}catch(error){notify(error.message);}};
 
   const skip=document.createElement('button');skip.type='button';I18n.assign(skip,I18n.ui("Volgende (laat in Inbox)",'Volgende (laat in Inbox)'),"textContent");skip.hidden=true;submit.after(skip);
@@ -23,7 +23,7 @@
    state='edit';form.dataset.inboxProcessing='true';bar.hidden=false;skip.hidden=false;
    I18n.assign($('form-title'),I18n.ui("Inbox verwerken",'Inbox verwerken'),"textContent");I18n.assign(progress,I18n.ui("Bron {0} van {1} · {2} in Inbox",'Bron '+queue.position+' van '+queue.total+' · '+data.items.filter(i=>i.category==='Inbox').length+' in Inbox'),"textContent");
    const url=safeURL(item.url);link.hidden=!url;if(url)link.href=url;
-   $('category').value='';$('category').setCustomValidity('');updateCategoryChoice();I18n.assign(submit,I18n.ui("Bewaar en volgende",'Bewaar en volgende'),"textContent");baseline=fields();$('category').focus();
+   $('source-more').open=true;$('category').value='';$('category').setCustomValidity('');updateCategoryChoice();I18n.assign(submit,I18n.ui("Bewaar en volgende",'Bewaar en volgende'),"textContent");baseline=fields();$('category').focus();
   }
   const oldEdit=edit;
   edit=function(id=null){oldEdit(id);if(queue&&queue.next(data.items)?.id===id)showEditor(data.items.find(item=>item.id===id));};

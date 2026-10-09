@@ -1,10 +1,10 @@
 'use strict';
 (()=>{
  const K=Koppelingen,label=document.createElement('label');I18n.assign(label,I18n.ui("Project",'Project'),"textContent");
- const select=document.createElement('select');select.id='task-project';label.append(select);$('title').after(label);
+ const select=document.createElement('select');select.id='task-project';label.append(select);const projectField=document.querySelector('#task-form #state');projectField.after(label);
  const contactLabel=document.createElement('label');I18n.assign(contactLabel,I18n.ui("Persoon",'Persoon'),"textContent");
  const contactSelect=document.createElement('select');contactSelect.id='task-contact';contactLabel.append(contactSelect);label.after(contactLabel);
- const searchLabel=document.createElement('label');I18n.assign(searchLabel,I18n.ui("Contact zoeken",'Contact zoeken'),"textContent");const contactSearch=document.createElement('input');contactSearch.id='task-contact-search';contactSearch.type='search';I18n.assign(contactSearch,I18n.ui("Zoek naam of organisatie…",'Zoek naam of organisatie…'),"placeholder");I18n.attribute(contactSearch,'aria-label',I18n.ui("Zoek een contact voor deze taak",'Zoek een contact voor deze taak'));searchLabel.append(contactSearch);contactLabel.before(searchLabel);
+ const searchLabel=document.createElement('label');I18n.assign(searchLabel,I18n.ui("Contact zoeken",'Contact zoeken'),"textContent");const contactSearch=document.createElement('input');contactSearch.id='task-contact-search';contactSearch.type='search';I18n.assign(contactSearch,I18n.ui("Zoek naam of organisatie…",'Zoek naam of organisatie…'),"placeholder");I18n.attribute(contactSearch,'aria-label',I18n.ui("Zoek een contact voor deze taak",'Zoek een contact voor deze taak'));searchLabel.append(contactSearch);const more=document.createElement('details');more.id='task-more';const summary=document.createElement('summary');I18n.assign(summary,I18n.ui('Meer','Meer'),'textContent');more.append(summary,searchLabel,contactLabel);label.after(more);
  let projects=[],contacts=[],request=0;
  function populate(task={}){
   select.replaceChildren(I18n.mark(new Option('Geen project',''),"Geen project"));
@@ -31,7 +31,7 @@
   const p=projects.find(p=>p.id===select.value);return {project:p?.name||'',projectId:p?.id||''};
  };
  const oldEdit=edit;edit=function(id=null,state='inbox'){
-  oldEdit(id,state);contactSearch.value='';const task={...(data.tasks.find(t=>t.id===id)||{})};if(!id){const selected=$('project-filter').value;if(selected.startsWith('id:')){task.projectId=selected.slice(3);task.project=projects.find(p=>p.id===task.projectId)?.name||'';}else if(selected.startsWith('name:'))task.project=selected.slice(5);}populate(task);populateContact(task);
+  oldEdit(id,state);contactSearch.value='';const task={...(data.tasks.find(t=>t.id===id)||{})};if(!id){const selected=$('project-filter').value;if(selected.startsWith('id:')){task.projectId=selected.slice(3);task.project=projects.find(p=>p.id===task.projectId)?.name||'';}else if(selected.startsWith('name:'))task.project=selected.slice(5);}populate(task);populateContact(task);more.open=!!task.contactId;
   $('task-hours').hidden=true;
   const token=++request,initial=select.value,initialContact=contactSelect.value;
   Samenwerken.projects().then(list=>{if(token!==request)return;projects=list;if($('edit').open&&select.value===initial){populate(task);Werkstatus.resetDialog('edit');}}).catch(()=>K.notice(I18n.value(I18n.ui("Projecten konden niet worden geladen. Je bestaande keuze blijft behouden.",'Projecten konden niet worden geladen. Je bestaande keuze blijft behouden.'))));

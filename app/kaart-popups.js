@@ -26,7 +26,7 @@
    if(details){details.open=false;details.hidden=true;}
    if(title.querySelector('.record-open'))continue;
    const button=document.createElement('button');button.type='button';button.className='record-open';button.dataset.recordOpen=contacts?details.dataset.contactDetails:row.dataset.bookingId;
-   button.textContent=title.textContent;button.setAttribute('aria-label',(contacts?'Open contact: ':'Open inkomst of uitgave: ')+title.textContent);
+   button.textContent=title.textContent;I18n.attribute(button,'aria-label',I18n.ui(contacts?'Open contact: {0}':'Open inkomst of uitgave: {0}',(contacts?'Open contact: ':'Open inkomst of uitgave: ')+title.textContent));
    title.replaceChildren(button);
   }
  }
@@ -40,17 +40,17 @@
   const dialog=document.createElement('dialog');dialog.className='record-detail-dialog';dialog.setAttribute('aria-labelledby','record-detail-title');
   const heading=document.createElement('div');heading.className='record-detail-heading';
   const title=document.createElement('h2');title.id='record-detail-title';title.textContent=contacts?item.name:item.party;
-  const close=document.createElement('button');close.type='button';close.className='record-detail-close';I18n.assign(close,I18n.ui("×",'×'),"textContent");I18n.attribute(close,'aria-label',I18n.ui("Sluit",'Sluit'));close.onclick=dismiss;
+  const close=document.createElement('button');close.type='button';close.className='record-detail-close';I18n.assign(close,I18n.ui('Sluit','Sluit'),"textContent");I18n.attribute(close,'aria-label',I18n.ui("Sluit",'Sluit'));close.onclick=dismiss;
   heading.append(title,close);dialog.append(heading);
   const meta=document.createElement('p');meta.className='record-detail-meta';
   meta.textContent=contacts?[item.organization,item.role,item.email,item.phone].filter(Boolean).join(' · '):[pretty(item.date),item.type==='income'?'Inkomst':'Uitgave',item.category,(item.type==='income'?'+ ':'− ')+euro(item.cents)].join(' · ');
-  dialog.append(meta);
+  if(contacts){const facts=document.createElement('dl');facts.className='detail-facts';for(const [label,value]of [['Organisatie',item.organization],['Rol / functie',item.role],['E-mail',item.email],['Telefoon',item.phone]]){if(!value||label==='Organisatie'&&value===item.name)continue;const term=document.createElement('dt'),description=document.createElement('dd');I18n.assign(term,I18n.ui(label,label),'textContent');if(label==='Soort')I18n.assign(description,I18n.ui(value,value),'textContent');else description.textContent=value;facts.append(term,description);}if(facts.children.length)dialog.append(facts);}else{const facts=document.createElement('dl');facts.className='detail-facts';for(const [label,value]of [['Datum',pretty(item.date)],['Soort',item.type==='income'?'Inkomst':'Uitgave'],['Categorie',item.category],['Bedrag',(item.type==='income'?'+ ':'− ')+euro(item.cents)]]){const term=document.createElement('dt'),description=document.createElement('dd');I18n.assign(term,I18n.ui(label,label),'textContent');if(label==='Soort')I18n.assign(description,I18n.ui(value,value),'textContent');else description.textContent=value;facts.append(term,description);}dialog.append(facts);}
   if(contacts&&item.address){const address=document.createElement('p');address.className='record-detail-address';address.textContent=item.address;dialog.append(address);}
   let parent=null,nextSibling=null;
   if(contacts){parent=details.parentElement;nextSibling=details.nextSibling;details.hidden=false;details.open=true;dialog.append(details);}
   else{
    const body=document.createElement('div');body.className='booking-details';
-   const description=document.createElement('p');description.textContent=item.description;body.append(description);
+   const descriptionTitle=document.createElement('h3');I18n.assign(descriptionTitle,I18n.ui('Omschrijving','Omschrijving'),'textContent');const description=document.createElement('p');description.textContent=item.description;body.append(descriptionTitle,description);
    const vat=document.createElement('p');I18n.assign(vat,(item.sourceInvoiceId?I18n.ui("Btw staat bij de gekoppelde factuur",'Btw staat bij de gekoppelde factuur'):(item.vatCents===null||item.vatCents===undefined?I18n.ui("Btw nog niet gecontroleerd",'Btw nog niet gecontroleerd'):I18n.ui("Btw {0}{1} · factuurdatum {2}",'Btw '+euro(item.vatCents)+(item.vatRate!==null&&item.vatRate!==undefined?' · '+item.vatRate+'%':'')+' · factuurdatum '+pretty(item.vatDate||item.date)))),"textContent");body.append(vat);
    if(item.receipt){const receipt=document.createElement('button');receipt.type='button';receipt.className='receipt-button';receipt.dataset.receipt=item.id;I18n.assign(receipt,I18n.ui("↓ Bon: {0}",'↓ Bon: '+item.receipt.name),"textContent");body.append(receipt);}
    else{const receipt=document.createElement('p');receipt.className='no-receipt';I18n.assign(receipt,I18n.ui("Geen bon toegevoegd",'Geen bon toegevoegd'),"textContent");body.append(receipt);}
@@ -58,19 +58,20 @@
   }
   const actions=document.createElement('div');actions.className='record-detail-actions wp-actions';
   if(contacts){const note=document.createElement('button');note.type='button';I18n.assign(note,I18n.ui("+ Notitie",'+ Notitie'),"textContent");note.onclick=()=>{dismiss();row.querySelector('[data-conversation]')?.click();};actions.append(note);}
-  const editButton=document.createElement('button');editButton.type='button';I18n.assign(editButton,I18n.ui("Bewerk",'Bewerk'),"textContent");editButton.onclick=()=>{dismiss();edit(id);};
-  const done=document.createElement('button');done.type='button';I18n.assign(done,I18n.ui("Sluit",'Sluit'),"textContent");done.onclick=dismiss;
-  actions.append(done,editButton);dialog.append(actions);row.append(dialog);
+  const editButton=document.createElement('button');editButton.type='button';editButton.className='primary action-primary';I18n.assign(editButton,I18n.ui("Bewerk",'Bewerk'),"textContent");editButton.onclick=()=>{dismiss();edit(id);};
+
+  actions.append(editButton);if(contacts){const originalTask=row.querySelector('[data-contact-task]');if(originalTask){const taskButton=document.createElement('button');taskButton.type='button';I18n.assign(taskButton,I18n.ui('Maak taak','Maak taak'),'textContent');taskButton.onclick=()=>{dismiss();originalTask.click();};actions.append(taskButton);}}dialog.append(actions);row.append(dialog);
   active={row,parent,nextSibling,details,dialog};dialog.addEventListener('close',()=>{if(active?.dialog===dialog)dismiss();});dialog.showModal();close.focus();
  }
  const oldRender=render;
  render=function(...args){dismiss();oldRender(...args);prepare();};
  prepare();
  container.addEventListener('click',event=>{
-  const button=event.target.closest('.record-open');if(button){open(button.dataset.recordOpen);return;}
+  const button=event.target.closest('.record-open');if(button){event.stopImmediatePropagation();open(button.dataset.recordOpen);return;}
+  if(!contacts){const view=event.target.closest('button[data-view]');if(view){event.stopImmediatePropagation();open(view.dataset.view);return;}}
   if(event.target.closest('dialog,button,a,input,label,summary'))return;
   const row=event.target.closest(contacts?'article.card':'article.entry');
   const id=contacts?row?.querySelector('.contact-details')?.dataset.contactDetails:row?.dataset.bookingId;
-  if(id)open(id);
- });
+  if(id){event.stopImmediatePropagation();open(id);}
+ },true);
 })();

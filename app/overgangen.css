@@ -1,17 +1,21 @@
 /* Shared motion for Home, tools, tabs and information windows. */
-@view-transition{navigation:auto}
-@keyframes werkplaats-arrive{from{opacity:.55}to{opacity:1}}
+@view-transition{navigation:none}
+@keyframes werkplaats-arrive{from{opacity:.86}to{opacity:1}}
 @keyframes werkplaats-panel{from{opacity:.7}to{opacity:1}}
 @keyframes werkplaats-old{from{opacity:1}to{opacity:0}}
 @keyframes werkplaats-new{from{opacity:0}to{opacity:1}}
 @media(prefers-reduced-motion:no-preference){
- html[data-werkplaats-motion="local"] body{animation:werkplaats-arrive 180ms ease-out}
- ::view-transition-old(root){animation:werkplaats-old 220ms ease-in-out both;mix-blend-mode:normal}
- ::view-transition-new(root){animation:werkplaats-new 220ms ease-in-out both;mix-blend-mode:normal}
- dialog[open]{animation:werkplaats-panel 150ms ease-out}
- .notes-board:not([hidden]),.app:not([hidden]),[role="tabpanel"]:not([hidden]){animation:werkplaats-panel 150ms ease-out}
+ html[data-werkplaats-motion="local"]:not([data-workspace-building]) body{animation:werkplaats-arrive 90ms ease-out}
+ ::view-transition-old(root){animation:werkplaats-old 90ms ease-in-out both;mix-blend-mode:normal}
+ ::view-transition-new(root){animation:werkplaats-new 90ms ease-in-out both;mix-blend-mode:normal}
+ dialog[open]{animation:werkplaats-panel 90ms ease-out}
+ .notes-board:not([hidden]),.app:not([hidden]),[role="tabpanel"]:not([hidden]){animation:werkplaats-panel 90ms ease-out}
 }
 @media(prefers-reduced-motion:reduce){
  ::view-transition-old(root),::view-transition-new(root){animation:none!important}
 }
 @media print{body,dialog,.notes-board,.app,[role="tabpanel"]{animation:none!important}}
+
+/* A stable work surface while the next local document restores its state. */
+html[data-workspace-building]::before {content:"";position:fixed;inset:24px;background:var(--cte-surface,#fff);border-top:3px solid var(--wp-accent,#c51d17);border-radius:24px 24px 0 0;z-index:2147483646;pointer-events:none}
+@media(max-width:650px){html[data-workspace-building]::before{inset:8px;border-radius:16px 16px 0 0}}

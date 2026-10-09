@@ -40,6 +40,8 @@
    close.onclick=closeDetail;detail.oncancel=event=>{event.preventDefault();closeDetail();};
    head.append(label,close);grid.append(editor,preview);detail.append(head,grid);main.append(detail);
    const openDetail=()=>{if(!detail.open)detail.showModal();close.focus();};
+   if(tool==='Ping')document.addEventListener('factuur-aangemaakt',event=>{if(current()?.id===event.detail.id){openDetail();editor.querySelector('input:not([type=hidden]),textarea')?.focus();}});
+   if(tool==='Ping')document.getElementById('quote-file')?.addEventListener('change',()=>{const before=selected;const observer=new MutationObserver(()=>{if(selected&&selected!==before){observer.disconnect();openDetail();}});observer.observe(list,{childList:true});setTimeout(()=>observer.disconnect(),10000);});
    list.addEventListener('click',event=>{const row=event.target.closest(tool==='Ping'?'.invoice-btn':'.quote-button');if(!row)return;const id=row.dataset.select;requestAnimationFrame(()=>{if(list.querySelector(tool==='Ping'?'.invoice-btn.active':'.quote-button.selected')?.dataset.select===id)openDetail();});});
    document.getElementById('new')?.addEventListener('click',()=>{
     if(tool==='Ping'){requestAnimationFrame(()=>{if(selected)openDetail();});return;}

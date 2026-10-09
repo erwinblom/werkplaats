@@ -119,7 +119,7 @@ window.consolidateMijnTeam=async()=>{
  const saveButton=document.getElementById('loose-save');
  const updateSaveButton=()=>{
   saveButton.disabled=savingDocument||!activeFile;saveButton.classList.add('edit-btn');
-  I18n.assign(saveButton,(!activeFile?I18n.ui("Open eerst een document",'Open eerst een document'):(!activeFile.isVirtual?I18n.ui("Bijwerken in {0}",'Bijwerken in '+activeFile.relativePath):(window.Werkmap?.active?I18n.ui("Bewaar als Markdown-bestand in {0}/Schrijven",'Bewaar als Markdown-bestand in '+Werkmap.name+'/Schrijven'):I18n.ui("Download dit document als Markdown-bestand",'Download dit document als Markdown-bestand')))),"title");
+  I18n.assign(saveButton,(!activeFile?I18n.ui("Open eerst een document",'Open eerst een document'):(!activeFile.isVirtual?I18n.ui("Bijwerken in {0}",'Bijwerken in '+activeFile.relativePath):(window.Werkmap?.active?I18n.ui("Bewaar als Markdown-bestand in je werkmap",'Bewaar als Markdown-bestand in je werkmap'):I18n.ui("Download dit document als Markdown-bestand",'Download dit document als Markdown-bestand')))),"title");
   const actions=document.querySelector('#content .file-actions:not(.editor-actions)');
   const target=actions||bar;
   if(saveButton.parentElement!==target){if(actions)actions.insertBefore(saveButton,actions.querySelector('.document-edit-primary')?.nextSibling||actions.firstChild);else bar.append(saveButton);}

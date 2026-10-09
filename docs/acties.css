@@ -1,7 +1,7 @@
 /* Shared action blocks and native popup frames. Order comes from source markup. */
 :root{--wp-action-height:40px;--wp-action-gap:10px;--wp-dialog-width:640px;--wp-dialog-padding:28px}
 body dialog{box-sizing:border-box;width:min(var(--wp-dialog-width),calc(100vw - 32px));max-width:calc(100vw - 32px);max-height:calc(100dvh - 32px);margin:auto;padding:var(--wp-dialog-padding);border:1px solid var(--border,#bbb);border-radius:0;background:var(--bg-primary,#fff);color:var(--text-primary,#222);font:15px/1.5 Arial,sans-serif;overflow:auto;box-shadow:0 18px 60px #0004}
-body dialog:modal{position:fixed;top:50%;left:50%;right:auto;bottom:auto;transform:translate(-50%,-50%);margin:0}
+body dialog:modal{position:fixed;inset:0;transform:none;margin:auto}
 body dialog::backdrop{background:#0008}
 body dialog h2{margin:0 0 16px;font:700 25px/1.25 Arial,sans-serif;overflow-wrap:anywhere}
 body :is(.wp-actions,.form-actions,.note-actions,.document-connections-actions,.my-tools-actions,.organization-actions,.plan-overview-actions,.invoice-edit-actions){display:flex;align-items:center;justify-content:flex-end;gap:var(--wp-action-gap);flex-wrap:wrap;margin:20px 0 0;padding:16px 0 0;border-top:1px solid var(--border,#ddd)}
