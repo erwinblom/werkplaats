@@ -49,6 +49,7 @@ const server=http.createServer((req,res)=>{
   await home.waitForURL(/werkruimte=eigen/);await home.waitForFunction(()=>Werkmap.active);
   const firstNote=home.getByRole('button',{name:'Maak mijn eerste notitie',exact:true});
   await home.bringToFront();
+  if(!await firstNote.isVisible())await home.getByRole('button',{name:'Hulp',exact:true}).click();
   if(!await firstNote.isVisible())await home.getByText('Begin in drie stappen',{exact:true}).click();
   await firstNote.click();
   await home.getByRole('dialog',{name:'Nieuwe notitie',exact:true}).waitFor();

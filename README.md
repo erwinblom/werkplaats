@@ -36,7 +36,7 @@ Bestaande gebruikers: bewaar eerst je actuele werk in de oude versie. Open na de
 | Abonnementen | Kosten, verlengdatums en opzegdatums bijhouden |
 | Boekhouden | Inkomsten, uitgaven, bonnen en export |
 
-Via **Instellingen** kies je welke onderdelen zichtbaar zijn, hun volgorde en je starttool. Verborgen onderdelen behouden hun gegevens. De interface ondersteunt Nederlands en Engels; je eigen inhoud blijft in zijn oorspronkelijke taal.
+Via **Instellingen → Mijn Werkplaats** kies je je naam, accentkleur en bureaublad, welke onderdelen zichtbaar zijn, hun volgorde en je starttool. Je kunt zes meegeleverde bureaubladen gebruiken of een eigen afbeelding kiezen. Voeg daarnaast compacte snelkoppelingen en eigen projectstatussen, contactlabels en categorieën toe. Verborgen onderdelen behouden hun gegevens. De interface ondersteunt Nederlands en Engels; je eigen inhoud blijft in zijn oorspronkelijke taal.
 
 [Uitleg en gebruik](https://erwinblom.github.io/werkplaats/Uitleg.html) · [Over Werkplaats](https://erwinblom.github.io/werkplaats/Over.html) · [Privacy](app/PRIVACY.md)
 

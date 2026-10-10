@@ -42,3 +42,5 @@ body.writing-focus #content:has(>.document-materials){display:block!important}
 @media(max-width:600px){}
 
 
+
+.document-material-dialog label select{display:block;width:100%;margin-top:var(--space-xs)}

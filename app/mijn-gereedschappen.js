@@ -12,8 +12,8 @@ window.MijnGereedschappen=(()=>{
  const shortcut=number=>entries()[number-1]||null;
  const shortcutText=()=>entries().map(([id,[name]],index)=>(index+1)+' '+name).join(' · ');
  const toolURL=(id,params={})=>{const file=id==='Uren'?'Start Uren.html':id==='Offerte'?'Start Offerte.html':catalog[id][1],url=new URL('Apps/'+id+'/'+file,base);for(const [key,value]of Object.entries(params))if(value)url.searchParams.set(key,value);return GereedschapskistKeuze.url(url).href;};
- function apply(){I18n.set(preferences.language||I18n.language);window.WerkplaatsUiterlijk?.apply(preferences.appearance);document.documentElement.dataset.business=business()?'on':'off';renderHome();document.dispatchEvent(new CustomEvent('gereedschappen-gewijzigd'));}
- async function reload(){preferences=(await BewaarAlles.readShared()).toolPreferences||{};apply();}
+ function apply(){I18n.set(preferences.language||I18n.language);window.WerkplaatsUiterlijk?.apply(preferences.appearance);document.documentElement.dataset.business=business()?'on':'off';renderHome();window.WerkplaatsPersonalisatie?.renderHome();document.dispatchEvent(new CustomEvent('gereedschappen-gewijzigd'));}
+ async function reload(){preferences=(await BewaarAlles.readShared()).toolPreferences||{};await window.WerkplaatsPersonalisatie?.reload();apply();}
  const ready=(async()=>{await Werkmap.suiteReady;await BewaarAlles.ready;try{await reload();}catch(error){console.error('Indeling nog niet geladen:',error);apply();}})();
  ready.catch(()=>{});
  try{channel=new BroadcastChannel('mijn-gereedschappen:'+base.href);channel.onmessage=()=>reload().catch(console.error);}catch{}
@@ -34,9 +34,23 @@ window.MijnGereedschappen=(()=>{
  async function setAppearance(value){
   if(typeof value.name!=='string'||value.name.trim().length>60)throw Error(I18n.value(I18n.ui("Gebruik maximaal 60 tekens voor de naam.",'Gebruik maximaal 60 tekens voor de naam.')));
   if(!WerkplaatsUiterlijk.colors[value.color])throw Error(I18n.value(I18n.ui("Kies een van de vier accentkleuren.",'Kies een van de vier accentkleuren.')));
+  if(!WerkplaatsUiterlijk.desktops[value.desktop])throw Error(I18n.value(I18n.ui("Kies een bureaublad.",'Kies een bureaublad.')));
+  if(value.desktop==='custom'&&!WerkplaatsUiterlijk.validImage(value.customImage))throw Error(I18n.value(I18n.ui("Kies eerst een eigen afbeelding.",'Kies eerst een eigen afbeelding.')));
   const appearance=WerkplaatsUiterlijk.normalize(value);
   const shared=await BewaarAlles.updateShared(s=>{s.toolPreferences={...s.toolPreferences,appearance};});
   preferences=shared.toolPreferences;apply();window.Werkstatus?.changed();channel?.postMessage('changed');
+ }
+ async function prepareDesktopImage(file){
+  if(!file||!['image/jpeg','image/png','image/webp'].includes(file.type))throw Error(I18n.value(I18n.ui("Kies een JPG-, PNG- of WebP-afbeelding.",'Kies een JPG-, PNG- of WebP-afbeelding.')));
+  if(file.size>20*1024*1024)throw Error(I18n.value(I18n.ui("Deze afbeelding is groter dan 20 MB. Kies een kleiner bestand.",'Deze afbeelding is groter dan 20 MB. Kies een kleiner bestand.')));
+  const bitmap=await createImageBitmap(file,{imageOrientation:'from-image'});let scale=Math.min(1,1920/bitmap.width,1080/bitmap.height),data='';
+  try{
+   for(let attempt=0;attempt<6;attempt++){
+    const canvas=document.createElement('canvas');canvas.width=Math.max(1,Math.round(bitmap.width*scale));canvas.height=Math.max(1,Math.round(bitmap.height*scale));const context=canvas.getContext('2d',{alpha:false});context.fillStyle='#171717';context.fillRect(0,0,canvas.width,canvas.height);context.drawImage(bitmap,0,0,canvas.width,canvas.height);data=canvas.toDataURL('image/webp',Math.max(.58,.86-attempt*.06));
+    if(WerkplaatsUiterlijk.validImage(data))return data;scale*=.8;
+   }
+  }finally{bitmap.close?.();}
+  throw Error(I18n.value(I18n.ui("De afbeelding kon niet klein genoeg worden gemaakt. Kies een eenvoudiger of kleiner beeld.",'De afbeelding kon niet klein genoeg worden gemaakt. Kies een eenvoudiger of kleiner beeld.')));
  }
  async function setLanguage(language){
   if(!['nl','en'].includes(language))throw Error('Unsupported interface language.');
@@ -68,7 +82,14 @@ window.MijnGereedschappen=(()=>{
    const summary=document.createElement('summary');summary.append(...heading.childNodes);
    heading.remove();details.append(summary,...section.childNodes);section.replaceWith(details);
   }
-  document.body.append(d);parent?.append(I18n.mark(button('Instellingen',settings),"Instellingen"));d.querySelector('.my-tools-actions').append(I18n.mark(button('Sluit',()=>d.close()),"Sluit"));
+  const workspaceSection=d.querySelector('#settings-tools').closest('.settings-section'),workspaceIntro=workspaceSection.querySelector(':scope > p'),businessChoice=workspaceSection.querySelector('.business-choice'),appearanceFormInSettings=d.querySelector('#settings-appearance'),appearanceSection=appearanceFormInSettings.closest('.settings-section');workspaceSection.id='settings-my-workspace';
+  I18n.assign(workspaceIntro,I18n.ui('Stel in wat je ziet, waar je begint en welke vaste keuzes bij jouw manier van werken passen.','Stel in wat je ziet, waar je begint en welke vaste keuzes bij jouw manier van werken passen.'),'textContent');
+  const appearanceHeading=document.createElement('h4');I18n.assign(appearanceHeading,I18n.ui('Naam, kleur en bureaublad','Naam, kleur en bureaublad'),'textContent');
+  const appearanceIntro=document.createElement('p');I18n.assign(appearanceIntro,I18n.ui('Kies je naam, accentkleur en bureaublad. Je kunt ook een eigen afbeelding gebruiken.','Kies je naam, accentkleur en bureaublad. Je kunt ook een eigen afbeelding gebruiken.'),'textContent');
+  workspaceIntro.after(appearanceHeading,appearanceIntro,appearanceFormInSettings);appearanceSection.remove();
+  const layoutHeading=document.createElement('h4');I18n.assign(layoutHeading,I18n.ui('Indeling','Indeling'),'textContent');businessChoice.before(layoutHeading);
+  const personalization=document.createElement('div');personalization.id='settings-personalization';workspaceSection.append(personalization);
+  document.body.append(d);parent?.append(I18n.mark(button('Instellingen',settings),"Instellingen"));d.querySelector('.my-tools-actions').append(I18n.mark(button('Sluit',()=>d.close()),"Sluit"));window.WerkplaatsPersonalisatie?.mountSettings(d);
   const languageSelect=d.querySelector('#settings-language');languageSelect.value=I18n.language;languageSelect.onchange=async()=>{languageSelect.disabled=true;try{await setLanguage(languageSelect.value);I18n.assign(d.querySelector('#settings-language-status'),I18n.ui('Taal toegepast. Gebruik Bewaar alles voor je werkmap.','Taal toegepast. Gebruik Bewaar alles voor je werkmap.'));}catch(error){languageSelect.value=I18n.language;d.querySelector('#settings-language-status').textContent=error.message;}finally{languageSelect.disabled=false;}};
   const profile=d.querySelector('form'),status=d.querySelector('#settings-profile-status'),check=d.querySelector('#settings-business');
   const toolsForm=d.querySelector('#settings-tools'),toolList=d.querySelector('#settings-tool-list'),startSelect=d.querySelector('#settings-start-tool');
@@ -98,17 +119,26 @@ window.MijnGereedschappen=(()=>{
    catch(error){d.querySelector('#settings-tools-status').textContent=error.message;}
    finally{submit.disabled=false;}
   };
-  const appearanceForm=d.querySelector('#settings-appearance'),appearanceName=appearanceForm.elements.workspaceName,appearanceStatus=d.querySelector('#appearance-status');let appearanceBaseline='';
-  const appearanceSnapshot=()=>JSON.stringify({name:appearanceName.value,color:appearanceForm.querySelector('input[name=accentColor]:checked')?.value||'red'});
-  function previewAppearance(){const value=JSON.parse(appearanceSnapshot()),preview=appearanceForm.querySelector('.appearance-preview');I18n.assign(preview,(value.name.trim()||I18n.ui("Werkplaats",'Werkplaats')),"textContent");preview.style.setProperty('--preview-accent',WerkplaatsUiterlijk.colors[value.color][1]);}
+  const appearanceForm=d.querySelector('#settings-appearance'),appearanceName=appearanceForm.elements.workspaceName,appearanceStatus=d.querySelector('#appearance-status');let appearanceBaseline='',customImage='';
+  I18n.assign(appearanceForm.querySelector('button[type=submit]'),I18n.ui('Uiterlijk toepassen','Uiterlijk toepassen'),'textContent');
+  const desktopField=document.createElement('fieldset'),desktopLegend=document.createElement('legend'),desktopHelp=document.createElement('p'),desktopChoices=document.createElement('div'),customPanel=document.createElement('div'),uploadLabel=document.createElement('label'),uploadInput=document.createElement('input'),customName=document.createElement('span'),fitLabel=document.createElement('label'),fitSelect=document.createElement('select'),removeImage=button('Verwijder eigen afbeelding',()=>{});
+  desktopField.className='desktop-field';desktopChoices.className='desktop-choices';customPanel.className='desktop-custom';I18n.assign(desktopLegend,I18n.ui('Bureaublad','Bureaublad'),'textContent');I18n.assign(desktopHelp,I18n.ui('Kies het vlak achter je Werkplaats. De gereedschappen zelf blijven hetzelfde.','Kies het vlak achter je Werkplaats. De gereedschappen zelf blijven hetzelfde.'),'textContent');desktopField.append(desktopLegend,desktopHelp,desktopChoices,customPanel);appearanceForm.querySelector('fieldset').after(desktopField);
+  for(const [id,[label,description]]of Object.entries(WerkplaatsUiterlijk.desktops)){
+   const choice=document.createElement('label'),input=document.createElement('input'),sample=document.createElement('span'),copy=document.createElement('span'),name=document.createElement('strong'),detail=document.createElement('small');choice.className='desktop-choice';input.type='radio';input.name='desktop';input.value=id;sample.className='desktop-sample';sample.dataset.desktopSample=id;sample.setAttribute('aria-hidden','true');I18n.assign(name,I18n.ui(label,label),'textContent');I18n.assign(detail,I18n.ui(description,description),'textContent');copy.append(name,detail);choice.append(input,sample,copy);desktopChoices.append(choice);
+  }
+  uploadLabel.className='desktop-upload-button';I18n.assign(uploadLabel,I18n.ui('Kies afbeelding','Kies afbeelding'),'textContent');uploadInput.type='file';uploadInput.accept='image/jpeg,image/png,image/webp';uploadInput.hidden=true;uploadLabel.append(uploadInput);customName.className='desktop-file-name';fitLabel.className='desktop-fit';fitLabel.append(I18n.node('Weergave'));fitSelect.name='desktopFit';fitSelect.append(I18n.mark(new Option('Vullen','cover'),'Vullen'),I18n.mark(new Option('Passend','contain'),'Passend'));customPanel.append(uploadLabel,customName,fitLabel,fitSelect,I18n.mark(removeImage,'Verwijder eigen afbeelding'));
+  const appearanceSnapshot=()=>JSON.stringify({name:appearanceName.value,color:appearanceForm.querySelector('input[name=accentColor]:checked')?.value||'red',desktop:appearanceForm.querySelector('input[name=desktop]:checked')?.value||'erwin',customImage,desktopFit:fitSelect.value||'cover'});
+  function previewAppearance(){const value=JSON.parse(appearanceSnapshot()),preview=appearanceForm.querySelector('.appearance-preview');I18n.assign(preview,(value.name.trim()||I18n.ui("Werkplaats",'Werkplaats')),"textContent");preview.style.setProperty('--preview-accent',WerkplaatsUiterlijk.colors[value.color][1]);customPanel.hidden=value.desktop!=='custom';const customSample=appearanceForm.querySelector('[data-desktop-sample=custom]');customSample.style.backgroundImage=value.customImage?`url("${value.customImage}")`:'';customName.textContent=value.customImage?I18n.t('Eigen afbeelding staat klaar.'):I18n.t('Nog geen eigen afbeelding gekozen.');}
   for(const [id,[label,color]]of Object.entries(WerkplaatsUiterlijk.colors)){
    const choice=document.createElement('label'),input=document.createElement('input'),swatch=document.createElement('span');input.type='radio';input.name='accentColor';input.value=id;swatch.className='appearance-swatch';swatch.style.background=color;swatch.setAttribute('aria-hidden','true');choice.append(input,swatch,I18n.node(label));appearanceForm.querySelector('.appearance-colors').append(choice);
   }
-  function loadAppearance(){const value=WerkplaatsUiterlijk.normalize(preferences.appearance);appearanceName.value=value.name;for(const input of appearanceForm.querySelectorAll('input[name=accentColor]'))input.checked=input.value===value.color;previewAppearance();appearanceBaseline=appearanceSnapshot();}
+  function loadAppearance(){const value=WerkplaatsUiterlijk.normalize(preferences.appearance);appearanceName.value=value.name;customImage=value.customImage;fitSelect.value=value.desktopFit;for(const input of appearanceForm.querySelectorAll('input[name=accentColor]'))input.checked=input.value===value.color;for(const input of appearanceForm.querySelectorAll('input[name=desktop]'))input.checked=input.value===value.desktop;previewAppearance();appearanceBaseline=appearanceSnapshot();}
   appearanceForm.addEventListener('input',previewAppearance);
-  async function saveAppearance(value){const buttons=[...appearanceForm.querySelectorAll('button')];buttons.forEach(b=>b.disabled=true);try{await setAppearance(value);loadAppearance();I18n.assign(appearanceStatus,I18n.ui("Naam en kleur toegepast. Gebruik Bewaar alles voor je werkmap.",'Naam en kleur toegepast. Gebruik Bewaar alles voor je werkmap.'),"textContent");}catch(error){appearanceStatus.textContent=error.message;}finally{buttons.forEach(b=>b.disabled=false);}}
+  uploadInput.onchange=async()=>{const file=uploadInput.files?.[0];if(!file)return;uploadLabel.setAttribute('aria-busy','true');I18n.assign(appearanceStatus,I18n.ui('Afbeelding voorbereiden…','Afbeelding voorbereiden…'),'textContent');try{customImage=await prepareDesktopImage(file);const own=appearanceForm.querySelector('input[name=desktop][value=custom]');own.checked=true;customName.textContent=file.name;appearanceStatus.textContent='';previewAppearance();}catch(error){appearanceStatus.textContent=error.message;}finally{uploadInput.value='';uploadLabel.removeAttribute('aria-busy');}};
+  removeImage.onclick=()=>{customImage='';const fallback=appearanceForm.querySelector('input[name=desktop][value=erwin]');fallback.checked=true;previewAppearance();};
+  async function saveAppearance(value){const buttons=[...appearanceForm.querySelectorAll('button')];buttons.forEach(b=>b.disabled=true);try{await setAppearance(value);loadAppearance();I18n.assign(appearanceStatus,I18n.ui("Uiterlijk toegepast. Gebruik Bewaar alles voor je werkmap.",'Uiterlijk toegepast. Gebruik Bewaar alles voor je werkmap.'),"textContent");}catch(error){appearanceStatus.textContent=error.message;}finally{buttons.forEach(b=>b.disabled=false);}}
   appearanceForm.onsubmit=event=>{event.preventDefault();if(appearanceForm.reportValidity())saveAppearance(JSON.parse(appearanceSnapshot()));};
-  d.querySelector('#appearance-reset').onclick=()=>saveAppearance({name:'',color:'red'});
+  d.querySelector('#appearance-reset').onclick=()=>saveAppearance({name:'',color:'red',desktop:'erwin',customImage:'',desktopFit:'cover'});
   const businessKeys=['name','address','email','iban','kvk','vat'];let baseline='',loaded=false;
   const taxBox=d.querySelector('#settings-tax-rates');function drawTaxRates(items=Belastingtarieven.defaults()){taxBox.replaceChildren(...items.map(item=>{const row=document.createElement('div');row.className='tax-rate-row';const name=document.createElement('input');name.name='taxName_'+item.id;name.value=item.name;name.maxLength=60;name.setAttribute('aria-label',I18n.t('Tariefnaam'));row.append(name);if(item.rate!==null){const rate=document.createElement('input');rate.name='taxRate_'+item.id;rate.type='number';rate.min='0';rate.max='100';rate.step='0.01';rate.value=item.rate;rate.setAttribute('aria-label',I18n.t('Percentage'));row.append(rate,document.createTextNode('%'));}else{const special=document.createElement('span');special.textContent='—';special.title=I18n.t('Geen percentage');row.append(special);}return row;}));}
   const taxValues=()=>Belastingtarieven.defaults().map(item=>({id:item.id,name:profile.elements['taxName_'+item.id].value,rate:item.rate===null?null:Number(profile.elements['taxRate_'+item.id].value)}));drawTaxRates();
@@ -132,7 +162,7 @@ window.MijnGereedschappen=(()=>{
   check.onchange=async()=>{check.disabled=true;try{await setBusiness(check.checked);I18n.assign(d.querySelector('#settings-tools-status'),I18n.ui("Indeling toegepast. Gebruik Bewaar alles om deze te bewaren.",'Indeling toegepast. Gebruik Bewaar alles om deze te bewaren.'),"textContent");}catch(e){check.checked=business();I18n.assign(d.querySelector('#settings-tools-status'),I18n.ui("Niet aangepast: {0}",'Niet aangepast: '+e.message),"textContent");}finally{check.disabled=false;}};
   function refresh(){languageSelect.value=I18n.language;check.checked=business();for(const key of businessKeys)profile.elements[key].disabled=!business();I18n.assign(d.querySelector('#settings-location'),(Werkmap.active?I18n.ui("Je werk wordt bewaard in: {0}",'Je werk wordt bewaard in: '+Werkmap.name):I18n.ui("Nog geen opslagmap gekozen.",'Nog geen opslagmap gekozen.')),"textContent");const choose=document.getElementById('wm-choose');if(choose)I18n.assign(choose,I18n.ui("Bestaand werk openen",'Bestaand werk openen'),"textContent");}
   d.addEventListener('settings-open',()=>{refresh();load();loadTools();loadAppearance();});document.addEventListener('gereedschappen-gewijzigd',()=>{refresh();if(d.open){drawTools();startOptions();}});document.addEventListener('werkmap-gekozen',()=>{refresh();if(d.open)load();});
-  function close(){if(((baseline&&snapshot()!==baseline)||(toolsBaseline&&toolsSnapshot()!==toolsBaseline)||(appearanceBaseline&&appearanceSnapshot()!==appearanceBaseline))&&!confirm(I18n.value(I18n.ui("Je gewijzigde gegevens nog niet toepassen en dit venster sluiten?",'Je gewijzigde gegevens nog niet toepassen en dit venster sluiten?'))))return;d.close();}
+  function close(){if(((baseline&&snapshot()!==baseline)||(toolsBaseline&&toolsSnapshot()!==toolsBaseline)||(appearanceBaseline&&appearanceSnapshot()!==appearanceBaseline)||window.WerkplaatsPersonalisatie?.dirty())&&!confirm(I18n.value(I18n.ui("Je gewijzigde gegevens nog niet toepassen en dit venster sluiten?",'Je gewijzigde gegevens nog niet toepassen en dit venster sluiten?'))))return;d.close();}
   d.querySelector('.my-tools-actions button').onclick=close;d.addEventListener('cancel',e=>{e.preventDefault();close();});
   const storage=d.querySelector('#settings-storage'),backup=d.querySelector('#settings-backup'),advanced=d.querySelector('#settings-advanced');
   function move(id,target,label){const el=document.getElementById(id);if(el){target.append(el);if(label)I18n.assign(el,I18n.ui(label,label));}return el;}
@@ -208,7 +238,7 @@ window.MijnGereedschappen=(()=>{
  }
  async function mount(){
   await ready;if(mounted)return;mounted=true;
-  const style=document.createElement('link');style.rel='stylesheet';style.href=new URL('mijn-gereedschappen.css?v=20261006-personal-title-1',base).href;document.head.insertBefore(style,document.querySelector('link[href*="blom-os-tokens.css"]'));
+  const style=document.createElement('link');style.rel='stylesheet';style.href=new URL('mijn-gereedschappen.css?v=20261010-personalisatie-6',base).href;document.head.insertBefore(style,document.querySelector('link[href*="blom-os-tokens.css"]'));
   const tool=document.querySelector('script[data-tool]')?.dataset.tool;
   if(!tool)document.addEventListener('keydown',async event=>{
    if(event.isComposing||!event.altKey||event.ctrlKey||event.metaKey||event.shiftKey||!/^Digit[0-9]$/.test(event.code))return;
@@ -236,5 +266,5 @@ window.MijnGereedschappen=(()=>{
   const taskView=new URL(location.href).searchParams.get('taak-bekijken');if(tool==='Projectbord'&&taskView&&typeof viewTask==='function')viewTask(taskView);
   const q=new URL(location.href).searchParams.get('zoek');if(q){const field=document.getElementById('suite-search')||document.getElementById('search');if(field){field.value=q;field.dispatchEvent(new Event('input',{bubbles:true}));}}
  }
- return {ready,mount,entries,catalog,startTool,setPreferences,setAppearance,setLanguage,shortcut,shortcutText,business,setBusiness,search,settings,toolURL,searchRows,reload,get configured(){return typeof preferences.business==='boolean';}};
+ return {ready,mount,entries,catalog,startTool,setPreferences,setAppearance,setLanguage,shortcut,shortcutText,business,setBusiness,search,settings,toolURL,searchRows,reload,choices:key=>window.WerkplaatsPersonalisatie?.choices(key)||[],get configured(){return typeof preferences.business==='boolean';}};
 })();

@@ -1,9 +1,27 @@
 /* De omlijsting hoort alleen bij het overzicht; het werkvlak blijft wit. */
-html{background:#171717!important}
-body{background:#171717!important;isolation:isolate;padding:clamp(20px,3vw,48px) clamp(20px,calc((100vw - 1200px)/4),7vw);min-height:100vh}
+html{background:var(--wp-desktop-base,#171717)!important}
+body{background:var(--wp-desktop-base,#171717)!important;isolation:isolate;padding:clamp(20px,3vw,48px) clamp(20px,calc((100vw - 1200px)/4),7vw);min-height:100vh}
 body::before,body::after{content:"";position:fixed;z-index:-1;pointer-events:none}
 body::before{inset:0;background:radial-gradient(circle at 101% 1%,var(--wp-accent,#e32720) 0 220px,transparent 221px),radial-gradient(ellipse at -7% 26%,#eeeae0 0 235px,transparent 236px),radial-gradient(circle at 5% 82%,var(--wp-accent,#e32720) 0 65px,transparent 66px),linear-gradient(90deg,var(--wp-accent,#e32720) 0 22px,transparent 22px),linear-gradient(135deg,transparent 70%,#242424 70%);}
 body::after{left:38px;bottom:0;width:110px;height:31vh;border-top:1px solid #b8b5ab;background:repeating-linear-gradient(90deg,transparent 0 14px,#b8b5ab 14px 15px,transparent 15px 19px);opacity:.65}
+html[data-desktop="calm"]{--wp-desktop-base:#e8e2d7}
+html[data-desktop="calm"] body::before{background:linear-gradient(110deg,#eee9df 0 52%,#ded5c6 52% 100%)}
+html[data-desktop="calm"] body::after{display:none}
+html[data-desktop="paper"]{--wp-desktop-base:#d8c8aa}
+html[data-desktop="paper"] body::before{background:radial-gradient(circle at 16% 18%,#fff9 0 1px,transparent 2px),radial-gradient(circle at 78% 68%,#5d493c20 0 1px,transparent 2px),repeating-linear-gradient(2deg,#eadfc9 0 5px,#e3d6bd 6px 7px)}
+html[data-desktop="paper"] body::after{left:42px;top:0;bottom:auto;width:2px;height:100vh;border:0;background:var(--wp-accent,#c51d17);opacity:.7}
+html[data-desktop="grid"]{--wp-desktop-base:#d9edf0}
+html[data-desktop="grid"] body::before{background:linear-gradient(#306b7830 1px,transparent 1px),linear-gradient(90deg,#306b7830 1px,transparent 1px),linear-gradient(#306b781c 1px,transparent 1px),linear-gradient(90deg,#306b781c 1px,transparent 1px),#d9edf0;background-size:80px 80px,80px 80px,16px 16px,16px 16px,auto}
+html[data-desktop="grid"] body::after{left:auto;right:42px;bottom:42px;width:74px;height:74px;border:2px solid var(--wp-accent,#c51d17);border-radius:50%;background:linear-gradient(90deg,transparent 35px,var(--wp-accent,#c51d17) 35px 39px,transparent 39px),linear-gradient(transparent 35px,var(--wp-accent,#c51d17) 35px 39px,transparent 39px);opacity:1}
+html[data-desktop="night"]{--wp-desktop-base:#08090b}
+html[data-desktop="night"] body::before{background:radial-gradient(circle at 77% 16%,#fff 0 2px,transparent 3px),radial-gradient(circle at 11% 72%,#fff8 0 1px,transparent 2px),radial-gradient(ellipse at 50% 35%,#303742 0,transparent 55%),linear-gradient(118deg,transparent 0 68%,#121820 68% 100%)}
+html[data-desktop="night"] body::after{left:0;bottom:12%;width:34vw;height:8px;border:0;background:var(--wp-accent,#c51d17);opacity:1}
+html[data-desktop="outside"]{--wp-desktop-base:#b7d8df}
+html[data-desktop="outside"] body::before{background:radial-gradient(circle at 82% 16%,#fff5c5 0 72px,transparent 73px),linear-gradient(165deg,transparent 0 56%,#6d8273 56% 67%,transparent 67%),linear-gradient(195deg,transparent 0 61%,#344d43 61% 74%,transparent 74%),linear-gradient(#b7d8df 0 64%,#d7cab1 64% 100%)}
+html[data-desktop="outside"] body::after{left:5%;bottom:7%;width:90%;height:2px;border:0;background:#111;opacity:.55}
+html[data-desktop="custom"]{--wp-desktop-base:#171717}
+html[data-desktop="custom"] body::before{background-color:#171717;background-image:var(--wp-desktop-image);background-size:var(--wp-desktop-size,cover);background-position:center;background-repeat:no-repeat}
+html[data-desktop="custom"] body::after{display:none}
 .shell{max-width:1800px;margin:0 auto;padding:0 24px;border-radius:32px;background:#fff!important;box-shadow:0 16px 60px #0004;overflow:hidden}
 header{padding:18px 0 14px;border-bottom-width:4px}
 .wordmark-copy{display:grid;gap:2px;line-height:1.05}

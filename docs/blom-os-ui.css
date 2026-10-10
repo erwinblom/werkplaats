@@ -182,9 +182,16 @@
  body[data-tool] :is(.source-open strong,.task-title,.note-card h2) {font-family:var(--font-ui);font-weight:var(--weight-ui-heavy);font-size:var(--size-s);line-height:var(--line-s);letter-spacing:var(--letter-spacing-s);color:var(--cte-text)}
  body[data-tool=Bronnenkast] .source-open strong {height:calc(3 * var(--line-s))}
  body[data-tool] .note-card h2 {margin:var(--space-s) 0 var(--space-xs);max-height:calc(2 * var(--line-s))}
- body[data-tool] .note-card p {font-family:var(--font-ui);font-weight:var(--weight-ui-regular);font-size:var(--size-s);line-height:var(--line-s);letter-spacing:var(--letter-spacing-s);max-height:calc(3 * var(--line-s));margin:0 0 var(--space-m)}
+ body[data-tool] .note-card .note-excerpt {font-family:var(--font-ui);font-weight:var(--weight-ui-regular);font-size:var(--size-s);line-height:var(--line-s);letter-spacing:var(--letter-spacing-s);display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:7;max-height:calc(7 * var(--line-s));min-height:0;overflow:hidden;overflow-wrap:anywhere;white-space:normal;margin:0 0 var(--space-m)}
+ body[data-tool] .note-card .note-excerpt :is(p,ul,ol,li,pre,blockquote,h1,h2,h3,h4,h5,h6) {font:inherit;letter-spacing:inherit;display:block;-webkit-line-clamp:unset;max-height:none;min-height:0;margin:0;padding:0;white-space:normal;overflow:visible}
+ body[data-tool] .note-card .note-excerpt :is(ul,ol) {padding-left:var(--space-m);list-style-position:outside}
+ body[data-tool] .note-card .note-excerpt ul {list-style-type:disc}
+ body[data-tool] .note-card .note-excerpt ol {list-style-type:decimal}
+ body[data-tool] .note-card .note-excerpt li {display:list-item}
+ body[data-tool] .note-card .note-excerpt :is(h1,h2,h3,h4,h5,h6) {font-weight:var(--weight-ui-heavy)}
+ body[data-tool] .note-card .note-excerpt pre {white-space:pre-wrap}
  body[data-tool] .note-card :is(.note-topic,.note-footer) {font-family:var(--font-ui);font-weight:var(--weight-ui-regular);font-size:var(--size-xs);line-height:var(--line-xs);letter-spacing:var(--letter-spacing-xs);color:var(--cte-text-muted);text-transform:none}
- body[data-tool] .notes-grid {gap:var(--space-m)}
+ body[data-tool] .notes-grid {gap:var(--space-m);align-items:stretch}
  body[data-tool] .notes-board .note-card {padding:var(--space-m);height:auto;min-height:220px;transition:background-color var(--motion-duration) var(--motion-easing)}
  body[data-tool] .notes-board .note-card:hover {transform:none;box-shadow:var(--blom-card-edge),inset 0 var(--space-xxs) var(--cte-text)}
  body[data-tool] .note-dialog>h2 {font-family:var(--font-brand);font-weight:var(--weight-brand-heavy);font-size:var(--size-l);line-height:var(--line-l);letter-spacing:var(--letter-spacing-l)}

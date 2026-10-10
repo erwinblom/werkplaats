@@ -12,5 +12,24 @@
 #suite-settings #settings-appearance input[type=radio]{width:20px;height:20px;margin:0;accent-color:var(--wp-accent,#c51d17)}
 .appearance-swatch{width:20px;height:20px;display:inline-block;border:1px solid #0003}
 .appearance-preview{padding:16px;background:var(--preview-accent,var(--wp-accent,#c51d17));color:#fff;font-weight:700;overflow-wrap:anywhere}
+.desktop-field>p{max-width:62ch;color:#555}
+#settings-appearance .desktop-choices{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:14px 0}
+#suite-settings #settings-appearance .desktop-choice{display:grid;grid-template-columns:22px 96px minmax(0,1fr);align-items:center;gap:12px;min-height:78px;margin:0;padding:10px;border:1px solid #aaa;border-radius:5px;cursor:pointer;background:#fff}
+#suite-settings #settings-appearance .desktop-choice:has(input:checked){border-color:#111;box-shadow:inset 5px 0 var(--wp-accent,#c51d17)}
+#suite-settings #settings-appearance .desktop-choice:focus-within{outline:3px solid var(--wp-accent,#c51d17);outline-offset:2px}
+#suite-settings #settings-appearance .desktop-choice input{width:20px;height:20px;margin:0;accent-color:var(--wp-accent,#c51d17)}
+.desktop-choice strong,.desktop-choice small{display:block}.desktop-choice small{margin-top:3px;color:#555;line-height:1.3}
+.desktop-sample{display:block;width:96px;height:56px;border:1px solid #777;background-color:#171717;background-size:cover;background-position:center}
+.desktop-sample[data-desktop-sample="erwin"]{background:radial-gradient(circle at 100% 0,var(--wp-accent,#c51d17) 0 18px,transparent 19px),radial-gradient(ellipse at 0 42%,#eeeae0 0 28px,transparent 29px),linear-gradient(90deg,var(--wp-accent,#c51d17) 0 5px,transparent 5px),linear-gradient(135deg,#171717 0 72%,#292929 72%)}
+.desktop-sample[data-desktop-sample="calm"]{background:linear-gradient(110deg,#eee9df 0 52%,#ded5c6 52%)}
+.desktop-sample[data-desktop-sample="paper"]{background:radial-gradient(circle at 18% 24%,#fff9 0 1px,transparent 2px),repeating-linear-gradient(2deg,#eadfc9 0 4px,#e3d6bd 5px 6px)}
+.desktop-sample[data-desktop-sample="grid"]{background:linear-gradient(#306b7840 1px,transparent 1px),linear-gradient(90deg,#306b7840 1px,transparent 1px),#d9edf0;background-size:12px 12px,12px 12px,auto}
+.desktop-sample[data-desktop-sample="night"]{background:radial-gradient(circle at 70% 25%,#434b59 0,transparent 42%),linear-gradient(165deg,#08090b 0 70%,var(--wp-accent,#c51d17) 71% 76%,#121820 77%)}
+.desktop-sample[data-desktop-sample="outside"]{background:radial-gradient(circle at 80% 20%,#fff5c5 0 9px,transparent 10px),linear-gradient(165deg,transparent 0 55%,#6d8273 56% 67%,transparent 68%),linear-gradient(#b7d8df 0 64%,#d7cab1 65%)}
+.desktop-sample[data-desktop-sample="custom"]{background:#ddd repeating-linear-gradient(45deg,#eee 0 8px,#ddd 8px 16px);background-size:cover;background-position:center}
+.desktop-custom{display:flex;align-items:center;flex-wrap:wrap;gap:10px 14px;margin:14px 0;padding:14px;background:#f3f4f5;border-left:5px solid var(--wp-accent,#c51d17)}
+#suite-settings #settings-appearance .desktop-upload-button{display:inline-flex;margin:0;padding:10px 16px;border:1px solid #888;border-radius:4px;background:#fff;color:#111;font:600 14px/1.5 Arial,sans-serif;cursor:pointer}
+.desktop-upload-button[aria-busy="true"]{opacity:.55;cursor:wait}.desktop-file-name{flex:1 1 180px;color:#555;font-size:14px}.desktop-fit{display:flex!important;align-items:center;gap:8px;margin:0!important;font-weight:700}.desktop-fit select{padding:8px 34px 8px 10px;font:inherit}
+@media(max-width:700px){#settings-appearance .desktop-choices{grid-template-columns:1fr}#suite-settings #settings-appearance .desktop-choice{grid-template-columns:22px 80px minmax(0,1fr)}.desktop-sample{width:80px}}
 
 button [data-i18n],a [data-i18n],summary [data-i18n]{pointer-events:none}

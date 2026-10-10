@@ -209,3 +209,13 @@ Eén hoofdactie en Meer horen bij het overzicht. Zoeken en Bewaar alles staan op
 - Leesdetails gebruiken één actierij met Bewerk en Meer; koppelen, kopiëren en afgeleide objecten maken blijven onder Meer bereikbaar. Contextuele inhoud en fouten blijven zichtbaar.
 - Abonnementen gebruikt dezelfde titel-/actiepositie en marges als de andere toolhomes. Zoekfilters gebruiken dezelfde veldrollen.
 - Een geslaagde broncode- of opslagtest is geen visuele eindcontrole. Meld die bewijsvormen afzonderlijk.
+
+## Persoonlijke bureaubladen — 10 oktober 2026
+
+Het bureaublad is de buitenste laag achter de Werkplaats. De witte werkvlakken, typografie, knoppen, contrasten en gereedschappen veranderen niet mee. Daardoor mag het bureaublad karakter hebben zonder de bruikbaarheid of herkenbaarheid van de interface aan te tasten.
+
+`Erwin Grafisch` blijft de standaard. De alternatieven `Rustig`, `Papier`, `Raster`, `Nacht` en `Buiten` verschillen bewust in ruimte, textuur en sfeer; het zijn geen kleurvarianten van hetzelfde patroon. Een gebruiker kan daarnaast een eigen JPEG-, PNG- of WebP-afbeelding kiezen en die laten vullen of passend tonen.
+
+Een eigen afbeelding wordt volledig lokaal voorbereid, verkleind tot maximaal 1920 × 1080 en als compacte WebP-versie bewaard. Onveilige bestandssoorten en te grote resultaten worden geweigerd. Het origineel wordt niet opgenomen. Op mobiel verdwijnt het decoratieve bureaublad en blijft een witte basis over.
+
+Acceptatie: keuze en eigen afbeelding moeten na toepassen en herladen behouden blijven; oude voorkeuren moeten zonder migratiestap `Erwin Grafisch` krijgen; zonder geldige eigen afbeelding valt `Eigen afbeelding` veilig terug op de standaard. De bureaubladlaag mag geen horizontale pagina-overloop of consolefouten veroorzaken.

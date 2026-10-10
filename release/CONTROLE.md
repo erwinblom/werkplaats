@@ -1,4 +1,20 @@
-# Werkplaats v0.35.9 — controle op 9 oktober 2026
+# Werkplaats v0.36.0 — controle op 10 oktober 2026
+
+Deze uitgave maakt Werkplaats persoonlijker zonder de lokale opslag of gereedschappen te veranderen. Onder **Instellingen → Mijn Werkplaats** staan naam, accentkleur en bureaublad nu bovenaan. Er zijn zes meegeleverde bureaubladen en een eigen lokale afbeelding; de beschrijving volgt de gekozen accentkleur. Snelkoppelingen op Home zijn compact en rustig vormgegeven. Eigen projectstatussen, contactlabels en categorieën worden aan de vaste keuzelijsten toegevoegd.
+
+## Controles voor 0.36.0
+
+- 206 publieke appbestanden geïmporteerd uit de gecontroleerde Master; persoonlijke werkgegevens, privésync, persoonlijke feedback en persoonlijke administratieve hulpmiddelen zijn uitgesloten.
+- 18/18 bronproeven geslaagd, inclusief personalisatie, veilige afbeeldingsopslag, taalregels en de algemene Werkplaats-regels.
+- Bron- en Masterweergave van Mijn Werkplaats gecontroleerd: personalisatie staat vóór Indeling, de teksten volgen de accentkleur en er zijn geen JavaScript-waarschuwingen of fouten.
+- Mobiele breedte van 390 pixels gecontroleerd zonder horizontale overloop.
+- Website en download opnieuw uit dezelfde Master gebouwd; manifest, lokale HTML-links, JavaScript-syntax, privacyuitsluitingen en ieder bestand in de ZIP gecontroleerd.
+
+## Grenzen van deze ronde
+
+De native macOS-mapkiezer en herstel vanuit een volledig nieuw browserprofiel zijn niet opnieuw beproefd. Niet iedere handeling in alle negen gereedschappen is opnieuw doorlopen. Persoonlijke gegevens zijn niet gebruikt of opgenomen.
+
+## Voorafgaande uitgave v0.35.9 — controle op 9 oktober 2026
 
 Deze uitgave brengt de actuele Master naar website en download. De gedeelde bediening is bijgewerkt, met Nieuw/Meer bij de tooloverzichten, verdiepende filters en beheer onder Instellingen. De eerste klik na wisselen van tool wordt niet langer door een browserovergang geblokkeerd.
 

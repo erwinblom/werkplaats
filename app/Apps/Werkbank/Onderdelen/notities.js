@@ -46,7 +46,9 @@ window.SchrijfNotities = (() => {
     const card=button('',()=>detail(note.id),'note-card');card.dataset.noteId=note.id;
     const topic=document.createElement('span');topic.className='note-topic';I18n.assign(topic,(note.topic||I18n.ui("Los idee",'Los idee')),"textContent");
     const title=document.createElement('h2');I18n.assign(title,(note.title||I18n.ui("Nieuwe notitie",'Nieuwe notitie')),"textContent");
-    const excerpt=document.createElement('p');const preview=document.createElement('div');preview.innerHTML=DOMPurify.sanitize(marked.parse(note.body||I18n.t('Nog geen tekst.')));excerpt.textContent=preview.textContent;
+    const excerpt=document.createElement('div');excerpt.className='note-excerpt';
+    // Keep the note's text structure without links or other interactive content inside the card button.
+    excerpt.innerHTML=DOMPurify.sanitize(marked.parse(note.body||I18n.t('Nog geen tekst.')),{ALLOWED_TAGS:['p','br','ul','ol','li','strong','em','del','code','pre','blockquote','h1','h2','h3','h4','h5','h6'],ALLOWED_ATTR:['start','reversed','value']});
     const footer=document.createElement('span');footer.className='note-footer';footer.textContent=I18n.t(note.document?'Uitgewerkt als document':'Notitie')+((note.sourceIds||[]).length?' · '+note.sourceIds.length+' '+I18n.t(note.sourceIds.length===1?'bron':'bronnen'):'');
     card.append(topic,title,excerpt,footer);grid.append(card);
    }
@@ -169,6 +171,10 @@ window.SchrijfNotities = (() => {
     const next={...note,...values,sourceIds,updatedAt:new Date().toISOString()};
     document.dispatchEvent(new CustomEvent('werkplaats-note-before-save',{detail:{dialog:d,note:next}}));
     const projectChanged=projectIds.length!==expectedProjects.length||projectIds.some(id=>!expectedProjects.includes(id));
+    const textChanged=['title','body','topic','mobileSync'].some(key=>next[key]!==note[key]);
+    const sourcesChanged=JSON.stringify(sourceIds)!==JSON.stringify(note.sourceIds||[]);
+    // Closing an already saved editor must not rewrite an older snapshot after Sync.
+    if(original&&!textChanged&&!sourcesChanged&&!projectChanged&&!failed)return;
     try{await write(next,expected,false,projectChanged?{ids:projectIds,expected:expectedProjects}:null);if(projectChanged)expectedProjects=projectIds;note=next;expected=next.updatedAt;failed=false;I18n.assign(status,I18n.ui("In browser bijgewerkt · nog niet in werkmap",'In browser bijgewerkt · nog niet in werkmap'),"textContent");}
     catch(e){failed=true;status.textContent=e.message;}
    });return pending;
@@ -197,7 +203,14 @@ window.SchrijfNotities = (() => {
    finally{sourcesLoading=false;}
   });
   for(const input of Object.values(fields))input.addEventListener('input',save);
-  const done=I18n.mark(button('Sluit',async()=>{await save();if(!failed)d.close();},'notes-close'),"Sluit");
+  let finishing=false;
+  async function finish(){
+   if(finishing)return;finishing=true;done.disabled=true;
+   try{await save();if(!failed)d.close();}
+   catch(e){failed=true;status.textContent=e.message;}
+   finally{finishing=false;done.disabled=false;}
+  }
+  const done=I18n.mark(button('Sluit',finish,'notes-close'),"Sluit");
   const actions=document.createElement('div');actions.className='note-actions wp-actions';actions.append(done);
   if(new URL(location.href).searchParams.get('startroute')==='1'&&!original){
    const intro=document.createElement('p');I18n.assign(intro,I18n.ui('Schrijf een titel en een paar regels. Met de knop hieronder bewaar je de notitie in je eigen werkmap.','Schrijf een titel en een paar regels. Met de knop hieronder bewaar je de notitie in je eigen werkmap.'),'textContent');d.querySelector('h2').after(intro);
@@ -235,7 +248,7 @@ window.SchrijfNotities = (() => {
    }),"Verwijder");remove.classList.add('action-delete');actions.prepend(remove);
   }
   d.append(actions);
-  d.addEventListener('cancel',async e=>{e.preventDefault();await pending;if(!failed)d.close();});
+  d.addEventListener('cancel',e=>{e.preventDefault();finish();});
   document.dispatchEvent(new CustomEvent('werkplaats-note-editor',{detail:{dialog:d,note,fields,save}}));
   d.showModal();fields.title.focus();
  }
