@@ -23,8 +23,17 @@ const server=http.createServer((req,res)=>{
   assert.equal(await home.getByRole('button',{name:'Bekijk voorbeelden',exact:true}).count(),0);
   assert.equal(await home.getByText('Begin in drie stappen',{exact:true}).count(),1);
   assert(!/Proeftuin/.test(await home.locator('body').innerText()));
+  assert(!/Werk in uitvoering/.test(await home.locator('body').innerText()));
+  assert.equal(await home.getByText('Versie 0.36.1',{exact:true}).count(),1);
   assert.equal(await home.evaluate(()=>GereedschapskistKeuze.mode),'eigen');
   await home.screenshot({path:'/private/tmp/werkplaats-home-actueel.png',fullPage:true});
+  const about=await context.newPage();await about.goto(base+'/Over.html');
+  await about.getByRole('heading',{name:'Maak er jouw Werkplaats van',exact:true}).waitFor();
+  const aboutText=await about.locator('body').innerText();
+  assert(/Met hulp van AI/.test(aboutText));
+  assert(/functies en complete tools toevoegen, aanpassen of verwijderen/.test(aboutText));
+  assert(/open source/.test(aboutText));
+  await about.close();
   const routes=[['Bronnenkast','Start Bronnenkast.html'],['Werkbank','▶ Begin hier.html'],['Publicatieplanner','Start Publicatieplanner.html'],['Projectbord','Start Projectbord.html'],['Contacten','Start Contacten.html'],['Ping','Start Ping.html'],['Abonnementen','Start Abonnementen.html'],['Kasboek','Start Kasboek.html'],['Offerte','Start Offerte.html'],['Uren','Start Uren.html']];
   for(const [tool,file] of routes){
    const p=await context.newPage();await p.goto(base+'/Apps/'+tool+'/'+encodeURIComponent(file));

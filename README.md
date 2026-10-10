@@ -38,6 +38,8 @@ Bestaande gebruikers: bewaar eerst je actuele werk in de oude versie. Open na de
 
 Via **Instellingen → Mijn Werkplaats** kies je je naam, accentkleur en bureaublad, welke onderdelen zichtbaar zijn, hun volgorde en je starttool. Je kunt zes meegeleverde bureaubladen gebruiken of een eigen afbeelding kiezen. Voeg daarnaast compacte snelkoppelingen en eigen projectstatussen, contactlabels en categorieën toe. Verborgen onderdelen behouden hun gegevens. De interface ondersteunt Nederlands en Engels; je eigen inhoud blijft in zijn oorspronkelijke taal.
 
+Werkplaats is een open-source vertrekpunt, geen vast pakket dat iedereen hetzelfde moet gebruiken. Veel pas je zonder code aan. Wil je verder gaan, dan kun je de gewone HTML-, CSS- en JavaScriptbestanden zelf of met hulp van AI aanpassen. Zo kun je functies en complete gereedschappen toevoegen, veranderen of verwijderen. Werk vanuit een kopie en controleer na iedere wijziging of openen, bewaren en heropenen nog goed werken. Dat is de praktische kracht van open source: je begint met iets bruikbaars en maakt het daarna echt van jezelf.
+
 [Uitleg en gebruik](https://erwinblom.github.io/werkplaats/Uitleg.html) · [Over Werkplaats](https://erwinblom.github.io/werkplaats/Over.html) · [Privacy](app/PRIVACY.md)
 
 ## Bewaren, herstel en overstappen

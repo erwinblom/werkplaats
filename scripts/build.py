@@ -9,9 +9,6 @@ source=ROOT/'app';web=ROOT/'docs';dist=ROOT/'dist'
 if web.exists():shutil.rmtree(web)
 shutil.copytree(source,web,ignore=shutil.ignore_patterns('.DS_Store'))
 homepage=web/'Begin hier.html'
-notice_style='<style>.work-notice{margin:18px 0 0;padding:14px 18px;border-left:6px solid #e32720;background:#111;color:#fff;font:16px/1.5 Arial,Helvetica,sans-serif}.work-notice strong{display:block;font-size:20px;text-transform:uppercase;letter-spacing:.4px}</style>'
-notice='<aside class="work-notice" aria-label="Werk in uitvoering"><strong>Werk in uitvoering!</strong>Aan deze site wordt nog voortdurend gesleuteld.</aside>'
-homepage.write_text(homepage.read_text().replace('</head>',notice_style+'</head>').replace('<main>','<main>'+notice,1))
 (web/'index.html').write_text(homepage.read_text());(web/'.nojekyll').touch()
 launcher='''<!doctype html>
 <html lang="nl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Werkplaats openen</title></head>

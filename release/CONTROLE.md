@@ -1,4 +1,21 @@
-# Werkplaats v0.36.0 — controle op 10 oktober 2026
+# Werkplaats v0.36.1 — controle op 10 oktober 2026
+
+Deze uitgave maakt expliciet dat Werkplaats een open-source vertrekpunt is. Gebruikers kunnen zonder code onder meer kleur, bureaublad, zichtbare gereedschappen, volgorde, snelkoppelingen, statussen, labels en categorieën kiezen. Wie verder wil gaan, kan de gewone HTML-, CSS- en JavaScriptbestanden zelf of met hulp van AI aanpassen en functies of complete gereedschappen toevoegen, veranderen of verwijderen. De eerdere publieke waarschuwing **Werk in uitvoering!** is van de startpagina verwijderd.
+
+## Controles voor 0.36.1
+
+- 206 publieke appbestanden geïmporteerd uit de gecontroleerde Master; persoonlijke werkgegevens, privésync, persoonlijke feedback en persoonlijke administratieve hulpmiddelen zijn uitgesloten.
+- 18/18 bronproeven geslaagd.
+- Publieke startpagina gecontroleerd op versie 0.36.1 en de afwezigheid van **Werk in uitvoering!**.
+- De pagina Over Werkplaats gecontroleerd op de uitleg over personaliseren zonder code, aanpassen met code en AI, en het toevoegen, veranderen of verwijderen van functies en gereedschappen.
+- Website en download opnieuw uit dezelfde Master gebouwd; manifest, lokale HTML-links, JavaScript-syntax, privacyuitsluitingen en ieder bestand in de ZIP gecontroleerd.
+- Bewaren, teruglezen, herladen en heropenen vanuit een afzonderlijke testwerkmap opnieuw beproefd. De uitgepakte ZIP is ook zonder netwerk geopend.
+
+## Grenzen van deze ronde
+
+De native macOS-mapkiezer en herstel vanuit een volledig nieuw browserprofiel zijn niet opnieuw beproefd. Niet iedere handeling in alle gereedschappen is opnieuw doorlopen. Persoonlijke gegevens zijn niet gebruikt of opgenomen.
+
+## Voorafgaande uitgave v0.36.0 — controle op 10 oktober 2026
 
 Deze uitgave maakt Werkplaats persoonlijker zonder de lokale opslag of gereedschappen te veranderen. Onder **Instellingen → Mijn Werkplaats** staan naam, accentkleur en bureaublad nu bovenaan. Er zijn zes meegeleverde bureaubladen en een eigen lokale afbeelding; de beschrijving volgt de gekozen accentkleur. Snelkoppelingen op Home zijn compact en rustig vormgegeven. Eigen projectstatussen, contactlabels en categorieën worden aan de vaste keuzelijsten toegevoegd.
 
