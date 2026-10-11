@@ -1,3 +1,10 @@
+@font-face {
+  font-family: "Paper Mono";
+  src: url("fonts/paper-mono/PaperMono.woff2") format("woff2");
+  font-weight: 100 800;
+  font-style: normal;
+  font-display: swap;
+}
 /* Blom-OS: exacte foundations uit het aangeleverde GraphicalUI-thema. */
 :root {
   --theme-name: Blom-OS;
@@ -88,7 +95,8 @@
   --weight-ui-regular: 400;
   --weight-ui-medium: 500;
   --weight-ui-heavy: 600;
-  --font-brand: Arial, Helvetica, sans-serif;
+  --font-brand: "Paper Mono", "Courier New", monospace;
+  --font-label: "Paper Mono", "Courier New", monospace;
   --weight-brand-regular: 400;
   --weight-brand-medium: 500;
   --weight-brand-heavy: 600;
@@ -248,7 +256,8 @@ html[data-theme="dark"] {
   --weight-ui-regular: 400;
   --weight-ui-medium: 500;
   --weight-ui-heavy: 600;
-  --font-brand: Arial, Helvetica, sans-serif;
+  --font-brand: "Paper Mono", "Courier New", monospace;
+  --font-label: "Paper Mono", "Courier New", monospace;
   --weight-brand-regular: 400;
   --weight-brand-medium: 500;
   --weight-brand-heavy: 600;

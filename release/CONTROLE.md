@@ -1,3 +1,14 @@
+# Werkplaats v0.36.3 — controle op 11 oktober 2026
+
+Paper Mono voor interfacekoppen en korte labels; Arial voor leestekst en invoer. Font lokaal meegeleverd met SIL OFL 1.1.
+
+- 20/20 brontests; 209 publieke Master-bestanden geïmporteerd en gecontroleerd.
+- Tien lokale toolpagina’s gecontroleerd inclusief naamtekst linksboven; Home, Schrijven en Boekhouden bij 390px zonder horizontale overflow.
+- Onafhankelijke controle verwerkt: documentinhoud, tabellen en factuur/offertepapier behouden Arial.
+- Publieke import, HTML-links, JavaScript, privacyuitsluitingen en ZIP-inhoud tegen Master gecontroleerd.
+- Geen opslaggedrag aangepast; persoonlijke gegevens uitgesloten.
+- Live-controle en publicatiestatus: Chief CH-058.
+
 # Werkplaats v0.36.2 — controle op 11 oktober 2026
 
 Nieuwste schone Master met Kopieer in Schrijven, direct zichtbare omzetting naar Tekst en korte afbeeldingsverwijzingen in de Markdown-editor.

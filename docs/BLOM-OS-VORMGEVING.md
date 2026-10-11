@@ -219,3 +219,6 @@ Het bureaublad is de buitenste laag achter de Werkplaats. De witte werkvlakken, 
 Een eigen afbeelding wordt volledig lokaal voorbereid, verkleind tot maximaal 1920 × 1080 en als compacte WebP-versie bewaard. Onveilige bestandssoorten en te grote resultaten worden geweigerd. Het origineel wordt niet opgenomen. Op mobiel verdwijnt het decoratieve bureaublad en blijft een witte basis over.
 
 Acceptatie: keuze en eigen afbeelding moeten na toepassen en herladen behouden blijven; oude voorkeuren moeten zonder migratiestap `Erwin Grafisch` krijgen; zonder geldige eigen afbeelding valt `Eigen afbeelding` veilig terug op de standaard. De bureaubladlaag mag geen horizontale pagina-overloop of consolefouten veroorzaken.
+
+## Paper Mono — 11 oktober 2026
+Paper Mono is de letter voor interfacekoppen, merknaam en korte labels. Arial blijft de letter voor leestekst, documentinhoud, invoervelden en tabellen met gegevens. Documentkoppen binnen de lees- en bewerkruimte blijven Arial; druk- en PDF-opmaak blijven ongewijzigd. Lokale variable WOFF2, SIL OFL 1.1 met copyright en licentie in fonts/paper-mono. De bestaande maten en kleuren blijven behouden.
