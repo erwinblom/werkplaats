@@ -1,3 +1,18 @@
+# Werkplaats v0.36.5 — controle op 11 oktober 2026
+
+- App is de enige ontwikkelbron; 211 bestanden geïmporteerd uit de gecontroleerde Master.
+- 22/22 brontestbestanden geslaagd. Publieke HTML-links, JavaScript, privacyuitsluitingen en ZIP gecontroleerd.
+- Nieuw beginnen opent de eerste notitie. Bewaar in mijn werkmap controleert titel en tekst door de schijfversie terug te lezen.
+- Native Chrome: tijdelijke werkmap aangemaakt, notitie opgeslagen, browser gesloten en werkmap opnieuw geopend; titel en tekst identiek.
+- Lokale Master in browser: gewone notitie met bewaarknop, zonder persoonlijke Sync. Beide video’s geladen en afgespeeld; elk 60 seconden.
+- Uitlegvideo op Home; personaliseren bij Mijn Werkplaats; beide ook bereikbaar via README.
+- Ververs en titelherkenning na YAML-metadata inbegrepen.
+- Geen persoonlijke bestanden of syncscript in Master, website of ZIP.
+
+Geen volledige nieuwe acceptatieronde voor alle negen tools. Onafhankelijke bronback-up niet geverifieerd: bestaande losse bronwijzigingen blokkeren het snapshot-script. Publicatiecontrole wordt na deploy vastgelegd bij de bron.
+
+## Historische controle van v0.36.4
+
 # Werkplaats v0.36.4 — controle op 11 oktober 2026
 
 Stevigere Paper Mono-hoofdkoppen (700), actieve tabs en filters met onderstreping en vet label, lege overzichten met klein blokmotief, korte zin en één startknop. Arial blijft voor leestekst en invoer.

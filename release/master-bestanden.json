@@ -1,5 +1,5 @@
 {
-  "date": "2026-10-11T17:58:32.611625+00:00",
+  "date": "2026-10-11T18:03:39.096172+00:00",
   "source": "App",
   "feature": "Blom-OS met vertrouwde Werkplaats-uitstraling",
   "exclusions": [
@@ -97,7 +97,7 @@
     "Apps/Werkbank/Werkbank/Mijn notities/02 - Ideeen en invallen.md": "b0d472282a1fe70ef04a1f8bed362d1a83cee1d5de3e585806252e2b85a5164a",
     "Apps/Werkbank/▶ Begin hier.html": "88d63e4604f9f8f5777f32d262d554b397b1b542fa328500fc7307d8d5b76641",
     "BLOM-OS-VORMGEVING.md": "b9d664a1da3ed942abacaf28e60d69fa285e76147fa8c30497193ab7654bff79",
-    "Begin hier.html": "9239ccc4457d6968b362f6732773330afa8328daa05b6038dc461c42235a5489",
+    "Begin hier.html": "52c65e39092dad69621583f660c65c04fa716c06938bf7cdb914b00060e31f32",
     "Downloads/Link-Bewaren-lokaal/LEESMIJ.md": "74b3f5b8f98feec0f0b85a7b3a1e2d2de916225f0d93b7bb25ebc301a8a5b969",
     "Downloads/Link-Bewaren-lokaal/LICENSE": "fd64b6d5e44d43612c7669602cb46041e65df520c3ac657daae35bd40f70210d",
     "Downloads/Link-Bewaren-lokaal/bridge.js": "a75f10c68f42117e1b28be73c3e3d2b332d783372bba4461a6af6a50cf58226b",
@@ -116,7 +116,7 @@
     "LEESMIJ.txt": "1ec2e76a1213861a160789d247e61483911acd47a1065121edfd5a987fc72cb4",
     "LICENSE": "fd64b6d5e44d43612c7669602cb46041e65df520c3ac657daae35bd40f70210d",
     "Link-bewaren.html": "a86a16a498edec420e4a5c97165e55b2fdb6c9705c39b8d4c477da1b1feab404",
-    "Over.html": "6c9aa33c039ef131fc3ff3aa8edc2e124d4f349627ec8763b67853768c91fb54",
+    "Over.html": "0b3801866536fb6a94c452ef053fb394d1a744967174d9f53924b92c7d697be2",
     "PRIVACY.md": "99760bcf6a0540fb080f5c9066927405bf6dfdea9948bbcf6155f95cf261090d",
     "Sjablonen/Werkplaats-boekhouding.xlsx": "8f3856b06aeab47a05ea1dc4ef2657e09b53a0e15b562be06ff99b287647cac5",
     "Symbolen/ONTWERP.md": "3c943513c59b282902c2e5206f7ef15301ecca18a63fc37b187ceaa8ceb5fcc2",
@@ -206,7 +206,7 @@
     "startinhoud.js": "3329d84e97108a1055b46e8f2e632a41e5fba8bacfaa33efb26a39b382c72b9e",
     "startwerkmap.js": "b5b220aa4d972a561c5a935d5e5f61b638e82a18c6e33269fab4ea82565b6aee",
     "suite-unified.css": "cdf5155f7247b5e91047a75f4da54d838086a269b391aa4638b9987c9a2ad43a",
-    "taal-woordenboek.js": "7d721829d8725d0ecf617a2634cd2488611d34296f9a5ff412c7232be9645d12",
+    "taal-woordenboek.js": "d01586410bc01d32a6dee1ac6cade2fca4a2fd39db55ebcc64cc10863ff176cc",
     "taal.js": "dd0cd483fe419540ebf974b184e65f77b139977689be33215cc38f2d1f9f9d80",
     "tool-gedeeld.css": "682b7ed643e70db18f8a80630dfa0fbc20884cb37cc534fa187edf14b78f8f1d",
     "uiterlijk.css": "a1735f3eab95ea0554db59f7b3505e531eb0e3bcb869e10c230dcb721afc5571",
