@@ -176,7 +176,7 @@ window.Werkmap=(()=>{
  window.WerkplaatsPersonalisatieReady=allReady.then(()=>new Promise((resolve,reject)=>{const s=document.createElement('script');s.src=new URL('personalisatie.js?v=20261010-personalisatie-6',werkmapScriptURL).href;s.onload=()=>resolve(window.WerkplaatsPersonalisatie);s.onerror=()=>reject(Error(I18n.value(I18n.ui("Personalisatie kon niet laden.",'Personalisatie kon niet laden.'))));document.head.append(s);}));
  window.MijnGereedschappenReady=WerkplaatsPersonalisatieReady.then(()=>new Promise((resolve,reject)=>{const s=document.createElement('script');s.src=new URL('mijn-gereedschappen.js?v=20261010-personalisatie-6',werkmapScriptURL).href;s.onload=()=>resolve(window.MijnGereedschappen);s.onerror=()=>reject(Error(I18n.value(I18n.ui("Mijn gereedschappen kon niet laden.",'Mijn gereedschappen kon niet laden.'))));document.head.append(s);}));
  MijnGereedschappenReady.catch(()=>{});
- const ui=document.createElement('script');ui.src=new URL('werkruimte-ui.js?v=20261009-doen-2',werkmapScriptURL).href;document.head.append(ui);
+ const ui=document.createElement('script');ui.src=new URL('werkruimte-ui.js?v=20261011-empty-start-1',werkmapScriptURL).href;document.head.append(ui);
  function requestReadAccess(){
   if(!root)return Promise.reject(Error(I18n.t('Kies eerst een werkmap.')));
   return root.requestPermission({mode:'read'}).then(state=>{if(state!=='granted')throw Error(I18n.t('Geen toegang tot je werkmap.'));});

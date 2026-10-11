@@ -77,9 +77,12 @@
   font:var(--weight-ui-medium) var(--size-s)/var(--line-s) var(--font-label)!important;
   letter-spacing:var(--letter-spacing-s);padding:var(--space-xs) var(--space-s)!important;min-height:var(--wp-action-height)
  }
- body :is(#filters,#categories,.view-switch,.writing-views,.work-tabs,.ledger-nav,.ledger-type) button:is([aria-pressed=true],[aria-selected=true]) {
-  background:var(--neutral-3)!important;box-shadow:inset 0 calc(-1 * var(--border-l)) var(--cte-text)!important;font-weight:var(--weight-ui-heavy)!important
+ html body[data-tool] :is(#filters,#categories,.view-switch,.writing-views,.work-tabs,.ledger-nav,.ledger-type) button:is([aria-pressed=true],[aria-selected=true]),
+ html body[data-tool] .factureren-tabs a[aria-current=page] {
+  background:var(--neutral-3)!important;box-shadow:inset 0 calc(-1 * var(--border-l)) var(--color-1)!important;font-weight:var(--weight-selection)!important;border-bottom-width:0!important
  }
+ html body[data-tool] :is(#filters,#categories,.view-switch,.writing-views,.work-tabs,.ledger-nav,.ledger-type) button:is([aria-pressed=true],[aria-selected=true]) :is(span,strong),
+ html body[data-tool] .factureren-tabs a[aria-current=page] span {font-weight:var(--weight-selection)!important}
  body :is(#filters,#categories,.view-switch,.writing-views,.work-tabs,.ledger-nav,.ledger-type) button:hover:not(:disabled) {background:var(--neutral-3)!important}
  body :is(.writing-views,.work-tabs,.ledger-nav,.factureren-tabs) {border:0!important;box-shadow:inset 0 calc(-1 * var(--border-s)) var(--neutral-7)}
  /* Compact format controls use fixed icon boxes, not text-action padding. */
@@ -116,9 +119,6 @@
  body.compact-tools :is(.invoice-btn,.quote-button) {border:0!important;box-shadow:inset 0 calc(-1 * var(--border-s)) var(--neutral-7)!important}
  body.compact-tools :is(.invoice-btn.active,.quote-button.selected) {background:var(--neutral-3)!important;box-shadow:inset 0 calc(-1 * var(--border-s)) var(--neutral-7),inset var(--space-xxs) 0 var(--cte-text)!important}
 
-}
-@media screen and (min-width:769px) {
- body[data-tool=Contacten] #filters button[aria-pressed=true] {box-shadow:inset var(--space-xxs) 0 var(--cte-text)!important}
 }
 @media screen and (max-width:768px) {
  /* In Notities is de bestandslade verborgen; haar overlay hoort daar niet overheen. */
@@ -178,7 +178,7 @@
 
 /* Gedeelde werkrollen: Schrijven, Verzamelen en Doen gebruiken dezelfde schaal. */
 @media screen {
- body[data-tool] :is(.heading,.notes-heading) h1 {font-family:var(--font-brand);font-weight:var(--weight-brand-heavy);font-size:var(--size-xl)!important;line-height:var(--line-xl)!important;letter-spacing:var(--letter-spacing-xl);color:var(--cte-text)}
+ body[data-tool] :is(.heading,.notes-heading) h1 {font-family:var(--font-brand);font-weight:var(--weight-tool-heading);font-size:var(--size-xl)!important;line-height:var(--line-xl)!important;letter-spacing:var(--letter-spacing-xl);color:var(--cte-text)}
  body[data-tool] :is(.source-open strong,.task-title,.note-card h2) {font-family:var(--font-ui);font-weight:var(--weight-ui-heavy);font-size:var(--size-s);line-height:var(--line-s);letter-spacing:var(--letter-spacing-s);color:var(--cte-text)}
  body[data-tool=Bronnenkast] .source-open strong {height:calc(3 * var(--line-s))}
  body[data-tool] .note-card h2 {margin:var(--space-s) 0 var(--space-xs);max-height:calc(2 * var(--line-s))}
@@ -297,7 +297,7 @@
   font-family:var(--font-brand)!important;font-weight:var(--weight-brand-heavy)!important;font-size:var(--size-l)!important;line-height:var(--line-l)!important;letter-spacing:var(--letter-spacing-l)!important;
  }
  html body[data-tool] [data-wp-type="page-title"],html body[data-tool] [data-wp-type="page-title"] * {
-  font-family:var(--font-brand)!important;font-weight:var(--weight-brand-heavy)!important;font-size:var(--size-xl)!important;line-height:var(--line-xl)!important;letter-spacing:var(--letter-spacing-xl)!important;
+  font-family:var(--font-brand)!important;font-weight:var(--weight-tool-heading)!important;font-size:var(--size-xl)!important;line-height:var(--line-xl)!important;letter-spacing:var(--letter-spacing-xl)!important;
  }
  html body[data-tool] [data-wp-type="control"],html body[data-tool] [data-wp-type="control"] :is(span,option) {
   font-family:var(--font-ui)!important;font-weight:var(--weight-ui-heavy)!important;font-size:var(--size-s)!important;line-height:var(--line-s)!important;letter-spacing:var(--letter-spacing-s)!important;
@@ -464,4 +464,18 @@ html body .all-search-heading h2 .tool-symbol{display:inline-block;vertical-alig
  html body :is(button,summary,.record-detail-close,.wp-detail-close),html body[data-tool] [data-wp-type=control]:not(input):not(textarea):not(select),html body[data-tool] button[data-wp-type=control]>span {font-family:var(--font-label)!important}
  html body :is(.markdown-content,.wysiwyg-editor,.note-full-text,.note-excerpt,.invoice-preview,.invoice-paper,.paper,#paper,#preview) :is(h1,h2,h3,h4,h5,h6,th,label) {font-family:var(--font-editorial)!important}
  html body :is(input,textarea,select,[contenteditable=true]) {font-family:var(--font-ui)!important}
+}
+
+/* Eén uitnodiging bij een werkelijk leeg overzicht; filters houden hun eigen melding. */
+@media screen {
+ html body[data-tool] .startinhoud {padding:var(--space-l) 0;grid-column:1/-1;color:var(--cte-text);max-width:100%}
+ html body[data-tool] .startinhoud-motif {display:block;width:var(--space-xl);height:var(--space-xl);margin-bottom:var(--space-s)}
+ html body[data-tool] .startinhoud button.primary {background:var(--neutral-10)!important;color:var(--neutral-1)!important;box-shadow:var(--blom-control-edge)!important}
+ html body[data-tool] .startinhoud-accent {fill:var(--color-1)}
+ html body[data-tool] .startinhoud p {font-family:var(--font-editorial);font-size:var(--size-m);line-height:var(--line-m);margin:0 0 var(--space-m)}
+ html body[data-tool]:has(main .startinhoud) #new,
+ html body[data-tool]:has(main .startinhoud) #invoice-new-menu,
+ html body[data-tool] .notes-board:has(.startinhoud) #note-new,
+ html body[data-tool] .notes-board:has(.startinhoud) .notes-heading>div>p,
+ html body[data-tool] .notes-board:has(.startinhoud) .notes-save-hint:not([role]) {display:none!important}
 }

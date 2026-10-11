@@ -100,6 +100,8 @@
   --weight-brand-regular: 400;
   --weight-brand-medium: 500;
   --weight-brand-heavy: 600;
+  --weight-tool-heading: 700;
+  --weight-selection: 700;
   --font-editorial: Arial, Helvetica, sans-serif;
   --weight-editorial-regular: 400;
   --weight-editorial-medium: 500;
@@ -261,6 +263,8 @@ html[data-theme="dark"] {
   --weight-brand-regular: 400;
   --weight-brand-medium: 500;
   --weight-brand-heavy: 600;
+  --weight-tool-heading: 700;
+  --weight-selection: 700;
   --font-editorial: Arial, Helvetica, sans-serif;
   --weight-editorial-regular: 400;
   --weight-editorial-medium: 500;

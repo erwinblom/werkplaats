@@ -1,3 +1,15 @@
+# Werkplaats v0.36.4 — controle op 11 oktober 2026
+
+Stevigere Paper Mono-hoofdkoppen (700), actieve tabs en filters met onderstreping en vet label, lege overzichten met klein blokmotief, korte zin en één startknop. Arial blijft voor leestekst en invoer.
+
+- 20/20 brontests geslaagd; 209 publieke Master-bestanden gecontroleerd.
+- Toolkoppen en actieve keuzes in Chrome gecontroleerd; mobiele breedte 390px zonder horizontale overflow.
+- Tien lege overzichten gecontroleerd; startknoppen van Doen, Notities, Offerte en Ping openen de bestaande aanmaakroute. Doen houdt lege kolommen rustig.
+- Nederlands/Engels in de bron gecontroleerd; geen volledige Engelse browserronde.
+- Publieke import, HTML-links, JavaScript, privacyuitsluitingen en ZIP-inhoud gelijk aan Master gecontroleerd.
+- Opslagstructuur blijft gelijk; persoonlijke gegevens uitgesloten.
+- Publicatie en live/download-controle: Chief CH-062.
+
 # Werkplaats v0.36.3 — controle op 11 oktober 2026
 
 Paper Mono voor interfacekoppen en korte labels; Arial voor leestekst en invoer. Font lokaal meegeleverd met SIL OFL 1.1.

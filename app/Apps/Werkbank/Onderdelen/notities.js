@@ -33,7 +33,7 @@ window.SchrijfNotities = (() => {
    const saveHint=board.querySelector('.notes-save-hint');
    saveHint.hidden=notes.length>0&&!saveHint.hasAttribute('role')&&new URL(location.href).searchParams.get('startroute')!=='1';
    const grid=board.querySelector('.notes-grid');grid.replaceChildren();
-   if(!notes.length){const empty=document.createElement('p');empty.className='notes-empty';I18n.assign(empty,I18n.ui("Nog geen notities. Begin met een idee dat je niet wilt vergeten.",'Nog geen notities. Begin met een idee dat je niet wilt vergeten.'),"textContent");grid.append(empty);return;}
+   if(!notes.length){grid.innerHTML=Startinhoud('Notities');return;}
    const normalize=value=>String(value||'').toLocaleLowerCase('nl').replace(/\s+/g,' ').trim();
    const query=normalize(document.getElementById('suite-search')?.value),namesOnly=document.getElementById('writing-search-scope')?.value==='names';
    const visible=notes.filter(note=>{

@@ -222,3 +222,12 @@ Acceptatie: keuze en eigen afbeelding moeten na toepassen en herladen behouden b
 
 ## Paper Mono — 11 oktober 2026
 Paper Mono is de letter voor interfacekoppen, merknaam en korte labels. Arial blijft de letter voor leestekst, documentinhoud, invoervelden en tabellen met gegevens. Documentkoppen binnen de lees- en bewerkruimte blijven Arial; druk- en PDF-opmaak blijven ongewijzigd. Lokale variable WOFF2, SIL OFL 1.1 met copyright en licentie in fonts/paper-mono. De bestaande maten en kleuren blijven behouden.
+
+### Stevigere toolhoofdkoppen — 11 oktober 2026
+De hoofdkop van ieder tooloverzicht gebruikt Paper Mono 700 via de gedeelde rol `--weight-tool-heading`. Bestaande desktop- en mobiele maten blijven gelijk. Merkvlakken, labels, documentkoppen en Arial-leestekst behouden hun eigen rollen.
+
+### Actieve keuzes — 11 oktober 2026
+Geselecteerde tabs en overzichtfilters gebruiken de gedeelde accentkleur (standaard rood) als onderstreping plus Paper Mono 700. Dit geldt ook voor Facturen/Offertes/Uren en voor geneste labels. De zachte selectieachtergrond blijft behouden. Kleurpersonalisatie en toetsenbordfocus blijven intact; documentopmaakknoppen en itemselectie behouden hun eigen rollen.
+
+### Lege startoverzichten — 11 oktober 2026
+Een werkelijk leeg tooloverzicht toont een klein decoratief Werkplaats-blokmotief, één korte zin en één contrasterende startknop. De bestaande Nieuw-actie blijft als handler behouden en is bij deze startweergave visueel verborgen. Doen toont geen herhaalde uitleg in zijn vijf lege kolommen. Bij bestaande inhoud of een filter zonder resultaten blijft de gewone bediening en gerichte melding bestaan. De gedeelde startweergave geldt ook voor Notities en Abonnementen; Nederlandse en Engelse teksten zijn vastgelegd.

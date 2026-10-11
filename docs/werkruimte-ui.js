@@ -502,7 +502,7 @@
     Projectbord:['tasks','.column[data-column=todo] .empty','Voeg je eerste taak toe. Verplaats haar tijdens het werken van Te doen naar Bezig en Klaar.']};
    const refine=()=>{simplify();
 
-if(GereedschapskistMode.example){const status=$('storage'),text='Oefeninhoud. Je eigen werk en werkmap blijven apart.';if(status&&status.textContent!==I18n.t(text))I18n.assign(status,I18n.ui(text,text));}if(!GereedschapskistMode.example&&emptyHelp[tool]){const [key,selector,text]=emptyHelp[tool],content=Werkmap.allRead();if(content&&Array.isArray(content[key])&&!content[key].length){const el=document.querySelector(selector);if(el&&el.textContent!==I18n.t(text))I18n.assign(el,I18n.ui(text,text));}}};
+if(GereedschapskistMode.example){const status=$('storage'),text='Oefeninhoud. Je eigen werk en werkmap blijven apart.';if(status&&status.textContent!==I18n.t(text))I18n.assign(status,I18n.ui(text,text));}if(!GereedschapskistMode.example&&emptyHelp[tool]){const [key,selector,text]=emptyHelp[tool],content=Werkmap.allRead();if(content&&Array.isArray(content[key])&&!content[key].length){const el=document.querySelector(selector);if(el&&!el.classList.contains('startinhoud')&&el.textContent!==I18n.t(text))I18n.assign(el,I18n.ui(text,text));}}};
    refine();new MutationObserver(refine).observe(document.body,{childList:true,subtree:true});
    // Keep a current browser snapshot when following an internal link; no extra disk write.
 
