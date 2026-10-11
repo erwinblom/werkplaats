@@ -89,6 +89,10 @@ window.MijnGereedschappen=(()=>{
   workspaceIntro.after(appearanceHeading,appearanceIntro,appearanceFormInSettings);appearanceSection.remove();
   const layoutHeading=document.createElement('h4');I18n.assign(layoutHeading,I18n.ui('Indeling','Indeling'),'textContent');businessChoice.before(layoutHeading);
   const personalization=document.createElement('div');personalization.id='settings-personalization';workspaceSection.append(personalization);
+  const videoHelp=document.createElement('details');videoHelp.className='instruction-video';
+  const videoTitle=document.createElement('summary');I18n.assign(videoTitle,I18n.ui('Maak hem van jou · 1 minuut','Maak hem van jou · 1 minuut'),'textContent');
+  const video=document.createElement('video');video.controls=true;video.preload='none';video.src=new URL('Video/Werkplaats-personaliseren.mp4',base).href;d.addEventListener('close',()=>video.pause());workspaceSection.addEventListener('toggle',()=>{if(!workspaceSection.open)video.pause();});videoHelp.append(videoTitle,video);videoHelp.addEventListener('toggle',()=>{if(!videoHelp.open)video.pause();});workspaceIntro.after(videoHelp);
+
   document.body.append(d);parent?.append(I18n.mark(button('Instellingen',settings),"Instellingen"));d.querySelector('.my-tools-actions').append(I18n.mark(button('Sluit',()=>d.close()),"Sluit"));window.WerkplaatsPersonalisatie?.mountSettings(d);
   const languageSelect=d.querySelector('#settings-language');languageSelect.value=I18n.language;languageSelect.onchange=async()=>{languageSelect.disabled=true;try{await setLanguage(languageSelect.value);I18n.assign(d.querySelector('#settings-language-status'),I18n.ui('Taal toegepast. Gebruik Bewaar alles voor je werkmap.','Taal toegepast. Gebruik Bewaar alles voor je werkmap.'));}catch(error){languageSelect.value=I18n.language;d.querySelector('#settings-language-status').textContent=error.message;}finally{languageSelect.disabled=false;}};
   const profile=d.querySelector('form'),status=d.querySelector('#settings-profile-status'),check=d.querySelector('#settings-business');

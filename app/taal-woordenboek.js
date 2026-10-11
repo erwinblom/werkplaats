@@ -1,4 +1,8 @@
 window.WerkplaatsVertalingen={
+  "Ververs": "Refresh",
+  "Documentenlijst opnieuw uit de map lezen": "Reload the document list from the folder",
+  "Bewaar eerst je wijzigingen en klik daarna op Ververs.": "Save your changes first, then click Refresh.",
+  "Verversen mislukt. Controleer de maptoegang en probeer opnieuw.": "Refresh failed. Check folder access and try again.",
   "Kopieer tekst met opmaak om elders te plakken": "Copy formatted text to paste elsewhere",
   "Gekopieerd met opmaak. Plak met ⌘V / Ctrl+V.": "Copied with formatting. Paste with ⌘V / Ctrl+V.",
   "Tekst gekopieerd met opmaak. Voeg lokale afbeeldingen apart toe.": "Text copied with formatting. Add local images separately.",
@@ -3303,4 +3307,21 @@ window.WerkplaatsVertalingen={
   "Krijg grip op wat iedere maand terugkomt.": "Get a grip on recurring costs.",
   "Geef een idee dat je wilt onthouden een plek.": "Give an idea you want to remember a place.",
   "Maak een notitie": "Create a note"
+,
+"Waar wil je je werk bewaren?": "Where do you want to save your work?",
+"We maken hier de map Mijn Werkplaats voor je bestanden.": "We create the Mijn Werkplaats folder here for your files.",
+"Deze plek kan niet worden geopend. Kies een andere plek of maak zelf een lege map.": "This location cannot be opened. Choose another location or create an empty folder yourself.",
+"Open Werkplaats in Chrome of Edge op je computer om je werkmap te kiezen.": "Open Werkplaats in Chrome or Edge on your computer to choose your workspace folder.",
+"Kies een plek voor je bestanden.": "Choose a location for your files.",
+"Stap 1 van 3 · Kies een opslagplek": "Step 1 of 3 \u00b7 Choose a save location",
+"Klik op Nieuw beginnen. Daarna maak je je eerste notitie.": "Click Start new. Next, create your first note.",
+"Bekijk wat je kunt doen · 1 minuut": "See what you can do \u00b7 1 minute",
+"Je bestanden blijven op je computer.": "Your files stay on your computer.",
+"Je eigen plek voor ideeën, teksten en projecten. Zonder account.": "Your own place for ideas, texts and projects. No account needed.",
+"Stap 2 van 3 · Geef je notitie een titel en schrijf een paar regels.": "Step 2 of 3 \u00b7 Give your note a title and write a few lines.",
+"Bewaard in je werkmap": "Saved in your workspace folder",
+"Nog niet bewaard in je werkmap": "Not yet saved in your workspace folder",
+"Bewaar in mijn werkmap slaat je notitie op.": "Save to my workspace folder saves your note.",
+"Maak hem van jou · 1 minuut": "Make it yours \u00b7 1 minute",
+"Bronnen{0}": "Sources{0}"
 };

@@ -424,7 +424,7 @@
         }
 
         async function refreshFolders() {
-            if(wysiwygDirty && !confirm(I18n.value(I18n.ui("Je hebt niet-opgeslagen wijzigingen. Weggooien en vernieuwen?",'Je hebt niet-opgeslagen wijzigingen. Weggooien en vernieuwen?')))) return;
+            if(wysiwygDirty){showNotification(I18n.value(I18n.ui("Bewaar eerst je wijzigingen en klik daarna op Ververs.",'Bewaar eerst je wijzigingen en klik daarna op Ververs.')),'error');return;}
             if (directoryHandles.length === 0) return;
 
             const refreshBtn = document.getElementById('refreshBtn');
@@ -467,6 +467,7 @@
                 }
             } catch (err) {
                 console.error('Error refreshing folders:', err);
+                showNotification(I18n.value(I18n.ui("Verversen mislukt. Controleer de maptoegang en probeer opnieuw.",'Verversen mislukt. Controleer de maptoegang en probeer opnieuw.')),'error');
             } finally {
                 refreshBtn.classList.remove('spinning');
                 refreshBtn.disabled = directoryHandles.length === 0;
@@ -719,7 +720,9 @@
 
 
         function documentListTitle(file) {
-            const content = fileContents.get(file.relativePath) || '';
+            const raw = fileContents.get(file.relativePath) || '';
+            // Metadata is not a Setext heading: use the first heading in the body.
+            const content = raw.replace(/^\uFEFF?---[ \t]*\r?\n[\s\S]*?\r?\n(?:---|\.\.\.)[ \t]*(?:\r?\n|$)/, '');
             let fence = '', previous = '';
             for (const line of content.split(/\r?\n/)) {
                 const marker = line.match(/^\s{0,3}(`{3,}|~{3,})/);

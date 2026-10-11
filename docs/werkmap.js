@@ -60,20 +60,20 @@ window.Werkmap=(()=>{
 
  function chooseNewLocation(){return new Promise((resolve,reject)=>{
   const dialog=document.createElement('dialog');dialog.className='wm-dialog';dialog.setAttribute('aria-labelledby','new-location-title');
-  const title=document.createElement('h2');title.id='new-location-title';I18n.assign(title,I18n.ui("Waar mag je Werkplaats komen?",'Waar mag je Werkplaats komen?'),"textContent");
-  const text=document.createElement('p');I18n.assign(text,I18n.ui("Kies een opslagplek. Wij maken daarin Mijn Werkplaats met negen submappen. Sommige plekken, zoals de hele map Documenten, kunnen door je browser worden geweigerd.",'Kies een opslagplek. Wij maken daarin Mijn Werkplaats met negen submappen. Sommige plekken, zoals de hele map Documenten, kunnen door je browser worden geweigerd.'),"textContent");
-  const hint=document.createElement('p');I18n.assign(hint,I18n.ui("Gebruik Chrome of Edge op je computer. Wordt alleen de gekozen opslagplek geweigerd? Gebruik dan de handmatige optie voor een lege hoofdmap.",'Gebruik Chrome of Edge op je computer. Wordt alleen de gekozen opslagplek geweigerd? Gebruik dan de handmatige optie voor een lege hoofdmap.'),"textContent");
+  const title=document.createElement('h2');title.id='new-location-title';I18n.assign(title,I18n.ui("Waar wil je je werk bewaren?",'Waar wil je je werk bewaren?'),"textContent");
+  const text=document.createElement('p');I18n.assign(text,I18n.ui("We maken hier de map Mijn Werkplaats voor je bestanden.",'We maken hier de map Mijn Werkplaats voor je bestanden.'),"textContent");
+  const hint=document.createElement('p');I18n.assign(hint,I18n.ui("Gebruik Chrome of Edge op je computer.",'Gebruik Chrome of Edge op je computer.'),"textContent");
   const cancel=document.createElement('button');I18n.assign(cancel,I18n.ui("Annuleer",'Annuleer'),"textContent");cancel.onclick=()=>dialog.close();
   const pick=document.createElement('button');I18n.assign(pick,I18n.ui("Kies opslagplek",'Kies opslagplek'),"textContent");pick.className='primary action-primary';
-  const manual=document.createElement('button');I18n.assign(manual,I18n.ui("Zelf een lege hoofdmap kiezen",'Zelf een lege hoofdmap kiezen'),"textContent");let picked=false;
-  const select=async(direct)=>{pick.disabled=manual.disabled=true;try{const handle=await showDirectoryPicker({id:'gereedschapskist-plek',mode:'readwrite'});picked=true;dialog.close();resolve({handle,direct});}catch(e){picked=true;dialog.close();reject(e);}};
-  pick.onclick=()=>select(false);
+  const manual=document.createElement('button');manual.hidden=true;I18n.assign(manual,I18n.ui("Zelf een lege hoofdmap kiezen",'Zelf een lege hoofdmap kiezen'),"textContent");let picked=false;
+  const select=async(direct)=>{pick.disabled=manual.disabled=true;try{const handle=await showDirectoryPicker({id:'gereedschapskist-plek',mode:'readwrite'});picked=true;dialog.close();resolve({handle,direct});}catch(e){if(e.name==='AbortError'){pick.disabled=manual.disabled=false;return;}if(e.name==='NotAllowedError'||e.name==='SecurityError'){manual.hidden=false;hint.textContent=I18n.t('Deze plek kan niet worden geopend. Kies een andere plek of maak zelf een lege map.');pick.disabled=manual.disabled=false;return;}picked=true;dialog.close();reject(e);}};
+  pick.onclick=()=>select(false);if(!window.showDirectoryPicker){pick.disabled=true;hint.textContent=I18n.t('Open Werkplaats in Chrome of Edge op je computer om je werkmap te kiezen.');}
   manual.onclick=()=>{I18n.assign(text,I18n.ui("Maak in het mapvenster een nieuwe map, bijvoorbeeld Mijn Werkplaats. Selecteer die lege map en bevestig met Selecteer of Open. Er komt geen extra hoofdmap in.",'Maak in het mapvenster een nieuwe map, bijvoorbeeld Mijn Werkplaats. Selecteer die lege map en bevestig met Selecteer of Open. Er komt geen extra hoofdmap in.'),"textContent");pick.hidden=true;I18n.assign(manual,I18n.ui("Selecteer de lege hoofdmap",'Selecteer de lege hoofdmap'),"textContent");manual.onclick=()=>select(true);};
   dialog.onclose=()=>{dialog.remove();if(!picked)reject(Object.assign(new Error(I18n.value(I18n.ui("Geannuleerd",'Geannuleerd'))),{name:'UserCancelledError'}));};dialog.append(title,text,hint,cancel,pick,manual);document.body.append(dialog);dialog.showModal();
  });}
  async function startNew(){
   if(busy||starting)return false;starting=true;let stage='map kiezen';
-  message(I18n.value(I18n.ui("Kies een opslagplek. Wij maken de hoofdmap en negen submappen.",'Kies een opslagplek. Wij maken de hoofdmap en negen submappen.')));
+  message(I18n.value(I18n.ui("Kies een plek voor je bestanden.",'Kies een plek voor je bestanden.')));
   try{
    const selection=await chooseNewLocation();let handle=selection.handle;
    stage='toegang controleren';await ready;await permission(handle);await allReady;await BewaarAlles.ready;
@@ -174,9 +174,9 @@ window.Werkmap=(()=>{
  allReady.catch(()=>{});window.BewaarAllesReady=allReady;
  const taxScript=document.createElement('script');taxScript.src=new URL('belastingtarieven.js?v=20261006-tax-rates-1',werkmapScriptURL).href;document.head.append(taxScript);
  window.WerkplaatsPersonalisatieReady=allReady.then(()=>new Promise((resolve,reject)=>{const s=document.createElement('script');s.src=new URL('personalisatie.js?v=20261010-personalisatie-6',werkmapScriptURL).href;s.onload=()=>resolve(window.WerkplaatsPersonalisatie);s.onerror=()=>reject(Error(I18n.value(I18n.ui("Personalisatie kon niet laden.",'Personalisatie kon niet laden.'))));document.head.append(s);}));
- window.MijnGereedschappenReady=WerkplaatsPersonalisatieReady.then(()=>new Promise((resolve,reject)=>{const s=document.createElement('script');s.src=new URL('mijn-gereedschappen.js?v=20261010-personalisatie-6',werkmapScriptURL).href;s.onload=()=>resolve(window.MijnGereedschappen);s.onerror=()=>reject(Error(I18n.value(I18n.ui("Mijn gereedschappen kon niet laden.",'Mijn gereedschappen kon niet laden.'))));document.head.append(s);}));
+ window.MijnGereedschappenReady=WerkplaatsPersonalisatieReady.then(()=>new Promise((resolve,reject)=>{const s=document.createElement('script');s.src=new URL('mijn-gereedschappen.js?v=20261011-clear-start-1',werkmapScriptURL).href;s.onload=()=>resolve(window.MijnGereedschappen);s.onerror=()=>reject(Error(I18n.value(I18n.ui("Mijn gereedschappen kon niet laden.",'Mijn gereedschappen kon niet laden.'))));document.head.append(s);}));
  MijnGereedschappenReady.catch(()=>{});
- const ui=document.createElement('script');ui.src=new URL('werkruimte-ui.js?v=20261011-empty-start-1',werkmapScriptURL).href;document.head.append(ui);
+ const ui=document.createElement('script');ui.src=new URL('werkruimte-ui.js?v=20261011-clear-start-1',werkmapScriptURL).href;document.head.append(ui);
  function requestReadAccess(){
   if(!root)return Promise.reject(Error(I18n.t('Kies eerst een werkmap.')));
   return root.requestPermission({mode:'read'}).then(state=>{if(state!=='granted')throw Error(I18n.t('Geen toegang tot je werkmap.'));});

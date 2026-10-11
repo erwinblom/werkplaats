@@ -159,14 +159,13 @@ window.SchrijfNotities = (() => {
   const sourceDetails=document.createElement('details');sourceDetails.className='note-edit-sources';
   const sourceSummary=document.createElement('summary');
   const sourcePanel=document.createElement('div');sourcePanel.className='note-edit-source-panel';
-  function updateSourceSummary(){I18n.assign(sourceSummary,I18n.ui("Bronnen (ont)koppelen{0}",'Bronnen (ont)koppelen'+(selected.size?' · '+selected.size+' '+I18n.t('gekozen'):'')),"textContent");}
+  function updateSourceSummary(){I18n.assign(sourceSummary,I18n.ui("Bronnen{0}",'Bronnen'+(selected.size?' · '+selected.size+' '+I18n.t('gekozen'):'')),"textContent");}
   updateSourceSummary();sourceDetails.append(sourceSummary,sourcePanel);d.append(sourceDetails);
-  const status=document.createElement('p');status.setAttribute('role','status');I18n.assign(status,I18n.ui("Bewaar alles schrijft je notitie naar je werkmap.",'Bewaar alles schrijft je notitie naar je werkmap.'),"textContent");d.append(status);
+  const status=document.createElement('p');status.setAttribute('role','status');I18n.assign(status,I18n.ui("Bewaar in mijn werkmap slaat je notitie op.",'Bewaar in mijn werkmap slaat je notitie op.'),"textContent");d.append(status);
   let pending=Promise.resolve(),failed=false;
   function save(){
    const values=Object.fromEntries(Object.entries(fields).map(([key,field])=>[key,field.value]));
    const sourceIds=[...selected],projectIds=[...selectedProjects];
-   I18n.assign(status,I18n.ui("Notitie bewaren…",'Notitie bewaren…'),"textContent");
    pending=pending.then(async()=>{
     const next={...note,...values,sourceIds,updatedAt:new Date().toISOString()};
     document.dispatchEvent(new CustomEvent('werkplaats-note-before-save',{detail:{dialog:d,note:next}}));
@@ -174,8 +173,9 @@ window.SchrijfNotities = (() => {
     const textChanged=['title','body','topic','mobileSync'].some(key=>next[key]!==note[key]);
     const sourcesChanged=JSON.stringify(sourceIds)!==JSON.stringify(note.sourceIds||[]);
     // Closing an already saved editor must not rewrite an older snapshot after Sync.
-    if(original&&!textChanged&&!sourcesChanged&&!projectChanged&&!failed)return;
-    try{await write(next,expected,false,projectChanged?{ids:projectIds,expected:expectedProjects}:null);if(projectChanged)expectedProjects=projectIds;note=next;expected=next.updatedAt;failed=false;I18n.assign(status,I18n.ui("In browser bijgewerkt · nog niet in werkmap",'In browser bijgewerkt · nog niet in werkmap'),"textContent");}
+    if(note.updatedAt&&!textChanged&&!sourcesChanged&&!projectChanged&&!failed)return;
+    I18n.assign(status,I18n.ui("Notitie bewaren…",'Notitie bewaren…'),"textContent");
+    try{await write(next,expected,false,projectChanged?{ids:projectIds,expected:expectedProjects}:null);if(projectChanged)expectedProjects=projectIds;note=next;expected=next.updatedAt;failed=false;I18n.assign(status,I18n.ui("Nog niet bewaard in je werkmap",'Nog niet bewaard in je werkmap'),"textContent");}
     catch(e){failed=true;status.textContent=e.message;}
    });return pending;
   }
@@ -203,33 +203,39 @@ window.SchrijfNotities = (() => {
    finally{sourcesLoading=false;}
   });
   for(const input of Object.values(fields))input.addEventListener('input',save);
-  let finishing=false;
+  let finishing=false,diskSaving=false;
   async function finish(){
-   if(finishing)return;finishing=true;done.disabled=true;
+   if(finishing||diskSaving)return;finishing=true;done.disabled=true;
    try{await save();if(!failed)d.close();}
    catch(e){failed=true;status.textContent=e.message;}
    finally{finishing=false;done.disabled=false;}
   }
   const done=I18n.mark(button('Sluit',finish,'notes-close'),"Sluit");
   const actions=document.createElement('div');actions.className='note-actions wp-actions';actions.append(done);
-  if(new URL(location.href).searchParams.get('startroute')==='1'&&!original){
-   const intro=document.createElement('p');I18n.assign(intro,I18n.ui('Schrijf een titel en een paar regels. Met de knop hieronder bewaar je de notitie in je eigen werkmap.','Schrijf een titel en een paar regels. Met de knop hieronder bewaar je de notitie in je eigen werkmap.'),'textContent');d.querySelector('h2').after(intro);
-   const disk=button('',async()=>{
-    if(!fields.title.value.trim()||!fields.body.value.trim()){I18n.assign(status,I18n.ui('Vul een titel en een paar regels tekst in.','Vul een titel en een paar regels tekst in.'),'textContent');return;}
-    disk.disabled=true;
-    try{
-     await save();if(failed)throw Error(status.textContent);
-     const expectedNote={...note};
-     await BewaarAlles.save();
-     const {root}=await Werkmap.allAccess();const round=await BewaarAlles.readRound(root);
-     const stored=round?.shared?.writingNotes?.find(item=>item.id===expectedNote.id);
-     if(!stored||stored.title!==expectedNote.title||stored.body!==expectedNote.body)throw Error(I18n.t('Bewaren kon niet worden bevestigd. Probeer opnieuw.'));
-     d.close();await render();
-     const hint=board.querySelector('.notes-save-hint');hint.textContent=I18n.t('Je eerste notitie staat in werkmap:')+' '+Werkmap.name+'. '+I18n.t('Voeg een volgend idee toe, werk je notitie uit of open een andere tool. Later verdergaan? Open dezelfde werkmap.');hint.setAttribute('role','status');
-     const clean=new URL(location.href);clean.searchParams.delete('startroute');history.replaceState(null,'',clean);
-    }catch(e){status.textContent=e.message;}finally{disk.disabled=false;}
-   },'notes-primary action-primary');I18n.assign(disk,I18n.ui('Bewaar in mijn werkmap','Bewaar in mijn werkmap'),'textContent');actions.prepend(disk);
+  const firstNote=new URL(location.href).searchParams.get('startroute')==='1'&&!original;
+  if(firstNote){
+   const intro=document.createElement('p');I18n.assign(intro,I18n.ui('Stap 2 van 3 · Geef je notitie een titel en schrijf een paar regels.','Stap 2 van 3 · Geef je notitie een titel en schrijf een paar regels.'),'textContent');d.querySelector('h2').after(intro);
   }
+  const disk=button('',async()=>{
+   if(diskSaving||finishing)return;
+   if(firstNote&&(!fields.title.value.trim()||!fields.body.value.trim())){status.textContent=I18n.t('Vul een titel en een paar regels tekst in.');return;}
+   diskSaving=true;const controls=[...d.querySelectorAll('input,textarea,button')];const previous=controls.map(control=>control.disabled);controls.forEach(control=>control.disabled=true);
+   try{
+    await save();if(failed)throw Error(status.textContent);
+    const expectedNote=structuredClone(note);
+    await BewaarAlles.save();
+    const {root}=await Werkmap.allAccess();const round=await BewaarAlles.readRound(root);
+    const stored=round?.shared?.writingNotes?.find(item=>item.id===expectedNote.id);
+    if(!stored||['title','body','topic'].some(key=>stored[key]!==expectedNote[key])||JSON.stringify(stored.sourceIds||[])!==JSON.stringify(expectedNote.sourceIds||[]))throw Error(I18n.t('Bewaren kon niet worden bevestigd. Probeer opnieuw.'));
+    const confirmation=I18n.t('Bewaard in je werkmap')+' · '+new Date().toLocaleTimeString(I18n.language==='en'?'en-GB':'nl-NL',{hour:'2-digit',minute:'2-digit'});
+    status.textContent=confirmation;
+    if(firstNote){
+     d.close();await render();
+     const hint=board.querySelector('.notes-save-hint');hint.textContent=confirmation;hint.hidden=false;hint.setAttribute('role','status');
+     const clean=new URL(location.href);clean.searchParams.delete('startroute');history.replaceState(null,'',clean);
+    }
+   }catch(e){status.textContent=e.message;}finally{diskSaving=false;controls.forEach((control,index)=>control.disabled=previous[index]);}
+  },'notes-primary action-primary');I18n.assign(disk,I18n.ui('Bewaar in mijn werkmap','Bewaar in mijn werkmap'),'textContent');actions.prepend(disk);
   if(original){
    const remove=I18n.mark(button('Verwijder',async()=>{
     if(!(await Prullenbak.confirm(I18n.value(I18n.ui("Deze notitie naar de prullenbak verplaatsen? Een uitgewerkt document en gekoppelde bronnen blijven behouden.",'Deze notitie naar de prullenbak verplaatsen? Een uitgewerkt document en gekoppelde bronnen blijven behouden.')))))return;
@@ -264,7 +270,7 @@ window.SchrijfNotities = (() => {
     try{d.close();await develop(id);}catch(err){error.textContent=err.message;showNotification(err.message,'error');}finally{b.disabled=false;}
    },'note-develop'));
    const sources=await sourceList(note);
-   actions.insertBefore(I18n.mark(button('Bronnen (ont)koppelen',()=>{d.close();chooseSources(id);}),"Bronnen (ont)koppelen"),actions.lastChild);
+   actions.insertBefore(I18n.mark(button('Bronnen',()=>{d.close();chooseSources(id);}),"Bronnen"),actions.lastChild);
    const projectLinks=await projectList(note);
    const more=document.createElement('details');more.className='context-actions note-detail-more';
    const summary=document.createElement('summary');I18n.assign(summary,I18n.ui('Meer','Meer'),'textContent');

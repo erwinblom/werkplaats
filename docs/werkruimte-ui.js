@@ -189,7 +189,7 @@
    const observer=new MutationObserver(()=>{if(document.querySelector('.workspace-strip #workspace-help-toggle')){observer.disconnect();resolve();}});
    observer.observe(document.body,{childList:true,subtree:true});
   });
-  if(!document.querySelector('link[href*="werkruimte-ui.css"]')){const style=document.createElement('link');style.rel='stylesheet';style.href=new URL('werkruimte-ui.css?v=20261008-beginners-1',base);document.head.append(style);}
+  if(!document.querySelector('link[href*="werkruimte-ui.css"]')){const style=document.createElement('link');style.rel='stylesheet';style.href=new URL('werkruimte-ui.css?v=20261011-clear-start-1',base);document.head.append(style);}
   const map=$('werkmap');map.open=false;
    document.addEventListener('click',e=>{const a=e.target.closest('a');if(!a||a.target||e.metaKey||e.ctrlKey||e.shiftKey||e.button)return;const url=new URL(a.href,location.href);if(url.href.startsWith(base.href)&&url.pathname.endsWith('.html')){e.preventDefault();navigate(url.href);}},true);
   if(tool){
@@ -512,19 +512,17 @@ if(GereedschapskistMode.example){const status=$('storage'),text='Oefeninhoud. Je
    const open=document.createElement('button');I18n.assign(open,I18n.ui("Verder werken",'Verder werken'),"textContent");
    const state=document.createElement('span');state.className='workspace-name';
    const workChoice=document.createElement('div');workChoice.className='home-work-choice';workChoice.setAttribute('role','group');I18n.attribute(workChoice,'aria-label',I18n.ui("Eigen werk",'Eigen werk'));workChoice.append(first,open,state);const browserHint=document.createElement('span');browserHint.className='workspace-name';I18n.assign(browserHint,I18n.ui("Gebruik Chrome of Edge op je computer voor je werkmap.",'Gebruik Chrome of Edge op je computer voor je werkmap.'),"textContent");workChoice.append(browserHint);
-   const route=document.createElement('details');route.className='quick-start';route.open=!Werkmap.active;
-   const routeTitle=document.createElement('summary');I18n.assign(routeTitle,I18n.ui('Begin in drie stappen','Begin in drie stappen'),'textContent');
-   const steps=document.createElement('ol');
-   const step=(title,text)=>{const item=document.createElement('li'),heading=document.createElement('strong'),copy=document.createElement('p');I18n.assign(heading,I18n.ui(title,title),'textContent');I18n.assign(copy,I18n.ui(text,text),'textContent');item.append(heading,copy);steps.append(item);return item;};
-   const locationStep=step('Kies je werkmap','Kies Nieuw beginnen. Werkplaats maakt een map voor je bestanden. Gebruik Chrome of Edge op je computer.');
-   const noteStep=step('Maak je eerste notitie','Geef je idee een titel en schrijf een paar regels.');
-   const noteStart=document.createElement('button');noteStart.type='button';I18n.assign(noteStart,I18n.ui('Maak mijn eerste notitie','Maak mijn eerste notitie'),'textContent');
-   noteStart.onclick=()=>{if(!Werkmap.active)return;location.assign(GereedschapskistKeuze.url('Apps/Werkbank/▶ Begin hier.html?startroute=1','eigen').href);};noteStep.append(noteStart);
-   step('Bewaar en werk verder','Kies Bewaar in mijn werkmap bij je notitie. Voeg daarna een volgend idee toe, werk je notitie uit of open een andere tool. Later verdergaan? Open dezelfde werkmap.');
+   const route=document.createElement('section');route.className='quick-start';
+   const routeTitle=document.createElement('strong');I18n.assign(routeTitle,I18n.ui('Stap 1 van 3 · Kies een opslagplek','Stap 1 van 3 · Kies een opslagplek'),'textContent');
+   const steps=document.createElement('p');I18n.assign(steps,I18n.ui('Klik op Nieuw beginnen. Daarna maak je je eerste notitie.','Klik op Nieuw beginnen. Daarna maak je je eerste notitie.'),'textContent');
    route.append(routeTitle,steps);bar.append(workChoice,$('wm-backup'),route);document.querySelector('.titlebar').after(bar);
+   const videoHelp=document.createElement('details');videoHelp.className='instruction-video';
+   const videoTitle=document.createElement('summary');I18n.assign(videoTitle,I18n.ui('Bekijk wat je kunt doen · 1 minuut','Bekijk wat je kunt doen · 1 minuut'),'textContent');
+   const video=document.createElement('video');video.controls=true;video.preload='none';video.src=new URL('Video/Werkplaats-uitlegvideo.mp4',base).href;
+   videoHelp.append(videoTitle,video);videoHelp.addEventListener('toggle',()=>{if(!videoHelp.open)video.pause();});bar.after(videoHelp);
    const details=document.createElement('details');details.className='home-more';details.hidden=true;const summary=document.createElement('summary');I18n.assign(summary,I18n.ui("Hulp",'Hulp'),"textContent");const guide=document.createElement('div');guide.className='context-help';guide.innerHTML="<h2><span data-i18n=\"Zo begin je\">Zo begin je</span></h2><ol><li><span data-i18n=\"Kies\">Kies</span> <strong><span data-i18n=\"Nieuw beginnen\">Nieuw beginnen</span></strong> <span data-i18n=\"en selecteer een map voor je werk, of kies\">en selecteer een map voor je werk, of kies</span> <strong><span data-i18n=\"Verder werken\">Verder werken</span></strong> <span data-i18n=\"om een bestaande werkmap te openen.\">om een bestaande werkmap te openen.</span></li><li><span data-i18n=\"Open daarna de tool die je nodig hebt. Met\">Open daarna de tool die je nodig hebt. Met</span> <strong><span data-i18n=\"Bewaar alles\">Bewaar alles</span></strong> <span data-i18n=\"bewaar je je werk in alle tools, inclusief verborgen administratie.\">bewaar je je werk in alle tools, inclusief verborgen administratie.</span></li></ol><h3><span data-i18n=\"Sneltoetsen binnen de tools\">Sneltoetsen binnen de tools</span></h3><p><span data-i18n=\"⌘S / Ctrl+S: Bewaar alles · ⌥N / Alt+N: nieuw item · ⌘K / Ctrl+K: zoeken · Esc: menu of venster sluiten. ⌥0 / Alt+0 opent Werkplaats Home. De nummers volgen je gekozen toolvolgorde en staan hieronder; dit werkt niet tijdens typen of wanneer een venster openstaat.\">⌘S / Ctrl+S: Bewaar alles · ⌥N / Alt+N: nieuw item · ⌘K / Ctrl+K: zoeken · Esc: menu of venster sluiten. ⌥0 / Alt+0 opent Werkplaats Home. De nummers volgen je gekozen toolvolgorde en staan hieronder; dit werkt niet tijdens typen of wanneer een venster openstaat.</span></p><p><span data-i18n=\"Alleen in Schrijven: ⌘E / Ctrl+E zet bewerken aan of uit; in de opgemaakte teksteditor gebruik je ⌘B / Ctrl+B voor vet en ⌘I / Ctrl+I voor cursief.\">Alleen in Schrijven: ⌘E / Ctrl+E zet bewerken aan of uit; in de opgemaakte teksteditor gebruik je ⌘B / Ctrl+B voor vet en ⌘I / Ctrl+I voor cursief.</span></p>";const toolMap=document.createElement('p');toolMap.className='help-tool-shortcuts';toolMap.textContent=shortcutText();document.addEventListener('taal-gewijzigd',()=>{toolMap.textContent=shortcutText();});guide.append(toolMap);details.append(summary,guide,map);const distribution=document.querySelector('.distribution'),opening=document.querySelector('.opening');if(distribution)details.append(distribution);if(opening)details.append(opening);bar.after(details);
    const message=$('wm-message');bar.after(message);
-   async function begin(){const configured=myTools.configured,business=myTools.business();if(await Werkmap.startNew()){if(configured)await myTools.setBusiness(business);await GereedschapskistKeuze.choose('eigen');}}
+   async function begin(){const configured=myTools.configured,business=myTools.business();if(await Werkmap.startNew()){if(configured)await myTools.setBusiness(business);location.assign(GereedschapskistKeuze.url('Apps/Werkbank/▶ Begin hier.html?startroute=1','eigen').href);}}
    async function resume(){
     if(!await Werkmap.continueWork())return;await myTools.reload();
     if(GereedschapskistKeuze.mode!=='eigen'){
@@ -534,17 +532,7 @@ if(GereedschapskistMode.example){const status=$('storage'),text='Oefeninhoud. Je
     }
     refresh();I18n.assign(message,I18n.ui("Werkmap geopend. Kies hieronder de tool waarmee je verder wilt.",'Werkmap geopend. Kies hieronder de tool waarmee je verder wilt.'),"textContent");
    }
-   let guidanceRevision=0;
-   async function hasSavedWork(){
-    if(!Werkmap.active)return false;
-    try{
-     await Werkmap.suiteReady;
-     const {root}=await Werkmap.allAccess(false);
-     if(await root.queryPermission({mode:'readwrite'})!=='granted')return false;
-     return !!await BewaarAlles.readRound(root);
-    }catch{return false;}
-   }
-   async function refresh(){const current=++guidanceRevision;const example=GereedschapskistKeuze.mode==='voorbeeld'||!GereedschapskistKeuze.mode&&!Werkmap.active;
+   async function refresh(){const example=GereedschapskistKeuze.mode==='voorbeeld'||!GereedschapskistKeuze.mode&&!Werkmap.active;
     document.documentElement.classList.toggle('has-workmap',!!Werkmap.active&&!example);
     first.hidden=false;I18n.assign(first,I18n.ui("Nieuw beginnen",'Nieuw beginnen'),"textContent");first.onclick=()=>begin().catch(report);I18n.assign(open,I18n.ui("Verder werken",'Verder werken'),"textContent");open.onclick=()=>resume().catch(report);
 
@@ -552,17 +540,15 @@ if(GereedschapskistMode.example){const status=$('storage'),text='Oefeninhoud. Je
     if(open.parentElement!==workChoice)first.after(open);
     if(state.parentElement!==workChoice)workChoice.append(state);
     state.hidden=!!Werkmap.active;
-    I18n.assign(state,(Werkmap.active?'':I18n.ui("Nieuw beginnen: kies een opslagplek. Wij maken de mappen voor je werk.",'Nieuw beginnen: kies een opslagplek. Wij maken de mappen voor je werk.')),"textContent");
+    I18n.assign(state,(Werkmap.active?'':I18n.ui("Je bestanden blijven op je computer.",'Je bestanden blijven op je computer.')),"textContent");
     browserHint.hidden='showDirectoryPicker' in window&&!!window.indexedDB;
     const continuePrimary=Werkmap.active&&!example;
     first.classList.toggle('primary',!continuePrimary);first.classList.toggle('action-primary',!continuePrimary);
     open.classList.toggle('primary',continuePrimary);open.classList.toggle('action-primary',continuePrimary);
     $('wm-backup').hidden=!Werkmap.active||example;
-    noteStart.disabled=!Werkmap.active||example;locationStep.dataset.complete=String(Werkmap.active&&!example);
+    route.hidden=!!Werkmap.active&&!example;
     for(const a of document.querySelectorAll('.grid a'))a.href=GereedschapskistKeuze.url(a.href,example?'voorbeeld':'eigen').href;
-    const experienced=!example&&await hasSavedWork();
-    if(current!==guidanceRevision)return;
-    if(experienced){guide.before(route);route.open=false;}else{bar.append(route);route.open=true;}
+
    }
    document.addEventListener('werkmap-gekozen',refresh);refresh();
    try{const opened=sessionStorage.getItem('gereedschapskist-just-opened');if(opened){sessionStorage.removeItem('gereedschapskist-just-opened');I18n.assign(message,I18n.ui("Werkmap geopend. Kies hieronder de tool waarmee je verder wilt.",'Werkmap geopend. Kies hieronder de tool waarmee je verder wilt.'),"textContent");}}catch{}
