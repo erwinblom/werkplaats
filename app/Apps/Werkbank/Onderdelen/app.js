@@ -1382,6 +1382,71 @@
             input.focus(); input.setSelectionRange(0, file.name.replace(/\.md$/i, '').length);
         }
 
+        function documentCopyButton() {
+            return '<button type="button" class="edit-btn" onclick="copyDocument()" title="Kopieer tekst met opmaak om elders te plakken" data-i18n-title="Kopieer tekst met opmaak om elders te plakken"><span data-i18n="Kopieer">Kopieer</span></button>';
+        }
+
+        function documentClipboardContent() {
+            const raw = isEditMode ? getWritingMarkdown() : currentRawContent;
+            const {content} = parseFrontmatter(Kladblok.strip(raw || ''));
+            const holder = document.createElement('div');
+            holder.innerHTML = DOMPurify.sanitize(marked.parse(content), {
+                FORBID_TAGS: ['style', 'iframe'], FORBID_ATTR: ['style', 'class', 'id', 'onclick']
+            });
+            // Local media and document links cannot travel to another website.
+            let localImages = false;
+            for (const image of holder.querySelectorAll('img')) {
+                if (!/^https?:\/\//i.test(image.getAttribute('src') || '')) {
+                    localImages = true;
+                    image.replaceWith(document.createTextNode(image.alt || ''));
+                }
+            }
+            for (const link of holder.querySelectorAll('a')) {
+                if (!/^(https?:|mailto:)/i.test(link.getAttribute('href') || '')) link.replaceWith(...link.childNodes);
+            }
+            const html = holder.innerHTML;
+            holder.style.cssText = 'position:fixed;left:-10000px;top:0;white-space:normal';
+            document.body.append(holder);
+            const text = holder.innerText;
+            holder.remove();
+            return {html, text, localImages};
+        }
+
+        function copyDocumentFallback({html, text}) {
+            const onCopy = event => {
+                event.preventDefault();
+                event.clipboardData.setData('text/html', html);
+                event.clipboardData.setData('text/plain', text);
+            };
+            document.addEventListener('copy', onCopy);
+            try { return document.execCommand('copy'); }
+            finally { document.removeEventListener('copy', onCopy); }
+        }
+
+        async function copyDocument() {
+            if (!activeFile) return;
+            try {
+                const payload = documentClipboardContent();
+                if (navigator.clipboard?.write && window.ClipboardItem) {
+                    try {
+                        await navigator.clipboard.write([new ClipboardItem({
+                            'text/html': new Blob([payload.html], {type: 'text/html'}),
+                            'text/plain': new Blob([payload.text], {type: 'text/plain'})
+                        })]);
+                    } catch (error) {
+                        if (!copyDocumentFallback(payload)) throw error;
+                    }
+                } else if (!copyDocumentFallback(payload)) {
+                    throw new Error(I18n.t('Kopiëren lukt niet. Selecteer de tekst en kopieer met ⌘C / Ctrl+C.'));
+                }
+                showNotification(I18n.t(payload.localImages
+                    ? 'Tekst gekopieerd met opmaak. Voeg lokale afbeeldingen apart toe.'
+                    : 'Gekopieerd met opmaak. Plak met ⌘V / Ctrl+V.'), 'success');
+            } catch (error) {
+                showNotification(I18n.t('Kopiëren lukt niet. Selecteer de tekst en kopieer met ⌘C / Ctrl+C.'), 'error');
+            }
+        }
+
         function fileMoreActions() {
             if (!activeFile) return '';
             const editingControls = isEditMode ? "<button id=\"markdownSourceToggle\" class=\"edit-btn\" title=\"De Markdown-brontekst bewerken\" onclick=\"toggleMarkdownSource()\" aria-pressed=\"false\" data-i18n-title=\"De Markdown-brontekst bewerken\"><span data-i18n=\"Markdown\">Markdown</span></button>" : "";
@@ -1395,7 +1460,7 @@
         }
 
         function fileActions() {
-            return "<div class=\"file-actions\" role=\"group\" aria-label=\"Bestandsacties\" data-i18n-aria-label=\"Bestandsacties\">\n                <button class=\"edit-btn document-edit-primary action-primary\" onclick=\"toggleEditMode()\"><span data-i18n=\"Bewerk\">Bewerk</span></button>\n                <button type=\"button\" class=\"edit-btn document-material-toggle\" aria-controls=\"document-material-panel\" aria-expanded=\"false\" onclick=\"DocumentMaterials.togglePanel().catch(error=&gt;showNotification(error.message,&#x27;error&#x27;))\"><span data-i18n=\"Koppel\">Koppel</span></button>"+(fileMoreActions())+"\n                    "+(documentFocusButton())+"\n            </div>";
+            return "<div class=\"file-actions\" role=\"group\" aria-label=\"Bestandsacties\" data-i18n-aria-label=\"Bestandsacties\">\n                <button class=\"edit-btn document-edit-primary action-primary\" onclick=\"toggleEditMode()\"><span data-i18n=\"Bewerk\">Bewerk</span></button>\n                <button type=\"button\" class=\"edit-btn document-material-toggle\" aria-controls=\"document-material-panel\" aria-expanded=\"false\" onclick=\"DocumentMaterials.togglePanel().catch(error=&gt;showNotification(error.message,&#x27;error&#x27;))\"><span data-i18n=\"Koppel\">Koppel</span></button>"+(documentCopyButton())+(fileMoreActions())+"\n                    "+(documentFocusButton())+"\n            </div>";
         }
 
         async function saveAndCloseEditor() {
@@ -1598,7 +1663,9 @@
             const toolbar = editor.parentElement.querySelector('.wysiwyg-toolbar');
             const button = document.getElementById('markdownSourceToggle');
             if (source.hidden) {
-                source.value = getWritingMarkdown();
+                const compact = MarkdownSourceImages.compact(getWritingMarkdown());
+                source.embeddedImages = compact.images;
+                source.value = compact.text;
                 source.hidden = false;
                 editor.style.display = 'none';
                 toolbar.style.display = 'none';
@@ -1612,9 +1679,10 @@
                     source.value = wrapped[1];
                     wysiwygDirty = true;
                 }
-                const match = source.value.match(/^---\s*\n([\s\S]*?)\n---\s*\n?/);
+                const markdown = MarkdownSourceImages.expand(source.value, source.embeddedImages);
+                const match = markdown.match(/^---\s*\n([\s\S]*?)\n---\s*\n?/);
                 wysiwygFrontmatterRaw = match ? match[0] : '';
-                editor.innerHTML = DOMPurify.sanitize(marked.parse(source.value.slice(wysiwygFrontmatterRaw.length)));
+                editor.innerHTML = DOMPurify.sanitize(marked.parse(markdown.slice(wysiwygFrontmatterRaw.length)));
                 renderInternalLinks(editor, true);
                 prepareTaskLists(editor);
                 source.dataset.visualSnapshot = editor.innerHTML;
@@ -1634,10 +1702,10 @@
 
         function getWritingMarkdown() {
             const source = document.getElementById('markdownSource');
-            if (source && !source.hidden) return source.value;
+            if (source && !source.hidden) return MarkdownSourceImages.expand(source.value, source.embeddedImages);
             const editor = document.getElementById('wysiwygEditor');
             if (!editor) return currentRawContent;
-            if (source && source.dataset.visualSnapshot === editor.innerHTML) return source.value;
+            if (source && source.dataset.visualSnapshot === editor.innerHTML) return MarkdownSourceImages.expand(source.value, source.embeddedImages);
 
             const td = createTurndownService();
             syncTaskCheckboxes(editor);
@@ -1697,28 +1765,128 @@
             }
         }
 
+        function rememberWysiwygBlockSelection() {
+            const editor = document.getElementById('wysiwygEditor');
+            const selection = window.getSelection();
+            if (!editor || !selection.rangeCount) return;
+            const range = selection.getRangeAt(0);
+            if (editor.contains(range.startContainer) && editor.contains(range.endContainer)) {
+                editor.blockFormatRange = range.cloneRange();
+            }
+        }
+
         function wysiwygFormatBlock(tag) {
             const editor = document.getElementById('wysiwygEditor');
             if (!editor) return;
+            rememberWysiwygBlockSelection();
+            const selection = window.getSelection();
+            const range = editor.blockFormatRange;
             editor.focus();
+            if (!range || !editor.contains(range.startContainer) || !editor.contains(range.endContainer)) return;
+            selection.removeAllRanges();
+            selection.addRange(range);
 
-            // Check if currently in the same block type - toggle off to paragraph
-            const sel = window.getSelection();
-            if (sel.rangeCount > 0) {
-                const node = sel.anchorNode;
-                const parentBlock = node.nodeType === 3 ? node.parentElement : node;
-                const currentBlock = parentBlock.closest(tag);
-                if (currentBlock && editor.contains(currentBlock)) {
-                    document.execCommand('formatBlock', false, "<p>");
-                    wysiwygDirty = true;
-                    updateWysiwygModifiedState();
-                    return;
+            const blockSelector = 'p,h1,h2,h3,h4,h5,h6,pre';
+            const blocks = Array.from(editor.querySelectorAll(blockSelector)).filter(block => {
+                if (range.collapsed) return block.contains(range.startContainer);
+                if (!range.intersectsNode(block)) return false;
+                const contents = document.createRange();
+                if (!block.textContent && !block.querySelector('img,video,iframe')) {
+                    contents.selectNode(block);
+                    return contents.compareBoundaryPoints(Range.START_TO_START, range) >= 0 &&
+                        contents.compareBoundaryPoints(Range.END_TO_END, range) <= 0;
                 }
+                contents.selectNodeContents(block);
+                const overlap = range.cloneRange();
+                if (contents.compareBoundaryPoints(Range.START_TO_START, range) > 0) {
+                    overlap.setStart(contents.startContainer, contents.startOffset);
+                }
+                if (contents.compareBoundaryPoints(Range.END_TO_END, range) < 0) {
+                    overlap.setEnd(contents.endContainer, contents.endOffset);
+                }
+                return !overlap.collapsed && (overlap.toString().length > 0 || overlap.cloneContents().querySelector('br,img,video'));
+            });
+            const targetTag = tag !== 'p' && blocks.length && blocks.every(block => block.localName === tag) ? 'p' : tag;
+            const prefix = range.cloneRange();
+            prefix.selectNodeContents(editor);
+            prefix.setEnd(range.startContainer, range.startOffset);
+            const startOffset = prefix.toString().length;
+            prefix.setEnd(range.endContainer, range.endOffset);
+            const endOffset = prefix.toString().length;
+            // Chromium can merge and reorder a multi-block selection. Format each block separately.
+            if (blocks.length && /^(p|h[1-6])$/.test(targetTag)) {
+                for (const block of blocks) {
+                    const blockRange = document.createRange();
+                    const emptyBlock = !block.textContent && !block.querySelector('img,video,iframe');
+                    if (emptyBlock) blockRange.selectNode(block);
+                    else blockRange.selectNodeContents(block);
+                    selection.removeAllRanges();
+                    selection.addRange(blockRange);
+                    if (emptyBlock) {
+                        const replacement = document.createElement(targetTag);
+                        replacement.appendChild(document.createElement('br'));
+                        block.replaceWith(replacement);
+                    } else {
+                        document.execCommand('formatBlock', false, '<' + targetTag + '>');
+                        const anchor = selection.anchorNode;
+                        const element = anchor?.nodeType === 3 ? anchor.parentElement : anchor;
+                        const formatted = element?.closest(targetTag);
+                        if (formatted && editor.contains(formatted)) {
+                            // Match the saved Markdown view: pasted font sizes must not keep a paragraph looking like H1.
+                            for (const styled of [formatted, ...formatted.querySelectorAll('[style],font')]) {
+                                for (const property of ['font-size', 'font-family', 'font-weight', 'line-height', 'letter-spacing']) {
+                                    styled.style.removeProperty(property);
+                                }
+                                if (!styled.getAttribute('style')) styled.removeAttribute('style');
+                                if (styled.localName === 'font') styled.removeAttribute('size');
+                            }
+                        }
+                    }
+                }
+            } else {
+                document.execCommand('formatBlock', false, '<' + targetTag + '>');
             }
-
-            document.execCommand('formatBlock', false, `<${tag}>`);
+            const textPosition = offset => {
+                const walker = document.createTreeWalker(editor, NodeFilter.SHOW_TEXT);
+                let node, last;
+                while ((node = walker.nextNode())) {
+                    if (offset <= node.length) return [node, offset];
+                    offset -= node.length;
+                    last = node;
+                }
+                return last ? [last, last.length] : [editor, 0];
+            };
+            const restored = document.createRange();
+            restored.setStart(...textPosition(startOffset));
+            restored.setEnd(...textPosition(endOffset));
+            selection.removeAllRanges();
+            selection.addRange(restored);
+            rememberWysiwygBlockSelection();
             wysiwygDirty = true;
             updateWysiwygModifiedState();
+        }
+
+        function setupWysiwygBlockControls(editor) {
+            const toolbar = editor?.parentElement?.querySelector('.wysiwyg-toolbar');
+            if (!toolbar) return;
+            document.removeEventListener('selectionchange', rememberWysiwygBlockSelection);
+            document.addEventListener('selectionchange', rememberWysiwygBlockSelection);
+            const blockButtons = Array.from(toolbar.querySelectorAll('button')).filter(button =>
+                /^wysiwygFormatBlock\('(h1|h2|h3)'\)$/.test(button.getAttribute('onclick') || '')
+            );
+            if (!blockButtons.length) return;
+            for (const button of blockButtons) {
+                button.addEventListener('mousedown', event => event.preventDefault());
+            }
+            const paragraphButton = document.createElement('button');
+            paragraphButton.type = 'button';
+            paragraphButton.style.width = 'auto';
+            I18n.assign(paragraphButton, I18n.ui("Tekst", 'Tekst'), 'textContent');
+            I18n.assign(paragraphButton, I18n.ui("Gewone tekst", 'Gewone tekst'), 'title');
+            I18n.assign(paragraphButton, I18n.ui("Gewone tekst", 'Gewone tekst'), 'aria-label');
+            paragraphButton.addEventListener('mousedown', event => event.preventDefault());
+            paragraphButton.addEventListener('click', () => wysiwygFormatBlock('p'));
+            blockButtons[0].before(paragraphButton);
         }
 
         function wysiwygInsertLink() {
@@ -1840,10 +2008,11 @@
             const bodyHtml = editorBody.innerHTML;
             wysiwygDirty = false;
 
-            document.getElementById('content').innerHTML = "\n                <div class=\"content-header\"><details class=\"document-information\"><summary data-i18n=\"Documentgegevens\">Documentgegevens</summary><span class=\"file-path-heading\" title=\""+(escapeHtml(activeFile?.relativePath || ""))+"\" data-i18n-title=\"{0}\"><span class=\"document-name\">"+(escapeHtml(activeFile?.name || activeFile?.relativePath?.split("/").pop() || ""))+"</span><span class=\"document-folder\">"+(activeFile?.isVirtual?I18n.t("Los document · browserkopie"): "Map: "+escapeHtml(activeFile?.relativePath?.split("/").slice(0, -1).join(" / ") || I18n.t("Geen map")))+"</span></span>"+(renderDocumentMetadata())+"</details>\n                    <span id=\"editorModified\" class=\"document-save-status\" role=\"status\"></span><div class=\"file-actions editor-actions\" role=\"group\" aria-label=\"Bewerk\" data-i18n-aria-label=\"Bewerk\">\n                    \n                    \n                    <button class=\"cancel-btn\" onclick=\"cancelEdit()\" title=\"Annuleer bewerking\" data-i18n-title=\"Annuleer bewerking\">\n                        <svg xmlns=\"http://www.w3.org/2000/svg\" viewbox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\">\n                            <line x1=\"18\" y1=\"6\" x2=\"6\" y2=\"18\"></line>\n                            <line x1=\"6\" y1=\"6\" x2=\"18\" y2=\"18\"></line>\n                        </svg>\n                        <span data-i18n=\"Annuleer\">Annuleer</span>\n                    </button>\n                    <button id=\"editorSaveButton\" class=\"save-btn action-primary\" disabled onclick=\"saveAndCloseEditor()\" title=\"Geen wijzigingen om op te slaan\" data-i18n-title=\"Geen wijzigingen om op te slaan\">\n                        <svg xmlns=\"http://www.w3.org/2000/svg\" viewbox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\">\n                            <path d=\"M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z\"></path>\n                            <polyline points=\"17 21 17 13 7 13 7 21\"></polyline>\n                            <polyline points=\"7 3 7 8 15 8\"></polyline>\n                        </svg>\n                        "+(I18n.t('Bewaar'))+"\n                    </button>\n                    <button type=\"button\" class=\"edit-btn document-material-toggle\" aria-controls=\"document-material-panel\" aria-expanded=\"false\" onclick=\"DocumentMaterials.togglePanel().catch(error=&gt;showNotification(error.message,&#x27;error&#x27;))\"><span data-i18n=\"Koppel\">Koppel</span></button>"+(fileMoreActions())+"\n                    "+(documentFocusButton())+"\n                    </div>\n                </div>\n                <div class=\"editor-container visible\">\n                    <div class=\"editor-wrapper wysiwyg-mode\">\n                        <div class=\"wysiwyg-toolbar\">\n                            <button onclick=\"formatWysiwyg(&#x27;bold&#x27;)\" title=\"Vet ("+(shortcutKey)+"+B)\" data-i18n-title=\"Vet ({6}+B)\"><strong><span data-i18n=\"B\">B</span></strong></button>\n                            <button onclick=\"formatWysiwyg(&#x27;italic&#x27;)\" title=\"Cursief ("+(shortcutKey)+"+I)\" data-i18n-title=\"Cursief ({7}+I)\"><em><span data-i18n=\"I\">I</span></em></button>\n                            <button onclick=\"formatWysiwyg(&#x27;strikeThrough&#x27;)\" title=\"Doorhalen\" data-i18n-title=\"Doorhalen\"><s><span data-i18n=\"S\">S</span></s></button>\n                            <div class=\"separator\"></div>\n                            <button onclick=\"wysiwygFormatBlock(&#x27;h1&#x27;)\" title=\"Kop 1\" data-i18n-title=\"Kop 1\"><span data-i18n=\"H1\">H1</span></button>\n                            <button onclick=\"wysiwygFormatBlock(&#x27;h2&#x27;)\" title=\"Kop 2\" data-i18n-title=\"Kop 2\"><span data-i18n=\"H2\">H2</span></button>\n                            <button onclick=\"wysiwygFormatBlock(&#x27;h3&#x27;)\" title=\"Kop 3\" data-i18n-title=\"Kop 3\"><span data-i18n=\"H3\">H3</span></button>\n                            <div class=\"separator\"></div>\n                            <button onclick=\"formatWysiwyg(&#x27;insertUnorderedList&#x27;)\" title=\"Opsomming\" data-i18n-title=\"Opsomming\">\n                                <svg viewbox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><line x1=\"8\" y1=\"6\" x2=\"21\" y2=\"6\"/><line x1=\"8\" y1=\"12\" x2=\"21\" y2=\"12\"/><line x1=\"8\" y1=\"18\" x2=\"21\" y2=\"18\"/><circle cx=\"4\" cy=\"6\" r=\"1\" fill=\"currentColor\"/><circle cx=\"4\" cy=\"12\" r=\"1\" fill=\"currentColor\"/><circle cx=\"4\" cy=\"18\" r=\"1\" fill=\"currentColor\"/></svg>\n                            </button>\n                            <button class=\"task-list-button\" onmousedown=\"event.preventDefault()\" onclick=\"insertTaskList()\" title=\"Afvinkbare takenlijst\" aria-label=\"Takenlijst\" data-i18n-title=\"Afvinkbare takenlijst\" data-i18n-aria-label=\"Takenlijst\"><svg viewbox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" aria-hidden=\"true\"><path d=\"m3 6 2 2 4-4\"/><rect x=\"3\" y=\"14\" width=\"5\" height=\"5\" rx=\"1\"/><path d=\"M12 6h9M12 16.5h9\"/></svg></button>\n                            <button onclick=\"formatWysiwyg(&#x27;insertOrderedList&#x27;)\" title=\"Genummerde lijst\" data-i18n-title=\"Genummerde lijst\">\n                                <svg viewbox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><line x1=\"10\" y1=\"6\" x2=\"21\" y2=\"6\"/><line x1=\"10\" y1=\"12\" x2=\"21\" y2=\"12\"/><line x1=\"10\" y1=\"18\" x2=\"21\" y2=\"18\"/><text x=\"4\" y=\"7\" font-size=\"7\" fill=\"currentColor\" stroke=\"none\" font-family=\"monospace\">1</text><text x=\"4\" y=\"13\" font-size=\"7\" fill=\"currentColor\" stroke=\"none\" font-family=\"monospace\">2</text><text x=\"4\" y=\"19\" font-size=\"7\" fill=\"currentColor\" stroke=\"none\" font-family=\"monospace\">3</text></svg>\n                            </button>\n                            <div class=\"separator\"></div>\n                            <button onclick=\"wysiwygFormatBlock(&#x27;blockquote&#x27;)\" title=\"Citaat\" data-i18n-title=\"Citaat\">\n                                <svg viewbox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><path d=\"M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z\"/><path d=\"M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2h.75c0 2.25.25 4-2.75 4v3c0 1 0 1 1 1z\"/></svg>\n                            </button>\n                            <button onclick=\"wysiwygToggleCode()\" title=\"Code\" data-i18n-title=\"Code\">\n                                <svg viewbox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><polyline points=\"16 18 22 12 16 6\"/><polyline points=\"8 6 2 12 8 18\"/></svg>\n                            </button>\n                            <div class=\"separator\"></div>\n                            <button onmousedown=\"event.preventDefault()\" onclick=\"wysiwygInsertInternalLink()\" title=\"Link naar document\" aria-label=\"Link naar document\" style=\"width:auto;min-width:36px;font-weight:600\" data-i18n-title=\"Link naar document\" data-i18n-aria-label=\"Link naar document\">[[…]]</button>\n                            <button onmousedown=\"event.preventDefault()\" onclick=\"DocumentMaterials.addImage(activeFile,null,{insert:true}).catch(error=>showNotification(error.message,&#x27;error&#x27;))\" title=\"Afbeelding toevoegen\" aria-label=\"Afbeelding toevoegen\" data-i18n-title=\"Afbeelding toevoegen\" data-i18n-aria-label=\"Afbeelding toevoegen\"><svg viewbox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" aria-hidden=\"true\"><rect x=\"3\" y=\"3\" width=\"18\" height=\"18\" rx=\"2\"/><circle cx=\"8\" cy=\"8\" r=\"1.5\"/><path d=\"m21 15-5-5L5 21\"/></svg></button>\n                            <button onmousedown=\"event.preventDefault()\" onclick=\"openMediaDialog(&#x27;youtube&#x27;)\" title=\"YouTube-video toevoegen\" aria-label=\"YouTube-video toevoegen\" data-i18n-title=\"YouTube-video toevoegen\" data-i18n-aria-label=\"YouTube-video toevoegen\"><svg viewbox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" aria-hidden=\"true\"><rect x=\"2\" y=\"4\" width=\"20\" height=\"16\" rx=\"3\"/><path d=\"m10 8 6 4-6 4z\"/></svg></button>\n                            <button onclick=\"wysiwygInsertLink()\" title=\"Link invoegen\" data-i18n-title=\"Link invoegen\">\n                                <svg viewbox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><path d=\"M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71\"/><path d=\"M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71\"/></svg>\n                            </button>\n                            <button onclick=\"formatWysiwyg(&#x27;insertHorizontalRule&#x27;)\" title=\"Horizontale lijn\" data-i18n-title=\"Horizontale lijn\">\n                                <svg viewbox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><line x1=\"2\" y1=\"12\" x2=\"22\" y2=\"12\" stroke-width=\"3\"/></svg>\n                            </button>\n                        </div>\n                        <textarea id=\"markdownSource\" hidden aria-label=\"Kale Markdown\" spellcheck=\"false\" style=\"box-sizing:border-box;width:100%;min-height:60vh;padding:24px;font:16px/1.6 monospace;resize:vertical;background:var(--bg-primary);color:var(--text-primary);border:1px solid #888\" data-i18n-aria-label=\"Kale Markdown\"></textarea>\n                        <div class=\"wysiwyg-editor markdown-content\" contenteditable=\"true\" id=\"wysiwygEditor\" spellcheck=\"true\">"+(bodyHtml)+"</div>\n                    </div>\n                    <div class=\"editor-status\">\n                        <span class=\"editor-shortcut-hint\">"+(shortcutKey)+"<span data-i18n=\"+B vet ·\">+B vet ·</span> "+(shortcutKey)+"<span data-i18n=\"+I cursief ·\">+I cursief ·</span> "+(shortcutKey)+"<span data-i18n=\"+S Bewaar alles · Esc sluit menu of venster\">+S Bewaar alles · Esc sluit menu of venster</span></span>\n                    </div>\n                </div>\n            ";
+            document.getElementById('content').innerHTML = "\n                <div class=\"content-header\"><details class=\"document-information\"><summary data-i18n=\"Documentgegevens\">Documentgegevens</summary><span class=\"file-path-heading\" title=\""+(escapeHtml(activeFile?.relativePath || ""))+"\" data-i18n-title=\"{0}\"><span class=\"document-name\">"+(escapeHtml(activeFile?.name || activeFile?.relativePath?.split("/").pop() || ""))+"</span><span class=\"document-folder\">"+(activeFile?.isVirtual?I18n.t("Los document · browserkopie"): "Map: "+escapeHtml(activeFile?.relativePath?.split("/").slice(0, -1).join(" / ") || I18n.t("Geen map")))+"</span></span>"+(renderDocumentMetadata())+"</details>\n                    <span id=\"editorModified\" class=\"document-save-status\" role=\"status\"></span><div class=\"file-actions editor-actions\" role=\"group\" aria-label=\"Bewerk\" data-i18n-aria-label=\"Bewerk\">\n                    \n                    \n                    <button class=\"cancel-btn\" onclick=\"cancelEdit()\" title=\"Annuleer bewerking\" data-i18n-title=\"Annuleer bewerking\">\n                        <svg xmlns=\"http://www.w3.org/2000/svg\" viewbox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\">\n                            <line x1=\"18\" y1=\"6\" x2=\"6\" y2=\"18\"></line>\n                            <line x1=\"6\" y1=\"6\" x2=\"18\" y2=\"18\"></line>\n                        </svg>\n                        <span data-i18n=\"Annuleer\">Annuleer</span>\n                    </button>\n                    <button id=\"editorSaveButton\" class=\"save-btn action-primary\" disabled onclick=\"saveAndCloseEditor()\" title=\"Geen wijzigingen om op te slaan\" data-i18n-title=\"Geen wijzigingen om op te slaan\">\n                        <svg xmlns=\"http://www.w3.org/2000/svg\" viewbox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\">\n                            <path d=\"M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z\"></path>\n                            <polyline points=\"17 21 17 13 7 13 7 21\"></polyline>\n                            <polyline points=\"7 3 7 8 15 8\"></polyline>\n                        </svg>\n                        "+(I18n.t('Bewaar'))+"\n                    </button>\n                    <button type=\"button\" class=\"edit-btn document-material-toggle\" aria-controls=\"document-material-panel\" aria-expanded=\"false\" onclick=\"DocumentMaterials.togglePanel().catch(error=&gt;showNotification(error.message,&#x27;error&#x27;))\"><span data-i18n=\"Koppel\">Koppel</span></button>"+(documentCopyButton())+(fileMoreActions())+"\n                    "+(documentFocusButton())+"\n                    </div>\n                </div>\n                <div class=\"editor-container visible\">\n                    <div class=\"editor-wrapper wysiwyg-mode\">\n                        <div class=\"wysiwyg-toolbar\">\n                            <button onclick=\"formatWysiwyg(&#x27;bold&#x27;)\" title=\"Vet ("+(shortcutKey)+"+B)\" data-i18n-title=\"Vet ({6}+B)\"><strong><span data-i18n=\"B\">B</span></strong></button>\n                            <button onclick=\"formatWysiwyg(&#x27;italic&#x27;)\" title=\"Cursief ("+(shortcutKey)+"+I)\" data-i18n-title=\"Cursief ({7}+I)\"><em><span data-i18n=\"I\">I</span></em></button>\n                            <button onclick=\"formatWysiwyg(&#x27;strikeThrough&#x27;)\" title=\"Doorhalen\" data-i18n-title=\"Doorhalen\"><s><span data-i18n=\"S\">S</span></s></button>\n                            <div class=\"separator\"></div>\n                            <button onclick=\"wysiwygFormatBlock(&#x27;h1&#x27;)\" title=\"Kop 1\" data-i18n-title=\"Kop 1\"><span data-i18n=\"H1\">H1</span></button>\n                            <button onclick=\"wysiwygFormatBlock(&#x27;h2&#x27;)\" title=\"Kop 2\" data-i18n-title=\"Kop 2\"><span data-i18n=\"H2\">H2</span></button>\n                            <button onclick=\"wysiwygFormatBlock(&#x27;h3&#x27;)\" title=\"Kop 3\" data-i18n-title=\"Kop 3\"><span data-i18n=\"H3\">H3</span></button>\n                            <div class=\"separator\"></div>\n                            <button onclick=\"formatWysiwyg(&#x27;insertUnorderedList&#x27;)\" title=\"Opsomming\" data-i18n-title=\"Opsomming\">\n                                <svg viewbox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><line x1=\"8\" y1=\"6\" x2=\"21\" y2=\"6\"/><line x1=\"8\" y1=\"12\" x2=\"21\" y2=\"12\"/><line x1=\"8\" y1=\"18\" x2=\"21\" y2=\"18\"/><circle cx=\"4\" cy=\"6\" r=\"1\" fill=\"currentColor\"/><circle cx=\"4\" cy=\"12\" r=\"1\" fill=\"currentColor\"/><circle cx=\"4\" cy=\"18\" r=\"1\" fill=\"currentColor\"/></svg>\n                            </button>\n                            <button class=\"task-list-button\" onmousedown=\"event.preventDefault()\" onclick=\"insertTaskList()\" title=\"Afvinkbare takenlijst\" aria-label=\"Takenlijst\" data-i18n-title=\"Afvinkbare takenlijst\" data-i18n-aria-label=\"Takenlijst\"><svg viewbox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" aria-hidden=\"true\"><path d=\"m3 6 2 2 4-4\"/><rect x=\"3\" y=\"14\" width=\"5\" height=\"5\" rx=\"1\"/><path d=\"M12 6h9M12 16.5h9\"/></svg></button>\n                            <button onclick=\"formatWysiwyg(&#x27;insertOrderedList&#x27;)\" title=\"Genummerde lijst\" data-i18n-title=\"Genummerde lijst\">\n                                <svg viewbox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><line x1=\"10\" y1=\"6\" x2=\"21\" y2=\"6\"/><line x1=\"10\" y1=\"12\" x2=\"21\" y2=\"12\"/><line x1=\"10\" y1=\"18\" x2=\"21\" y2=\"18\"/><text x=\"4\" y=\"7\" font-size=\"7\" fill=\"currentColor\" stroke=\"none\" font-family=\"monospace\">1</text><text x=\"4\" y=\"13\" font-size=\"7\" fill=\"currentColor\" stroke=\"none\" font-family=\"monospace\">2</text><text x=\"4\" y=\"19\" font-size=\"7\" fill=\"currentColor\" stroke=\"none\" font-family=\"monospace\">3</text></svg>\n                            </button>\n                            <div class=\"separator\"></div>\n                            <button onclick=\"wysiwygFormatBlock(&#x27;blockquote&#x27;)\" title=\"Citaat\" data-i18n-title=\"Citaat\">\n                                <svg viewbox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><path d=\"M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z\"/><path d=\"M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2h.75c0 2.25.25 4-2.75 4v3c0 1 0 1 1 1z\"/></svg>\n                            </button>\n                            <button onclick=\"wysiwygToggleCode()\" title=\"Code\" data-i18n-title=\"Code\">\n                                <svg viewbox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><polyline points=\"16 18 22 12 16 6\"/><polyline points=\"8 6 2 12 8 18\"/></svg>\n                            </button>\n                            <div class=\"separator\"></div>\n                            <button onmousedown=\"event.preventDefault()\" onclick=\"wysiwygInsertInternalLink()\" title=\"Link naar document\" aria-label=\"Link naar document\" style=\"width:auto;min-width:36px;font-weight:600\" data-i18n-title=\"Link naar document\" data-i18n-aria-label=\"Link naar document\">[[…]]</button>\n                            <button onmousedown=\"event.preventDefault()\" onclick=\"DocumentMaterials.addImage(activeFile,null,{insert:true}).catch(error=>showNotification(error.message,&#x27;error&#x27;))\" title=\"Afbeelding toevoegen\" aria-label=\"Afbeelding toevoegen\" data-i18n-title=\"Afbeelding toevoegen\" data-i18n-aria-label=\"Afbeelding toevoegen\"><svg viewbox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" aria-hidden=\"true\"><rect x=\"3\" y=\"3\" width=\"18\" height=\"18\" rx=\"2\"/><circle cx=\"8\" cy=\"8\" r=\"1.5\"/><path d=\"m21 15-5-5L5 21\"/></svg></button>\n                            <button onmousedown=\"event.preventDefault()\" onclick=\"openMediaDialog(&#x27;youtube&#x27;)\" title=\"YouTube-video toevoegen\" aria-label=\"YouTube-video toevoegen\" data-i18n-title=\"YouTube-video toevoegen\" data-i18n-aria-label=\"YouTube-video toevoegen\"><svg viewbox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" aria-hidden=\"true\"><rect x=\"2\" y=\"4\" width=\"20\" height=\"16\" rx=\"3\"/><path d=\"m10 8 6 4-6 4z\"/></svg></button>\n                            <button onclick=\"wysiwygInsertLink()\" title=\"Link invoegen\" data-i18n-title=\"Link invoegen\">\n                                <svg viewbox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><path d=\"M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71\"/><path d=\"M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71\"/></svg>\n                            </button>\n                            <button onclick=\"formatWysiwyg(&#x27;insertHorizontalRule&#x27;)\" title=\"Horizontale lijn\" data-i18n-title=\"Horizontale lijn\">\n                                <svg viewbox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><line x1=\"2\" y1=\"12\" x2=\"22\" y2=\"12\" stroke-width=\"3\"/></svg>\n                            </button>\n                        </div>\n                        <textarea id=\"markdownSource\" hidden aria-label=\"Kale Markdown\" spellcheck=\"false\" style=\"box-sizing:border-box;width:100%;min-height:60vh;padding:24px;font:16px/1.6 monospace;resize:vertical;background:var(--bg-primary);color:var(--text-primary);border:1px solid #888\" data-i18n-aria-label=\"Kale Markdown\"></textarea>\n                        <div class=\"wysiwyg-editor markdown-content\" contenteditable=\"true\" id=\"wysiwygEditor\" spellcheck=\"true\">"+(bodyHtml)+"</div>\n                    </div>\n                    <div class=\"editor-status\">\n                        <span class=\"editor-shortcut-hint\">"+(shortcutKey)+"<span data-i18n=\"+B vet ·\">+B vet ·</span> "+(shortcutKey)+"<span data-i18n=\"+I cursief ·\">+I cursief ·</span> "+(shortcutKey)+"<span data-i18n=\"+S Bewaar alles · Esc sluit menu of venster\">+S Bewaar alles · Esc sluit menu of venster</span></span>\n                    </div>\n                </div>\n            ";
             window.ProjectMaterials?.showDocumentProject(activeFile);
 
             const editor = document.getElementById('wysiwygEditor');
+            setupWysiwygBlockControls(editor);
             editor.focus();
             editor.addEventListener('beforeinput', event => continueHeadingAsParagraph(event, editor));
             offerMarkdownCodeConversion(editor);

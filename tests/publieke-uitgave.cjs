@@ -24,7 +24,7 @@ const server=http.createServer((req,res)=>{
   assert.equal(await home.getByText('Begin in drie stappen',{exact:true}).count(),1);
   assert(!/Proeftuin/.test(await home.locator('body').innerText()));
   assert(!/Werk in uitvoering/.test(await home.locator('body').innerText()));
-  assert.equal(await home.getByText('Versie 0.36.1',{exact:true}).count(),1);
+  assert.equal(await home.getByText('Versie 0.36.2',{exact:true}).count(),1);
   assert.equal(await home.evaluate(()=>GereedschapskistKeuze.mode),'eigen');
   await home.screenshot({path:'/private/tmp/werkplaats-home-actueel.png',fullPage:true});
   const about=await context.newPage();await about.goto(base+'/Over.html');

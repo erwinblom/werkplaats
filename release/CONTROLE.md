@@ -1,3 +1,15 @@
+# Werkplaats v0.36.2 — controle op 11 oktober 2026
+
+Nieuwste schone Master met Kopieer in Schrijven, direct zichtbare omzetting naar Tekst en korte afbeeldingsverwijzingen in de Markdown-editor.
+
+- 20/20 bronproeven geslaagd; Master bevat 207 publieke appbestanden.
+- Bronwijzigingen afzonderlijk in Chrome gecontroleerd met tijdelijke documenten, bewaren en heropenen. Klembordinhoud teruggelezen; afbeeldingsdata exact behouden op schijf.
+- Publieke import, manifest, privacyuitsluitingen, JavaScript, lokale links en alle ZIP-bestanden gecontroleerd tegen dezelfde Master.
+- Publieke browserproef geslaagd: tien lege toolschermen, mobiele breedte, notitie bewaren/teruglezen/heropenen na gewiste testcaches en uitgepakte ZIP offline; geen browserfouten.
+- Publicatiecontrole: zie het actuele resultaat in het Chief-opdrachtenregister CH-056.
+
+Grenzen: echte Substack-paste, native macOS-mapkiezer en alle handelingen in alle tools zijn niet opnieuw beproefd. Persoonlijke gegevens en persoonlijke extensie blijven buiten de uitgave.
+
 # Werkplaats v0.36.1 — controle op 10 oktober 2026
 
 Deze uitgave maakt expliciet dat Werkplaats een open-source vertrekpunt is. Gebruikers kunnen zonder code onder meer kleur, bureaublad, zichtbare gereedschappen, volgorde, snelkoppelingen, statussen, labels en categorieën kiezen. Wie verder wil gaan, kan de gewone HTML-, CSS- en JavaScriptbestanden zelf of met hulp van AI aanpassen en functies of complete gereedschappen toevoegen, veranderen of verwijderen. De eerdere publieke waarschuwing **Werk in uitvoering!** is van de startpagina verwijderd.

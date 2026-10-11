@@ -37,6 +37,7 @@ window.DocumentMaterials=(()=>{
   checkActive(file);if(!isEditMode)await toggleEditMode();checkActive(file);
   const editor=$('wysiwygEditor'),markdown=$('markdownSource');if(!editor)throw Error(I18n.t('Het document kon niet worden geopend om te bewerken.'));
   if(markdown&&!markdown.hidden){
+   if(window.MarkdownSourceImages){const compact=MarkdownSourceImages.compact(text,markdown.embeddedImages);markdown.embeddedImages=compact.images;text=compact.text;}
    const valid=position?.node===markdown,start=valid?position.start:markdown.value.length,end=valid?position.end:start;
    markdown.focus();markdown.setSelectionRange(start,end);markdown.setRangeText('\n\n'+text+'\n\n',start,end,'end');markdown.dispatchEvent(new Event('input',{bubbles:true}));
   }else{
