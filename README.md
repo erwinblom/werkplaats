@@ -2,6 +2,8 @@
 
 Je eigen werkplek voor ideeën, teksten en projecten. Gratis. Zonder account. Je bestanden blijven op je computer.
 
+**Gebouwd met AI. Te gebruiken zonder AI.** AI heeft geholpen om de code van Werkplaats te maken. Daarna draait die code gewoon in je browser: voor het dagelijkse gebruik heb je geen AI, AI-account of AI-abonnement nodig. Ook de offline download werkt zonder AI.
+
 **[Open Werkplaats](https://erwinblom.github.io/werkplaats/)**
 
 **Voor bewaren in een map heb je Chrome of Edge op je computer nodig.** Safari, Firefox en ingebouwde browsers kunnen hier geen werkmap kiezen. Je hoeft geen broncode aan te passen.
@@ -61,7 +63,7 @@ Via **Instellingen → Mijn Werkplaats** kies je je naam, kleur, bureaublad en w
 
 Je kiest ook de volgorde van de onderdelen en je starttool. Je kunt zes meegeleverde bureaubladen gebruiken of een eigen afbeelding kiezen. Voeg daarnaast compacte snelkoppelingen en eigen projectstatussen, contactlabels en categorieën toe. Verborgen onderdelen behouden hun gegevens. De interface ondersteunt Nederlands en Engels; je eigen inhoud blijft in zijn oorspronkelijke taal.
 
-Werkplaats is een open-source vertrekpunt, geen vast pakket dat iedereen hetzelfde moet gebruiken. Veel pas je zonder code aan. Wil je verder gaan, dan kun je de gewone HTML-, CSS- en JavaScriptbestanden zelf of met hulp van AI aanpassen. Zo kun je functies en complete gereedschappen toevoegen, veranderen of verwijderen. Werk vanuit een kopie en controleer na iedere wijziging of openen, bewaren en heropenen nog goed werken. Dat is de praktische kracht van open source: je begint met iets bruikbaars en maakt het daarna echt van jezelf.
+Werkplaats is een open-source vertrekpunt, geen vast pakket dat iedereen hetzelfde moet gebruiken. Veel pas je zonder code aan. Wil je verder gaan, dan kun je de gewone HTML-, CSS- en JavaScriptbestanden zelf of met hulp van AI aanpassen. Zo kun je functies en complete gereedschappen toevoegen, veranderen of verwijderen. AI is daarbij een hulpmiddel tijdens het bouwen. Zodra je de aangepaste code hebt opgeslagen, werkt je versie zelfstandig: AI hoeft niet bij ieder gebruik opnieuw iets te bedenken of uit te voeren. De code voert de vastgelegde instructies uit. Controle en onderhoud blijven nodig. Werk vanuit een kopie en controleer na iedere wijziging of openen, bewaren en heropenen nog goed werken. Dat is de praktische kracht van open source: je begint met iets bruikbaars en maakt het daarna echt van jezelf.
 
 </details>
 
