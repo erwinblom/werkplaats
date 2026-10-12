@@ -1,3 +1,14 @@
+# Werkplaats v0.36.7 — 12 oktober 2026
+
+- Verzamelen: compact categoriemenu, vijf gebruikslabels en bladeren binnen de huidige selectie.
+- 24/24 brontestbestanden geslaagd; 212 publieke bestanden, links, JavaScript, privacyuitsluitingen en ZIP gecontroleerd.
+- Chrome: drie proefbronnen bewaard in een tijdelijke werkmap en op schijf teruggelezen. Na sluiten/heropenen metadata en filters gecontroleerd; geen afzonderlijke cachevrije herstelproef.
+- Pijlen, selectie, favorieten, categorie en Wis filters gecontroleerd. Geen persoonlijke proefgegevens gepubliceerd.
+- Mobiele filters: 21 servertests, typecontrole en productiebuild geslaagd; filterbediening gecontroleerd op componentbreedte 390 pixels.
+- Persoonlijke Sync blijft buiten Master. Onafhankelijke bronback-up niet opnieuw bevestigd wegens de bekende losse bronwijzigingen.
+
+## Historische controle
+
 # Werkplaats v0.36.6 — 12 oktober 2026
 
 - Browservereiste zichtbaar op Home, bij Opslag en in uitleg/README: Chrome of Edge op computer voor mapopslag.
