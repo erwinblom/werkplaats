@@ -1,3 +1,14 @@
+# Werkplaats v0.36.6 — 12 oktober 2026
+
+- Browservereiste zichtbaar op Home, bij Opslag en in uitleg/README: Chrome of Edge op computer voor mapopslag.
+- Browser zonder maptoegang krijgt concrete uitleg; geen codewijziging nodig. Start zonder ondersteuning of geannuleerde mapkeuze herlaadt geen werk.
+- 23/23 brontestbestanden geslaagd; 211 Master-bestanden, HTML-links, JavaScript, privacyuitsluitingen en ZIP gecontroleerd.
+- Native Safari: originele disabled knop gereproduceerd; nieuwe uitleg op Home/Opslag en aanklikbare knop gecontroleerd. Chromium-testbrowser: normale startroute en annuleren.
+- Firefox/Windows 11 is door Erwin bevestigd als meldende omgeving; niet rechtstreeks op die computer getest.
+- Persoonlijke Sync en gegevens blijven uitgesloten. Onafhankelijke bronback-up heeft de eerder vastgestelde blokkade door losse bronwijzigingen.
+
+## Historische controle
+
 # Werkplaats v0.36.5 — controle op 11 oktober 2026
 
 - App is de enige ontwikkelbron; 211 bestanden geïmporteerd uit de gecontroleerde Master.
