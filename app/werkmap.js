@@ -3,7 +3,13 @@
 window.Werkmap=(()=>{
  const catalog={Werkbank:['Schrijven',null],Ping:['Factureren','factureren'],Projectbord:['Doen','doen'],Bronnenkast:['Verzamelen','verzamelen'],Uren:['Uren schrijven','uren-schrijven'],Contacten:['Contact houden','contact-houden'],Publicatieplanner:['Plannen','plannen'],Offerte:['Offreren','offreren'],Kasboek:['Boekhouden','boekhouden'],Abonnementen:['Abonnementen','abonnementen']};
  const tool=document.querySelector('script[data-tool]')?.dataset.tool,example=window.GereedschapskistMode?.example;
- const supported='showDirectoryPicker' in window&&!!window.indexedDB,dbName='gereedschapskist-werkmap-v1';
+ function storageSupport(){
+  if(window.isSecureContext===false)return {supported:false,message:'Open Werkplaats via https of de lokale download in Chrome of Edge op je computer om een opslagmap te kiezen.'};
+  if(typeof window.showDirectoryPicker!=='function')return {supported:false,message:'Deze browser kan geen opslagmap kiezen. Open Werkplaats in Chrome of Edge op je computer. Je hoeft geen broncode aan te passen.'};
+  if(!window.indexedDB)return {supported:false,message:'Deze browser kan de mapkeuze niet onthouden. Gebruik Chrome of Edge op je computer met browseropslag ingeschakeld.'};
+  return {supported:true,message:'Voor bewaren in een map: gebruik Chrome of Edge op je computer.'};
+ }
+ const support=storageSupport(),supported=support.supported,dbName='gereedschapskist-werkmap-v1';
  let root=null,revision=null,db=null,adapter=null,box=null,busy=false,starting=false;const known=new Map();let adapterResolve;const adapterReady=new Promise(resolve=>adapterResolve=resolve);
  const $=id=>document.getElementById('wm-'+id);
  function message(text){if($('message'))$('message').textContent=text;}
@@ -25,6 +31,7 @@ window.Werkmap=(()=>{
  function filename(){return 'gereedschapskist-'+catalog[tool][1]+'.json';}
  function safeName(name){if(typeof name!=='string'||!name.trim()||name.length>160||/[\\/:*?"<>|\u0000-\u001f]/.test(name)||name==='.'||name==='..')throw Error(I18n.value(I18n.ui("Gebruik een korte bestandsnaam zonder schuine strepen of bijzondere tekens.",'Gebruik een korte bestandsnaam zonder schuine strepen of bijzondere tekens.')));return name.trim();}
  async function choose(selectedHandle=null,{requireExisting=false}={}){
+  if(!supported){message(I18n.t(support.message));return false;}
   if(!selectedHandle&&!requireExisting&&await recall()){await permission(root);return true;}
   if(busy)return;busy=true;const button=$('choose');if(button)button.disabled=true;if(box)box.open=true;
   message(I18n.value(I18n.ui("Kies een map in het mapvenster en geef toegang. Verschijnt er geen venster? Probeer deze pagina in Chrome of Edge.",'Kies een map in het mapvenster en geef toegang. Verschijnt er geen venster? Probeer deze pagina in Chrome of Edge.')));
@@ -72,6 +79,7 @@ window.Werkmap=(()=>{
   dialog.onclose=()=>{dialog.remove();if(!picked)reject(Object.assign(new Error(I18n.value(I18n.ui("Geannuleerd",'Geannuleerd'))),{name:'UserCancelledError'}));};dialog.append(title,text,hint,cancel,pick,manual);document.body.append(dialog);dialog.showModal();
  });}
  async function startNew(){
+  if(!supported){message(I18n.t(support.message));return false;}
   if(busy||starting)return false;starting=true;let stage='map kiezen';
   message(I18n.value(I18n.ui("Kies een plek voor je bestanden.",'Kies een plek voor je bestanden.')));
   try{
@@ -174,9 +182,9 @@ window.Werkmap=(()=>{
  allReady.catch(()=>{});window.BewaarAllesReady=allReady;
  const taxScript=document.createElement('script');taxScript.src=new URL('belastingtarieven.js?v=20261006-tax-rates-1',werkmapScriptURL).href;document.head.append(taxScript);
  window.WerkplaatsPersonalisatieReady=allReady.then(()=>new Promise((resolve,reject)=>{const s=document.createElement('script');s.src=new URL('personalisatie.js?v=20261010-personalisatie-6',werkmapScriptURL).href;s.onload=()=>resolve(window.WerkplaatsPersonalisatie);s.onerror=()=>reject(Error(I18n.value(I18n.ui("Personalisatie kon niet laden.",'Personalisatie kon niet laden.'))));document.head.append(s);}));
- window.MijnGereedschappenReady=WerkplaatsPersonalisatieReady.then(()=>new Promise((resolve,reject)=>{const s=document.createElement('script');s.src=new URL('mijn-gereedschappen.js?v=20261011-clear-start-1',werkmapScriptURL).href;s.onload=()=>resolve(window.MijnGereedschappen);s.onerror=()=>reject(Error(I18n.value(I18n.ui("Mijn gereedschappen kon niet laden.",'Mijn gereedschappen kon niet laden.'))));document.head.append(s);}));
+ window.MijnGereedschappenReady=WerkplaatsPersonalisatieReady.then(()=>new Promise((resolve,reject)=>{const s=document.createElement('script');s.src=new URL('mijn-gereedschappen.js?v=20261012-browser-help-1',werkmapScriptURL).href;s.onload=()=>resolve(window.MijnGereedschappen);s.onerror=()=>reject(Error(I18n.value(I18n.ui("Mijn gereedschappen kon niet laden.",'Mijn gereedschappen kon niet laden.'))));document.head.append(s);}));
  MijnGereedschappenReady.catch(()=>{});
- const ui=document.createElement('script');ui.src=new URL('werkruimte-ui.js?v=20261011-clear-start-1',werkmapScriptURL).href;document.head.append(ui);
+ const ui=document.createElement('script');ui.src=new URL('werkruimte-ui.js?v=20261012-browser-help-1',werkmapScriptURL).href;document.head.append(ui);
  function requestReadAccess(){
   if(!root)return Promise.reject(Error(I18n.t('Kies eerst een werkmap.')));
   return root.requestPermission({mode:'read'}).then(state=>{if(state!=='granted')throw Error(I18n.t('Geen toegang tot je werkmap.'));});
@@ -195,5 +203,5 @@ window.Werkmap=(()=>{
  document.addEventListener('DOMContentLoaded',mount,{once:true});
  // Schrijven keeps its own per-document save; the other tools use the shared workspace save.
  document.addEventListener('click',e=>{const id=e.target.closest('button')?.id;if(!adapter||example||['Werkbank','Abonnementen'].includes(tool)||id!==adapter.saveId)return;e.preventDefault();e.stopImmediatePropagation();backup();},true);
- return {recall,suiteReady:allReady,choose,startNew,continueWork,adapterReady,allCheck:()=>adapter?.check?.(),allRestore:s=>adapter.restore(s),allReset:()=>{},allAccess,requestReadAccess,allInfo:async()=>{await ready;return {revision,name:root?.name};},allRead:()=>adapter?.read()??null,allLoad:file=>adapter.load(file),ready,register,save,exportFile,readContacts,get name(){return root?.name||''},get active(){return !!root&&!example},get busy(){return busy},load};
+ return {supported,get supportMessage(){return I18n.t(support.message);},recall,suiteReady:allReady,choose,startNew,continueWork,adapterReady,allCheck:()=>adapter?.check?.(),allRestore:s=>adapter.restore(s),allReset:()=>{},allAccess,requestReadAccess,allInfo:async()=>{await ready;return {revision,name:root?.name};},allRead:()=>adapter?.read()??null,allLoad:file=>adapter.load(file),ready,register,save,exportFile,readContacts,get name(){return root?.name||''},get active(){return !!root&&!example},get busy(){return busy},load};
 })();

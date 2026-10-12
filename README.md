@@ -4,7 +4,7 @@ Je eigen werkplek voor ideeën, teksten en projecten. Gratis. Zonder account. Je
 
 **[Open Werkplaats](https://erwinblom.github.io/werkplaats/)**
 
-Gebruik Chrome of Edge op je computer.
+**Voor bewaren in een map heb je Chrome of Edge op je computer nodig.** Safari, Firefox en ingebouwde browsers kunnen hier geen werkmap kiezen. Je hoeft geen broncode aan te passen.
 
 [Bekijk de uitlegvideo](https://erwinblom.github.io/werkplaats/Video/Werkplaats-uitlegvideo.mp4) · [Download voor offline gebruik](https://github.com/erwinblom/werkplaats/releases/latest/download/Werkplaats.zip)
 

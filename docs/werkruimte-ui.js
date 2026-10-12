@@ -515,6 +515,7 @@ if(GereedschapskistMode.example){const status=$('storage'),text='Oefeninhoud. Je
    const route=document.createElement('section');route.className='quick-start';
    const routeTitle=document.createElement('strong');I18n.assign(routeTitle,I18n.ui('Stap 1 van 3 · Kies een opslagplek','Stap 1 van 3 · Kies een opslagplek'),'textContent');
    const steps=document.createElement('p');I18n.assign(steps,I18n.ui('Klik op Nieuw beginnen. Daarna maak je je eerste notitie.','Klik op Nieuw beginnen. Daarna maak je je eerste notitie.'),'textContent');
+   if(!Werkmap.supported){routeTitle.textContent=I18n.t('Voor bewaren in een map: gebruik Chrome of Edge op je computer.');steps.textContent=Werkmap.supportMessage;}
    route.append(routeTitle,steps);bar.append(workChoice,$('wm-backup'),route);document.querySelector('.titlebar').after(bar);
    const videoHelp=document.createElement('details');videoHelp.className='instruction-video';
    const videoTitle=document.createElement('summary');I18n.assign(videoTitle,I18n.ui('Bekijk wat je kunt doen · 1 minuut','Bekijk wat je kunt doen · 1 minuut'),'textContent');
@@ -541,7 +542,7 @@ if(GereedschapskistMode.example){const status=$('storage'),text='Oefeninhoud. Je
     if(state.parentElement!==workChoice)workChoice.append(state);
     state.hidden=!!Werkmap.active;
     I18n.assign(state,(Werkmap.active?'':I18n.ui("Je bestanden blijven op je computer.",'Je bestanden blijven op je computer.')),"textContent");
-    browserHint.hidden='showDirectoryPicker' in window&&!!window.indexedDB;
+    browserHint.hidden=!Werkmap.supported;browserHint.textContent=Werkmap.supportMessage;
     const continuePrimary=Werkmap.active&&!example;
     first.classList.toggle('primary',!continuePrimary);first.classList.toggle('action-primary',!continuePrimary);
     open.classList.toggle('primary',continuePrimary);open.classList.toggle('action-primary',continuePrimary);

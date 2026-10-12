@@ -1,4 +1,10 @@
 window.WerkplaatsVertalingen={
+  "Voor bewaren in een map: gebruik Chrome of Edge op je computer.": "To save to a folder, use Chrome or Edge on your computer.",
+  "Deze browser kan geen opslagmap kiezen. Open Werkplaats in Chrome of Edge op je computer. Je hoeft geen broncode aan te passen.": "This browser cannot choose a storage folder. Open Werkplaats in Chrome or Edge on your computer. You do not need to change the source code.",
+  "Open Werkplaats via https of de lokale download in Chrome of Edge op je computer om een opslagmap te kiezen.": "Open Werkplaats over HTTPS or use the local download in Chrome or Edge on your computer to choose a storage folder.",
+  "Deze browser kan de mapkeuze niet onthouden. Gebruik Chrome of Edge op je computer met browseropslag ingeschakeld.": "This browser cannot remember the folder selection. Use Chrome or Edge on your computer with browser storage enabled.",
+  "Safari, Firefox en ingebouwde browsers kunnen hier geen werkmap kiezen. Open deze pagina in Chrome of Edge op je computer. Je hoeft geen broncode aan te passen.": "Safari, Firefox and embedded browsers cannot choose a workspace folder here. Open this page in Chrome or Edge on your computer. You do not need to change the source code.",
+
   "Ververs": "Refresh",
   "Documentenlijst opnieuw uit de map lezen": "Reload the document list from the folder",
   "Bewaar eerst je wijzigingen en klik daarna op Ververs.": "Save your changes first, then click Refresh.",

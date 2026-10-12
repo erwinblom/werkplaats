@@ -1,7 +1,9 @@
 WERKPLAATS — LOKAAL / OPEN SOURCE
 
 Begin met Begin hier.html, of gebruik de online versie.
-Gebruik Chrome of Edge op je computer voor je werkmap.
+Voor bewaren in een map: gebruik Chrome of Edge op je computer.
+Safari, Firefox en ingebouwde browsers bieden deze mapkeuze niet.
+Je hoeft geen broncode aan te passen.
 
 1. Kies Nieuw beginnen en kies een opslagplek. De app maakt Mijn Werkplaats met negen submappen. Blokkeert de browser de plek? Kies de handmatige optie: maak en selecteer zelf een lege hoofdmap.
 2. Gebruik de tools. Via de keuzelijst bovenaan wissel je van tool.
