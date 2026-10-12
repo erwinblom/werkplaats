@@ -57,3 +57,5 @@ body[data-tool=Bronnenkast] .card>.library-note{grid-row:4;margin:0}
 body[data-tool=Bronnenkast] .card>.source{grid-row:5;line-height:16px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin:0}
 body[data-tool=Bronnenkast] .card>.source-details{grid-row:6;margin:0}
 body[data-tool=Bronnenkast] .card>.card-foot{grid-row:7;margin:0;padding-top:2px;align-self:end}
+
+body[data-tool=Bronnenkast] #categories select{max-width:100%;min-width:0}body[data-tool=Bronnenkast] #categories label{align-self:center}

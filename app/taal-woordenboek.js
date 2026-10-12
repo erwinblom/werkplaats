@@ -1,4 +1,22 @@
 window.WerkplaatsVertalingen={
+  "Kies je categorie in het menu. Onder Zoeken → Filters kies je een onderwerp of gebruik: Lezen, Luisteren, Kijken, Proberen of Inspireren.": "Choose your category in the menu. Under Search → Filters, choose a topic or use: Read, Listen, Watch, Try or Inspire.",
+
+  "Bladeren door je selectie": "Browse your selection",
+  "Vorige bron": "Previous source",
+  "Volgende bron": "Next source",
+  "Vorige": "Previous",
+  "Volgende": "Next",
+
+  "Wat wil je hiermee?": "What do you want to do with this?",
+  "Lezen": "Read",
+  "Luisteren": "Listen",
+  "Kijken": "Watch",
+  "Proberen": "Try",
+  "Inspireren": "Inspire",
+  "Open Source": "Open Source",
+  "Robots": "Robots",
+  "Ongeldige gebruikskeuze bij een bron.": "Invalid use selection on a source.",
+
   "Voor bewaren in een map: gebruik Chrome of Edge op je computer.": "To save to a folder, use Chrome or Edge on your computer.",
   "Deze browser kan geen opslagmap kiezen. Open Werkplaats in Chrome of Edge op je computer. Je hoeft geen broncode aan te passen.": "This browser cannot choose a storage folder. Open Werkplaats in Chrome or Edge on your computer. You do not need to change the source code.",
   "Open Werkplaats via https of de lokale download in Chrome of Edge op je computer om een opslagmap te kiezen.": "Open Werkplaats over HTTPS or use the local download in Chrome or Edge on your computer to choose a storage folder.",

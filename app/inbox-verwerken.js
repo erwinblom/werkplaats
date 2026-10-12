@@ -37,7 +37,7 @@
    advance.onclick=()=>{queue.advance();next();};
    actions.before(review);actions.append(advance);
   }
-  function startInbox(){if(document.querySelector('dialog[open]'))return;filter='cat:Inbox';$('search').value='';$('topic').value='';render();queue=inboxQueue(data.items);next();}
+  function startInbox(){if(document.querySelector('dialog[open]'))return;filter='cat:Inbox';$('search').value='';$('topic').value='';if($('use-filter'))$('use-filter').value='';render();queue=inboxQueue(data.items);next();}
   launch.onclick=startInbox;
   // Start once; later arrivals must not interrupt someone already browsing.
   let initialReview=true;
@@ -64,6 +64,7 @@
    finally{saving=false;submit.disabled=false;skip.disabled=false;}
   };
   dialog.addEventListener('close',()=>{if(state==='edit'&&!saving)stop();});
+  document.addEventListener('bron-details-geopend',event=>{if(queue&&state==='view'&&queue.next(data.items)?.id!==event.detail.id)stop();});
   document.addEventListener('close',event=>{if(event.target.id==='source-detail'&&state==='view')stop();},true);
   document.addEventListener('werkbestand-geopend',()=>{if(queue){$('source-detail')?.close();if(dialog.open)dialog.close();stop();}});
   const style=document.createElement('style');I18n.assign(style,I18n.ui("#inbox-process[hidden]{display:none!important}#inbox-process{margin:12px 0 20px;padding:10px 16px;font-weight:700}.inbox-review-bar{margin:16px 0 24px;padding:16px 20px;background:#f3f4f5;line-height:1.6}.inbox-review-bar[hidden]{display:none}.inbox-review-bar p{margin:0 0 8px}.inbox-review-bar a{font-weight:700}#form[data-inbox-processing] #delete{display:none}.inbox-view-progress{margin:18px 0 8px;font-size:13px;font-weight:700;color:#555}.inbox-view-next{margin-left:8px}",'#inbox-process[hidden]{display:none!important}#inbox-process{margin:12px 0 20px;padding:10px 16px;font-weight:700}.inbox-review-bar{margin:16px 0 24px;padding:16px 20px;background:#f3f4f5;line-height:1.6}.inbox-review-bar[hidden]{display:none}.inbox-review-bar p{margin:0 0 8px}.inbox-review-bar a{font-weight:700}#form[data-inbox-processing] #delete{display:none}.inbox-view-progress{margin:18px 0 8px;font-size:13px;font-weight:700;color:#555}.inbox-view-next{margin-left:8px}'),"textContent");document.head.append(style);

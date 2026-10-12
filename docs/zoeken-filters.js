@@ -15,7 +15,7 @@
   Abonnementen:['.subscription-filters','#rows',{filter:'current'}],
   Werkbank:['.writing-search-filters','#fileList',{'writing-search-scope':'content'}],
   Projectbord:['.toolbar','#board',{'project-filter':'',filter:'all',sort:'priority'}],
-  Bronnenkast:['.tools','#count',{topic:'','library-category':''}],
+  Bronnenkast:['.tools','#count',{topic:'','use-filter':'','collection-category':'Alles'}],
   Contacten:['.tools','#count',{tag:''}],
   Publicatieplanner:['.toolbar','#count',{'kind-filter':'','channel-filter':'','status-filter':'',attention:false}],
   Uren:['.toolbar','#count',{period:'all','client-filter':'','project-filter':'',kind:'all'}],
@@ -78,6 +78,7 @@
  }
  clear.onclick=()=>{
   search.value='';
+  const categoryMenu=$('collection-category');if(categoryMenu){categoryMenu.value='Alles';categoryMenu.dispatchEvent(new Event('change',{bubbles:true}));}
   for(const el of fields()){if(el.type==='checkbox')el.checked=defaults[el.id];else el.value=defaults[el.id];}
   const all=document.querySelector('#categories [data-category="Alles"],#filters [data-filter="Alles"]');if(all)all.click();
   for(const el of fields())el.dispatchEvent(new Event('change',{bubbles:true}));

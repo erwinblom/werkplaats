@@ -36,7 +36,7 @@ Bestaande gebruikers: bewaar eerst je actuele werk in de oude versie. Open na de
 
 | Onderdeel | Gebruik |
 |---|---|
-| Verzamelen | Links, citaten, bronnen en bestanden bewaren |
+| Verzamelen | Links en citaten bewaren; kiezen tussen Lezen, Luisteren, Kijken, Proberen en Inspireren |
 | Schrijven | Notities en documenten; gekoppelde bronnen, afbeeldingen en ander materiaal |
 | Zoeken | Je eigen werk doorzoeken |
 | Projecten | Tijdelijke en doorlopende projecten met gekoppeld materiaal |
@@ -47,6 +47,8 @@ Bestaande gebruikers: bewaar eerst je actuele werk in de oude versie. Open na de
 | Boekhouden | Inkomsten, uitgaven, bonnen en export |
 
 </details>
+
+In Verzamelen kies je categorieën uit één menu. Open een bron en blader met Vorige/Volgende of de toetsenbordpijlen door je huidige selectie. De ster bewaart je persoonlijke shortlist.
 
 ## Maak Werkplaats van jezelf
 
