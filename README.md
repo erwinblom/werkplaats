@@ -80,6 +80,20 @@ Wil je tussen website en download wisselen? Bewaar eerst, sluit de vorige versie
 
 </details>
 
+## Help Werkplaats verbeteren
+
+Werkplaats groeit door mensen die het gebruiken. Loop je ergens tegenaan, mis je iets of heb je zelf een uitbreiding gebouwd? Laat het weten.
+
+- **[Meld een fout](https://github.com/erwinblom/werkplaats/issues/new?template=bug.md)**: wat deed je, wat verwachtte je en wat gebeurde er?
+- **[Stel een verbetering voor](https://github.com/erwinblom/werkplaats/issues/new?template=verbetering.md)**: wat wil je kunnen doen en welk probleem lost dat op?
+- **[Deel een uitbreiding](https://github.com/erwinblom/werkplaats/issues/new?template=uitbreiding.md)**: wat heb je gebouwd, voor wie en waar staat de code of ZIP?
+
+Je kunt ook **[mailen naar erwblo@gmail.com](mailto:erwblo@gmail.com?subject=Werkplaats%20verbeteren)**. Een GitHub-account is daarvoor niet nodig. In Werkplaats vind je dezelfde drie keuzes onder **Help Werkplaats verbeteren** op de startpagina en onder **Hulp**. Bekijk de tekst vóór je deelt; lokaal bewaren verzendt niets. Je verstuurt de e-mail of plaatst de GitHub-melding zelf.
+
+Erik van Elten maakte bijvoorbeeld Agenda-export. Na controle kreeg die een plek in Werkplaats, met zijn naam erbij. Ook jouw bijdrage is welkom. Uitbreidingen worden vóór opname gecontroleerd en de maker blijft vermeld.
+
+[Hoe je kunt bijdragen](CONTRIBUTING.md)
+
 ## Agenda-export van Erik van Elten
 
 Met Agenda-export zet je deadlines en datums uit Doen, Projecten, Contacten en Abonnementen in je eigen agenda. Kies welke onderdelen je wilt meenemen en download een .ics-bestand. Open of importeer dat in je agenda. Afgeronde items en herinneringen zijn optioneel.
@@ -88,7 +102,7 @@ Met Agenda-export zet je deadlines en datums uit Doen, Projecten, Contacten en A
 
 ### Installeren
 
-1. Download de [nieuwe Werkplaats-uitgave](https://github.com/erwinblom/werkplaats/releases/tag/v0.36.8) en [Agenda-export 0.2.0](https://github.com/erwinblom/werkplaats/releases/download/v0.36.8/Agenda-export-0.2.0.zip). Open Werkplaats in Chrome of Edge op je computer.
+1. Download de [nieuwe Werkplaats-uitgave](https://github.com/erwinblom/werkplaats/releases/tag/v0.36.9) en [Agenda-export 0.2.0](https://github.com/erwinblom/werkplaats/releases/download/v0.36.8/Agenda-export-0.2.0.zip). Open Werkplaats in Chrome of Edge op je computer.
 2. Kies je werkmap bij Instellingen → Opslag. Klik daarna Instellingen → Uitbreidingen → Map voorbereiden.
 3. Pak het Agenda-exportpakket uit. Zet de map agenda-export in Uitbreidingen van je werkmap.
 4. Klik Ververs → Zet aan. Kies je onderdelen en klik Download agenda (.ics).

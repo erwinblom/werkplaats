@@ -799,7 +799,7 @@ window.WerkplaatsVertalingen={
   "Deze taken staan al op dit bord.": "These tasks are already on this board.",
   "Deze tool is in een ander venster gewijzigd. Download eventueel je huidige invoer als kopie en herlaad voordat je de werkmap bijwerkt.": "This tool has changed in another window. Download your current input as a copy if needed and reload before updating the workspace folder.",
   "Deze tool is in een ander venster gewijzigd. Herlaad eerst.": "This tool has changed in another window. Reload first.",
-  "Deze uitleg beschrijft versie 0.36.8 van Werkplaats, 14 oktober 2026.": "This help describes Werkplaats version 0.36.8, 14 October 2026.",
+  "Deze uitleg beschrijft versie 0.36.9 van Werkplaats, 14 oktober 2026.": "This help describes Werkplaats version 0.36.9, 14 October 2026.",
   "Dat is de kracht van open source: je hoeft niet vanaf nul te beginnen en je zit ook niet vast aan onze keuzes. Je kunt een werkende basis gebruiken, haar persoonlijk maken en verbeteringen weer met anderen delen.": "That is the strength of open source: you do not have to start from scratch and you are not locked into our choices. You can use a working foundation, make it personal and share improvements with others.",
   "Download de broncode of maak een eigen kopie op GitHub. Je kunt functies en complete tools toevoegen, aanpassen of verwijderen.": "Download the source code or make your own copy on GitHub. You can add, change or remove features and complete tools.",
   "Een AI-codeassistent kan de gewone HTML-, CSS- en JavaScriptbestanden met je aanpassen. Werk vanuit een kopie, beschrijf concreet wat je wilt en controleer daarna of bewaren en heropenen blijven werken.": "An AI coding assistant can help you change the plain HTML, CSS and JavaScript files. Work from a copy, describe precisely what you want and then verify that saving and reopening still work.",
@@ -2155,7 +2155,7 @@ window.WerkplaatsVertalingen={
   "Verplaatst naar {0}. Bewaar alles om je werkmap bij te werken.": "Moved to {0}. Use Save all to update your workspace folder.",
   "Verschil": "Difference",
   "Versie": "Version",
-  "Versie 0.36.8": "Version 0.36.8",
+  "Versie 0.36.9": "Version 0.36.9",
   "Versie en download": "Version and download",
   "Verstuurd": "Sent",
   "Verwerken en bewaren": "Process and save",
@@ -3366,4 +3366,29 @@ Object.assign(window.WerkplaatsVertalingen,{
   "Zet de map agenda-export in Uitbreidingen van je werkmap, buiten de appbestanden.": "Put the agenda-export folder in Extensions in your workspace folder, outside the app files.",
   "Klik Ververs → Zet aan. Kies je bronnen en klik Download agenda (.ics).": "Click Refresh → Enable. Choose your sources and click Download calendar (.ics).",
   "Lees hoe Agenda-export werkt": "Read how Calendar export works"
+});
+
+Object.assign(window.WerkplaatsVertalingen,{
+  "Help Werkplaats verbeteren": "Help improve Werkplaats",
+  "Meld een fout": "Report a bug",
+  "Stel een verbetering voor": "Suggest an improvement",
+  "Deel een uitbreiding": "Share an extension",
+  "Werkplaats groeit door mensen die het gebruiken. Loop je ergens tegenaan, mis je iets of heb je zelf een uitbreiding gebouwd? Laat het weten.": "Werkplaats grows through the people using it. Found a problem, missing something or built an extension? Let us know.",
+  "Meld een fout, stel een verbetering voor of deel een eigen uitbreiding. Erik van Elten maakte bijvoorbeeld Agenda-export. Ook jouw bijdrage is welkom.": "Report a bug, suggest an improvement or share your own extension. Erik van Elten created Calendar export, for example. Your contribution is welcome too.",
+  "Deel je bijdrage": "Share your contribution",
+  "Controleer hieronder wat je deelt. Alleen jouw tekst en dit onderdeel gaan mee. Je verstuurt zelf de e-mail of plaatst zelf de GitHub-melding.": "Check what you are sharing below. Only your text and this part of Werkplaats are included. You send the email or post the GitHub issue yourself.",
+  "Wat je deelt": "What you share",
+  "Deel per e-mail": "Share by email",
+  "Kopieer tekst": "Copy text",
+  "Deel op GitHub": "Share on GitHub",
+  "E-mail opent je mailprogramma met erwblo@gmail.com als ontvanger. GitHub is openbaar en vraagt een account. Voeg screenshots of een ZIP zelf toe.": "Email opens your mail app with erwblo@gmail.com as the recipient. GitHub is public and requires an account. Add screenshots or a ZIP yourself.",
+  "Lokaal bewaarde opmerkingen": "Locally saved comments",
+  "Beschrijf je uitbreiding, noem de maker en voeg een link toe.": "Describe your extension, name its creator and add a link.",
+  "Lange tekst? Klik eerst Kopieer tekst en plak die in je e-mail of GitHub-melding.": "Long text? Click Copy text first and paste it into your email or GitHub issue.",
+  "Er is nog niets verstuurd.": "Nothing has been sent yet.",
+  "Tekst gekopieerd. Plak deze in je e-mail of GitHub-melding.": "Text copied. Paste it into your email or GitHub issue.",
+  "Je mailprogramma wordt geopend. Verstuur het bericht daar zelf. Geen mailprogramma? Kopieer de tekst en mail die naar erwblo@gmail.com.": "Your mail app is opening. Send the message there yourself. No mail app? Copy the text and email it to erwblo@gmail.com.",
+  "GitHub wordt geopend. Controleer je tekst en plaats de melding daar zelf.": "GitHub is opening. Review your text and post the issue there yourself.",
+  "Alleen lokaal bewaard. Gebruik Deel per e-mail of Deel op GitHub om je bijdrage te delen.": "Saved locally only. Use Share by email or Share on GitHub to share your contribution.",
+  "Deel deze opmerking": "Share this comment"
 });
