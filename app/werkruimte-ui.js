@@ -147,7 +147,7 @@
    const add=$('new'),quote=$('take-quote');
    if(add&&quote){const menu=document.createElement('details');menu.className='context-actions home-new';menu.id='invoice-new-menu';const summary=document.createElement('summary');I18n.assign(summary,I18n.ui('+ Nieuwe factuur','+ Nieuwe factuur'),'textContent');const panel=document.createElement('div');panel.className='context-actions-panel';add.before(menu);menu.append(summary,panel);panel.append(add,quote);panel.addEventListener('click',e=>{if(e.target.closest('button'))menu.open=false;});}
    const editor=document.querySelector('.factureren-detail .editor');
-   if(editor){const controls=['invoice-duplicate','invoice-delete','invoice-credit'].map($).filter(Boolean);if(controls.length){const menu=document.createElement('details');menu.className='context-actions invoice-more';const summary=document.createElement('summary');I18n.assign(summary,I18n.ui('Meer','Meer'),'textContent');const panel=document.createElement('div');panel.className='context-actions-panel';controls[0].before(menu);menu.append(summary,panel);panel.append(...controls);}}
+   if(editor){const controls=['invoice-duplicate','invoice-credit'].map($).filter(Boolean);if(controls.length){const menu=document.createElement('details');menu.className='context-actions invoice-more';const summary=document.createElement('summary');I18n.assign(summary,I18n.ui('Meer','Meer'),'textContent');const panel=document.createElement('div');panel.className='context-actions-panel';controls[0].before(menu);menu.append(summary,panel);panel.append(...controls);}}
   }
   if(tool==='Abonnementen'){
    const heading=document.querySelector('.subscriptions-heading');heading?.classList.add('suite-collection-heading');
@@ -511,12 +511,12 @@ if(GereedschapskistMode.example){const status=$('storage'),text='Oefeninhoud. Je
    const first=document.createElement('button');I18n.assign(first,I18n.ui("Nieuw beginnen",'Nieuw beginnen'),"textContent");first.className='primary action-primary';
    const open=document.createElement('button');I18n.assign(open,I18n.ui("Verder werken",'Verder werken'),"textContent");
    const state=document.createElement('span');state.className='workspace-name';
-   const workChoice=document.createElement('div');workChoice.className='home-work-choice';workChoice.setAttribute('role','group');I18n.attribute(workChoice,'aria-label',I18n.ui("Eigen werk",'Eigen werk'));workChoice.append(first,open,state);const browserHint=document.createElement('span');browserHint.className='workspace-name';I18n.assign(browserHint,I18n.ui("Gebruik Chrome of Edge op je computer voor je werkmap.",'Gebruik Chrome of Edge op je computer voor je werkmap.'),"textContent");workChoice.append(browserHint);
+   const workChoice=document.createElement('div');workChoice.className='home-work-choice';workChoice.setAttribute('role','group');I18n.attribute(workChoice,'aria-label',I18n.ui("Eigen werk",'Eigen werk'));workChoice.append(first,open,state);const browserHint=Werkmap.browserNotice();browserHint.id='home-storage-browser';
    const route=document.createElement('section');route.className='quick-start';
    const routeTitle=document.createElement('strong');I18n.assign(routeTitle,I18n.ui('Stap 1 van 3 · Kies een opslagplek','Stap 1 van 3 · Kies een opslagplek'),'textContent');
    const steps=document.createElement('p');I18n.assign(steps,I18n.ui('Klik op Nieuw beginnen. Daarna maak je je eerste notitie.','Klik op Nieuw beginnen. Daarna maak je je eerste notitie.'),'textContent');
    if(!Werkmap.supported){routeTitle.textContent=I18n.t('Voor bewaren in een map: gebruik Chrome of Edge op je computer.');steps.textContent=Werkmap.supportMessage;}
-   route.append(routeTitle,steps);bar.append(workChoice,$('wm-backup'),route);document.querySelector('.titlebar').after(bar);
+   route.append(routeTitle,steps);bar.append(workChoice,$('wm-backup'),browserHint,route);document.querySelector('.titlebar').after(bar);
    const videoHelp=document.createElement('details');videoHelp.className='instruction-video';
    const videoTitle=document.createElement('summary');I18n.assign(videoTitle,I18n.ui('Bekijk wat je kunt doen · 1 minuut','Bekijk wat je kunt doen · 1 minuut'),'textContent');
    const video=document.createElement('video');video.controls=true;video.preload='none';video.src=new URL('Video/Werkplaats-uitlegvideo.mp4',base).href;
@@ -542,7 +542,7 @@ if(GereedschapskistMode.example){const status=$('storage'),text='Oefeninhoud. Je
     if(state.parentElement!==workChoice)workChoice.append(state);
     state.hidden=!!Werkmap.active;
     I18n.assign(state,(Werkmap.active?'':I18n.ui("Je bestanden blijven op je computer.",'Je bestanden blijven op je computer.')),"textContent");
-    browserHint.hidden=!Werkmap.supported;browserHint.textContent=Werkmap.supportMessage;
+    browserHint.hidden=false;
     const continuePrimary=Werkmap.active&&!example;
     first.classList.toggle('primary',!continuePrimary);first.classList.toggle('action-primary',!continuePrimary);
     open.classList.toggle('primary',continuePrimary);open.classList.toggle('action-primary',continuePrimary);

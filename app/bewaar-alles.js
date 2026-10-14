@@ -5,6 +5,7 @@
  const names={Werkbank:'Schrijven',Ping:'Factureren',Projectbord:'Doen',Bronnenkast:'Verzamelen',Uren:'Uren schrijven',Contacten:'Contact houden',Publicatieplanner:'Plannen',Offerte:'Offreren',Kasboek:'Boekhouden',Abonnementen:'Abonnementen'};
  const keys={Ping:'ping-local-v1',Projectbord:'projectbord-v1',Bronnenkast:'bronnenkast-v1',Uren:'uren-v1',Contacten:'contacten-v1',Publicatieplanner:'publicatieplanner-v1',Offerte:'offerte-v1',Kasboek:'kasboek-v1',Abonnementen:'abonnementen-v1'};
  const tool=document.querySelector('script[data-tool]')?.dataset.tool,own=!window.GereedschapskistMode?.example,id=crypto.randomUUID();
+ const storage=window.GereedschapskistMode?.storage||window.localStorage;
  const lockPrefix='gk-all:'+scope+':tab:',channelName='gk-all:'+scope,dbName='gereedschapskist-bewaar-alles-v1';
  let db,channel,frozen=false,active=false,cacheTimer,unlock,registration,seen,restoring=false,recoveredForms=[],windowVersions=[];
  const say=text=>{const el=document.getElementById('wm-message');if(el)I18n.assign(el,text);for(const el of document.querySelectorAll('dialog[open] .all-dialog-status'))el.textContent=text;};
@@ -473,7 +474,7 @@
  async function readTool(t){
   await registration;
   if(!names[t])throw Error(I18n.value(I18n.ui("Onbekende tool.",'Onbekende tool.')));
-  if(!own){const key=keys[t]||'converterFiles',storage=GereedschapskistMode.storage,tourKey='rondleiding:'+key;
+  if(!own){const key=keys[t]||'converterFiles',tourKey='rondleiding:'+key;
    const current=storage.getItem(tourKey)===GereedschapskistKeuze.tour&&storage.getItem(tourKey+':version')===GereedschapskistExampleVersion;
    const data=current?JSON.parse(storage.getItem(key)||'null')||GereedschapskistExamples(t):GereedschapskistExamples(t);
    return {data:t==='Werkbank'?null:data,documents:t==='Werkbank'?(data||GereedschapskistExamples(t)).map(([name,file])=>({name,path:file.relativePath||'converter/'+name,content:file.content})):undefined};}
@@ -481,7 +482,7 @@
   let session=await storedSession(t);if(session)return clone(session);
   const {revision}=await Werkmap.allInfo();
   if(Werkmap.active){const {root}=await Werkmap.allAccess();session=(await readRound(root,false,t))?.values.find(s=>s.tool===t);if(session)return {...session,revision};}
-  const raw=keys[t]?GereedschapskistMode.storage.getItem(keys[t]):null;
+  const raw=keys[t]?storage.getItem(keys[t]):null;
   return {format:'gereedschapskist-werksessie',version:1,tool:t,name:names[t],data:raw?JSON.parse(raw):t==='Werkbank'?null:emptyData(t),documents:t==='Werkbank'?[]:undefined,draft:null,revision};
  }
  async function updateTool(t,fn){
@@ -489,12 +490,12 @@
   return mutation(()=>navigator.locks.request(scope+':update:'+t,async()=>{
    const before=await readTool(t),next=clone(before);delete next.fromDisk;await fn(next.data,next);
    limit(next);
-   if(!own){GereedschapskistMode.storage.setItem(keys[t],JSON.stringify(next.data));return next;}
+   if(!own){storage.setItem(keys[t],JSON.stringify(next.data));return next;}
    const live=await askTool(t,'replace',{expected:JSON.stringify([before.data,before.documents,before.draft]),next:{data:next.data,documents:next.documents,draft:next.draft,activeDocument:next.activeDocument}});
    if(live){return live;}
    next.savedAt=new Date().toISOString();
    await transact('readwrite',store=>store.put({id:scope+':loaded:'+t,scope,tool:t,value:next,updated:Date.now()}));
-   if(keys[t])GereedschapskistMode.storage.setItem(keys[t],JSON.stringify(next.data));
+   if(keys[t])storage.setItem(keys[t],JSON.stringify(next.data));
    return next;
   }));
  }

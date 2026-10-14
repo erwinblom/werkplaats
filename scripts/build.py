@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Maak website en eenvoudige download uit dezelfde gecontroleerde publieksbron."""
 from pathlib import Path
-import shutil, zipfile, hashlib, subprocess, sys
+import shutil, zipfile, hashlib, subprocess, sys, json
 ROOT=Path(__file__).resolve().parents[1]
 source=ROOT/'app';web=ROOT/'docs';dist=ROOT/'dist'
 # The imported Master contains the checked extension ZIP. Do not replace it
@@ -27,5 +27,15 @@ with zipfile.ZipFile(dist/'Werkplaats.zip','w',zipfile.ZIP_DEFLATED) as archive:
  for file in sorted(source.rglob('*')):
   if file.is_file() and file.name!='.DS_Store':add('Werkplaats/Bestanden/'+str(file.relative_to(source)),file.read_bytes())
 with zipfile.ZipFile(dist/'Werkplaats.zip') as archive:assert archive.testzip() is None
-(dist/'SHA256SUMS.txt').write_text(hashlib.sha256((dist/'Werkplaats.zip').read_bytes()).hexdigest()+'  Werkplaats.zip\n')
+sums=hashlib.sha256((dist/'Werkplaats.zip').read_bytes()).hexdigest()+'  Werkplaats.zip\n'
+agenda=source/'Uitbreidingen/agenda-export'
+if agenda.is_dir():
+ version=json.loads((agenda/'uitbreiding.json').read_text())['version']
+ agenda_name='Agenda-export-'+version+'.zip'
+ with zipfile.ZipFile(dist/agenda_name,'w',zipfile.ZIP_DEFLATED) as archive:
+  for file in sorted(agenda.iterdir()):
+   if file.is_file():add('agenda-export/'+file.name,file.read_bytes())
+ with zipfile.ZipFile(dist/agenda_name) as archive:assert archive.testzip() is None
+ sums+=hashlib.sha256((dist/agenda_name).read_bytes()).hexdigest()+'  '+agenda_name+'\n'
+(dist/'SHA256SUMS.txt').write_text(sums)
 print('Gebouwd: docs/ en dist/Werkplaats.zip; één startbestand en Bestanden/.')

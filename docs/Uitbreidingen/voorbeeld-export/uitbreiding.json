@@ -1,0 +1,9 @@
+{
+  "id": "voorbeeld-export",
+  "name": "Voorbeeld: taken als JSON",
+  "version": "1.0.0",
+  "apiVersion": 1,
+  "tools": [
+    "Projectbord"
+  ]
+}

@@ -1,4 +1,7 @@
 window.WerkplaatsVertalingen={
+  "Bewaren in een map? Gebruik Chrome of Edge op je computer.": "Saving to a folder? Use Chrome or Edge on your computer.",
+  "Chrome en Edge kunnen je werk rechtstreeks in je eigen map bewaren. In Safari, Firefox en op je telefoon kun je hier geen werkmap kiezen.": "Chrome and Edge can save your work directly to your own folder. You cannot choose a workspace folder here in Safari, Firefox or on your phone.",
+
   "Kies je categorie in het menu. Onder Zoeken → Filters kies je een onderwerp of gebruik: Lezen, Luisteren, Kijken, Proberen of Inspireren.": "Choose your category in the menu. Under Search → Filters, choose a topic or use: Read, Listen, Watch, Try or Inspire.",
 
   "Bladeren door je selectie": "Browse your selection",
@@ -796,7 +799,7 @@ window.WerkplaatsVertalingen={
   "Deze taken staan al op dit bord.": "These tasks are already on this board.",
   "Deze tool is in een ander venster gewijzigd. Download eventueel je huidige invoer als kopie en herlaad voordat je de werkmap bijwerkt.": "This tool has changed in another window. Download your current input as a copy if needed and reload before updating the workspace folder.",
   "Deze tool is in een ander venster gewijzigd. Herlaad eerst.": "This tool has changed in another window. Reload first.",
-  "Deze uitleg beschrijft versie 0.36.7 van Werkplaats, 12 oktober 2026.": "This help describes Werkplaats version 0.36.7, 12 October 2026.",
+  "Deze uitleg beschrijft versie 0.36.8 van Werkplaats, 14 oktober 2026.": "This help describes Werkplaats version 0.36.8, 14 October 2026.",
   "Dat is de kracht van open source: je hoeft niet vanaf nul te beginnen en je zit ook niet vast aan onze keuzes. Je kunt een werkende basis gebruiken, haar persoonlijk maken en verbeteringen weer met anderen delen.": "That is the strength of open source: you do not have to start from scratch and you are not locked into our choices. You can use a working foundation, make it personal and share improvements with others.",
   "Download de broncode of maak een eigen kopie op GitHub. Je kunt functies en complete tools toevoegen, aanpassen of verwijderen.": "Download the source code or make your own copy on GitHub. You can add, change or remove features and complete tools.",
   "Een AI-codeassistent kan de gewone HTML-, CSS- en JavaScriptbestanden met je aanpassen. Werk vanuit een kopie, beschrijf concreet wat je wilt en controleer daarna of bewaren en heropenen blijven werken.": "An AI coding assistant can help you change the plain HTML, CSS and JavaScript files. Work from a copy, describe precisely what you want and then verify that saving and reopening still work.",
@@ -2152,7 +2155,7 @@ window.WerkplaatsVertalingen={
   "Verplaatst naar {0}. Bewaar alles om je werkmap bij te werken.": "Moved to {0}. Use Save all to update your workspace folder.",
   "Verschil": "Difference",
   "Versie": "Version",
-  "Versie 0.36.7": "Version 0.36.7",
+  "Versie 0.36.8": "Version 0.36.8",
   "Versie en download": "Version and download",
   "Verstuurd": "Sent",
   "Verwerken en bewaren": "Process and save",
@@ -3119,6 +3122,7 @@ window.WerkplaatsVertalingen={
   "Schrijfmappen openen…": "Opening writing folders…",
   "Geef toegang om je schrijfmappen te openen.": "Grant access to open your writing folders.",
   "Open schrijfmappen": "Open writing folders",
+  "Geef opnieuw toegang": "Grant access again",
   "Kies een map": "Choose a folder",
   "Bewerk": "Edit",
   "Bewaar": "Save",
@@ -3349,3 +3353,17 @@ window.WerkplaatsVertalingen={
 "Maak hem van jou · 1 minuut": "Make it yours \u00b7 1 minute",
 "Bronnen{0}": "Sources{0}"
 };
+
+Object.assign(window.WerkplaatsVertalingen,{
+  "Agenda-export van Erik van Elten": "Calendar export by Erik van Elten",
+  "Zet deadlines en datums uit Doen, Projecten, Contacten en Abonnementen in je eigen agenda. Kies de gewenste bronnen, download een .ics-bestand en open of importeer dat in je agenda. Afgeronde items en herinneringen zijn optioneel.": "Put deadlines and dates from Tasks, Projects, Contacts and Subscriptions in your own calendar. Choose the sources, download an .ics file and open or import it in your calendar. Completed items and reminders are optional.",
+  "Erik van Elten bouwde de oorspronkelijke Agenda-export 0.1.0. De exportkern en zijn MIT-licentie zijn behouden. Erwin Blom paste met hulp van Codex de aansluiting op de vaste uitbreidingenplek van Werkplaats aan.": "Erik van Elten built the original Calendar export 0.1.0. Its export core and his MIT licence have been retained. Erwin Blom adapted the connection to the fixed Werkplaats extensions folder with help from Codex.",
+  "Bij een Werkplaats-update blijven de uitbreiding, activering en keuzes bij je werk staan. Open dezelfde werkmap; je browser kan opnieuw maptoegang vragen. Je hoeft de uitbreiding niet opnieuw te installeren.": "After a Werkplaats update, the extension, activation and choices remain with your work. Open the same workspace folder; your browser may ask for folder access again. You do not need to reinstall the extension.",
+  "De export is een momentopname, geen automatische synchronisatie. Opnieuw importeren kan dubbele afspraken opleveren; dat verschilt per agenda. Bewaar een aparte back-up van Uitbreidingen: Bewaar alles neemt die map niet mee.": "The export is a snapshot, not automatic synchronisation. Importing again may create duplicate events; this depends on your calendar. Keep a separate backup of Extensions: Save all does not include that folder.",
+  "Download Agenda-export 0.2.0 (.zip)": "Download Calendar export 0.2.0 (.zip)",
+  "Download Agenda-export 0.2.0 en pak het pakket uit.": "Download Calendar export 0.2.0 and unzip the package.",
+  "Kies je werkmap bij Instellingen → Opslag en klik daarna Instellingen → Uitbreidingen → Map voorbereiden.": "Choose your workspace folder under Settings → Storage, then click Settings → Extensions → Prepare folder.",
+  "Zet de map agenda-export in Uitbreidingen van je werkmap, buiten de appbestanden.": "Put the agenda-export folder in Extensions in your workspace folder, outside the app files.",
+  "Klik Ververs → Zet aan. Kies je bronnen en klik Download agenda (.ics).": "Click Refresh → Enable. Choose your sources and click Download calendar (.ics).",
+  "Lees hoe Agenda-export werkt": "Read how Calendar export works"
+});

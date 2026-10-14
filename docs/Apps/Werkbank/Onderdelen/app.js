@@ -367,17 +367,43 @@
             showNotification(I18n.value(I18n.ui("{0} is uit de lijst verwijderd. De map en bestanden blijven op je computer staan.",handle.name+' is uit de lijst verwijderd. De map en bestanden blijven op je computer staan.')),'success');
         }
 
-        function showWritingAccessRequired(){
-            const list=document.getElementById('fileList');list.replaceChildren();
+        function showWritingAccessRequired(savedHandles = null){
+            const list=document.getElementById('fileList');
+            document.getElementById('writingAccessRequired')?.remove();
+            const panel=document.createElement('div');panel.id='writingAccessRequired';panel.className='sidebar-footer';
+            list.before(panel);
             const message=document.createElement('p');message.textContent=I18n.t('Geef toegang om je schrijfmappen te openen.');message.style.cssText='font:14px/1.5 Arial;margin:0 0 12px;overflow-wrap:anywhere';
-            const button=document.createElement('button');button.type='button';button.className='edit-btn';button.style.cssText='font:600 14px Arial;padding:10px 14px;border:1px solid #bbb;background:#fff;color:#222;cursor:pointer';button.textContent=I18n.t('Open schrijfmappen');
-            button.onclick=async()=>{button.disabled=true;message.textContent=I18n.t('Toegang controleren…');try{await Werkmap.requestReadAccess();message.textContent=I18n.t('Schrijfmappen openen…');const access=await Werkmap.allAccess(false);const writing=await access.root.getDirectoryHandle('Schrijven');directoryHandles=[writing];selectedProject='Schrijven';activeFile=null;await loadFiles({skipRestore:true});for(const path of folderHandlesByPath.keys())if(path==='Schrijven'||path.startsWith('Schrijven/'))expandedFolders.add(path);renderFileList();}catch(error){message.textContent=error.message;message.setAttribute('role','alert');}finally{button.disabled=false;}};
+            const button=document.createElement('button');button.type='button';button.className='edit-btn';button.style.cssText='font:600 14px Arial;padding:10px 14px;border:1px solid #bbb;background:#fff;color:#222;cursor:pointer';button.textContent=I18n.t('Geef opnieuw toegang');
+            button.onclick=async()=>{
+                // Request access immediately from this click, before any other await.
+                button.disabled=true;message.textContent=I18n.t('Toegang controleren…');
+                try{
+                    const accessRequest = savedHandles
+                        ? Promise.all(savedHandles.map(handle => handle.requestPermission({mode:'read'})))
+                        : Werkmap.requestReadAccess();
+                    const permissions=await accessRequest;
+                    if(savedHandles){
+                        if(permissions.some(state=>state!=='granted'))throw Error(I18n.t('Geef toegang om je schrijfmappen te openen.'));
+                        directoryHandles=savedHandles;
+                    }else{
+                        const access=await Werkmap.allAccess(false);
+                        directoryHandles=[await access.root.getDirectoryHandle('Schrijven')];
+                    }
+                    await saveDirectoryHandles(directoryHandles);
+                    selectedProject=directoryHandles.length===1?directoryHandles[0].name:'all';
+                    activeFile=null;await loadFiles({skipRestore:true});
+                    for(const path of folderHandlesByPath.keys())expandedFolders.add(path);
+                    renderFileList();
+                }catch(error){message.textContent=error.message;message.setAttribute('role','alert');}
+                finally{button.disabled=false;}
+            };
             const choose=document.createElement('button');choose.type='button';choose.className='edit-btn';choose.textContent=I18n.t('Schrijven-map opnieuw koppelen');choose.style.cssText=button.style.cssText+';margin-top:10px';
             choose.onclick=async()=>{const selection=window.showDirectoryPicker({id:'writing-reconnect',mode:'read'});choose.disabled=true;try{const writing=await selection;if(writing.name!=='Schrijven')throw Error(I18n.t('Kies de map Schrijven binnen Mijn werk.'));directoryHandles=[writing];await saveDirectoryHandles(directoryHandles);selectedProject='Schrijven';activeFile=null;await loadFiles({skipRestore:true});for(const path of folderHandlesByPath.keys())expandedFolders.add(path);renderFileList();}catch(error){if(error.name!=='AbortError'){message.textContent=error.message;message.setAttribute('role','alert');}}finally{choose.disabled=false;}};
-            list.append(message,button,choose);
+            panel.append(message,button,choose);
         }
         async function restoreSavedFolders() {
             if (document.readyState === 'loading') await new Promise(resolve => document.addEventListener('DOMContentLoaded', resolve, { once: true }));
+            if(window.WerkplaatsDocumentBridge)return await WerkplaatsDocumentBridge.open();
             await GereedschapskistMode.ready;
             if (GereedschapskistMode.redirecting) return;
             // The workmap's writing folder is the canonical starting point.
@@ -388,37 +414,28 @@
                     const writing=await access.root.getDirectoryHandle('Schrijven');
                     {const entries=writing.values();await entries.next();
                         directoryHandles=[writing];
+                        await saveDirectoryHandles(directoryHandles);
                         selectedProject='Schrijven';
                         await loadFiles();
                         for(const path of folderHandlesByPath.keys())if(path==='Schrijven'||path.startsWith('Schrijven/'))expandedFolders.add(path);
                         renderFileList();return;
                     }
-                }catch(error){if(Werkmap.active){const saved=await getSavedDirectoryHandles();const writing=saved.find(handle=>handle.name==='Schrijven');if(writing){try{await writing.values().next();directoryHandles=[writing];selectedProject='Schrijven';await loadFiles({skipRestore:true});for(const path of folderHandlesByPath.keys())expandedFolders.add(path);renderFileList();return;}catch{}}showWritingAccessRequired();const message=document.querySelector('#fileList p');if(message){message.textContent=error.message;message.setAttribute('role','alert');}return;}}
+                }catch(error){if(Werkmap.active){const saved=await getSavedDirectoryHandles();const writing=saved.find(handle=>handle.name==='Schrijven');if(writing){try{await writing.values().next();directoryHandles=[writing];selectedProject='Schrijven';await loadFiles({skipRestore:true});for(const path of folderHandlesByPath.keys())expandedFolders.add(path);renderFileList();return;}catch{}}showWritingAccessRequired();const message=document.querySelector('#writingAccessRequired p');if(message){message.textContent=error.message;message.setAttribute('role','alert');}return;}}
             }
             const savedHandles = await getSavedDirectoryHandles();
             if (savedHandles.length > 0) {
-                const validHandles = [];
-                for (const handle of savedHandles) {
-                    try {
-                        const hasPermission = await verifyPermission(handle);
-                        if (hasPermission) {
-                            validHandles.push(handle);
-                        }
-                    } catch (err) {
-                        console.error('Error verifying permission for folder:', err);
-                    }
-                }
-
-                if (validHandles.length > 0) {
-                    directoryHandles = validHandles;
-                    await saveDirectoryHandles(directoryHandles);
+                // A browser restart may revoke access, but must not forget the map.
+                const permissions=await Promise.all(savedHandles.map(async handle=>{
+                    try{return await handle.queryPermission({mode:'read'})==='granted';}
+                    catch{return false;}
+                }));
+                if(permissions.every(Boolean)){
+                    directoryHandles=savedHandles;
                     await loadFiles();
-                } else if (converterFiles.size > 0) {
-                    // No valid folders but we have converter files, load them
-                    await loadFiles();
+                }else{
+                    showWritingAccessRequired(savedHandles);
                 }
             } else if (converterFiles.size > 0) {
-                // No saved folders but we have converter files, load them
                 await loadFiles();
             }
         }
@@ -505,6 +522,7 @@
         }
 
         async function loadFilesOnce(options = {}) {
+            if(directoryHandles.length)document.getElementById('writingAccessRequired')?.remove();
             await window.consolidateMijnTeam?.();
             allDirectoryPaths = [];
             folderHandlesByPath.clear();
@@ -2077,6 +2095,9 @@
         }
 
         async function saveFile() {
+            const bridgeUnlock=activeFile?.mijnosPath && window.WerkplaatsDocumentBridge ? WerkplaatsDocumentBridge.beginSave() : undefined;
+            if(bridgeUnlock===null)return false;
+            try {
             await Werkmap.recall();
             if(activeFile?.isVirtual && window.Werkmap?.active)return await Werkmap.save();
             if (!activeFile) return;
@@ -2110,7 +2131,8 @@
 
                     if (await (await activeFile.getFile()).text() !== originalRawContent) throw Error(I18n.value(I18n.ui("Dit bestand is buiten Schrijven gewijzigd. Je bewerking blijft in de editor; heropen het bestand voordat je verdergaat.",'Dit bestand is buiten Schrijven gewijzigd. Je bewerking blijft in de editor; heropen het bestand voordat je verdergaat.')));
                     // Get a writable stream from the file handle
-                    await replaceWithRecovery(activeFile, folderHandlesByPath.get(activeFile.relativePath.split('/').slice(0,-1).join('/')), originalRawContent, newContent);
+                    if(activeFile.mijnosPath && window.WerkplaatsDocumentBridge) await WerkplaatsDocumentBridge.save(activeFile, originalRawContent, newContent);
+                    else await replaceWithRecovery(activeFile, folderHandlesByPath.get(activeFile.relativePath.split('/').slice(0,-1).join('/')), originalRawContent, newContent);
                 }
 
                 // Update cached content
@@ -2137,6 +2159,7 @@
                 showNotification(message, 'error');
                 return false;
             }
+            } finally { bridgeUnlock?.(); }
         }
 
         function toggleSidebar() {
@@ -2358,8 +2381,10 @@
             }
         });
 
-        // Check for File System Access API support
-        if (!('showDirectoryPicker' in window)) {
+        // A local document connection also works without a directory picker.
+        if(window.WerkplaatsDocumentBridge){
+            restoreSavedFolders();
+        } else if (!('showDirectoryPicker' in window)) {
             document.getElementById('newFileBtn').disabled = false;
             for (const button of document.querySelectorAll('[data-template]')) button.disabled = false;
             document.getElementById('fileList').innerHTML = "\n                <div class=\"empty-state\">\n                    <span data-i18n=\"Deze browser kan geen lokale mappen openen.\">Deze browser kan geen lokale mappen openen.</span><br><br>\n                    <span data-i18n=\"Open Schrijven in Chrome of Edge op je computer.\">Open Schrijven in Chrome of Edge op je computer.</span>\n                </div>\n            ";

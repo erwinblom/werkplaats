@@ -1,0 +1,19 @@
+{
+  "id": "agenda-export",
+  "name": "Agenda-export",
+  "version": "0.2.0",
+  "apiVersion": 1,
+  "tools": [
+    "Home",
+    "Projectbord",
+    "Werkbank",
+    "Bronnenkast",
+    "Contacten",
+    "Publicatieplanner",
+    "Ping",
+    "Offerte",
+    "Uren",
+    "Kasboek",
+    "Abonnementen"
+  ]
+}

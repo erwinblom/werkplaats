@@ -80,6 +80,25 @@ Wil je tussen website en download wisselen? Bewaar eerst, sluit de vorige versie
 
 </details>
 
+## Agenda-export van Erik van Elten
+
+Met Agenda-export zet je deadlines en datums uit Doen, Projecten, Contacten en Abonnementen in je eigen agenda. Kies welke onderdelen je wilt meenemen en download een .ics-bestand. Open of importeer dat in je agenda. Afgeronde items en herinneringen zijn optioneel.
+
+**Gemaakt door Erik van Elten.** Hij bouwde de oorspronkelijke Agenda-export 0.1.0. De exportkern is behouden. De aansluiting op de vaste uitbreidingenplek van Werkplaats is aangepast door Erwin Blom met hulp van Codex. De oorspronkelijke MIT-licentie en copyrightvermelding van Erik blijven opgenomen.
+
+### Installeren
+
+1. Download de [nieuwe Werkplaats-uitgave](https://github.com/erwinblom/werkplaats/releases/tag/v0.36.8) en [Agenda-export 0.2.0](https://github.com/erwinblom/werkplaats/releases/download/v0.36.8/Agenda-export-0.2.0.zip). Open Werkplaats in Chrome of Edge op je computer.
+2. Kies je werkmap bij Instellingen → Opslag. Klik daarna Instellingen → Uitbreidingen → Map voorbereiden.
+3. Pak het Agenda-exportpakket uit. Zet de map agenda-export in Uitbreidingen van je werkmap.
+4. Klik Ververs → Zet aan. Kies je onderdelen en klik Download agenda (.ics).
+
+Bij een Werkplaats-update blijven de uitbreiding en keuzes bij je werk staan. Open dezelfde werkmap; de browser kan opnieuw maptoegang vragen. Je hoeft de uitbreiding niet opnieuw te installeren.
+
+Het agendabestand is een momentopname, geen automatische synchronisatie. Bij herhaald importeren kunnen afspraken dubbel verschijnen; dat verschilt per agenda. Bewaar een aparte back-up van de map Uitbreidingen, want Bewaar alles neemt die map niet mee.
+
+[Uitleg in Werkplaats](https://erwinblom.github.io/werkplaats/Uitleg.html#agenda-export) · [Broncode en MIT-licentie](app/Uitbreidingen/agenda-export/)
+
 <details>
 <summary>Links bewaren met de browserextensie</summary>
 
@@ -118,6 +137,8 @@ De browserproef voor deze uitgave staat in [tests/publieke-uitgave.cjs](tests/pu
 ## Herkomst en licenties
 
 Schrijven bouwt voort op Markdown Browser van Joost Plattel. Zie [herkomst](app/Apps/Werkbank/HERKOMST.md) en [licenties van gebruikte onderdelen](app/Apps/Werkbank/THIRD_PARTY_NOTICES.md).
+
+Agenda-export is oorspronkelijk gemaakt door **Erik van Elten**. Zijn [MIT-licentie](app/Uitbreidingen/agenda-export/LICENSE) en exportkern blijven behouden. De aansluiting op Werkplaats is aangepast door Erwin Blom met hulp van Codex.
 
 De eigen code is beschikbaar onder de [MIT-licentie](LICENSE). Organisaties kunnen Werkplaats ook op een eigen website of intranet aanbieden.
 

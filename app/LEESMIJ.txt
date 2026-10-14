@@ -30,3 +30,7 @@ duidelijke knop Bewerken. Alleen Nieuw of Toevoegen opent direct een formulier.
 
 BEGINNEN
 Kies een werkmap en voeg je eigen documenten en gegevens toe. Gebruik Bewaar alles om verder te kunnen werken.
+
+
+UITBREIDINGEN
+Instellingen → Uitbreidingen → Map voorbereiden maakt een vaste plek bij je eigen werk. Plaats ontvangen uitbreidingsmappen daarin, klik Ververs en zet ze aan. Kies na een nieuwe Werkplaats-download dezelfde werkmap. Handleiding en makersvoorbeeld: Uitbreidingen/LEESMIJ.md in de appbestanden. Agenda-export van Erik van Elten is beschikbaar. Zet de map agenda-export in Uitbreidingen van je werkmap en kies Ververs → Zet aan. Uitleg: Uitbreidingen/agenda-export/LEESMIJ.md of Uitleg.html → Agenda-export. Bewaar zelf een kopie van je uitbreidingenmap; Bewaar alles neemt die niet mee.

@@ -155,6 +155,8 @@ async function updateConnectedDocument(parent,handle,expected,next){
    for(const handle of savedFolders)if(!retainedFolders.some(h=>h.name===handle.name))retainedFolders.push(handle);
    const readableFolders=[];
    for(const handle of retainedFolders)try{if(await handle.queryPermission({mode:'read'})==='granted')readableFolders.push(handle);}catch{}
+   // Keep linked documents linked while browser permission is awaiting renewal.
+   if(retainedFolders.length>readableFolders.length){showWritingAccessRequired(retainedFolders);return;}
    const previousProject=typeof selectedProject==='string'?selectedProject:'all';
    const previousPath=activeFile?.relativePath;
    try{const access=await Werkmap.allAccess(false);const dir=await access.root.getDirectoryHandle('Schrijven');

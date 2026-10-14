@@ -35,3 +35,16 @@ with zipfile.ZipFile(root/'dist/Werkplaats.zip') as z:
  assert {n.split('/')[1] for n in z.namelist()}=={'Begin hier.html','Bestanden'}
  for name in actual:assert z.read('Werkplaats/Bestanden/'+name)==(root/'app'/name).read_bytes(),name
 print(f'OK: {len(actual)} Master-bestanden, lokale HTML-links, JavaScript, privacyuitsluitingen, actuele uitleg en ZIP gelijk aan bron.')
+
+agenda=root/'app/Uitbreidingen/agenda-export'
+if agenda.is_dir():
+ version=json.loads((agenda/'uitbreiding.json').read_text())['version']
+ with zipfile.ZipFile(root/'dist'/('Agenda-export-'+version+'.zip')) as z:
+  assert z.testzip() is None
+  assert set(z.namelist())=={'agenda-export/'+p.name for p in agenda.iterdir() if p.is_file()}
+  for p in agenda.iterdir():
+   if p.is_file():assert z.read('agenda-export/'+p.name)==p.read_bytes()
+ assert 'Erik van Elten' in (agenda/'LICENSE').read_text()
+ assert 'Erik van Elten' in (agenda/'LEESMIJ.md').read_text()
+ assert 'Erik van Elten' in (root/'README.md').read_text()
+ print('OK: apart Agenda-exportpakket bytegelijk aan Master-bron; oorspronkelijke maker en licentie vermeld.')

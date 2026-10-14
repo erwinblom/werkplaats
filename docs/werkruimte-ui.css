@@ -674,3 +674,8 @@ body.compact-tools .storage-details>summary{padding:0;margin:0;font-weight:400;l
 .instruction-video{margin:var(--space-m) 0;color:var(--cte-text)}
 .instruction-video summary{cursor:pointer;font-weight:var(--weight-ui-heavy)}
 .instruction-video video{display:block;width:100%;max-width:960px;margin-top:var(--space-s);background:var(--neutral-10)}
+
+/* Browservereiste staat bij opslag, met dezelfde ruimte- en tekstrollen. */
+.storage-browser-notice{flex-basis:100%;padding:var(--space-m);margin-block:var(--space-s);color:var(--cte-text);background:var(--cte-surface);box-shadow:inset var(--border-m) 0 0 var(--wp-accent),inset 0 0 0 var(--border-s) var(--cte-border)}
+.storage-browser-notice>strong{display:block;font-family:var(--font-ui);font-size:var(--size-s);line-height:var(--line-s);font-weight:var(--weight-ui-heavy)}
+.storage-browser-notice>p{margin:var(--space-xs) 0 0;line-height:var(--line-m)}
