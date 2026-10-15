@@ -1,0 +1,45 @@
+/* Shared finishing; keeps the existing controls, IDs and domain status meanings. */
+@media screen {
+ html body[data-tool=Contacten] .layout{display:block!important}
+ html body[data-tool=Contacten] .layout>.sidebar{display:none!important}
+ html body[data-tool=Contacten] .contact-list-head{background:transparent!important;color:var(--cte-text-muted)!important;font:var(--weight-ui-regular) var(--size-xs)/var(--line-xs) var(--font-label);padding:var(--space-s) var(--space-m);border-bottom:var(--border-s) solid var(--cte-border)}
+ html body[data-tool=Contacten] #cards.compact{border-top:0}
+ html body[data-tool=Contacten] #cards.compact>.card{padding-block:var(--space-m);min-height:72px}
+ html body dialog.wp-input-dialog{width:min(760px,calc(100vw - 32px));max-width:760px;max-height:calc(100dvh - 32px);overflow:auto}
+ html body .wp-input-head{display:flex;align-items:center;justify-content:space-between;gap:var(--space-m);padding-bottom:var(--space-m);margin-bottom:var(--space-l);border-bottom:var(--border-s) solid var(--neutral-4)}
+ html body .wp-input-head>strong{font:var(--weight-ui-medium) var(--size-s)/var(--line-s) var(--font-label)}
+ html body dialog.wp-input-dialog>h2,html body dialog.wp-input-dialog>form>h2{box-shadow:none!important;border:0!important;padding:0!important;margin:0 0 var(--space-l);font:var(--weight-brand-medium) var(--size-l)/var(--line-l) var(--font-brand)!important;letter-spacing:var(--letter-spacing-l)}
+ html body .wp-input-group{padding:var(--space-l);margin:0 0 var(--space-l);border:var(--border-s) solid var(--neutral-3)}
+ html body .wp-input-group>h3{margin:0 0 var(--space-m);font:var(--weight-ui-medium) var(--size-s)/var(--line-s) var(--font-label);color:var(--cte-text-muted)}
+ html body .wp-input-group>h3+label{margin-top:0}
+ html body .wp-input-group>.two+label{margin-top:var(--space-m)}
+ html body dialog.wp-input-dialog :is(.form-actions,.note-actions){display:flex;justify-content:flex-end;align-items:center;gap:var(--space-s);flex-wrap:wrap;padding-top:var(--space-m);border-top:var(--border-s) solid var(--neutral-4)}
+ html body dialog.wp-input-dialog :is(.form-actions,.note-actions)>:is(.primary,.action-primary,[type=submit]){order:3}
+ html body dialog.wp-input-dialog :is(.form-actions,.note-actions)>:is(#cancel,.notes-close){order:2}
+ html body dialog.unsaved-input{width:min(540px,calc(100vw - 32px));max-width:540px}
+ html body dialog.unsaved-input>h2{font:var(--weight-brand-medium) var(--size-l)/var(--line-l) var(--font-brand)!important;box-shadow:none!important;border:0!important;padding:0!important}
+ html body .unsaved-input-actions{display:flex;justify-content:flex-end;flex-wrap:wrap;gap:var(--space-s);margin-top:var(--space-l)}
+ html body[data-tool=Abonnementen] .subscription-totals{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--space-m);padding:0;border:0;margin:0 0 var(--space-m)}
+ html body[data-tool=Abonnementen] .subscription-totals>div{padding:var(--space-l);background:var(--cte-surface-muted);border:var(--border-s) solid var(--neutral-3);min-width:0}
+ html body[data-tool=Abonnementen] .subscription-totals strong{font:var(--weight-ui-medium) var(--size-l)/var(--line-l) var(--font-data);margin-top:var(--space-s)}
+ html body[data-tool=Abonnementen] .subscription-entry{border-bottom:var(--border-s) solid var(--cte-border);gap:var(--space-m);padding:var(--space-m) var(--space-s);background:var(--cte-surface)!important}
+ html body[data-tool=Abonnementen] .subscription-entry .subscription-row{border:0;box-shadow:none!important;background:transparent!important;padding:var(--space-s) 0;gap:var(--space-m)}
+ html body[data-tool=Abonnementen] .subscription-entry.is-to-cancel{box-shadow:inset var(--space-xxs) 0 var(--warning);background:var(--cte-surface)!important}
+ html body[data-tool=Abonnementen] .subscription-state{display:inline-block;font:var(--weight-ui-regular) var(--size-xs)/var(--line-xs) var(--font-ui);padding:var(--space-xxs) var(--space-xs);margin-top:var(--space-xs);background:var(--cte-surface-muted);color:var(--cte-text)}
+ html body[data-tool=Abonnementen] .is-to-cancel .subscription-state{background:var(--warning-transparent);color:var(--cte-text)}
+ html body[data-tool=Abonnementen] .is-cancelled .subscription-state{background:var(--neutral-3);color:var(--cte-text-muted)}
+ html body[data-tool=Abonnementen] .subscription-cancel{font:var(--weight-ui-medium) var(--size-s)/var(--line-s) var(--font-label)!important;padding:var(--space-xs) var(--space-s);min-height:36px;max-width:190px;white-space:normal}
+ html body[data-tool=Abonnementen] #rows .subscription-row strong{font:var(--weight-ui-heavy) var(--size-s)/var(--line-s) var(--font-ui)!important}
+ @media(max-width:650px){
+  html body .wp-input-group{padding:var(--space-m)}
+  html body[data-tool=Abonnementen] .subscription-totals{grid-template-columns:1fr;gap:var(--space-s)}
+  html body[data-tool=Abonnementen] .subscription-totals>div{padding:var(--space-m)}
+  html body[data-tool=Abonnementen] .subscription-entry{gap:var(--space-s)}
+  html body[data-tool=Abonnementen] .subscription-cancel{margin-bottom:var(--space-s)}
+ }
+}
+
+@media screen {
+ html body[data-tool=Abonnementen] .subscription-entry:is(.is-to-cancel,.is-cancelled) .subscription-row{background:transparent!important}
+ html body[data-tool=Abonnementen] .subscription-entry.is-cancelled{background:var(--cte-surface-muted)!important}
+}

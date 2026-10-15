@@ -15,3 +15,5 @@ Bij import en herstel moeten alle al aanwezige definitieve facturen en creditfac
 Overgenomen offertes kunnen `sourceQuoteId` en `draftBusiness` bevatten; overgenomen uren `timeSources`. Die koppelingen blijven bij oude bestanden behouden. Facturen bevatten alleen een kopie van klantgegevens; het adresboek zelf staat in Contact houden.
 
 `projectId` is optioneel (maximaal 100 tekens). Bij een offerte wordt de projectcode overgenomen; bij uren alleen wanneer alle geselecteerde uren dezelfde projectcode hebben. De projectcode gaat mee naar het factuuroverzicht en een ontvangen boeking in Boekhouden. Oudere facturen zonder code blijven geldig.
+
+`numberFormats` is optioneel en bewaart per jaar `{prefix, width}` voor nieuw uit te geven facturen. `width` is 3 tot 6; bestaande nummers worden nooit omgezet. Zonder instelling blijft de historische opmaak behouden. `sequences` bevat het volgende volgnummer; instellen kan de reeks alleen gelijk houden of verhogen.

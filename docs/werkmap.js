@@ -184,15 +184,15 @@ window.Werkmap=(()=>{
   try{await allReady;await BewaarAlles.save();}catch(e){message(I18n.value(I18n.ui("Niet alles bewaard: {0}",'Niet alles bewaard: '+e.message)));}finally{button.disabled=false;}
  }
  const werkmapScriptURL=document.currentScript.src;
- const allReady=new Promise((resolve,reject)=>{const s=document.createElement('script');const saveScriptURL=new URL('bewaar-alles.js',werkmapScriptURL);saveScriptURL.searchParams.set('v','20261009-hoofdstuk1-2');s.src=saveScriptURL.href;s.onload=resolve;s.onerror=()=>reject(Error(I18n.value(I18n.ui("Bewaar alles kon niet laden. Ververs de pagina.",'Bewaar alles kon niet laden. Ververs de pagina.'))));document.head.append(s);});
+ const allReady=new Promise((resolve,reject)=>{const s=document.createElement('script');const saveScriptURL=new URL('bewaar-alles.js',werkmapScriptURL);saveScriptURL.searchParams.set('v','20261014-herstel-1');s.src=saveScriptURL.href;s.onload=resolve;s.onerror=()=>reject(Error(I18n.value(I18n.ui("Bewaar alles kon niet laden. Ververs de pagina.",'Bewaar alles kon niet laden. Ververs de pagina.'))));document.head.append(s);});
  allReady.catch(()=>{});window.BewaarAllesReady=allReady;
  const taxScript=document.createElement('script');taxScript.src=new URL('belastingtarieven.js?v=20261006-tax-rates-1',werkmapScriptURL).href;document.head.append(taxScript);
  window.WerkplaatsPersonalisatieReady=allReady.then(()=>new Promise((resolve,reject)=>{const s=document.createElement('script');s.src=new URL('personalisatie.js?v=20261010-personalisatie-6',werkmapScriptURL).href;s.onload=()=>resolve(window.WerkplaatsPersonalisatie);s.onerror=()=>reject(Error(I18n.value(I18n.ui("Personalisatie kon niet laden.",'Personalisatie kon niet laden.'))));document.head.append(s);}));
- window.MijnGereedschappenReady=WerkplaatsPersonalisatieReady.then(()=>new Promise((resolve,reject)=>{const s=document.createElement('script');s.src=new URL('mijn-gereedschappen.js?v=20261012-browser-help-1',werkmapScriptURL).href;s.onload=()=>resolve(window.MijnGereedschappen);s.onerror=()=>reject(Error(I18n.value(I18n.ui("Mijn gereedschappen kon niet laden.",'Mijn gereedschappen kon niet laden.'))));document.head.append(s);}));
+ window.MijnGereedschappenReady=WerkplaatsPersonalisatieReady.then(()=>new Promise((resolve,reject)=>{const s=document.createElement('script');s.src=new URL('mijn-gereedschappen.js?v=20261015-nav-1',werkmapScriptURL).href;s.onload=()=>resolve(window.MijnGereedschappen);s.onerror=()=>reject(Error(I18n.value(I18n.ui("Mijn gereedschappen kon niet laden.",'Mijn gereedschappen kon niet laden.'))));document.head.append(s);}));
  MijnGereedschappenReady.catch(()=>{});
  window.WerkplaatsUitbreidingenReady=MijnGereedschappenReady.then(()=>new Promise((resolve,reject)=>{const script=document.createElement('script');script.src=new URL('uitbreidingen.js?v=20261013-1',werkmapScriptURL).href;script.onload=()=>resolve(window.WerkplaatsUitbreidingen);script.onerror=()=>reject(Error('Uitbreidingen konden niet laden.'));document.head.append(script);}));
  WerkplaatsUitbreidingenReady.catch(()=>{});
- const ui=document.createElement('script');ui.src=new URL('werkruimte-ui.js?v=20261012-use-2',werkmapScriptURL).href;document.head.append(ui);
+ const ui=document.createElement('script');ui.src=new URL('werkruimte-ui.js?v=20261015-nav-1',werkmapScriptURL).href;document.head.append(ui);
  function requestReadAccess(){
   if(!root)return Promise.reject(Error(I18n.t('Kies eerst een werkmap.')));
   return root.requestPermission({mode:'read'}).then(state=>{if(state!=='granted')throw Error(I18n.t('Geen toegang tot je werkmap.'));});

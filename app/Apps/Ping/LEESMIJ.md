@@ -6,10 +6,12 @@ Open `Start Ping.html` in Chrome of Edge. Werk voor je echte administratie met �
 
 1. Maak een concept. Kies zo nodig een bestaande klant uit **Contact houden**; Factureren heeft geen eigen adressenlijst. Een nieuw contact dat je hier toevoegt, wordt aan datzelfde contactenbestand toegevoegd.
 2. Vul bedrijfsgegevens, klantadres, regels, factuurdatum en leverdatum in. Je kunt een standaard betaaltermijn, btw-tarief, nummerprefix en logo instellen. Bij KOR of een andere vrijstelling staan alle regels op 0%; voor een andere vrijstelling vul je zelf de toelichting in.
-3. Controleer het voorbeeld en kies **Controleer en maak definitief**. Het factuurnummer wordt pas bij bevestiging toegekend.
+3. Controleer het voorbeeld en kies **Controleer en maak definitief**. Het factuurnummer wordt pas bij bevestiging toegekend. Kies boven het factuuroverzicht **Factuurnummer instellen** om het volgende volledige nummer in te stellen, bijvoorbeeld **2026-0017**. Daarna volgen 2026-0018, 2026-0019 enzovoort. Dit kan ook na eerdere facturen; het volgnummer kan niet terug naar een al uitgegeven nummer.
 4. Bewaar de administratie met **Bewaar bestand** of **Bewaar alles**. Bewaar de factuur via **Afdrukken / PDF bewaren** in het afdrukvenster. Verzenden doe je zelf.
 
 Een concept kun je bewerken, dupliceren of verwijderen. Een definitieve factuur staat vast. Je kunt haar als volledig betaald markeren, die status terugzetten of één volledige creditfactuur maken. Een creditfactuur heeft negatieve bedragen, een verwijzing naar het oorspronkelijke nummer en een eigen nummerreeks. Een gecrediteerde oorspronkelijke factuur telt niet meer mee als openstaand. Creditfacturen zijn alleen-lezen. Deelbetalingen verwerk je apart in Boekhouden.
+
+Ook definitieve, verstuurde, betaalde en creditfacturen kun je via **Verwijder → Naar prullenbak** verwijderen. Terugzetten kan via **Instellingen → Back-up en herstel → Prullenbak**. Een factuur met creditfactuur wordt samen met die creditfactuur verwijderd en hersteld; bij apart verwijderen zet je eerst de oorspronkelijke factuur terug. Nummerreeksen lopen door. Boekingen en urenstatussen in andere tools blijven behouden. Gebruik daarna **Bewaar alles**.
 
 Het overzicht toont openstaande, betaalde, verlopen en gecrediteerde bedragen of aantallen. Met de filters vind je facturen per status; **CSV** exporteert de volledige lijst. Een factuur die na haar vervaldatum nog niet betaald is, krijgt automatisch de weergavestatus **Verlopen**. De factuurinhoud verandert daardoor niet.
 

@@ -1,7 +1,7 @@
 "use strict";
 window.Prullenbak=(()=>{
  const fields={Bronnenkast:'items',Abonnementen:'items',Publicatieplanner:'items',Projectbord:'tasks',Contacten:'contacts',Uren:'entries',Kasboek:'entries',Offerte:'quotes',Ping:'invoices'};
- const names={Notities:'Notitie',Werkbank:'Document',Bronnenkast:'Bron',Abonnementen:'Abonnement',Publicatieplanner:'Project of activiteit',Projectbord:'Taak',Contacten:'Contact',Uren:'Urenregistratie',Kasboek:'Boeking',Offerte:'Offerte',Ping:'Conceptfactuur',Gesprek:'Gespreksnotitie'};
+ const names={Notities:'Notitie',Werkbank:'Document',Bronnenkast:'Bron',Abonnementen:'Abonnement',Publicatieplanner:'Project of activiteit',Projectbord:'Taak',Contacten:'Contact',Uren:'Urenregistratie',Kasboek:'Boeking',Offerte:'Offerte',Ping:'Factuur',Gesprek:'Gespreksnotitie'};
  const label=item=>item.title||item.name||item.party||item.description||item.client||item.text?.slice(0,100)||'Zonder titel';
  function add(shared,tool,item,extra={}){
   if(!item)throw Error(I18n.value(I18n.ui("Het item is niet meer beschikbaar.",'Het item is niet meer beschikbaar.')));
@@ -33,7 +33,7 @@ window.Prullenbak=(()=>{
      await BewaarAlles.updateTool(tool,(data,session)=>{
       if(tool==='Werkbank'){session.documents=session.documents||[];if(session.documents.some(item=>item.path===entry.item.path||item.name.toLocaleLowerCase('nl')===entry.item.name.toLocaleLowerCase('nl')))throw Error(I18n.value(I18n.ui("Dit document bestaat al. Er wordt niets overschreven.",'Dit document bestaat al. Er wordt niets overschreven.')));session.documents.push(structuredClone(entry.item));}
       else if(entry.tool==='Gesprek'){const contact=data.contacts.find(item=>item.id===entry.parentId);if(!contact)throw Error(I18n.value(I18n.ui("Zet eerst het bijbehorende contact terug.",'Zet eerst het bijbehorende contact terug.')));if(contact.conversations.some(item=>item.id===entry.item.id))throw Error(I18n.value(I18n.ui("Deze gespreksnotitie bestaat al.",'Deze gespreksnotitie bestaat al.')));contact.conversations.push(structuredClone(entry.item));}
-      else{const list=data[fields[tool]];if(!Array.isArray(list))throw Error(I18n.value(I18n.ui("De gegevens van deze tool zijn niet beschikbaar.",'De gegevens van deze tool zijn niet beschikbaar.')));if(list.some(item=>item.id===entry.item.id))throw Error(I18n.value(I18n.ui("Dit item bestaat al. Er wordt niets overschreven.",'Dit item bestaat al. Er wordt niets overschreven.')));list.push(structuredClone(entry.item));}
+      else{const list=data[fields[tool]];if(!Array.isArray(list))throw Error(I18n.value(I18n.ui("De gegevens van deze tool zijn niet beschikbaar.",'De gegevens van deze tool zijn niet beschikbaar.')));if(list.some(item=>item.id===entry.item.id))throw Error(I18n.value(I18n.ui("Dit item bestaat al. Er wordt niets overschreven.",'Dit item bestaat al. Er wordt niets overschreven.')));const items=tool==='Ping'?[entry.item,...(entry.relatedInvoices||[])]:[entry.item];if(items.some(item=>list.some(existing=>existing.id===item.id)))throw Error(I18n.value(I18n.ui("Dit item bestaat al. Er wordt niets overschreven.",'Dit item bestaat al. Er wordt niets overschreven.')));if(tool==='Ping'&&items.some(item=>item.state==='credit'&&![...list,...items].some(original=>original.state==='final'&&original.number===item.creditFor)))throw Error(I18n.value(I18n.ui("Zet eerst de oorspronkelijke factuur terug.",'Zet eerst de oorspronkelijke factuur terug.')));list.push(...structuredClone(items));}
      });
     }
     await discard(id);

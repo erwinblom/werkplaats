@@ -1,7 +1,7 @@
 'use strict';
 window.MijnGereedschappen=(()=>{
  const base=new URL('.',document.currentScript.src),businessTools=['Offerte','Ping','Uren','Kasboek','Abonnementen'];
- const catalog={Bronnenkast:['Verzamelen','Start Bronnenkast.html'],Werkbank:['Schrijven','▶ Begin hier.html'],Zoeken:['Zoeken',null],Publicatieplanner:['Projecten','Start Publicatieplanner.html'],Projectbord:['Doen','Start Projectbord.html'],Contacten:['Contacten','Start Contacten.html'],Ping:['Factureren','Start Ping.html'],Abonnementen:['Abonnementen','Start Abonnementen.html'],Kasboek:['Boekhouden','Start Kasboek.html']};
+ const catalog={Bronnenkast:['Verzamelen','Start Bronnenkast.html'],Werkbank:['Schrijven','▶ Begin hier.html'],Zoeken:['Zoeken',null],Publicatieplanner:['Projecten','Start Publicatieplanner.html'],Projectbord:['Doen','Start Projectbord.html'],Contacten:['Contacten','Start Contacten.html'],Ping:['Facturen','Start Ping.html'],Abonnementen:['Abonnementen','Start Abonnementen.html'],Kasboek:['Boekhouding','Start Kasboek.html']};
  let preferences={},channel,mounted=false;
  const business=()=>preferences.business===true;
  for(const entry of Object.values(catalog)){const source=entry[0];Object.defineProperty(entry,0,{get:()=>I18n.t(source),enumerable:true});}
@@ -62,7 +62,7 @@ window.MijnGereedschappen=(()=>{
   const layers=[...document.querySelectorAll('.shell main>.tool-layer')];if(!layers.length)return;
   if(!homeCards){homeCards=new Map();homeParents=new Map();for(const card of document.querySelectorAll('.shell .tool-layer .card')){
    const link=card.querySelector('a'),id=link?Object.keys(catalog).find(id=>catalog[id][1]&&link.getAttribute('href').includes('Apps/'+id+'/')):'Zoeken';
-   if(id){if(businessTools.includes(id))card.dataset.business='';homeCards.set(id,card);homeParents.set(id,card.parentElement);}
+   if(id){const heading=card.querySelector('h2,h3');if(heading)I18n.assign(heading,I18n.ui(catalog[id][0],catalog[id][0]));if(businessTools.includes(id))card.dataset.business='';homeCards.set(id,card);homeParents.set(id,card.parentElement);}
   }}
   if(!preferences.order&&!preferences.hidden?.length){document.getElementById('personal-tools')?.remove();for(const [id,card]of homeCards){card.hidden=false;homeParents.get(id).append(card);}for(const layer of layers)layer.hidden=false;return;}
   let section=document.getElementById('personal-tools');

@@ -1,17 +1,20 @@
 "use strict";
 (()=>{
- const tool=document.querySelector('script[data-tool]')?.dataset.tool;if(!['Ping','Offerte','Uren'].includes(tool))return;
- const scriptURL=document.currentScript.src;
- const main=document.querySelector('main'),nav=document.createElement('nav');nav.className='factureren-tabs';I18n.attribute(nav,'aria-label',I18n.ui("Factureren",'Factureren'));
- for(const [id,label,file]of [['Ping','Facturen','Start Ping.html'],['Offerte','Offertes','Start Offerte.html'],['Uren','Uren','Start Uren.html']]){
+ const tool=document.querySelector('script[data-tool]')?.dataset.tool;if(!['Ping','Offerte','Uren','Kasboek'].includes(tool))return;
+ const scriptURL=document.currentScript.src;let navigating=false;
+ const main=document.querySelector('main'),nav=document.createElement('nav');nav.className='factureren-tabs';I18n.attribute(nav,'aria-label',I18n.ui("Administratie",'Administratie'));
+ for(const [id,label,file]of [['Ping','Facturen','Start Ping.html'],['Offerte','Offertes','Start Offerte.html'],['Uren','Uren','Start Uren.html'],['Kasboek','Boekhouding','Start Kasboek.html']]){
   const a=document.createElement('a');I18n.assign(a,I18n.ui(label,label));a.href=GereedschapskistKeuze.url(new URL('../'+id+'/'+file,location.href)).href;
   if(id===tool)a.setAttribute('aria-current','page');
-  a.onclick=async event=>{if(event.button||event.metaKey||event.ctrlKey||event.shiftKey||event.altKey)return;event.preventDefault();try{await BewaarAlles.flush();location.assign(a.href);}catch(error){const status=document.getElementById('wm-message');if(status)I18n.assign(status,I18n.ui("Niet overgestapt: {0}",'Niet overgestapt: '+error.message),"textContent");}};
+  a.onclick=async event=>{if(event.button||event.metaKey||event.ctrlKey||event.shiftKey||event.altKey)return;event.preventDefault();if(navigating)return;navigating=true;try{if(Werkstatus.hasPending()&&!await Werkstatus.confirmInput('Je onbewaarde invoer wordt als concept in deze browser bewaard. Bij terugkomen kun je verder werken. Gebruik Bewaar alles om je werk ook in je werkmap vast te leggen.','Concept bewaren en wisselen'))return;await BewaarAlles.flush();window.GereedschapskistNavigating=true;location.assign(a.href);}catch(error){window.GereedschapskistNavigating=false;Werkstatus.failed(error);if(typeof notify==='function')notify(I18n.value(I18n.ui('Niet overgestapt: {0}. Je invoer blijft open.','Niet overgestapt: '+error.message+'. Je invoer blijft open.')));const status=document.getElementById('wm-message');if(status)I18n.assign(status,I18n.ui("Niet overgestapt: {0}",'Niet overgestapt: '+error.message),"textContent");}finally{navigating=false;}};
   nav.append(a);
  }
  main.prepend(nav);
- if(tool==='Offerte'){I18n.assign(document,I18n.ui("Factureren · Offertes — Werkplaats",'Factureren · Offertes — Werkplaats'),"title");const brand=document.querySelector('.brand .tool-name');if(brand)I18n.assign(brand,I18n.ui("FACTUREREN",'FACTUREREN'),"textContent");}
+ const toolLabel={Ping:'Facturen',Offerte:'Offertes',Uren:'Uren',Kasboek:'Boekhouding'}[tool];
+ I18n.assign(document,I18n.ui(toolLabel,toolLabel),'title');
+ const brand=document.querySelector('.brand .tool-name');if(brand)I18n.assign(brand,I18n.ui(toolLabel,toolLabel),'textContent');
  document.addEventListener('DOMContentLoaded',()=>{
+  if(tool==='Kasboek')return;
   const title=document.createElement('h2');title.className='factureren-section-title';I18n.assign(title,I18n.ui({Ping:'Facturen',Offerte:'Offertes',Uren:'Urenregistraties'}[tool],{Ping:'Facturen',Offerte:'Offertes',Uren:'Urenregistraties'}[tool]));
   main.querySelector(':scope>.heading,:scope>.intro')?.prepend(title);
   if(tool!=='Uren'){
@@ -31,8 +34,13 @@
    head.className='factureren-detail-head';grid.className='factureren-detail-grid';
    const label=document.createElement('strong'),close=document.createElement('button');
    I18n.assign(label,(tool==='Ping'?I18n.ui("Factuur",'Factuur'):I18n.ui("Offerte",'Offerte')),"textContent");close.type='button';I18n.assign(close,I18n.ui("Sluit",'Sluit'),"textContent");
-   const closeDetail=()=>{
-    if((tool==='Ping'&&!validInputs())||(tool==='Offerte'&&!discardOK()))return;
+   const closeDetail=async()=>{
+    if(tool==='Ping'){
+     if(!validInputs())return;
+     const changed=invoiceEditing&&(!invoiceEditBaseline||JSON.stringify(current())!==JSON.stringify(invoiceEditBaseline));
+     if(changed&&!await Werkstatus.confirmInput('Je wijzigingen staan al in het factuurconcept in deze browser. Sluiten behoudt dit concept. Gebruik Bewaar alles om het ook in je werkmap vast te leggen.','Concept behouden en sluiten'))return;
+     try{await BewaarAlles.flush();}catch(error){notify(I18n.value(I18n.ui('Sluiten mislukt: {0}. Je invoer blijft open.','Sluiten mislukt: '+error.message+'. Je invoer blijft open.')));return;}
+    }else if(dirty()&&!await Werkstatus.confirmInput('Je wijzigingen zijn nog niet bewaard. Verder bewerken houdt je invoer open. Wijzigingen weggooien sluit de offerte zonder deze wijzigingen.'))return;
     detail.close();
     if(tool==='Ping'){selected=null;invoiceEditing=false;invoiceEditBaseline=null;render();}
     else select(null);

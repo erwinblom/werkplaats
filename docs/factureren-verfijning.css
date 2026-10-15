@@ -1,0 +1,105 @@
+/* Factureren: rustige werkvlakken binnen de bestaande Werkplaats-letterkaart. */
+@media screen {
+ html body.compact-tools:is([data-tool=Ping],[data-tool=Offerte]) main{max-width:1240px}
+ html body.compact-tools:is([data-tool=Ping],[data-tool=Offerte]) .invoice-summary{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--space-m);border:0;margin:var(--space-xs) 0 var(--space-xl)}
+ html body:is([data-tool=Ping],[data-tool=Offerte]) .invoice-stat{display:flex;flex-direction:column;align-items:flex-start;gap:var(--space-xs);min-width:0;padding:var(--space-l);border:0;box-shadow:inset 0 0 0 var(--border-s) var(--neutral-4);background:var(--cte-surface-muted);color:var(--cte-text);text-align:left;font-family:var(--font-ui)!important}
+ html body:is([data-tool=Ping],[data-tool=Offerte]) .invoice-stat:hover{background:var(--neutral-4)}
+ html body:is([data-tool=Ping],[data-tool=Offerte]) .invoice-stat[aria-pressed=true]{box-shadow:inset 0 0 0 var(--border-s) var(--neutral-4),inset 0 calc(-1 * var(--border-l)) var(--color-1)}
+ html body:is([data-tool=Ping],[data-tool=Offerte]) .invoice-stat-label{font:var(--weight-ui-medium) var(--size-s)/var(--line-s) var(--font-label);letter-spacing:var(--letter-spacing-s);color:var(--cte-text-muted)}
+ html body:is([data-tool=Ping],[data-tool=Offerte]) .invoice-stat strong{font:var(--weight-data-medium) var(--size-l)/var(--line-l) var(--font-data);letter-spacing:var(--letter-spacing-l);font-variant-numeric:tabular-nums}
+ html body:is([data-tool=Ping],[data-tool=Offerte]) .invoice-stat-note{font:var(--weight-ui-regular) var(--size-xs)/var(--line-xs) var(--font-ui);letter-spacing:var(--letter-spacing-xs);color:var(--cte-text-muted)}
+ html body:is([data-tool=Ping],[data-tool=Offerte]) .invoice-stat[data-invoice-filter=overdue] strong{color:var(--color-1)}
+ html body.compact-tools:is([data-tool=Ping],[data-tool=Offerte]) :is(.layout,.workspace)>.sidebar{border:0;padding-bottom:var(--space-m)}
+ html body.compact-tools:is([data-tool=Ping],[data-tool=Offerte]) #list{border:0}
+ html body.compact-tools:is([data-tool=Ping],[data-tool=Offerte]) :is(.invoice-btn,.quote-button){grid-template-columns:150px minmax(0,1fr) minmax(120px,160px) 160px;gap:var(--space-l);padding:var(--space-l) var(--space-m)!important;min-height:0;border:0;box-shadow:inset 0 calc(-1 * var(--border-s)) var(--neutral-4)!important;background:var(--cte-surface)}
+ html body.compact-tools:is([data-tool=Ping],[data-tool=Offerte]) :is(.invoice-btn,.quote-button):hover{background:var(--cte-surface-muted)}
+ html body.compact-tools:is([data-tool=Ping],[data-tool=Offerte]) :is(.invoice-btn.active,.quote-button.selected){background:var(--cte-surface-muted)!important;box-shadow:inset 0 calc(-1 * var(--border-s)) var(--neutral-4),inset var(--space-xxs) 0 var(--color-1)!important}
+ html body:is([data-tool=Ping],[data-tool=Offerte]) .factureren-row-date{font:var(--weight-data-regular) var(--size-s)/var(--line-s) var(--font-data);letter-spacing:var(--letter-spacing-s);color:var(--cte-text-muted)}
+ html body.compact-tools:is([data-tool=Ping],[data-tool=Offerte]) .factureren-row-main>strong{font:var(--weight-ui-heavy) var(--size-m)/var(--line-m) var(--font-ui);letter-spacing:var(--letter-spacing-m);margin:var(--space-xxs) 0}
+ html body:is([data-tool=Ping],[data-tool=Offerte]) .factureren-row-amount{font:var(--weight-data-medium) var(--size-m)/var(--line-m) var(--font-data);letter-spacing:var(--letter-spacing-m)}
+ html body:is([data-tool=Ping],[data-tool=Offerte]) .invoice-row-end{display:flex;flex-direction:column;align-items:flex-end;gap:var(--space-xs)}
+ html body:is([data-tool=Ping],[data-tool=Offerte]) .invoice-state{max-width:100%;padding:var(--space-xxs) var(--space-xs);background:var(--neutral-3);color:var(--cte-text);font:var(--weight-ui-medium) var(--size-xs)/var(--line-xs) var(--font-ui);letter-spacing:var(--letter-spacing-xs);overflow-wrap:anywhere}
+ html body:is([data-tool=Ping],[data-tool=Offerte]) .invoice-state-overdue{background:var(--color-1-transparent);color:var(--color-1)}
+ html body:is([data-tool=Ping],[data-tool=Offerte]) .invoice-state-paid{box-shadow:inset 0 0 0 var(--border-s) var(--neutral-4)}
+ html body:is([data-tool=Ping],[data-tool=Offerte]) .invoice-state-draft{color:var(--cte-text-muted)}
+ html body:is([data-tool=Ping],[data-tool=Offerte]) .factureren-row-open{padding:0;border:0;background:none;font:var(--weight-ui-regular) var(--size-xs)/var(--line-xs) var(--font-ui);letter-spacing:var(--letter-spacing-xs);color:var(--cte-text-muted)}
+ html body:is([data-tool=Ping],[data-tool=Offerte]) dialog.factureren-detail{width:min(1400px,calc(100vw - 32px));max-width:1400px;padding:0!important}
+ html body:is([data-tool=Ping],[data-tool=Offerte]) .factureren-detail-head{padding:var(--space-m) var(--space-l);border:0;box-shadow:inset 0 calc(-1 * var(--border-s)) var(--neutral-4)}
+ html body:is([data-tool=Ping],[data-tool=Offerte]) .factureren-detail-grid{grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:var(--space-l);padding:var(--space-l);background:var(--cte-surface-muted)}
+ html body:is([data-tool=Ping],[data-tool=Offerte]) dialog.factureren-detail :is(.editor,.preview){padding:var(--space-l);border:0;border-top:0;box-shadow:inset 0 0 0 var(--border-s) var(--neutral-4);background:var(--cte-surface)}
+ html body:is([data-tool=Ping],[data-tool=Offerte]) .editor>h2,html body:is([data-tool=Ping],[data-tool=Offerte]) .preview>h2{font:var(--weight-brand-medium) var(--size-m)/var(--line-m) var(--font-label);letter-spacing:var(--letter-spacing-m);border:0;margin:0 0 var(--space-l);padding:0}
+ html body:is([data-tool=Ping],[data-tool=Offerte]) .invoice-form-group{padding:var(--space-l);margin:0 0 var(--space-l);box-shadow:inset 0 0 0 var(--border-s) var(--neutral-4);background:var(--cte-surface)}
+ html body:is([data-tool=Ping],[data-tool=Offerte]) .invoice-form-group>h3{margin:0 0 var(--space-m);font:var(--weight-ui-medium) var(--size-s)/var(--line-s) var(--font-label);letter-spacing:var(--letter-spacing-s);color:var(--cte-text-muted)}
+ html body:is([data-tool=Ping],[data-tool=Offerte]) .invoice-business{margin:0 0 var(--space-l);padding:var(--space-m);background:var(--cte-surface-muted)}
+ html body:is([data-tool=Ping],[data-tool=Offerte]) .invoice-form-group label{margin:var(--space-m) 0 0;font:var(--weight-ui-medium) var(--size-s)/var(--line-s) var(--font-ui);letter-spacing:var(--letter-spacing-s)}
+ html body:is([data-tool=Ping],[data-tool=Offerte]) .invoice-form-group label :is(input,select,textarea){margin-top:var(--space-xs)}
+ html body:is([data-tool=Ping],[data-tool=Offerte]) .invoice-form-group .two{gap:var(--space-s)}
+ html body:is([data-tool=Ping],[data-tool=Offerte]) :is(#lines .line,.offer-line){display:grid;grid-template-columns:minmax(130px,1fr) minmax(0,1.7fr) 82px 32px;gap:var(--space-xs);align-items:end;border:0;margin-top:var(--space-m);padding:0}
+ html body:is([data-tool=Ping],[data-tool=Offerte]) :is(#lines .line,.offer-line)>label{min-width:0}
+ html body:is([data-tool=Ping],[data-tool=Offerte]) :is(#lines .line,.offer-line)>:is(.two,.three){display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--space-xs);min-width:0}
+ html body:is([data-tool=Ping],[data-tool=Offerte]) :is(#lines .line,.offer-line) label{font-size:var(--size-xs);line-height:var(--line-xs)}
+ html body:is([data-tool=Ping],[data-tool=Offerte]) :is(#lines .line,.offer-line) :is(input,select){min-width:0;width:100%;padding-inline:var(--space-xs)!important}
+ html body:is([data-tool=Ping],[data-tool=Offerte]) :is(#lines .line,.offer-line) .remove{width:32px;min-height:var(--wp-action-height);padding:0!important;margin:0;text-indent:-9999px;position:relative;overflow:hidden;box-shadow:var(--blom-control-edge)!important}
+ html body:is([data-tool=Ping],[data-tool=Offerte]) :is(#lines .line,.offer-line) .remove::after{content:'×';position:absolute;inset:0;display:grid;place-items:center;text-indent:0;font-size:var(--size-l);color:var(--cte-text)}
+ html body:is([data-tool=Ping],[data-tool=Offerte]) .invoice-line-amount{font:var(--weight-data-regular) var(--size-s)/var(--line-s) var(--font-data);text-align:right;min-width:0}
+ html body:is([data-tool=Ping],[data-tool=Offerte]) .invoice-line-amount span{display:block;font-size:var(--size-xs);line-height:var(--line-xs);margin-bottom:var(--space-xs)}
+ html body:is([data-tool=Ping],[data-tool=Offerte]) .invoice-line-amount strong{display:block;font-weight:var(--weight-data-medium);min-height:var(--wp-action-height);display:flex;align-items:center;justify-content:flex-end;overflow-wrap:anywhere}
+ html body:is([data-tool=Ping],[data-tool=Offerte]) .invoice-form-group:has(#lines){padding:var(--space-m)}
+ html body:is([data-tool=Ping],[data-tool=Offerte]) .invoice-form-group .hint{font-size:var(--size-xs);line-height:var(--line-xs)}
+ html body:is([data-tool=Ping],[data-tool=Offerte]) #checks{margin-block:var(--space-l)}
+ html body:is([data-tool=Ping],[data-tool=Offerte]) .paper{font:var(--weight-editorial-regular) var(--size-s)/var(--line-s) var(--font-editorial);letter-spacing:var(--letter-spacing-s);min-height:0;padding:var(--space-m)}
+}
+/* Documentstructuur wordt ook door Afdrukken / PDF bewaren gebruikt. */
+body:is([data-tool=Ping],[data-tool=Offerte]) .invoice-paper-head{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:var(--space-l);margin-bottom:var(--space-xxl)}
+body:is([data-tool=Ping],[data-tool=Offerte]) .invoice-paper-logo{max-width:160px;max-height:64px;object-fit:contain;display:block;margin-bottom:var(--space-l)}
+body:is([data-tool=Ping],[data-tool=Offerte]) .invoice-paper-sender{text-align:right;color:var(--cte-text-muted);overflow-wrap:anywhere}
+body:is([data-tool=Ping],[data-tool=Offerte]) .invoice-paper-sender strong{color:var(--cte-text);font-weight:var(--weight-editorial-heavy)}
+body:is([data-tool=Ping],[data-tool=Offerte]) .paper h2{font:var(--weight-editorial-medium) var(--size-l)/var(--line-l) var(--font-editorial);letter-spacing:var(--letter-spacing-l);text-transform:none;margin:var(--space-xs) 0;overflow-wrap:anywhere}
+body:is([data-tool=Ping],[data-tool=Offerte]) .paper .tag,body:is([data-tool=Ping],[data-tool=Offerte]) .invoice-paper-label{display:block;font:var(--weight-editorial-medium) var(--size-xs)/var(--line-xs) var(--font-editorial);letter-spacing:var(--letter-spacing-xs);color:var(--cte-text-muted);text-transform:uppercase}
+body:is([data-tool=Ping],[data-tool=Offerte]) .invoice-paper-recipient{margin-bottom:var(--space-xl);color:var(--cte-text-muted)}
+body:is([data-tool=Ping],[data-tool=Offerte]) .invoice-paper-recipient>strong{display:block;color:var(--cte-text);font:var(--weight-editorial-heavy) var(--size-m)/var(--line-m) var(--font-editorial);margin:var(--space-xs) 0}
+body:is([data-tool=Ping],[data-tool=Offerte]) .paper .invoice-paper-lines{width:100%;table-layout:fixed}
+body:is([data-tool=Ping],[data-tool=Offerte]) .paper .invoice-paper-lines th:first-child{width:38%}
+body:is([data-tool=Ping],[data-tool=Offerte]) .paper .invoice-paper-lines :is(th,td){padding:var(--space-s) var(--space-xxs);border-color:var(--neutral-4);overflow-wrap:anywhere;font-weight:var(--weight-data-regular)}
+body:is([data-tool=Ping],[data-tool=Offerte]) .paper .invoice-paper-lines th{color:var(--cte-text-muted);font-size:var(--size-xs)}
+body:is([data-tool=Ping],[data-tool=Offerte]) .paper .invoice-paper-totals{width:min(100%,300px);margin:var(--space-l) 0 var(--space-xl) auto}
+body:is([data-tool=Ping],[data-tool=Offerte]) .paper .invoice-paper-totals :is(th,td){padding:var(--space-xs) 0;border:0;font-size:var(--size-s);font-weight:var(--weight-data-regular)}
+body:is([data-tool=Ping],[data-tool=Offerte]) .paper .invoice-paper-totals th{text-align:left;color:var(--cte-text-muted);width:65%}
+body:is([data-tool=Ping],[data-tool=Offerte]) .paper .invoice-paper-totals .total :is(th,td){border-top:var(--border-s) solid var(--neutral-4);padding-top:var(--space-m);color:var(--cte-text);font-size:var(--size-m);font-weight:var(--weight-data-heavy)}
+body:is([data-tool=Ping],[data-tool=Offerte]) .paper footer{border-color:var(--neutral-4);margin-top:var(--space-xl);padding-top:var(--space-l);color:var(--cte-text-muted)}
+body:is([data-tool=Ping],[data-tool=Offerte]) .invoice-paper-dates{display:grid;grid-template-columns:minmax(100px,max-content) minmax(0,1fr);gap:var(--space-xxs) var(--space-m);margin:0 0 var(--space-l)}
+body:is([data-tool=Ping],[data-tool=Offerte]) .invoice-paper-dates dd{margin:0;color:var(--cte-text)}
+@media screen and (max-width:1150px){html body:is([data-tool=Ping],[data-tool=Offerte]) .factureren-detail-grid{grid-template-columns:1fr}html body:is([data-tool=Ping],[data-tool=Offerte]) :is(#lines .line,.offer-line){grid-template-columns:minmax(130px,1fr) minmax(180px,1fr) 90px 32px}}
+@media screen and (max-width:700px){html body.compact-tools:is([data-tool=Ping],[data-tool=Offerte]) .invoice-summary{grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--space-s)}html body:is([data-tool=Ping],[data-tool=Offerte]) .invoice-stat{padding:var(--space-m)}html body.compact-tools:is([data-tool=Ping],[data-tool=Offerte]) :is(.invoice-btn,.quote-button){grid-template-columns:minmax(0,1fr) auto;gap:var(--space-s);padding:var(--space-m) 0!important}html body:is([data-tool=Ping],[data-tool=Offerte]) .factureren-row-date{grid-column:1/-1}html body:is([data-tool=Ping],[data-tool=Offerte]) .factureren-row-main{grid-column:1;grid-row:2}html body:is([data-tool=Ping],[data-tool=Offerte]) .factureren-row-amount{grid-column:2;grid-row:2}html body:is([data-tool=Ping],[data-tool=Offerte]) .invoice-row-end{grid-column:1/-1;flex-direction:row;justify-content:space-between;align-items:center}html body:is([data-tool=Ping],[data-tool=Offerte]) .factureren-row-open{grid-column:auto;grid-row:auto;width:auto}html body:is([data-tool=Ping],[data-tool=Offerte]) .factureren-detail-grid{padding:var(--space-s);gap:var(--space-s)}html body:is([data-tool=Ping],[data-tool=Offerte]) dialog.factureren-detail :is(.editor,.preview){padding:var(--space-m)}html body:is([data-tool=Ping],[data-tool=Offerte]) .invoice-form-group{padding:var(--space-m)}html body:is([data-tool=Ping],[data-tool=Offerte]) :is(#lines .line,.offer-line){grid-template-columns:minmax(0,1fr) 32px;row-gap:0}html body:is([data-tool=Ping],[data-tool=Offerte]) :is(#lines .line,.offer-line)>label{grid-column:1/-1}html body:is([data-tool=Ping],[data-tool=Offerte]) :is(#lines .line,.offer-line)>:is(.two,.three){grid-column:1/-1}html body:is([data-tool=Ping],[data-tool=Offerte]) .invoice-line-amount{grid-column:1;margin-top:var(--space-xs);display:flex;align-items:center;justify-content:space-between}html body:is([data-tool=Ping],[data-tool=Offerte]) .invoice-line-amount span{margin:0}html body:is([data-tool=Ping],[data-tool=Offerte]) .paper{padding:0}body:is([data-tool=Ping],[data-tool=Offerte]) .invoice-paper-head{grid-template-columns:1fr;gap:var(--space-l);margin-bottom:var(--space-xl)}body:is([data-tool=Ping],[data-tool=Offerte]) .invoice-paper-sender{text-align:left}}
+@media print{body:is([data-tool=Ping],[data-tool=Offerte]) .invoice-summary{display:none!important}body:is([data-tool=Ping],[data-tool=Offerte]) .paper{font-family:Arial,Helvetica,sans-serif;color:#000;padding:8mm}body:is([data-tool=Ping],[data-tool=Offerte]) .invoice-paper-head{grid-template-columns:1fr 1fr}body:is([data-tool=Ping],[data-tool=Offerte]) .paper .tag{color:#000}body:is([data-tool=Ping],[data-tool=Offerte]) .invoice-paper-sender{text-align:right}body:is([data-tool=Ping],[data-tool=Offerte]) .invoice-paper-totals{break-inside:avoid}body:is([data-tool=Ping],[data-tool=Offerte]) .paper h2{font-size:var(--size-l)}}
+
+@media screen {
+ html body:is([data-tool=Ping],[data-tool=Offerte]) .invoice-stat strong{font-size:var(--size-l)!important;line-height:var(--line-l)!important;font-weight:var(--weight-data-medium)!important;font-family:var(--font-data)!important}
+ html body:is([data-tool=Ping],[data-tool=Offerte]) .factureren-row-main>strong{font-size:var(--size-m)!important;line-height:var(--line-m)!important;font-weight:var(--weight-ui-heavy)!important}
+ html body[data-tool=Offerte] .invoice-form-group{border:0;padding:var(--space-l);margin:0 0 var(--space-l)}
+ html body[data-tool=Offerte] .invoice-form-group>summary{font:var(--weight-ui-medium) var(--size-s)/var(--line-s) var(--font-label);letter-spacing:var(--letter-spacing-s);color:var(--cte-text-muted)}
+ html body[data-tool=Offerte] .invoice-form-group h3{border:0;margin:var(--space-l) 0 var(--space-m);padding:0;font-size:var(--size-s)}
+ html body[data-tool=Offerte] .quote-description-controls{margin-bottom:var(--space-l)}
+ html body[data-tool=Offerte] .quote-button .invoice-row-end>span{margin-top:0}
+ html body[data-tool=Offerte] .editor-head{border:0;padding:0;margin:0 0 var(--space-l)}
+}
+@media screen and (max-width:700px){
+ html body:is([data-tool=Ping],[data-tool=Offerte]) :is(#lines .line,.offer-line)>:is(.two,.three){grid-template-columns:repeat(2,minmax(0,1fr));align-items:end}
+ html body:is([data-tool=Ping],[data-tool=Offerte]) :is(#lines .line,.offer-line)>:is(.two,.three)>label:last-child{grid-column:1/-1}
+ html body:is([data-tool=Ping],[data-tool=Offerte]) .invoice-form-group>.two{grid-template-columns:1fr}
+}
+
+@media screen {html body:is([data-tool=Ping],[data-tool=Offerte]) .factureren-row-open{white-space:nowrap}html body[data-tool=Offerte] .factureren-row-open>span{display:inline;margin:0}html body:is([data-tool=Ping],[data-tool=Offerte]) .factureren-row-date .invoice-due{font-size:var(--size-xs);line-height:var(--line-xs)}}
+@media screen {
+ html body:is([data-tool=Ping],[data-tool=Offerte]) #paper h2{font:var(--weight-editorial-medium) var(--size-l)/var(--line-l) var(--font-editorial);letter-spacing:var(--letter-spacing-l);text-transform:none;margin:var(--space-xs) 0}
+ html body:is([data-tool=Ping],[data-tool=Offerte]) #paper .tag{border:0;padding:0;background:none;font-weight:var(--weight-editorial-medium);margin:0}
+ html body:is([data-tool=Ping],[data-tool=Offerte]) .invoice-form-group .offer-line{align-items:end}
+}
+
+@media screen {
+ html body.compact-tools[data-tool=Offerte] .workspace>.sidebar>h2{font:var(--weight-tool-heading) var(--size-xl)/var(--line-xl) var(--font-brand)!important;letter-spacing:var(--letter-spacing-xl);text-transform:none!important;margin:var(--space-m) 0 var(--space-l)}
+ html body:is([data-tool=Ping],[data-tool=Offerte]) .invoice-due-date{display:block;white-space:nowrap}
+ html body[data-tool=Ping] .editor>#finalize{display:block;margin-left:auto}
+ html body[data-tool=Ping] .editor>#finalize[hidden]{display:none}
+}
+html body:is([data-tool=Ping],[data-tool=Offerte]) #paper .tag{border:0;padding:0;background:none}

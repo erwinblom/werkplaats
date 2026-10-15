@@ -1,7 +1,7 @@
 'use strict';
 (()=>{
  const script=document.currentScript,base=new URL('.',script.src),tool=document.querySelector('script[data-tool]')?.dataset.tool;
- const tools={Publicatieplanner:['Projecten','Start Publicatieplanner.html'],Bronnenkast:['Verzamelen','Start Bronnenkast.html'],Werkbank:['Schrijven','▶ Begin hier.html'],Projectbord:['Doen','Start Projectbord.html'],Contacten:['Contacten','Start Contacten.html'],Offerte:['Offreren','Start Offerte.html'],Uren:['Uren schrijven','Start Uren.html'],Ping:['Factureren','Start Ping.html'],Kasboek:['Boekhouden','Start Kasboek.html'],Abonnementen:['Abonnementen','Start Abonnementen.html']};
+ const tools={Publicatieplanner:['Projecten','Start Publicatieplanner.html'],Bronnenkast:['Verzamelen','Start Bronnenkast.html'],Werkbank:['Schrijven','▶ Begin hier.html'],Projectbord:['Doen','Start Projectbord.html'],Contacten:['Contacten','Start Contacten.html'],Offerte:['Offertes','Start Offerte.html'],Uren:['Uren','Start Uren.html'],Ping:['Facturen','Start Ping.html'],Kasboek:['Boekhouding','Start Kasboek.html'],Abonnementen:['Abonnementen','Start Abonnementen.html']};
  const shortcutText=()=>window.MijnGereedschappen?.shortcutText()||'';
  const $=id=>document.getElementById(id);
  const mode=()=>window.GereedschapskistMode?.example?'voorbeeld':'eigen';
@@ -9,14 +9,14 @@
  const helpSteps={
   Abonnementen:['Abonnementen','Voeg naam, bedrag, betaalperiode, verlenging en uiterste opzegdatum toe.','Open een abonnement om de gegevens te bekijken. Bewaar alles bewaart je overzicht in je werkmap.'],
   Werkbank:['Schrijven','Kies + Nieuw → Nieuw document, Brief, Artikel of Gespreksverslag. Geef het een naam en bewerk de starttekst.','Bewaar werkt het document bij op de getoonde opslagplek. Een los document gaat naar Schrijven in je werkmap. Bewaar alles bewaart daarnaast de hele Werkplaats.'],
-  Ping:['Factureren','Kies Nieuwe factuur, vul klant en factuurregels in en controleer het voorbeeld.','Maak de factuur pas definitief nadat je alles hebt nagekeken. Bewaar alles legt je concepten en facturen vast.'],
+  Ping:['Facturen','Kies Nieuwe factuur, vul klant en factuurregels in en controleer het voorbeeld.','Maak de factuur pas definitief nadat je alles hebt nagekeken. Bewaar alles legt je concepten en facturen vast.'],
   Projectbord:['Doen','Voeg een taak toe. Zet haar tijdens het werk van Te doen naar Bezig en Klaar.','Zoeken staat boven je taken. Sorteren en extra filters staan onder Filters. Bewaar alles legt ook je taken vast.'],
   Bronnenkast:['Verzamelen','Voeg een link, citaat of notitie toe. Geef bronnen een onderwerp om ze later terug te vinden.','Je kunt geselecteerde bronnen gebruiken voor een document in Schrijven. Bewaar alles legt je collectie vast.'],
-  Uren:['Uren schrijven','Voeg je uren toe per klant en project. De lijst toont eerst alle datums.','Kies onder Periode een week als je alleen die week wilt zien. Bewaar alles legt je registraties vast.'],
+  Uren:['Uren','Voeg je uren toe per klant en project. De lijst toont eerst alle datums.','Kies onder Periode een week als je alleen die week wilt zien. Bewaar alles legt je registraties vast.'],
   Contacten:['Contacten','Voeg een contact toe en noteer gesprekken of vervolgafspraken.','Dit is de adressenlijst voor Offreren en Factureren. Bewaar alles legt je contacten vast.'],
   Publicatieplanner:['Projecten','Start een tijdelijk of doorlopend project. Bekijk gekoppelde taken, documenten en bronnen.','Bij een project kun je taken maken in Doen. Bewaar alles legt je planning vast.'],
-  Offerte:['Offreren','Maak een nieuwe offerte, vul het werk en de afspraken in en controleer het voorbeeld.','Pas de status aan wanneer de klant reageert. Bewaar alles legt je offertes vast.'],
-  Kasboek:['Boekhouden','Voeg een inkomsten- of uitgavenboeking toe. Een betaalde factuur kun je overnemen.','Voeg zo nodig een bon toe. Bewaar alles legt je boekingen vast.']
+  Offerte:['Offertes','Maak een nieuwe offerte, vul het werk en de afspraken in en controleer het voorbeeld.','Pas de status aan wanneer de klant reageert. Bewaar alles legt je offertes vast.'],
+  Kasboek:['Boekhouding','Voeg een inkomsten- of uitgavenboeking toe. Een betaalde factuur kun je overnemen.','Voeg zo nodig een bon toe. Bewaar alles legt je boekingen vast.']
  };
  let navigating=false;
  async function navigate(url){
@@ -104,8 +104,24 @@
    heading.append(title,close);dialog.prepend(heading);
   }
  }
+ function applyInputHeaders(){
+  for(const dialog of document.querySelectorAll('dialog')){
+   if(dialog.classList.contains('wp-input-dialog')||dialog.querySelector('.administratie-dialog-head,.factureren-detail-head'))continue;
+   const form=dialog.querySelector('form'),note=dialog.classList.contains('note-dialog')&&dialog.querySelector('.notes-close');
+   if(!form&&!note)continue;
+   const root=form||dialog,title=root.querySelector(':scope > h2');
+   const original=note||[...root.querySelectorAll('button')].find(button=>button.querySelector('[data-i18n="Annuleer"]')||button.textContent.trim()===I18n.t('Annuleer'));
+   if(!title||!original)continue;
+   const head=document.createElement('div'),label=document.createElement('strong'),close=document.createElement('button');
+   head.className='wp-input-head';close.className='wp-input-close';close.type='button';
+   const name=note?'Notitie':({Contacten:'Contact',Abonnementen:'Abonnement',Bronnenkast:'Bron',Projectbord:'Taak',Publicatieplanner:'Project'}[tool]||'Invoer');
+   I18n.assign(label,I18n.ui(name,name));I18n.assign(close,I18n.ui('Sluit','Sluit'));
+   close.onclick=()=>{if(!original.disabled)original.click();};
+   head.append(label,close);root.prepend(head);dialog.classList.add('wp-input-dialog');
+  }
+ }
  function applySharedRoles(){
-  applyDetailHeaders();
+  applyDetailHeaders();applyInputHeaders();
   const roles={
    'tool-title':'.brand .tool-name',
    'page-title':'#cash-panel>.section-head h2,.invoice-home-heading h2,.subscriptions-heading h1,.heading h1,.work-actions h1,.suite-collection-heading h1,.notes-heading h1',
@@ -151,6 +167,7 @@
   }
   if(tool==='Abonnementen'){
    const heading=document.querySelector('.subscriptions-heading');heading?.classList.add('suite-collection-heading');
+   const totals=document.querySelector('.subscription-totals'),explanation=totals?.nextElementSibling;if(heading&&totals){heading.before(totals);if(explanation?.tagName==='P')heading.before(explanation);}
    const actions=heading?.querySelector('.suite-tool-actions');actions?.classList.add('suite-tool-actions');
   }
   if(tool==='Werkbank'){
@@ -163,7 +180,7 @@
    const nav=document.querySelector('.ledger-nav');
    if(more&&nav){for(const button of nav.querySelectorAll('[data-ledger-panel="categories"],[data-ledger-panel="invoices"]'))more.append(button);}
    const toolbar=document.querySelector('.suite-filter-panel .toolbar'),period=$('period');
-   if(toolbar&&period){const group=document.createElement('div');group.className='home-period';group.setAttribute('role','group');I18n.attribute(group,'aria-label',I18n.ui('Periode','Periode'));for(const el of [period.closest('label'),$('month-wrap'),$('year-wrap')])if(el)group.append(el);document.querySelector('.ledger-nav')?.before(group);}
+   if(toolbar&&period){const group=document.createElement('div');group.className='home-period';group.setAttribute('role','group');I18n.attribute(group,'aria-label',I18n.ui('Periode','Periode'));for(const el of [period.closest('label'),$('month-wrap'),$('year-wrap')])if(el)group.append(el);document.querySelector('#cash-summary')?.before(group);}
    // The visible type buttons already implement the same choice; keep one UI.
    const type=$('type-filter');if(type)type.closest('label').hidden=true;
   }
@@ -191,7 +208,7 @@
   });
   if(!document.querySelector('link[href*="werkruimte-ui.css"]')){const style=document.createElement('link');style.rel='stylesheet';style.href=new URL('werkruimte-ui.css?v=20261011-clear-start-1',base);document.head.append(style);}
   const map=$('werkmap');map.open=false;
-   document.addEventListener('click',e=>{const a=e.target.closest('a');if(!a||a.target||e.metaKey||e.ctrlKey||e.shiftKey||e.button)return;const url=new URL(a.href,location.href);if(url.href.startsWith(base.href)&&url.pathname.endsWith('.html')){e.preventDefault();navigate(url.href);}},true);
+   document.addEventListener('click',e=>{const a=e.target.closest('a');if(!a||a.closest('.factureren-tabs')||a.target||e.metaKey||e.ctrlKey||e.shiftKey||e.button)return;const url=new URL(a.href,location.href);if(url.href.startsWith(base.href)&&url.pathname.endsWith('.html')){e.preventDefault();navigate(url.href);}},true);
   if(tool){
    document.body.dataset.tool=tool;
    installShortcuts();
@@ -200,7 +217,7 @@
    function updateNavigation(){
     nav.replaceChildren(...myTools.entries().map(([id,[name]],index)=>new Option(shortcutPrefix+(index+1)+'  '+name,id)));
     const active=['Uren','Offerte'].includes(tool)?'Ping':tool;
-    if(![...nav.options].some(o=>o.value===active))nav.add(I18n.mark(new Option((['Uren','Offerte'].includes(tool)?'Factureren':tools[tool][0])+' (verborgen)',active),"{0} (verborgen)"));
+    if(![...nav.options].some(o=>o.value===active))nav.add(I18n.mark(new Option(tools[tool][0]+' (verborgen)',active),"{0} (verborgen)"));
     nav.value=active;I18n.assign(nav,I18n.ui("Wissel van gereedschap met {0}1 t/m {1}{2}",'Wissel van gereedschap met '+shortcutPrefix+'1 t/m '+shortcutPrefix+myTools.entries().length),"title");
     for(const p of document.querySelectorAll('.help-tool-shortcuts'))p.textContent=shortcutText();
    }
@@ -217,7 +234,7 @@
    }
    if(back)navigation.append(back);
    const toolControl=document.createElement('span');toolControl.className='tool-select-control';
-   const toolLabel=document.createElement('span');toolLabel.className='tool-select-label';I18n.assign(toolLabel,(['Uren','Offerte'].includes(tool)?I18n.ui("Factureren",'Factureren'):(tool==='Contacten'?I18n.ui("Contacten",'Contacten'):I18n.ui(tools[tool][0],tools[tool][0]))),"textContent");toolLabel.setAttribute('aria-hidden','true');
+   const toolLabel=document.createElement('span');toolLabel.className='tool-select-label';I18n.assign(toolLabel,I18n.ui(tools[tool][0],tools[tool][0]),"textContent");toolLabel.setAttribute('aria-hidden','true');
    toolControl.append(nav,toolLabel);navigation.append(toolControl);header.append(navigation);
    if(tool==='Abonnementen'){const heading=document.querySelector('.subscriptions-heading');const menu=$('subscription-more');if(heading&&menu){const actions=document.createElement('div');actions.className='suite-tool-actions';actions.append($('new'),menu);heading.append(actions);const panel=document.createElement('div');panel.className='context-actions-panel';for(const child of [...menu.children])if(child.tagName!=='SUMMARY')panel.append(child);menu.append(panel);}}
    const saveId=tool==='Werkbank'?'loose-save':tool==='Ping'?'save':'export';const save=$(saveId);
@@ -266,7 +283,7 @@
     if(destination){
      const actions=document.createElement('div');actions.className='suite-tool-actions';
      actions.setAttribute('role','group');I18n.attribute(actions,'aria-label',I18n.ui('Acties voor '+tools[tool][0],'Acties voor '+tools[tool][0]));
-     if(tool==='Offerte')destination.querySelector('h2').after(actions);else destination.append(actions);
+     if(tool==='Offerte'){const row=document.createElement('div');row.className='administratie-overview-head';const title=destination.querySelector('h2');title.before(row);row.append(title,actions);}else destination.append(actions);
      // Move the original buttons, preserving their handlers and selection state.
      const newButton=$('new');if(newButton)actions.append(newButton);
      if(heading){for(const group of heading.querySelectorAll(':scope > .actions,:scope > .link-actions')){
@@ -415,7 +432,7 @@
     if(helpPanel){const hint=document.createElement('p');I18n.assign(hint,I18n.ui("Begin bij Bewerk. Kies Voorbeeld bekijken om het document te controleren en af te drukken of als PDF te bewaren. Terug naar gegevens behoudt je invoer. Een voorbeeld bekijken maakt niets definitief.",'Begin bij Bewerk. Kies Voorbeeld bekijken om het document te controleren en af te drukken of als PDF te bewaren. Terug naar gegevens behoudt je invoer. Een voorbeeld bekijken maakt niets definitief.'),"textContent");helpPanel.querySelector('.context-help').append(hint);}
 
    }
-   if(tool==='Kasboek'){const label=document.createElement('p');label.className='tool-purpose';I18n.assign(label,I18n.ui("Eenvoudig kasboek · inkomsten, uitgaven en bonnen",'Eenvoudig kasboek · inkomsten, uitgaven en bonnen'),"textContent");document.querySelector('main').prepend(label);}
+   if(tool==='Kasboek'){const label=document.createElement('p');label.className='tool-purpose';I18n.assign(label,I18n.ui("Eenvoudig kasboek · inkomsten, uitgaven en bonnen",'Eenvoudig kasboek · inkomsten, uitgaven en bonnen'),"textContent");const nav=document.querySelector('.factureren-tabs');if(nav)nav.after(label);else document.querySelector('main').prepend(label);}
    if(tool==='Werkbank'){
     const hint=document.querySelector('.loose-documents > span');if(hint)I18n.assign(hint,I18n.ui("Nieuwe documenten gaan mee met Bewaar alles. Een externe map blijft op haar eigen plek.",'Nieuwe documenten gaan mee met Bewaar alles. Een externe map blijft op haar eigen plek.'),"textContent");
     const localSave=$('saveButton');if(localSave)I18n.assign(localSave,I18n.ui("Werk dit document bij in de oorspronkelijke map",'Werk dit document bij in de oorspronkelijke map'),"title");

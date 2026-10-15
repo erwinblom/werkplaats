@@ -1,0 +1,84 @@
+/* Gemeenschappelijke administratiebediening binnen de Werkplaats-letterkaart. */
+@media screen {
+ html body.compact-tools:is([data-tool=Ping],[data-tool=Offerte],[data-tool=Uren],[data-tool=Kasboek]) main{max-width:1240px}
+ html body:is([data-tool=Ping],[data-tool=Offerte],[data-tool=Uren],[data-tool=Kasboek]) .factureren-tabs{display:flex;flex-wrap:wrap;gap:0;margin:0 0 var(--space-l);overflow:visible}
+ html body:is([data-tool=Ping],[data-tool=Offerte],[data-tool=Uren],[data-tool=Kasboek]) .factureren-tabs a{padding:var(--space-s) var(--space-m);min-width:0}
+ html body[data-tool=Kasboek] .ledger-nav{margin-top:var(--space-m)}
+ html body.compact-tools[data-tool=Uren] .stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--space-m);border:0;margin:0 0 var(--space-xl);padding:0}
+ html body.compact-tools[data-tool=Uren] .stats>:is(div,button){display:flex;flex-direction:column;align-items:flex-start;gap:var(--space-xs);padding:var(--space-l);min-width:0;background:var(--cte-surface-muted);color:var(--cte-text);border:0;box-shadow:inset 0 0 0 var(--border-s) var(--neutral-4);text-align:left}
+ html body.compact-tools[data-tool=Uren] .stats>:is(div,button)>span{font:var(--weight-ui-medium) var(--size-s)/var(--line-s) var(--font-label);color:var(--cte-text-muted)}
+ html body.compact-tools[data-tool=Uren] .stats strong{font:var(--weight-data-medium) var(--size-l)/var(--line-l) var(--font-data)!important;letter-spacing:var(--letter-spacing-l);font-variant-numeric:tabular-nums}
+ html body.compact-tools[data-tool=Uren] .stats>button:hover{background:var(--neutral-4)}
+ html body.compact-tools[data-tool=Uren] .stats>button[aria-pressed=true]{box-shadow:inset 0 0 0 var(--border-s) var(--neutral-4),inset 0 calc(-1 * var(--border-l)) var(--color-1)}
+ html body.compact-tools:is([data-tool=Uren],[data-tool=Offerte]) :is(main>.section-head>h2,.administratie-overview-head>h2){font:var(--weight-tool-heading) var(--size-xl)/var(--line-xl) var(--font-brand)!important;letter-spacing:var(--letter-spacing-xl);text-transform:none!important;margin:var(--space-m) 0 var(--space-l)}
+ html body.compact-tools:is([data-tool=Uren],[data-tool=Offerte]) :is(main>.section-head>h2,.administratie-overview-head>h2)>span{font:inherit!important;text-transform:none!important}
+ html body[data-tool=Offerte] .administratie-overview-head{display:flex;align-items:center;justify-content:space-between;gap:var(--space-m);flex-wrap:wrap}
+ html body.compact-tools[data-tool=Uren] #rows .entry{display:grid;grid-template-columns:110px minmax(0,1fr) 100px 110px;gap:var(--space-l);align-items:center;padding:var(--space-l) var(--space-m)!important;border:0!important;box-shadow:inset 0 calc(-1 * var(--border-s)) var(--neutral-4)!important;background:var(--cte-surface)}
+ html body.compact-tools[data-tool=Uren] .entry-work>strong{font:var(--weight-ui-heavy) var(--size-m)/var(--line-m) var(--font-ui)!important;letter-spacing:var(--letter-spacing-m)}
+ html body.compact-tools[data-tool=Uren] .entry-work>p{font:var(--weight-ui-regular) var(--size-s)/var(--line-s) var(--font-ui);color:var(--cte-text-muted);margin:var(--space-xxs) 0;white-space:normal;overflow-wrap:anywhere}
+ html body.compact-tools[data-tool=Uren] .entry-date{font:var(--weight-data-regular) var(--size-s)/var(--line-s) var(--font-data);color:var(--cte-text-muted)}
+ html body.compact-tools[data-tool=Uren] .duration{font:var(--weight-data-medium) var(--size-m)/var(--line-m) var(--font-data)!important;letter-spacing:var(--letter-spacing-m);font-variant-numeric:tabular-nums;text-align:right}
+ html body.compact-tools[data-tool=Uren] .entry>.actions{flex-direction:column;align-items:flex-end;gap:var(--space-xs)}
+ html body.compact-tools[data-tool=Uren] .entry>.actions>button{padding:0;border:0;background:none;font:var(--weight-ui-regular) var(--size-xs)/var(--line-xs) var(--font-ui);color:var(--cte-text-muted)}
+ html body.compact-tools[data-tool=Uren] .entry [data-view]::after{content:"\00a0\2192"}
+ html body.compact-tools[data-tool=Uren] .link-select{font:var(--weight-ui-regular) var(--size-xs)/var(--line-xs) var(--font-ui);letter-spacing:var(--letter-spacing-xs);color:var(--cte-text-muted)}
+ html body.compact-tools[data-tool=Uren] .breakdowns{border-color:var(--neutral-4)}
+ html body.compact-tools:is([data-tool=Uren],[data-tool=Kasboek]) #dialog{width:min(760px,calc(100vw - 32px));max-width:760px}
+ html body.compact-tools:is([data-tool=Uren],[data-tool=Kasboek]) .administratie-dialog-head{display:flex;align-items:center;justify-content:space-between;gap:var(--space-m);padding-bottom:var(--space-m);margin-bottom:var(--space-l);box-shadow:inset 0 calc(-1 * var(--border-s)) var(--neutral-4)}
+ html body:is([data-tool=Ping],[data-tool=Offerte],[data-tool=Uren],[data-tool=Kasboek]) :is(.factureren-detail-head,.administratie-dialog-head)>strong{font:var(--weight-ui-medium) var(--size-s)/var(--line-s) var(--font-label)}
+ html body.compact-tools:is([data-tool=Uren],[data-tool=Kasboek]) #form-title,html body.compact-tools:is([data-tool=Ping],[data-tool=Offerte]) .editor>:is(h2,.editor-head)>h2,html body.compact-tools:is([data-tool=Ping],[data-tool=Offerte]) .editor>h2{font:var(--weight-brand-medium) var(--size-l)/var(--line-l) var(--font-brand)!important;letter-spacing:var(--letter-spacing-l);text-transform:none!important;border:0;padding:0;margin:0 0 var(--space-l)}
+ html body.compact-tools:is([data-tool=Uren],[data-tool=Kasboek]) #form-title>span,html body.compact-tools:is([data-tool=Ping],[data-tool=Offerte]) .editor h2>span{font:inherit!important;text-transform:none!important}
+ html body[data-tool=Uren] .administratie-form-group{padding:var(--space-l);margin:0 0 var(--space-l);background:var(--cte-surface);box-shadow:inset 0 0 0 var(--border-s) var(--neutral-4)}
+ html body:is([data-tool=Uren],[data-tool=Kasboek],[data-tool=Ping],[data-tool=Offerte]) :is(.administratie-form-group,.ledger-form-group,.invoice-form-group)>:is(h3,summary){font:var(--weight-ui-medium) var(--size-s)/var(--line-s) var(--font-label)!important;letter-spacing:var(--letter-spacing-s);text-transform:none!important;color:var(--cte-text-muted);margin:0 0 var(--space-m);padding:0;border:0}
+ html body:is([data-tool=Uren],[data-tool=Kasboek],[data-tool=Ping],[data-tool=Offerte]) :is(.administratie-form-group,.ledger-form-group,.invoice-form-group)>:is(h3,summary)>span{font:inherit!important;text-transform:none!important}
+ html body[data-tool=Uren] .administratie-form-group label{margin:var(--space-m) 0 var(--space-xs);font:var(--weight-ui-medium) var(--size-s)/var(--line-s) var(--font-ui);letter-spacing:var(--letter-spacing-s)}
+ html body[data-tool=Uren] .administratie-form-group .two{gap:var(--space-s)}
+ html body:is([data-tool=Uren],[data-tool=Kasboek],[data-tool=Ping],[data-tool=Offerte]) :is(.form-actions,.invoice-edit-actions,#editor-actions){display:flex;flex-wrap:wrap;justify-content:flex-end;align-items:center;gap:var(--space-s);border:0;box-shadow:inset 0 var(--border-s) var(--neutral-4);padding-top:var(--space-l);margin-top:var(--space-l)}
+ html body:is([data-tool=Uren],[data-tool=Kasboek],[data-tool=Ping],[data-tool=Offerte]) :is(.form-actions,.invoice-edit-actions,#editor-actions)>button{width:auto;flex:0 1 auto}
+ html body[data-tool=Offerte] #editor-actions>.delete{display:inline-block;padding:var(--space-xs) var(--space-s);font:var(--weight-ui-regular) var(--size-xs)/var(--line-xs) var(--font-ui);border:0;color:var(--color-1);background:none;margin-right:auto}
+ html body:is([data-tool=Uren],[data-tool=Kasboek],[data-tool=Ping],[data-tool=Offerte]) #toast{top:auto;bottom:var(--space-l);max-width:calc(100vw - 32px)}
+ html body[data-tool=Offerte] #editor-actions[hidden]{display:none!important}
+}
+@media screen and (max-width:700px){
+ html body:is([data-tool=Ping],[data-tool=Offerte],[data-tool=Uren],[data-tool=Kasboek]) .factureren-tabs a{padding:var(--space-s) var(--space-xs);font-size:var(--size-xs)!important;line-height:var(--line-xs)!important}
+ html body:is([data-tool=Ping],[data-tool=Offerte],[data-tool=Uren],[data-tool=Kasboek]) .factureren-tabs a span{font:inherit!important}
+ html body.compact-tools[data-tool=Uren] .stats{grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--space-s)}
+ html body.compact-tools[data-tool=Uren] .stats>:last-child{grid-column:1/-1}
+ html body.compact-tools[data-tool=Uren] .stats>:is(div,button){padding:var(--space-m)}
+ html body.compact-tools[data-tool=Uren] #rows .entry{grid-template-columns:minmax(0,1fr) auto;gap:var(--space-s);padding:var(--space-m) 0!important}
+ html body.compact-tools[data-tool=Uren] .entry-date{grid-column:1/-1}
+ html body.compact-tools[data-tool=Uren] .entry-work{grid-column:1;grid-row:2}
+ html body.compact-tools[data-tool=Uren] .duration{grid-column:2;grid-row:2}
+ html body.compact-tools[data-tool=Uren] .entry>.actions{grid-column:1/-1;grid-row:3;flex-direction:row;justify-content:flex-end}
+ html body[data-tool=Uren] .administratie-form-group{padding:var(--space-m)}
+ html body[data-tool=Uren] .administratie-form-group .two{grid-template-columns:1fr}
+}
+@media screen {
+ html body.compact-tools[data-tool=Uren] #rows .entry>.actions>button{border:0!important;box-shadow:none!important;background:none!important;padding:0!important;min-height:var(--space-xl);font:var(--weight-ui-regular) var(--size-xs)/var(--line-xs) var(--font-ui)!important;text-decoration:none!important}
+ html body.compact-tools[data-tool=Uren] #rows .entry>.actions>button>span{font:inherit!important;text-decoration:none!important}
+ html body.compact-tools:is([data-tool=Uren],[data-tool=Kasboek]) #form-title{box-shadow:none!important}
+ html body:is([data-tool=Uren],[data-tool=Kasboek],[data-tool=Ping],[data-tool=Offerte]) :is(.administratie-form-group,.ledger-form-group,.invoice-form-group) label>span{font:inherit!important}
+}
+
+@media screen {
+ html body.compact-tools[data-tool=Uren] .stats>:is(div,button){width:100%;margin:0!important;max-width:none;box-sizing:border-box}
+ html body.compact-tools:is([data-tool=Ping],[data-tool=Offerte]) .editor :is(.document-heading,.editor-head)>h2{font:var(--weight-brand-medium) var(--size-l)/var(--line-l) var(--font-brand)!important;letter-spacing:var(--letter-spacing-l);text-transform:none!important;border:0!important;box-shadow:none!important;padding:0!important;margin:0 0 var(--space-l)}
+ html body:is([data-tool=Uren],[data-tool=Kasboek],[data-tool=Ping],[data-tool=Offerte]) :is(.form-actions,.invoice-edit-actions,#editor-actions)>:is(.primary,.action-primary,#save,#invoice-keep){order:3}
+ html body:is([data-tool=Uren],[data-tool=Kasboek],[data-tool=Ping],[data-tool=Offerte]) :is(.form-actions,.invoice-edit-actions,#editor-actions)>:is(#cancel,#cancel-quote,#invoice-cancel){order:2}
+}
+
+@media screen {
+ html body dialog.unsaved-input{width:min(540px,calc(100vw - 32px));max-width:540px;padding:var(--space-l);background:var(--cte-surface);color:var(--cte-text)}
+ html body dialog.unsaved-input>h2{font:var(--weight-brand-medium) var(--size-l)/var(--line-l) var(--font-brand)!important;letter-spacing:var(--letter-spacing-l);margin:0 0 var(--space-m);border:0;box-shadow:none;padding:0;text-transform:none!important}
+ html body dialog.unsaved-input>p{font:var(--weight-ui-regular) var(--size-s)/var(--line-s) var(--font-ui);overflow-wrap:anywhere}
+ html body dialog.unsaved-input .unsaved-input-actions{display:flex;flex-wrap:wrap;gap:var(--space-s);justify-content:flex-end;margin-top:var(--space-l)}
+}
+
+/* Rustige tweede navigatielaag: alleen de huidige bestemming krijgt accent. */
+@media screen {
+ html body[data-tool] .factureren-tabs{gap:var(--space-l);margin-bottom:var(--space-xl);box-shadow:inset 0 -1px var(--neutral-4)}
+ html body[data-tool] .factureren-tabs a{padding:var(--space-s) 0!important;min-height:40px;background:transparent!important;color:var(--neutral-8)!important;font:var(--weight-ui-regular) var(--size-s)/var(--line-s) var(--font-label)!important;border:0;box-shadow:none!important}
+ html body[data-tool] .factureren-tabs a[aria-current=page]{color:var(--cte-text)!important;background:transparent!important;box-shadow:inset 0 -2px var(--color-1)!important;font-weight:var(--weight-selection)!important}
+ html body[data-tool] .factureren-tabs a:hover{color:var(--cte-text)!important}
+}
+@media screen and (max-width:700px){html body[data-tool] .factureren-tabs{gap:var(--space-m)}html body[data-tool] .factureren-tabs a{font-size:var(--size-xs)!important}}

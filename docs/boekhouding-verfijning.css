@@ -1,0 +1,45 @@
+/* Boekhouding deelt de rustige Werkplaats-vlakken van Factureren en Offreren. */
+@media screen {
+ html body.compact-tools[data-tool=Kasboek] main{max-width:1240px}
+ html body.compact-tools[data-tool=Kasboek] .ledger-nav{margin-bottom:var(--space-l)}
+ html body.compact-tools[data-tool=Kasboek] .home-period{margin:0 0 var(--space-m);padding:0;border:0}
+ html body.compact-tools[data-tool=Kasboek] :is(.stats,.vat-totals){display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--space-m);border:0;margin:0 0 var(--space-m)}
+ html body.compact-tools[data-tool=Kasboek] .vat-totals{grid-template-columns:repeat(4,minmax(0,1fr))}
+ html body.compact-tools[data-tool=Kasboek] :is(.stats,.vat-totals)>:is(div,button){display:flex;flex-direction:column;align-items:flex-start;gap:var(--space-xs);padding:var(--space-l);min-width:0;background:var(--cte-surface-muted);color:var(--cte-text);border:0;box-shadow:inset 0 0 0 var(--border-s) var(--neutral-4);text-align:left}
+ html body.compact-tools[data-tool=Kasboek] :is(.stats,.vat-totals)>:is(div,button)>span{font:var(--weight-ui-medium) var(--size-s)/var(--line-s) var(--font-label);color:var(--cte-text-muted)}
+ html body.compact-tools[data-tool=Kasboek] :is(.stats,.vat-totals) strong{font:var(--weight-data-medium) var(--size-l)/var(--line-l) var(--font-data)!important;letter-spacing:var(--letter-spacing-l);font-variant-numeric:tabular-nums}
+ html body.compact-tools[data-tool=Kasboek] .stats>button:hover{background:var(--neutral-4)}
+ html body.compact-tools[data-tool=Kasboek] .stats>button[aria-pressed=true]{box-shadow:inset 0 0 0 var(--border-s) var(--neutral-4),inset 0 calc(-1 * var(--border-l)) var(--color-1)}
+ html body.compact-tools[data-tool=Kasboek] #open-overdue{color:var(--color-1)}
+ html body.compact-tools[data-tool=Kasboek] .ledger-summary-hint{margin-bottom:var(--space-l)}
+ html body.compact-tools[data-tool=Kasboek] #rows .entry{grid-template-columns:110px minmax(0,1fr) 145px 110px;gap:var(--space-l);padding:var(--space-l) var(--space-m)!important;border:0;box-shadow:inset 0 calc(-1 * var(--border-s)) var(--neutral-4);background:var(--cte-surface);align-items:center}
+ html body.compact-tools[data-tool=Kasboek] .entry-date{font:var(--weight-data-regular) var(--size-s)/var(--line-s) var(--font-data);color:var(--cte-text-muted)}
+ html body.compact-tools[data-tool=Kasboek] .entry-main>strong{font:var(--weight-ui-heavy) var(--size-m)/var(--line-m) var(--font-ui)!important;margin:var(--space-xxs) 0}
+ html body.compact-tools[data-tool=Kasboek] .entry-main>small{display:block;color:var(--cte-text-muted);font:var(--weight-ui-regular) var(--size-s)/var(--line-s) var(--font-ui);white-space:normal;overflow-wrap:anywhere}
+ html body.compact-tools[data-tool=Kasboek] .entry .money{font:var(--weight-data-medium) var(--size-m)/var(--line-m) var(--font-data)!important;white-space:nowrap}
+ html body.compact-tools[data-tool=Kasboek] .category-label{border:0;padding:0;background:none;color:var(--cte-text-muted)}
+ html body.compact-tools[data-tool=Kasboek] .entry-statuses{display:flex;flex-wrap:wrap;gap:var(--space-xs);margin-top:var(--space-xs)}
+ html body.compact-tools[data-tool=Kasboek] .entry-statuses:empty{display:none}
+ html body.compact-tools[data-tool=Kasboek] .ledger-status{padding:var(--space-xxs) var(--space-xs);background:var(--color-1-transparent);color:var(--color-1);font:var(--weight-ui-medium) var(--size-xs)/var(--line-xs) var(--font-ui)}
+ html body.compact-tools[data-tool=Kasboek] #dialog{width:min(760px,calc(100vw - 32px));max-width:760px}
+ html body.compact-tools[data-tool=Kasboek] .ledger-form-group{margin:var(--space-l) 0;padding:var(--space-l);border:0;box-shadow:inset 0 0 0 var(--border-s) var(--neutral-4);background:var(--cte-surface)}
+ html body.compact-tools[data-tool=Kasboek] .ledger-form-group>h3{font:var(--weight-ui-medium) var(--size-s)/var(--line-s) var(--font-label)!important;color:var(--cte-text-muted);margin:0 0 var(--space-m);padding:0;border:0}
+ html body.compact-tools[data-tool=Kasboek] .ledger-form-group label{margin-top:var(--space-m);font:var(--weight-ui-medium) var(--size-s)/var(--line-s) var(--font-ui)}
+ html body.compact-tools[data-tool=Kasboek] .ledger-form-group .two{gap:var(--space-s)}
+ html body.compact-tools[data-tool=Kasboek] .ledger-form-group :is(input,select,textarea){min-width:0;max-width:100%}
+ html body.compact-tools[data-tool=Kasboek] :is(#cash-summary,#open-summary,.ledger-form-group)[hidden]{display:none!important}
+}
+@media screen and (max-width:700px){
+ html body.compact-tools[data-tool=Kasboek] :is(.stats,.vat-totals){grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--space-s)}
+ html body.compact-tools[data-tool=Kasboek] .stats>:last-child{grid-column:1/-1}
+ html body.compact-tools[data-tool=Kasboek] :is(.stats,.vat-totals)>:is(div,button){padding:var(--space-m)}
+ html body.compact-tools[data-tool=Kasboek] #rows .entry{grid-template-columns:minmax(0,1fr) auto;gap:var(--space-s);padding:var(--space-m) 0!important}
+ html body.compact-tools[data-tool=Kasboek] .entry-date{grid-column:1/-1}
+ html body.compact-tools[data-tool=Kasboek] .entry-main{grid-column:1;grid-row:2}
+ html body.compact-tools[data-tool=Kasboek] .entry .money{grid-column:2;grid-row:2}
+ html body.compact-tools[data-tool=Kasboek] .entry>button{grid-column:1/-1;justify-self:end;width:auto}
+ html body.compact-tools[data-tool=Kasboek] .ledger-form-group{padding:var(--space-m)}
+ html body.compact-tools[data-tool=Kasboek] .ledger-form-group .two{grid-template-columns:1fr}
+}
+
+@media screen {html body.compact-tools[data-tool=Kasboek] #rows .entry{border-bottom:0!important;box-shadow:inset 0 calc(-1 * var(--border-s)) var(--neutral-4)!important}html body.compact-tools[data-tool=Kasboek] #rows button[data-view]{border:0;background:none;padding:0;color:var(--cte-text-muted);font:var(--weight-ui-regular) var(--size-xs)/var(--line-xs) var(--font-ui);text-decoration:none}html body.compact-tools[data-tool=Kasboek] #toast{top:auto;bottom:var(--space-l);max-width:calc(100vw - 32px)}}

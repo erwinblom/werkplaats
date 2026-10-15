@@ -1,3 +1,14 @@
+# Werkplaats v0.36.10 — 15 oktober 2026
+
+- Schone Master uit actuele broncommit 17f1ae1ae74e2f0d94c9c4e047522602c2687efc; alle afgeronde verbeteringen van 14/15 oktober opgenomen. Persoonlijke modules/data uitgesloten.
+- Facturen, Offertes, Uren en Boekhouding: gezamenlijke rustige navigatie, uniforme namen, lichte overzichten en consistente invoer. Contactvelden direct zichtbaar. Abonnementen: duidelijke Opzeggen/nog doen tegenover Opgezegd/afgerond.
+- Bescherming onbewaarde invoer, enkelvoudige wisselroute en herstelde conceptbaseline. Echte tijdelijke werkmap/twee volledige browserherstarts en native Cancel rechtstreeks getest in eerdere acceptatieronde; geen persoonlijke werkmap gebruikt.
+- 37/37 actuele brontestbestanden geslaagd. Publieke controle op alle224 Master-bestanden, HTML-links, JavaScript, privacyuitsluitingen, website/downloadgelijkheid en Agenda-exportpakket geslaagd.
+- Legacy publieke browsertests niet opnieuw uitgevoerd: ontbrekende Playwright-module; die tests gebruiken ook verouderde selectors. Actuele bronproeven en nieuwe browserreadback zijn de controlebasis. Geen ongewijzigde verouderde suite als geslaagd gemeld.
+- Website en download uit exact dezelfde publieke appbron. Geen wijziging aan opslagcodes of persoonlijke gegevens. Nieuwe live-/downloadreadback volgt bij publicatie.
+
+## Historische controle
+
 # Werkplaats v0.36.7 — 12 oktober 2026
 
 - Verzamelen: compact categoriemenu, vijf gebruikslabels en bladeren binnen de huidige selectie.

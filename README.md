@@ -44,9 +44,9 @@ Bestaande gebruikers: bewaar eerst je actuele werk in de oude versie. Open na de
 | Projecten | Tijdelijke en doorlopende projecten met gekoppeld materiaal |
 | Doen | Taken, deadlines en prioriteiten |
 | Contacten | Contactgegevens, gesprekken en vervolgacties |
-| Factureren | Facturen, offertes en uren; zelf controleren en delen |
+| Facturen | Facturen, offertes en uren; zelf controleren en delen |
 | Abonnementen | Kosten, verlengdatums en opzegdatums bijhouden |
-| Boekhouden | Inkomsten, uitgaven, bonnen en export |
+| Boekhouding | Inkomsten, uitgaven, bonnen en export |
 
 </details>
 
@@ -102,7 +102,7 @@ Met Agenda-export zet je deadlines en datums uit Doen, Projecten, Contacten en A
 
 ### Installeren
 
-1. Download de [nieuwe Werkplaats-uitgave](https://github.com/erwinblom/werkplaats/releases/tag/v0.36.9) en [Agenda-export 0.2.0](https://github.com/erwinblom/werkplaats/releases/download/v0.36.8/Agenda-export-0.2.0.zip). Open Werkplaats in Chrome of Edge op je computer.
+1. Download de [nieuwe Werkplaats-uitgave](https://github.com/erwinblom/werkplaats/releases/tag/v0.36.10) en [Agenda-export 0.2.0](https://github.com/erwinblom/werkplaats/releases/download/v0.36.8/Agenda-export-0.2.0.zip). Open Werkplaats in Chrome of Edge op je computer.
 2. Kies je werkmap bij Instellingen → Opslag. Klik daarna Instellingen → Uitbreidingen → Map voorbereiden.
 3. Pak het Agenda-exportpakket uit. Zet de map agenda-export in Uitbreidingen van je werkmap.
 4. Klik Ververs → Zet aan. Kies je onderdelen en klik Download agenda (.ics).
