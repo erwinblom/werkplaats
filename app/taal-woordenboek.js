@@ -1,4 +1,10 @@
 window.WerkplaatsVertalingen={
+  "Mijn idee, AI aan het toetsenbord": "My idea, AI at the keyboard",
+  "Ik bedacht wat de tool moest kunnen. AI schreef de code. Nu mag jij ermee verder: verbouwen, uitbreiden en helemaal naar je hand zetten. Met of zonder AI als bouwmaatje.": "I decided what the tool should do. AI wrote the code. Now it is yours to build on: change it, extend it and make it your own. With or without AI as your building buddy.",
+  "Werkplaats is bedacht door Erwin Blom en gebouwd met AI, voortbouwend op werk van andere makers. De broncode staat openbaar op": "Werkplaats was conceived by Erwin Blom and built with AI, building on work by other makers. The source code is public on",
+  ". De projectbijdragen zijn beschikbaar onder MIT; oorspronkelijke onderdelen behouden hun eigen licenties en credits. Organisaties kunnen de tools ook op hun eigen website of intranet aanbieden.": ". Project contributions are available under MIT; original components retain their own licences and credits. Organisations can also offer the tools on their own website or intranet.",
+
+
   "Beheer en notities": "Management and notes",
   "Datums en status": "Dates and status",
   "Abonnement en kosten": "Subscription and cost",

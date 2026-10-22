@@ -2,7 +2,9 @@
 
 Je eigen werkplek voor ideeën, teksten en projecten. Gratis. Zonder account. Je bestanden blijven op je computer.
 
-**Gebouwd met AI. Te gebruiken zonder AI.** AI heeft geholpen om de code van Werkplaats te maken. Daarna draait die code gewoon in je browser: voor het dagelijkse gebruik heb je geen AI, AI-account of AI-abonnement nodig. Ook de offline download werkt zonder AI.
+**Mijn idee, AI aan het toetsenbord.** Ik bedacht wat de tool moest kunnen. AI schreef de code. Nu mag jij ermee verder: verbouwen, uitbreiden en helemaal naar je hand zetten. Met of zonder AI als bouwmaatje.
+
+Voor dagelijks gebruik hoeft AI niet mee te draaien: Werkplaats werkt in je browser, zonder AI-account of AI-abonnement. Credits voor Joost Plattel, Erik van Elten en andere makers blijven gewoon staan.
 
 **[Open Werkplaats](https://erwinblom.github.io/werkplaats/)**
 
@@ -80,9 +82,9 @@ Wil je tussen website en download wisselen? Bewaar eerst, sluit de vorige versie
 
 </details>
 
-## Help Werkplaats verbeteren
+## Trek je werkkleren aan
 
-Werkplaats groeit door mensen die het gebruiken. Loop je ergens tegenaan, mis je iets of heb je zelf een uitbreiding gebouwd? Laat het weten.
+Zie je iets dat slimmer kan? Pak je gereedschap — of je favoriete AI — en probeer het in een kopie. Een bug melden of een idee delen mag natuurlijk ook. Je hoeft niet op mijn planning te wachten om iets naar jouw hand te zetten.
 
 - **[Meld een fout](https://github.com/erwinblom/werkplaats/issues/new?template=bug.md)**: wat deed je, wat verwachtte je en wat gebeurde er?
 - **[Stel een verbetering voor](https://github.com/erwinblom/werkplaats/issues/new?template=verbetering.md)**: wat wil je kunnen doen en welk probleem lost dat op?
@@ -154,6 +156,6 @@ Schrijven bouwt voort op Markdown Browser van Joost Plattel. Zie [herkomst](app/
 
 Agenda-export is oorspronkelijk gemaakt door **Erik van Elten**. Zijn [MIT-licentie](app/Uitbreidingen/agenda-export/LICENSE) en exportkern blijven behouden. De aansluiting op Werkplaats is aangepast door Erwin Blom met hulp van Codex.
 
-De eigen code is beschikbaar onder de [MIT-licentie](LICENSE). Organisaties kunnen Werkplaats ook op een eigen website of intranet aanbieden.
+De projectbijdragen zijn beschikbaar onder de [MIT-licentie](LICENSE); oorspronkelijke onderdelen behouden hun eigen licenties en credits. Organisaties kunnen Werkplaats ook op een eigen website of intranet aanbieden.
 
-Gemaakt door [Erwin Blom](https://github.com/erwinblom).
+Bedacht en uitgeprobeerd door [Erwin Blom](https://github.com/erwinblom), gebouwd met AI en werk van andere makers.

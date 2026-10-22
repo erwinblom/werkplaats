@@ -1,5 +1,9 @@
 WERKPLAATS — LOKAAL / OPEN SOURCE
 
+MIJN IDEE, AI AAN HET TOETSENBORD
+Ik bedacht wat de tool moest kunnen. AI schreef de code. Nu mag jij ermee verder: verbouwen, uitbreiden en helemaal naar je hand zetten. Met of zonder AI als bouwmaatje.
+Begin klein: laat ChatGPT of Claude in een aparte kopie één kleur of knop aanpassen. Open, bewaar en heropen daarna iets om te controleren of alles nog werkt. Bugs melden is welkom; zelf iets moois bouwen ook. Credits en licenties van oorspronkelijke makers blijven staan.
+
 Begin met Begin hier.html, of gebruik de online versie.
 Voor bewaren in een map: gebruik Chrome of Edge op je computer.
 Safari, Firefox en ingebouwde browsers bieden deze mapkeuze niet.

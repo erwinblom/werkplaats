@@ -114,10 +114,10 @@
     "Downloads/Link-Bewaren-lokaal/worker.js": "b048b584bca2f72ab6882b624356809580dfeb133c7af745475e3608244cb75c",
     "Downloads/Link-Bewaren-lokaal.zip": "a3e1684204a8319ab2dd34a83b88f9439b9d09d84cc8ff663d3650ece6c9ecdc",
     "GUI.md": "732792e9f22b32e25c3464df12e4d501f7dbd9e37676c8d8539302722bac4c36",
-    "LEESMIJ.txt": "f94824cd7e505572a160e1fa92e0f52539959f702f9e7de621026625c90389ef",
+    "LEESMIJ.txt": "26acefefe7574960e77ce335bb076dd64b9abf304930ffdc01fb670e039cb518",
     "LICENSE": "fd64b6d5e44d43612c7669602cb46041e65df520c3ac657daae35bd40f70210d",
     "Link-bewaren.html": "c3f5e9bd0effc68323f7302e6b5fee7ec0aad8ad9665861ce9e237bf8011e9d8",
-    "Over.html": "6167b9e2d5d12db751f992709d1ed1584891fe314a592d9339a1469b3b8e609e",
+    "Over.html": "3517d1af9a4607d19b1236df3307c21b0f39f7ba623440c5c93e933286e1a658",
     "PRIVACY.md": "99760bcf6a0540fb080f5c9066927405bf6dfdea9948bbcf6155f95cf261090d",
     "Sjablonen/Werkplaats-boekhouding.xlsx": "8f3856b06aeab47a05ea1dc4ef2657e09b53a0e15b562be06ff99b287647cac5",
     "Symbolen/ONTWERP.md": "3c943513c59b282902c2e5206f7ef15301ecca18a63fc37b187ceaa8ceb5fcc2",
@@ -217,7 +217,7 @@
     "startinhoud.js": "3329d84e97108a1055b46e8f2e632a41e5fba8bacfaa33efb26a39b382c72b9e",
     "startwerkmap.js": "b5b220aa4d972a561c5a935d5e5f61b638e82a18c6e33269fab4ea82565b6aee",
     "suite-unified.css": "cdf5155f7247b5e91047a75f4da54d838086a269b391aa4638b9987c9a2ad43a",
-    "taal-woordenboek.js": "1ca907e8537339ff76640d3dbb1e8b97a6a458370be01ab4b345ddaa0dfaebde",
+    "taal-woordenboek.js": "ff9f8fbd4cac791d8d6a28c4d4a7b51b799aa1dfb9bddf922a7287f17638113f",
     "taal.js": "dd0cd483fe419540ebf974b184e65f77b139977689be33215cc38f2d1f9f9d80",
     "tool-gedeeld.css": "682b7ed643e70db18f8a80630dfa0fbc20884cb37cc534fa187edf14b78f8f1d",
     "uitbreidingen.js": "4c2991671f24bb904d47f1a8cbd16b15860e103be97877f580c0b64030798ab4",
@@ -234,5 +234,15 @@
     "werkruimte-ui.js": "4da54470ed7bd3fc69b67fbd2cf821cbbb21c4b469a5e0f598c2f1feee0c8a2f",
     "werkstatus.js": "f8bff0750bb26eb9a61f8b8fe04abefb0c6b81171d252609ae3394ec4ab0a92e",
     "zoeken-filters.js": "0fc7f9611fa588aada75c0a7713dc8111e0eaeae5bbfb033d969566943428213"
+  },
+  "text_update": {
+    "date": "2026-10-22",
+    "scope": [
+      "Over.html",
+      "LEESMIJ.txt",
+      "taal-woordenboek.js"
+    ],
+    "release_download": "unchanged",
+    "description": "Alleen goedgekeurde AI-bouwteksten en vertalingen; geen nieuwe software-uitgave."
   }
 }

@@ -1,5 +1,9 @@
 # Help Werkplaats verbeteren
 
+## Trek je werkkleren aan
+
+Mijn idee, AI aan het toetsenbord — en nu is er ruimte voor jouw ideeën. Pas Werkplaats aan met je favoriete AI of met je eigen programmeerkennis. Begin met één kleine wijziging in een aparte kopie en controleer openen, bewaren en heropenen. Een fout melden is welkom; een werkende verbetering delen ook. Niets teruggeven hoeft. De afspraken hieronder helpen als je jouw werk wél wilt laten opnemen. Credits en licenties blijven behouden.
+
 Je hoeft geen programmeur te zijn om Werkplaats beter te maken. Meld een fout, stel een verbetering voor of deel iets dat je zelf hebt gebouwd.
 
 ## Mailen of GitHub gebruiken
