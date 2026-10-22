@@ -10,7 +10,18 @@
     "Ontwikkeltests en herstelbestanden"
   ],
   "files": {
-    "AGENTS.md": "d2035e5fcb184a713ae76d65b0109b7f8d26b52616126506f1ccb43ed3bb0a06",
+    "AGENTS.md": "7c355a9d040fc368b3ebe56516f2a31c79d8feed4627d5ad08e1e47346663644",
+    "App-iconen/LEESMIJ.md": "aea1c9cdc4b7ffbd42f2a19f98927b49b0a576a81e0d0169fefb3b03b66ed935",
+    "App-iconen/Maak Werkplaats-app.command": "cfa56b35ff6febeb1f9cc5278b929a8be09ac86cd3906ebd9c1d8a6807e4776c",
+    "App-iconen/app-icon-192.png": "31958786fbdd1c0b3720aee4352673ad3128ded2f82190a0fb2cb0251bb64c8e",
+    "App-iconen/app-icon-512.png": "a0ad936404d05bf82a736a2d5a5c41ffc007eec632504d2136d10a710aed4fb5",
+    "App-iconen/app-icon.icns": "1ee170ee3e84d3d6a161a138664f9754b1b29f5bcf14e72b7c80265f1fd84949",
+    "App-iconen/app-icon.png": "07708bcb39f664f1899d55430bbc7c6bdb7553f062788511cd750e23d038d011",
+    "App-iconen/app-icon.svg": "718cc31fc1927bc4b3b704d49a898f0d20edfd9117b52688bc02868c60cdee44",
+    "App-iconen/app.webmanifest": "0b1d657688252089fbf6c2a3f0859eb2d54396e40f38618ff04b64178f480477",
+    "App-iconen/controleer.cjs": "7dbc08b102f3ac09b9082a029285732adc5f8a1e92d140d139acb28af198700e",
+    "App-iconen/hashes.json": "2322f8cc664d19fec4e608cb57ab6d662fb11450954f26482b7815f86c3d8e83",
+    "App-iconen/hashes.sha256": "d89f684781ec9dd4614cd288ccda856c0fd0d054fc439045490680f3364b12fa",
     "Apps/Abonnementen/Start Abonnementen.html": "cf09428025f8cc67fa3a10208653237cef5547e68c531eede6bfeaf3a4c1875f",
     "Apps/Abonnementen/abonnementen.css": "ac9f65439b516d729bc6216e0a63183ae9c3d61238ff8f388e7b05c0812ed496",
     "Apps/Abonnementen/abonnementen.js": "abfa7982e771e4c68b1d6d60152a13a56f369c1616f93b8964e25cb82da01f23",
@@ -98,7 +109,7 @@
     "Apps/Werkbank/Werkbank/Mijn notities/02 - Ideeen en invallen.md": "b0d472282a1fe70ef04a1f8bed362d1a83cee1d5de3e585806252e2b85a5164a",
     "Apps/Werkbank/▶ Begin hier.html": "44f7d3a4cc87c3e254ec77a554a6e0f680481f31c9af0235f995a552163811f8",
     "BLOM-OS-VORMGEVING.md": "b9d664a1da3ed942abacaf28e60d69fa285e76147fa8c30497193ab7654bff79",
-    "Begin hier.html": "88a99d1e21ea94e226a1ec0b7e4c8eb8fed41412c4acf1fa3c0a4eee509bfbea",
+    "Begin hier.html": "1f0a2f8ed9f893365f56a0f195272ff0249b224dcce7c57db714ded343272305",
     "Downloads/Link-Bewaren-lokaal/LEESMIJ.md": "540edf39977c37f0afbcd1af78aed60f55559c2e95efac766943996f4db798f6",
     "Downloads/Link-Bewaren-lokaal/LICENSE": "fd64b6d5e44d43612c7669602cb46041e65df520c3ac657daae35bd40f70210d",
     "Downloads/Link-Bewaren-lokaal/bridge.js": "a75f10c68f42117e1b28be73c3e3d2b332d783372bba4461a6af6a50cf58226b",
@@ -249,5 +260,10 @@
     "date": "2026-10-22",
     "chief": "CH-253",
     "description": "Volgordecontrole alle huidige toolhandleidingen, startuitleg en downloads"
+  },
+  "iconUpdate": {
+    "date": "2026-10-22",
+    "chief": "CH-252",
+    "scope": "Bestaande gecontroleerde publieke bron plus uitsluitend goedgekeurde FMT-appiconen en Mac-startapp; andere lokale ontwikkelingen niet geimporteerd."
   }
 }
