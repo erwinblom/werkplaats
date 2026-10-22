@@ -1,5 +1,9 @@
 OFFERTE — 0.1
 
+WAAROM IK DIT DEEL
+
+Ik ben geen programmeur en geen designer. Met AI maak ik tools en skills die ik zelf nodig heb. Ik deel ze om te laten zien wat er nu mogelijk is, je enthousiast te maken en je op gang te helpen. Gebruik dit als vertrekpunt: bouw erop voort en maak het passend bij jouw werk, smaak en wensen.
+
 Pak de ZIP uit en open Start Offerte.html. Klik Probeer een voorbeeld of Nieuwe offerte. Er zijn geen account, installatie, API-sleutel of externe koppelingen nodig.
 
 Vul je bedrijf, klant, titel, eventuele referentie, datum, geldigheid, werkzaamheden en afspraken in. Het voorbeeld verandert tijdens het invullen. Een aantal mag bijvoorbeeld 1,5 zijn; prijs en aantal mogen maximaal twee decimalen hebben. Gebruik een komma of punt als decimaalteken, zonder duizendtalscheiding.

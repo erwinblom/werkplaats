@@ -1,5 +1,9 @@
 PLANNER — 0.1
 
+WAAROM IK DIT DEEL
+
+Ik ben geen programmeur en geen designer. Met AI maak ik tools en skills die ik zelf nodig heb. Ik deel ze om te laten zien wat er nu mogelijk is, je enthousiast te maken en je op gang te helpen. Gebruik dit als vertrekpunt: bouw erop voort en maak het passend bij jouw werk, smaak en wensen.
+
 Pak de ZIP uit en open Start Publicatieplanner.html. Geen installatie, account, internet of API-sleutel nodig. Klik Probeer een voorbeeld of voeg zelf een publicatie toe.
 
 Bewaar titel, kanaal, status, optionele datum, concepttekst, eigen notities en eventueel de link naar de uiteindelijke publicatie. Kanalen zijn vrij invulbaar. De status is Idee, Concept, Klaar of Gepubliceerd. Gepubliceerd kies je zelf; de app verstuurt niets en controleert niet of een publicatie echt live staat.

@@ -1,5 +1,9 @@
 # Agenda-export voor Werkplaats — 0.2.0
 
+## Waarom ik dit deel
+
+Ik ben geen programmeur en geen designer. Met AI maak ik tools en skills die ik zelf nodig heb. Ik deel ze om te laten zien wat er nu mogelijk is, je enthousiast te maken en je op gang te helpen. Gebruik dit als vertrekpunt: bouw erop voort en maak het passend bij jouw werk, smaak en wensen.
+
 **Oorspronkelijke maker: Erik van Elten.** Hij bouwde Agenda-export 0.1.0. De oorspronkelijke exportkern is behouden. Erwin Blom paste met hulp van Codex de aansluiting aan voor de vaste uitbreidingenplek van Werkplaats. De MIT-licentie en copyrightvermelding van Erik blijven opgenomen.
 
 Zet deadlines en datums uit Doen, Projecten, Contacten en Abonnementen in je eigen agenda: kies de gewenste bronnen, download een .ics-bestand en open of importeer dat in je agenda. Afgeronde items en herinneringen zijn optioneel.

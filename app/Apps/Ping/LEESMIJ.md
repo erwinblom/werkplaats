@@ -1,5 +1,9 @@
 # Factureren in de Werkplaats
 
+## Waarom ik dit deel
+
+Ik ben geen programmeur en geen designer. Met AI maak ik tools en skills die ik zelf nodig heb. Ik deel ze om te laten zien wat er nu mogelijk is, je enthousiast te maken en je op gang te helpen. Gebruik dit als vertrekpunt: bouw erop voort en maak het passend bij jouw werk, smaak en wensen.
+
 Open `Start Ping.html` in Chrome of Edge. Werk voor je echte administratie met één actuele werkmap of één actueel facturenbestand. Er is geen account, cloudopslag of API-sleutel.
 
 ## Factuur maken

@@ -1,5 +1,9 @@
 MARKDOWN WERKBANK — STARTEN
 
+WAAROM IK DIT DEEL
+
+Ik ben geen programmeur en geen designer. Met AI maak ik tools en skills die ik zelf nodig heb. Ik deel ze om te laten zien wat er nu mogelijk is, je enthousiast te maken en je op gang te helpen. Gebruik dit als vertrekpunt: bouw erop voort en maak het passend bij jouw werk, smaak en wensen.
+
 1. Pak de volledige ZIP uit op een vaste plek op je computer.
 2. Klik met rechts op ▶ Begin hier.html en kies Open met → Google Chrome
    of Microsoft Edge. Open niet alleen het HTML-bestand vanuit de ZIP.

@@ -1,5 +1,9 @@
 BRONNENKAST — 0.1
 
+WAAROM IK DIT DEEL
+
+Ik ben geen programmeur en geen designer. Met AI maak ik tools en skills die ik zelf nodig heb. Ik deel ze om te laten zien wat er nu mogelijk is, je enthousiast te maken en je op gang te helpen. Gebruik dit als vertrekpunt: bouw erop voort en maak het passend bij jouw werk, smaak en wensen.
+
 Pak de ZIP uit en open Start Bronnenkast.html. Er zijn geen installatie, accounts of API-sleutels nodig. De tien startbronnen verschijnen meteen; een eerder bewaarde browsersessie krijgt voorrang.
 
 Zoek in titels, bronnen, onderwerpen, samenvattingen, citaten en notities. Filter op Sociaal, Technisch, Beide of Favorieten. Een categorie selecteert alleen die categorie: Beide is een aparte categorie. Combineer dit met een onderwerp. Klik op de ster voor favorieten, op Bewerken voor wijzigingen en op Bron toevoegen voor eigen materiaal.

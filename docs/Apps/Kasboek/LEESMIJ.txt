@@ -1,5 +1,9 @@
 KASBOEK 0.1 — LOKAAL / OPEN SOURCE
 
+WAAROM IK DIT DEEL
+
+Ik ben geen programmeur en geen designer. Met AI maak ik tools en skills die ik zelf nodig heb. Ik deel ze om te laten zien wat er nu mogelijk is, je enthousiast te maken en je op gang te helpen. Gebruik dit als vertrekpunt: bouw erop voort en maak het passend bij jouw werk, smaak en wensen.
+
 Pak de ZIP uit en open Start Kasboek.html in Chrome of Edge.
 Voeg een boeking toe of probeer de fictieve voorbeelden.
 Registreer werkelijk ontvangen en betaalde bedragen in euro, inclusief eventuele btw.

@@ -1,5 +1,9 @@
 # Je eigen Werkbank
 
+## Waarom ik dit deel
+
+Ik ben geen programmeur en geen designer. Met AI maak ik tools en skills die ik zelf nodig heb. Ik deel ze om te laten zien wat er nu mogelijk is, je enthousiast te maken en je op gang te helpen. Gebruik dit als vertrekpunt: bouw erop voort en maak het passend bij jouw werk, smaak en wensen.
+
 Deze map bevat drie voorbeeldprojecten die je meteen kunt gebruiken en aanpassen.
 
 ## Open de demomap

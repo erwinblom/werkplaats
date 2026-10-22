@@ -1,5 +1,9 @@
 UREN — 0.1
 
+WAAROM IK DIT DEEL
+
+Ik ben geen programmeur en geen designer. Met AI maak ik tools en skills die ik zelf nodig heb. Ik deel ze om te laten zien wat er nu mogelijk is, je enthousiast te maken en je op gang te helpen. Gebruik dit als vertrekpunt: bouw erop voort en maak het passend bij jouw werk, smaak en wensen.
+
 Pak de ZIP uit en open Start Uren.html. Probeer het fictieve voorbeeld of voeg je eigen uren toe. Geen installatie, account, API-sleutel of internet nodig.
 
 Registreer datum, klant/eigen organisatie, project, omschrijving, uren en minuten. Kies declarabel of niet declarabel. Namen die je al hebt gebruikt verschijnen als suggestie. De duur is minimaal één minuut en maximaal 24 uur per registratie. Meerdere registraties op een dag zijn toegestaan; de app controleert niet op overlap of een dagtotaal boven 24 uur.
