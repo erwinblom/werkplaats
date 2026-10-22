@@ -2,7 +2,9 @@
 
 Je eigen werkplek voor ideeën, teksten en projecten. Gratis. Zonder account. Je bestanden blijven op je computer.
 
-**Mijn idee, AI aan het toetsenbord.** Ik bedacht wat de tool moest kunnen. AI schreef de code. Nu mag jij ermee verder: verbouwen, uitbreiden en helemaal naar je hand zetten. Met of zonder AI als bouwmaatje.
+## Waarom ik dit deel
+
+Ik ben geen programmeur en geen designer. Met AI maak ik tools en skills die ik zelf nodig heb. Ik deel ze om te laten zien wat er nu mogelijk is, je enthousiast te maken en je op gang te helpen. Gebruik dit als vertrekpunt: bouw erop voort en maak het passend bij jouw werk, smaak en wensen.
 
 Voor dagelijks gebruik hoeft AI niet mee te draaien: Werkplaats werkt in je browser, zonder AI-account of AI-abonnement. Credits voor Joost Plattel, Erik van Elten en andere makers blijven gewoon staan.
 
