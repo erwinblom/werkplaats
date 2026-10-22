@@ -114,10 +114,10 @@
     "Downloads/Link-Bewaren-lokaal/worker.js": "b048b584bca2f72ab6882b624356809580dfeb133c7af745475e3608244cb75c",
     "Downloads/Link-Bewaren-lokaal.zip": "a3e1684204a8319ab2dd34a83b88f9439b9d09d84cc8ff663d3650ece6c9ecdc",
     "GUI.md": "732792e9f22b32e25c3464df12e4d501f7dbd9e37676c8d8539302722bac4c36",
-    "LEESMIJ.txt": "26acefefe7574960e77ce335bb076dd64b9abf304930ffdc01fb670e039cb518",
+    "LEESMIJ.txt": "b04658c4985726115307e11e911b15df9455042016ef7fd6e352def9d67cb42e",
     "LICENSE": "fd64b6d5e44d43612c7669602cb46041e65df520c3ac657daae35bd40f70210d",
     "Link-bewaren.html": "c3f5e9bd0effc68323f7302e6b5fee7ec0aad8ad9665861ce9e237bf8011e9d8",
-    "Over.html": "3517d1af9a4607d19b1236df3307c21b0f39f7ba623440c5c93e933286e1a658",
+    "Over.html": "447693aa0178f10a710135b93372ea88276fadf2f3fc5b42cc7b5bf593653124",
     "PRIVACY.md": "99760bcf6a0540fb080f5c9066927405bf6dfdea9948bbcf6155f95cf261090d",
     "Sjablonen/Werkplaats-boekhouding.xlsx": "8f3856b06aeab47a05ea1dc4ef2657e09b53a0e15b562be06ff99b287647cac5",
     "Symbolen/ONTWERP.md": "3c943513c59b282902c2e5206f7ef15301ecca18a63fc37b187ceaa8ceb5fcc2",
@@ -138,7 +138,7 @@
     "Uitbreidingen/agenda-export/uitbreiding.json": "2ab2f9ae2afae63a3c3396a658219e49fb6d32cc6db606fd0e503e5047e05232",
     "Uitbreidingen/voorbeeld-export/uitbreiding.js": "c61b0b7c59aca594907682000ddb7f94c00922d0ae1bef10afa389009c32c3c7",
     "Uitbreidingen/voorbeeld-export/uitbreiding.json": "ee71e65ca89a146a9dc8ab026043baa098f4901c7694f7643f93f41994db3f12",
-    "Uitleg.html": "d2a2d22500f732bf386490f49295fa460dd024b10fb6b9dc0d104080eede8897",
+    "Uitleg.html": "967d69f210a8625592c3864edcfebea34fd691925e2ff6e92781d9e2337fef63",
     "Video/Werkplaats-personaliseren.mp4": "026f97cc247252a30f861481c90a3e526d7a0fe652e0b52b874ccfa78a1ff424",
     "Video/Werkplaats-uitlegvideo.mp4": "e848a5abdddb4a66382af3bc65e5cb3efd80208248f73408818d0e34ccac6770",
     "acties.css": "11c1cf97dccba8ae8005153449181a81cdb91c941e632c95299ce3d3cc034f18",
@@ -244,5 +244,10 @@
     ],
     "release_download": "unchanged",
     "description": "Alleen goedgekeurde AI-bouwteksten en vertalingen; geen nieuwe software-uitgave."
+  },
+  "textUpdate": {
+    "date": "2026-10-22",
+    "chief": "CH-247",
+    "description": "Motivatie in Over en handleidingen"
   }
 }

@@ -1,7 +1,7 @@
 WERKPLAATS — LOKAAL / OPEN SOURCE
 
-MIJN IDEE, AI AAN HET TOETSENBORD
-Ik bedacht wat de tool moest kunnen. AI schreef de code. Nu mag jij ermee verder: verbouwen, uitbreiden en helemaal naar je hand zetten. Met of zonder AI als bouwmaatje.
+WAAROM IK DIT DEEL
+Ik ben geen programmeur en geen designer. Met AI maak ik tools en skills die ik zelf nodig heb. Ik deel ze om te laten zien wat er nu mogelijk is, je enthousiast te maken en je op gang te helpen. Gebruik dit als vertrekpunt: bouw erop voort en maak het passend bij jouw werk, smaak en wensen.
 Begin klein: laat ChatGPT of Claude in een aparte kopie één kleur of knop aanpassen. Open, bewaar en heropen daarna iets om te controleren of alles nog werkt. Bugs melden is welkom; zelf iets moois bouwen ook. Credits en licenties van oorspronkelijke makers blijven staan.
 
 Begin met Begin hier.html, of gebruik de online versie.
