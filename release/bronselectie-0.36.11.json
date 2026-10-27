@@ -1,0 +1,11 @@
+{
+  "publicBaseline": "e6159569a65dd5a40b71df9ecac68bd8efe100b3",
+  "canonicalFixCommit": "f685892",
+  "additionalFix": "Schrijven — alles toont ook documenten in de hoofdmap; nieuwe scriptcacheversies",
+  "scope": "Alleen werkmapstart, opslagtoegang, zichtbaarheid hoofdmapdocumenten, versienummers en uitleg; overige lokale ontwikkeling uitgesloten.",
+  "canonicalCommits": [
+    "f685892",
+    "ba59a9a",
+    "f2f6605"
+  ]
+}

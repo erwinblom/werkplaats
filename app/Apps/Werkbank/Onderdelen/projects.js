@@ -13,7 +13,7 @@ let selectedProject='all';
 try { selectedProject=GereedschapskistMode.storage.getItem('mw-project')||'all'; } catch {}
 function projectRoot(path,name=selectedProject){if(name==='all')return '';return path===name||path.startsWith(name+'/')?name:null;}
 function projectIncludes(path){return selectedProject==='all'||projectRoot(path)!==null;}
-function projectFiles(){return files.filter(f=>projectIncludes(f.relativePath)&&(!writingFolderOverview()||f.relativePath.slice('Schrijven/'.length).includes('/')));}
+function projectFiles(){return files.filter(f=>projectIncludes(f.relativePath));}
 function projectTreePath(path){return path;}
 function rememberProject(){try{GereedschapskistMode.storage.setItem('mw-folders-'+selectedProject,JSON.stringify([...expandedFolders]));if(activeFile&&projectIncludes(activeFile.relativePath))GereedschapskistMode.storage.setItem('mw-document-'+selectedProject,activeFile.relativePath);}catch{}}
 function projectChoices(){const roots=directoryHandles.map(h=>h.name);return [...new Set([...roots,...[...folderHandlesByPath.keys()].filter(p=>roots.some(r=>p.startsWith(r+'/')&&!p.slice(r.length+1).includes('/')))])].sort(compareWritingFolders);}

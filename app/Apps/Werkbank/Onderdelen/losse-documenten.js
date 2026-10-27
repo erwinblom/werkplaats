@@ -275,7 +275,7 @@ Werkstatus.register(()=>({name:activeFile?.relativePath||'',content:activeFile?(
  const start=document.createElement('button');start.type='button';I18n.assign(start,I18n.ui("Nieuw beginnen",'Nieuw beginnen'),"textContent");
  start.style.cssText='padding:9px 14px;background:#111;color:#fff;border:1px solid #111;font:600 14px Arial,sans-serif';
  const status=document.createElement('span');status.setAttribute('role','status');
- host.append(text,start,status);document.querySelector('.projectbar').before(host);
+ host.append(text,start,status);document.querySelector('.app').before(host);
  const refresh=()=>{if(Werkmap.active){host.remove();updateProjectControls();}};
  document.addEventListener('werkmap-gekozen',refresh);
  start.onclick=async()=>{start.disabled=true;try{

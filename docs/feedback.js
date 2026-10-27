@@ -1,7 +1,7 @@
 /* Lokale feedback voor gebruikers; bereikbaar onder Hulp. */
 (function () {
   'use strict';
-  const email='erwblo@gmail.com',version='0.36.10';
+  const email='erwblo@gmail.com',version='0.36.11';
   const kindNames={Bug:'Meld een fout',Request:'Stel een verbetering voor',Extension:'Deel een uitbreiding'};
   function shareText(kind,text,context){return '# Help Werkplaats verbeteren\n\n'+(kindNames[kind]||kind)+'\nWerkplaats '+version+' · '+context.tool+(context.view?' · '+context.view:'')+'\n\n'+text.trim();}
   function shareLinks(kind,text,context){const body=shareText(kind,text,context),title='Werkplaats: '+(kindNames[kind]||kind)+' ('+context.tool+')';return {body,mail:'mailto:'+email+'?subject='+encodeURIComponent(title)+'&body='+encodeURIComponent(encodeURIComponent(body).length<=1600?body:'Plak hieronder de volledige tekst uit Werkplaats (gebruik Kopieer tekst).'),github:'https://github.com/erwinblom/werkplaats/issues/new?template='+({Bug:'bug.md',Request:'verbetering.md',Extension:'uitbreiding.md'}[kind]||'verbetering.md')+'&title='+encodeURIComponent(title)+'&body='+encodeURIComponent(encodeURIComponent(body).length<=6000?body:'Plak hieronder de volledige tekst uit Werkplaats (gebruik Kopieer tekst).')};}

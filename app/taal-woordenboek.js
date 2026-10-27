@@ -856,7 +856,7 @@ window.WerkplaatsVertalingen={
   "Deze taken staan al op dit bord.": "These tasks are already on this board.",
   "Deze tool is in een ander venster gewijzigd. Download eventueel je huidige invoer als kopie en herlaad voordat je de werkmap bijwerkt.": "This tool has changed in another window. Download your current input as a copy if needed and reload before updating the workspace folder.",
   "Deze tool is in een ander venster gewijzigd. Herlaad eerst.": "This tool has changed in another window. Reload first.",
-  "Deze uitleg beschrijft versie 0.36.10 van Werkplaats, 15 oktober 2026.": "This help describes Werkplaats version 0.36.10, 15 October 2026.",
+  "Deze uitleg beschrijft versie 0.36.11 van Werkplaats, 27 oktober 2026.": "This help describes Werkplaats version 0.36.11, 15 October 2026.",
   "Dat is de kracht van open source: je hoeft niet vanaf nul te beginnen en je zit ook niet vast aan onze keuzes. Je kunt een werkende basis gebruiken, haar persoonlijk maken en verbeteringen weer met anderen delen.": "That is the strength of open source: you do not have to start from scratch and you are not locked into our choices. You can use a working foundation, make it personal and share improvements with others.",
   "Download de broncode of maak een eigen kopie op GitHub. Je kunt functies en complete tools toevoegen, aanpassen of verwijderen.": "Download the source code or make your own copy on GitHub. You can add, change or remove features and complete tools.",
   "Een AI-codeassistent kan de gewone HTML-, CSS- en JavaScriptbestanden met je aanpassen. Werk vanuit een kopie, beschrijf concreet wat je wilt en controleer daarna of bewaren en heropenen blijven werken.": "An AI coding assistant can help you change the plain HTML, CSS and JavaScript files. Work from a copy, describe precisely what you want and then verify that saving and reopening still work.",
@@ -2212,7 +2212,7 @@ window.WerkplaatsVertalingen={
   "Verplaatst naar {0}. Bewaar alles om je werkmap bij te werken.": "Moved to {0}. Use Save all to update your workspace folder.",
   "Verschil": "Difference",
   "Versie": "Version",
-  "Versie 0.36.10": "Version 0.36.10",
+  "Versie 0.36.11": "Version 0.36.11",
   "Versie en download": "Version and download",
   "Verstuurd": "Sent",
   "Verwerken en bewaren": "Process and save",
@@ -3448,4 +3448,13 @@ Object.assign(window.WerkplaatsVertalingen,{
   "GitHub wordt geopend. Controleer je tekst en plaats de melding daar zelf.": "GitHub is opening. Review your text and post the issue there yourself.",
   "Alleen lokaal bewaard. Gebruik Deel per e-mail of Deel op GitHub om je bijdrage te delen.": "Saved locally only. Use Share by email or Share on GitHub to share your contribution.",
   "Deel deze opmerking": "Share this comment"
+});
+
+Object.assign(window.WerkplaatsVertalingen,{
+  "Maak eerst je werkmap": "Set up your work folder first",
+  "Kies een opslagplek. Werkplaats maakt Mijn Werkplaats en de submappen voor je aan. Daarna kun je aan het werk.": "Choose a location. Werkplaats creates Mijn Werkplaats and its subfolders for you. Then you can start working.",
+  "Werkmap aanmaken": "Create work folder",
+  "Bestaande werkmap openen": "Open existing work folder",
+  "Naar Home": "Go to Home",
+  "Geef opnieuw toegang tot je werkmap. Je bestanden blijven staan.": "Grant access to your work folder again. Your files remain in place."
 });

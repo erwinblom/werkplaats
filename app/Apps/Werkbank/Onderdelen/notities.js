@@ -52,7 +52,17 @@ window.SchrijfNotities = (() => {
     const footer=document.createElement('span');footer.className='note-footer';footer.textContent=I18n.t(note.document?'Uitgewerkt als document':'Notitie')+((note.sourceIds||[]).length?' · '+note.sourceIds.length+' '+I18n.t(note.sourceIds.length===1?'bron':'bronnen'):'');
     card.append(topic,title,excerpt,footer);grid.append(card);
    }
-  }catch(e){error.textContent=e.message;}
+  }catch(e){
+   error.textContent=e.message;
+   if(e.name==='NotAllowedError'||e.name==='SecurityError'){
+    const retry=button(I18n.t('Geef opnieuw toegang'),async()=>{
+     retry.disabled=true;
+     try{await Werkmap.requestReadAccess();await render();}
+     catch(problem){error.textContent=problem.message;error.append(retry);}
+     finally{retry.disabled=false;}
+    });error.append(retry);
+   }
+  }
  }
  async function view(name) {
   currentView=name;app.hidden=name==='notes';board.hidden=name!=='notes';document.body.classList.toggle('writing-notes',name==='notes');
@@ -161,7 +171,7 @@ window.SchrijfNotities = (() => {
   const sourcePanel=document.createElement('div');sourcePanel.className='note-edit-source-panel';
   function updateSourceSummary(){I18n.assign(sourceSummary,I18n.ui("Bronnen{0}",'Bronnen'+(selected.size?' · '+selected.size+' '+I18n.t('gekozen'):'')),"textContent");}
   updateSourceSummary();sourceDetails.append(sourceSummary,sourcePanel);d.append(sourceDetails);
-  const status=document.createElement('p');status.setAttribute('role','status');I18n.assign(status,I18n.ui("Bewaar in mijn werkmap slaat je notitie op.",'Bewaar in mijn werkmap slaat je notitie op.'),"textContent");d.append(status);
+  const status=document.createElement('p');status.setAttribute('role','status');I18n.assign(status,I18n.ui("Bewaar slaat je notitie op.",'Bewaar slaat je notitie op.'),"textContent");d.append(status);
   let pending=Promise.resolve(),failed=false;
   function save(){
    const values=Object.fromEntries(Object.entries(fields).map(([key,field])=>[key,field.value]));
@@ -235,7 +245,7 @@ window.SchrijfNotities = (() => {
      const clean=new URL(location.href);clean.searchParams.delete('startroute');history.replaceState(null,'',clean);
     }
    }catch(e){status.textContent=e.message;}finally{diskSaving=false;controls.forEach((control,index)=>control.disabled=previous[index]);}
-  },'notes-primary action-primary');I18n.assign(disk,I18n.ui('Bewaar in mijn werkmap','Bewaar in mijn werkmap'),'textContent');actions.prepend(disk);
+  },'notes-primary action-primary');I18n.assign(disk,I18n.ui('Bewaar','Bewaar'),'textContent');actions.prepend(disk);
   if(original){
    const remove=I18n.mark(button('Verwijder',async()=>{
     if(!(await Prullenbak.confirm(I18n.value(I18n.ui("Deze notitie naar de prullenbak verplaatsen? Een uitgewerkt document en gekoppelde bronnen blijven behouden.",'Deze notitie naar de prullenbak verplaatsen? Een uitgewerkt document en gekoppelde bronnen blijven behouden.')))))return;

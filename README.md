@@ -18,9 +18,9 @@ Voor dagelijks gebruik hoeft AI niet mee te draaien: Werkplaats werkt in je brow
 
 ## Beginnen
 
-1. Kies **Nieuw beginnen** en kies een opslagplek voor je werkmap.
+1. Kies **Nieuw beginnen** en bevestig een opslagplek, bijvoorbeeld het bureaublad. Werkplaats maakt zelf **Mijn Werkplaats** met de submappen aan. Elke tool vraagt eerst om een nieuwe of bestaande werkmap.
 2. Schrijf je idee in de eerste notitie die wordt geopend.
-3. Klik **Bewaar in mijn werkmap**. Open later dezelfde werkmap via **Verder werken**.
+3. Klik **Bewaar**. Open later dezelfde werkmap via **Verder werken**.
 
 <details>
 <summary>Offline gebruiken, bijwerken en overstappen</summary>
@@ -76,7 +76,7 @@ Werkplaats is een open-source vertrekpunt, geen vast pakket dat iedereen hetzelf
 <details>
 <summary>Meer over bewaren, herstel en overstappen</summary>
 
-**Bewaar in mijn werkmap** schrijft je notitie naar je werkmap. **Sluit** sluit de editor; wijzigingen kunnen dan nog alleen in de browser staan. **Bewaar alles** schrijft de hele werkruimte naar je werkmap, inclusief concepten, met een actuele bewaarronde en een vorige herstelkopie. Bij **Verder werken** haal je die werkruimte terug. Een document in een externe map blijft bij zijn oorspronkelijke bestand.
+**Bewaar** schrijft je notitie naar je werkmap. **Sluit** sluit de editor; wijzigingen kunnen dan nog alleen in de browser staan. **Bewaar alles** schrijft de hele werkruimte naar je werkmap, inclusief concepten, met een actuele bewaarronde en een vorige herstelkopie. Bij **Verder werken** haal je die werkruimte terug. Een document in een externe map blijft bij zijn oorspronkelijke bestand.
 
 **Download back-up** maakt een ZIP van de laatst bewaarde werkmap. Gebruik eerst Bewaar alles. Losse JSON-, Markdown-, CSV- en PDF-exports staan bij de betreffende tool. Verwijderacties gebruiken waar beschikbaar de Prullenbak om terugzetten mogelijk te houden.
 

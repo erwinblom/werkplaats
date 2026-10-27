@@ -23,6 +23,13 @@
   if(navigating)return;navigating=true;
   const switcher=$('tool-switcher');if(switcher)switcher.disabled=true;
   try{
+   const requested=new URL(url,location.href);
+   // A tool must never be the first step of an unconfigured installation.
+   const opensTool=Object.entries(tools).some(([id,[,file]])=>requested.pathname===new URL('Apps/'+id+'/'+file,base).pathname);
+   if(opensTool&&!window.GereedschapskistMode?.example){
+    await Werkmap.ready;await Werkmap.recall();
+    if(!Werkmap.active&&!await Werkmap.startNew())return;
+   }
    window.WerkplaatsOvergangen?.leave();
    await BewaarAlles.flush();
    window.GereedschapskistNavigating=true;
@@ -37,6 +44,29 @@
    if(message)I18n.assign(message,I18n.ui("Niet overgestapt: {0}. Je huidige werk blijft open.",'Niet overgestapt: '+e.message+'. Je huidige werk blijft open.'),"textContent");
    console.error(e);
   }finally{navigating=false;if(switcher)switcher.disabled=false;}
+ }
+ // Direct tool links use the same mandatory setup as Home.
+ async function requireWorkspace(){
+  await Werkmap.ready;await Werkmap.recall();
+  if(!tool||Werkmap.active||window.GereedschapskistMode?.example)return;
+  const dialog=document.createElement('dialog');dialog.className='wm-dialog';dialog.setAttribute('aria-labelledby','required-workspace-title');
+  const title=document.createElement('h2');title.id='required-workspace-title';title.textContent=I18n.t('Maak eerst je werkmap');
+  const text=document.createElement('p');text.textContent=I18n.t('Kies een opslagplek. Werkplaats maakt Mijn Werkplaats en de submappen voor je aan. Daarna kun je aan het werk.');
+  const status=document.createElement('p');status.setAttribute('role','status');
+  const create=document.createElement('button');create.className='primary action-primary';create.textContent=I18n.t('Werkmap aanmaken');
+  const open=document.createElement('button');open.textContent=I18n.t('Bestaande werkmap openen');
+  const home=document.createElement('button');home.textContent=I18n.t('Naar Home');
+  async function choose(action){
+   create.disabled=open.disabled=true;
+   try{if(await action()){dialog.close();dialog.remove();await window.SchrijfNotities?.refresh();return;}
+    status.textContent=$('wm-message')?.textContent||Werkmap.supportMessage;
+   }catch(e){status.textContent=e.message;}
+   finally{create.disabled=open.disabled=false;}
+  }
+  create.onclick=()=>choose(()=>Werkmap.startNew());open.onclick=()=>choose(()=>Werkmap.continueWork());
+  home.onclick=()=>location.assign(new URL('Begin hier.html',base).href);
+  dialog.addEventListener('cancel',event=>event.preventDefault());
+  dialog.append(title,text,Werkmap.browserNotice(),create,open,home,status);document.body.append(dialog);dialog.showModal();
  }
  // One keyboard route for all tools; dialog cancel events retain existing draft guards.
  function installShortcuts(){
@@ -614,6 +644,7 @@ if(GereedschapskistMode.example){const status=$('storage'),text='Oefeninhoud. Je
   for(const p of document.querySelectorAll('.help-tool-shortcuts'))p.textContent=shortcutText();
   await filtersReady;
   applyHomeLayout();refreshMoreMenus();
+  await requireWorkspace();
   document.documentElement.removeAttribute('data-workspace-building');
  }
  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>mount().catch(report),{once:true});else mount().catch(report);

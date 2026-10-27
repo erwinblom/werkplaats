@@ -369,7 +369,11 @@
  async function readRound(root,previous=false,onlyTool=null){
   let rounds,pointer;
   try{rounds=await root.getDirectoryHandle('Bewaard werk');pointer=JSON.parse(await(await(await rounds.getFileHandle('actueel.json')).getFile()).text());}
-  catch(e){if(e.name==='NotFoundError'){const legacy=await readLegacy(root);return onlyTool&&legacy?{...legacy,values:legacy.values.filter(value=>value.tool===onlyTool)}:legacy;}throw Error(I18n.value(I18n.ui("De verwijzing naar bewaard werk is beschadigd. Je bestanden blijven staan.",'De verwijzing naar bewaard werk is beschadigd. Je bestanden blijven staan.')));}
+  catch(e){if(e.name==='NotFoundError'){const legacy=await readLegacy(root);return onlyTool&&legacy?{...legacy,values:legacy.values.filter(value=>value.tool===onlyTool)}:legacy;}if(e.name==='NotAllowedError'||e.name==='SecurityError'){
+    const accessError=Error(I18n.t('Geef opnieuw toegang tot je werkmap. Je bestanden blijven staan.'));accessError.name='NotAllowedError';throw accessError;
+   }
+   if(e.name!=='SyntaxError')throw e;
+   throw Error(I18n.value(I18n.ui("De verwijzing naar bewaard werk is beschadigd. Je bestanden blijven staan.",'De verwijzing naar bewaard werk is beschadigd. Je bestanden blijven staan.')));}
   if(pointer.format!=='gereedschapskist-bewaard-werk')throw Error(I18n.value(I18n.ui("Ongeldige bewaarkopie.",'Ongeldige bewaarkopie.')));
   const name=previous?pointer.previous:pointer.current;
   if(!name||typeof name!=='string'||/[\\/]/.test(name))throw Error(I18n.value(I18n.ui("Geen geldige {0} bewaarkopie.",'Geen geldige '+(previous?'vorige':'actuele')+' bewaarkopie.')));
