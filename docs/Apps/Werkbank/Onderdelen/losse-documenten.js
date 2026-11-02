@@ -57,9 +57,15 @@ window.consolidateMijnTeam=async()=>{
   });
  }
  async function addLoose(name,content){
+  try{await window.BewaarAllesReady;await window.BewaarAlles.ready;}
+  catch(error){throw Error(I18n.t('Schrijven is nog niet klaar. Ververs de pagina en probeer het document opnieuw te openen.'));}
   let chosen=name,n=2;while(converterFiles.has(chosen)){chosen=name.replace(/(\.[^.]+)?$/,(_,ext)=>' ('+(n++)+')'+(ext||''));}
   converterFiles.set(chosen,{name:chosen,content,relativePath:'converter/'+chosen,explicit:true});saveConverterFiles();selectedProject='all';wysiwygDirty=false;isEditMode=false;
-  await loadFiles();expandedFolders.add('converter');renderFileList();await selectFile(files.findIndex(f=>f.isVirtual&&f.name===chosen));
+  await loadFiles();
+  const index=files.findIndex(f=>f.isVirtual&&f.name===chosen);
+  if(!converterFiles.has(chosen)||index<0)throw Error(I18n.t('Het document kon niet worden geopend. Probeer opnieuw.'));
+  expandedFolders.add('converter');renderFileList();await selectFile(index);
+  if(activeFile?.relativePath!=='converter/'+chosen||activeFile?.name!==chosen||currentRawContent!==content)throw Error(I18n.t('Het document kon niet worden geopend. Probeer opnieuw.'));
   showNotification(I18n.value(I18n.ui("Document geopend. Gebruik Bewaar om een eigen bestand te bewaren.",'Document geopend. Gebruik Bewaar om een eigen bestand te bewaren.')),'success');
   return {name:activeFile.name,relativePath:activeFile.relativePath};
  }

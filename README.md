@@ -184,3 +184,8 @@ Versie 0.36.13 herstelt de bewaarmelding na herladen. Werkplaats vergelijkt de a
 - **Afbeeldingenexport:** kies bij een document Meer → Download afbeeldingen, of klik op een beeld. Download ingesloten originelen los of als ZIP. De oorspronkelijke bytes blijven behouden; webverwijzingen worden niet opgehaald.
 
 Deze drie uitbreidingen zijn met fictieve gegevens in Chrome op macOS gecontroleerd. Daarnaast slaagden op Chrome 156 in Windows Server 2022 en Ubuntu 24.04 alle 21 platformcontroles: zoeken, projectkoppelingen, echte schijfopslag, herladen, een volledige browserherstart en afbeeldingenexport vanuit een bestaand werkmapdocument. Zie [platformproef 0.36.14](release/PLATFORM-0.36.14.md) voor bewijs en grenzen.
+
+
+## Nieuw in 0.36.15
+
+Losse Markdown- en tekstbestanden openen wacht nu op het herstel van de werksessie. De succesmelding verschijnt pas als het gekozen document met de juiste inhoud geopend is. Dit voorkomt een aangetoonde botsing tijdens het opstarten. Zie [uitgave 0.36.15](release/UITGAVE-0.36.15.md) voor controles en grenzen.
