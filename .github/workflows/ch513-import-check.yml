@@ -4,6 +4,12 @@ on:
     branches: [ch513-import-check]
   workflow_dispatch:
     inputs:
+      runtimevariant:
+        description: Runtime (baseline of kandidaat)
+        required: false
+        default: candidate
+        type: choice
+        options: [baseline, candidate]
       caseset:
         description: Importproeven (all of restart)
         required: false
@@ -21,7 +27,8 @@ jobs:
     runs-on: ${{ matrix.os }}
     timeout-minutes: 40
     env:
-      CASESET: ${{ inputs.caseset || 'restart' }}
+      CASESET: ${{ inputs.caseset || 'all' }}
+      RUNTIME_VARIANT: ${{ inputs.runtimevariant || 'candidate' }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
