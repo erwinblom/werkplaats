@@ -104,12 +104,13 @@ Met Agenda-export zet je deadlines en datums uit Doen, Projecten, Contacten en A
 
 **Gemaakt door Erik van Elten.** Hij bouwde de oorspronkelijke Agenda-export 0.1.0. De exportkern is behouden. De aansluiting op de vaste uitbreidingenplek van Werkplaats is aangepast door Erwin Blom met hulp van Codex. De oorspronkelijke MIT-licentie en copyrightvermelding van Erik blijven opgenomen.
 
-### Installeren
+### Toevoegen
 
-1. Download de [nieuwe Werkplaats-uitgave](https://github.com/erwinblom/werkplaats/releases/tag/v0.36.10) en [Agenda-export 0.2.0](https://github.com/erwinblom/werkplaats/releases/download/v0.36.8/Agenda-export-0.2.0.zip). Open Werkplaats in Chrome of Edge op je computer.
-2. Kies je werkmap bij Instellingen → Opslag. Klik daarna Instellingen → Uitbreidingen → Map voorbereiden.
-3. Pak het Agenda-exportpakket uit. Zet de map agenda-export in Uitbreidingen van je werkmap.
-4. Klik Ververs → Zet aan. Kies je onderdelen en klik Download agenda (.ics).
+1. Open Werkplaats in Chrome of Edge op je computer en kies je werkmap.
+2. Ga naar **Instellingen → Uitbreidingen**. Klik **Toevoegen** bij Agenda-export van Erik van Elten.
+3. Kies welke onderdelen je wilt meenemen en klik **Download agenda (.ics)**. Open of importeer het bestand in je agenda.
+
+Werkplaats plaatst de meegeleverde uitbreiding zelf in je werkmap en zet haar aan. Je hoeft niets apart te downloaden, uit te pakken of te kopiëren. Een bestaande aangepaste installatie wordt niet overschreven. Eigen uitbreidingen kun je handmatig toevoegen via **Zelf een uitbreiding toevoegen**.
 
 Bij een Werkplaats-update blijven de uitbreiding en keuzes bij je werk staan. Open dezelfde werkmap; de browser kan opnieuw maptoegang vragen. Je hoeft de uitbreiding niet opnieuw te installeren.
 
@@ -189,3 +190,9 @@ Deze drie uitbreidingen zijn met fictieve gegevens in Chrome op macOS gecontrole
 ## Nieuw in 0.36.15
 
 Losse Markdown- en tekstbestanden openen wacht nu op het herstel van de werksessie. De succesmelding verschijnt pas als het gekozen document met de juiste inhoud geopend is. Dit voorkomt een aangetoonde botsing tijdens het opstarten. Zie [uitgave 0.36.15](release/UITGAVE-0.36.15.md) voor controles en grenzen.
+
+## Nieuw in 0.36.16
+
+Agenda-export van Erik van Elten voeg je toe met één knop bij Instellingen → Uitbreidingen. De uitbreiding wordt meegeleverd en werkt zonder Python, extra account of netwerkverbinding voor de installatie. Eriks exportkern en MIT-licentie blijven behouden.
+
+De installatie is in de volledige Werkplaats met Chrome op macOS gecontroleerd: echte tijdelijke werkmap, exacte bestandscontrole, agendabestand van een bewaarde taak, uit/aan en herladen met behoud van keuzes. Daarnaast slagen 48 broncontroles en een afzonderlijke Chrome-proef met 13 controles. De nieuwe installatieknop is niet opnieuw op Windows/Linux getest. Zie [controle 0.36.16](release/UITGAVE-0.36.16.md).

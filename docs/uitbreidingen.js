@@ -3,7 +3,7 @@ window.WerkplaatsUitbreidingen=(()=>{
  const apiVersion=1,tools=['Werkbank','Projectbord','Bronnenkast','Contacten','Publicatieplanner','Ping','Offerte','Uren','Kasboek','Abonnementen'];
  const currentTool=document.querySelector('script[data-tool]')?.dataset.tool||'Home';
  const t=(nl,en)=>I18n.language==='en'?en:nl;
- let panel,status,list,prepare,refreshButton,busy=false,generation=0,items=[],loaded=new Map(),channel,lastRevision=null,scanQueue=Promise.resolve(),switching=false;
+ let panel,status,list,available,advanced,prepare,refreshButton,busy=false,generation=0,items=[],loaded=new Map(),channel,lastRevision=null,scanQueue=Promise.resolve(),switching=false;
  const missing=error=>error.name==='NotFoundError';
  function validateManifest(value,folder){
   if(!value||value.apiVersion!==apiVersion)throw Error(t('Deze uitbreiding vraagt een andere Werkplaats-aansluiting.','This extension needs a different Werkplaats API.'));
@@ -18,7 +18,7 @@ window.WerkplaatsUitbreidingen=(()=>{
   if(!Werkmap.active)throw Error(t('Kies eerst bij Opslag een werkmap.','Choose a workspace folder under Storage first.'));
   const {root,revision}=await Werkmap.allAccess(ask);
   if(!ask&&await root.queryPermission({mode:'read'})!=='granted')throw Error(t('Klik op Ververs en geef toegang tot je werkmap.','Click Refresh and grant access to your workspace folder.'));
-  return {dir:await root.getDirectoryHandle('Uitbreidingen',{create}),revision};
+  return {dir:await root.getDirectoryHandle('Uitbreidingen',{create}),root,revision};
  }
  async function config(dir){
   let raw;try{raw=JSON.parse(await textFile(dir,'instellingen.json',100000));}catch(error){if(missing(error))return {format:'werkplaats-uitbreidingen',version:1,enabled:{}};throw error;}
@@ -123,7 +123,7 @@ window.WerkplaatsUitbreidingen=(()=>{
    await Werkmap.ready;await BewaarAlles.ready;
    if(switching){stopAll();say(t('Werkmap wordt geopend…','Opening workspace…'));return;}
    if(!Werkmap.active){stopAll();lastRevision=null;say(t('Kies eerst bij Opslag een werkmap.','Choose a workspace folder under Storage first.'));return;}
-   let dir;try{const location=await access(ask);dir=location.dir;if(token!==generation)return;if(lastRevision!==location.revision){stopAll();lastRevision=location.revision;}}catch(error){if(missing(error)){stopAll();say(t('Er zijn nog geen uitbreidingen. Klik op Map voorbereiden.','There are no extensions yet. Click Prepare folder.'));return;}throw error;}
+   let dir;try{const location=await access(ask);dir=location.dir;if(token!==generation)return;if(lastRevision!==location.revision){stopAll();lastRevision=location.revision;}}catch(error){if(missing(error)){stopAll();say(t('Kies hieronder een uitbreiding om toe te voegen.','Choose an extension below to add.'));return;}throw error;}
    const settings=await config(dir),found=[];
    for await(const entry of dir.values()){if(entry.kind==='directory'){if(found.length>=50)throw Error(t('Maximaal 50 uitbreidingen per werkmap.','Maximum 50 extensions per workspace folder.'));found.push(entry.name);}}
    const next=[];
@@ -152,15 +152,52 @@ window.WerkplaatsUitbreidingen=(()=>{
  }
  async function perform(fn){if(busy)return;busy=true;render();try{await fn();}catch(error){say(error.message);}finally{busy=false;render();}}
  function button(nl,en,fn){const element=document.createElement('button');element.type='button';element.textContent=t(nl,en);element.disabled=busy;element.onclick=()=>perform(fn);return element;}
+ async function install(entry){
+  const manifest=validateManifest(JSON.parse(entry.files['uitbreiding.json']),entry.id),expected=await hash(entry.files['uitbreiding.json']+'\n'+entry.files['uitbreiding.js']);
+  const {dir,root,revision}=await access(true,true);
+  const check=async()=>{const current=await Werkmap.allAccess(false);if(switching||current.revision!==revision||!await current.root.isSameEntry(root))throw Error(t('De werkmap is veranderd. Probeer opnieuw in de juiste werkmap.','Workspace changed. Try again in the correct workspace folder.'));};
+  await navigator.locks.request('werkplaats-uitbreidingen:'+revision,async()=>{
+   await check();await config(dir);let target;
+   try{target=await dir.getDirectoryHandle(entry.id);}catch(error){if(!missing(error))throw error;target=await dir.getDirectoryHandle(entry.id,{create:true});}
+   // Never replace an existing maker's files, including an interrupted or edited installation.
+   for await(const file of target.values()){
+    if(file.kind!=='file'||!Object.hasOwn(entry.files,file.name)||await textFile(target,file.name,1000000)!==entry.files[file.name])throw Error(t('Er staat al een andere of aangepaste Agenda-export. Die is behouden. Er is niets vervangen. Bekijk de bestaande uitbreiding hieronder.','A different or modified Calendar export already exists. It has been kept. Nothing was replaced. Check the existing extension below.'));
+   }
+   for(const name of Object.keys(entry.files).sort((a,b)=>(a==='uitbreiding.json')-(b==='uitbreiding.json'))){
+    await check();try{await target.getFileHandle(name);}catch(error){
+     if(!missing(error))throw error;
+     try{await write(target,name,entry.files[name]);}catch(writeError){
+      // createWritable abort can leave a new empty file. Remove only that empty placeholder,
+      // never an existing or non-empty file, so a failed first install can be retried safely.
+      try{if(await textFile(target,name,1000000)==='')await target.removeEntry(name);}catch{}
+      throw writeError;
+     }
+    }
+   }
+   await check();const fresh=await readItem(dir,manifest.id);if(fresh.hash!==expected)throw Error(t('Installatie niet bevestigd. Er is niets aangezet.','Installation was not confirmed. Nothing was enabled.'));
+   const latest=await config(dir);latest.enabled[manifest.id]=expected;
+   await write(dir,'instellingen.json',JSON.stringify(latest,null,2)+'\n');await check();
+  });
+  channel?.postMessage('changed');await scan();const installed=items.find(item=>item.id===manifest.id);
+  if(!installed?.enabled||installed.error||installed.tools.includes(currentTool)&&!loaded.has(manifest.id))throw Error(t('Bestanden bewaard, maar de uitbreiding kon niet starten. Bekijk de melding en probeer Ververs.','Files saved, but the extension could not start. Check the message and try Refresh.'));
+  say(t('Agenda-export is toegevoegd en staat aan. Kies je onderdelen en download je agenda.','Calendar export has been added and enabled. Choose your sources and download your calendar.'));
+ }
  function render(){
   if(!panel)return;
   panel.querySelector('summary').textContent=t('Uitbreidingen','Extensions');panel.querySelector('[data-intro]').textContent=t('Voeg extra functies toe. Een aangezette uitbreiding kan de gegevens lezen van de aangemelde gereedschappen.','Add extra features. An enabled extension can read data from its declared tools.');
-  panel.querySelector('[data-help]').textContent=t('De map Uitbreidingen staat bij je werk, buiten de appbestanden. Kies na een nieuwe download dezelfde werkmap.','The Extensions folder stays with your work, outside the app files. Choose the same workspace folder after a new download.');
+  panel.querySelector('[data-help]').textContent=t('Je uitbreidingen blijven bij je werk. Open na een Werkplaats-update dezelfde werkmap.','Your extensions stay with your work. Open the same workspace folder after a Werkplaats update.');
+  advanced.querySelector('summary').textContent=t('Zelf een uitbreiding toevoegen','Add an extension yourself');
+  available.replaceChildren();
+  for(const entry of window.WerkplaatsUitbreidingenCatalogus||[]){
+   if(items.some(item=>item.id===entry.id&&!item.error))continue;
+   const card=document.createElement('section'),heading=document.createElement('h4'),description=document.createElement('p'),rights=document.createElement('p');heading.textContent=entry.name+' · '+entry.maker;description.textContent=t(entry.description.nl,entry.description.en);rights.textContent=t('Leest gegevens uit je Werkplaats om een agendabestand te maken. Er wordt niets online verstuurd of aan je werk gewijzigd.','Reads your Werkplaats data to create a calendar file. Nothing is sent online or changed in your work.');
+   const partial=items.some(item=>item.id===entry.id);const add=button(partial?'Installatie opnieuw proberen':'Toevoegen',partial?'Retry installation':'Add',()=>install(entry));add.disabled=busy||!Werkmap.active;add.classList.add('primary');card.append(heading,description,rights,add);available.append(card);
+  }
   prepare.textContent=t('Map voorbereiden','Prepare folder');prepare.disabled=busy||!Werkmap.active;
   refreshButton.textContent=t('Ververs','Refresh');refreshButton.disabled=busy||!Werkmap.active;
   list.replaceChildren();
   for(const item of items){
-   const row=document.createElement('section'),heading=document.createElement('h4');heading.textContent=item.name+(item.version?' · '+item.version:'');row.append(heading);
+   const row=document.createElement('section'),heading=document.createElement('h4');heading.textContent=item.name+(item.id==='agenda-export'?' · Erik van Elten':'')+(item.version?' · '+item.version:'');row.append(heading);
    const state=document.createElement('p');state.textContent=item.error?t('Niet geladen: ','Not loaded: ')+item.error:item.changed?t('Gewijzigd. Controleer de nieuwe code en zet opnieuw aan.','Changed. Review the new code and enable again.'):item.enabled?t('Aan','Enabled'):t('Uit','Disabled');row.append(state);
    const actions=document.createElement('div');actions.className='settings-actions wp-actions';
    if(!item.error||item.enabled){actions.append(button(item.enabled?'Zet uit':'Zet aan',item.enabled?'Disable':'Enable',()=>toggle(item,!item.enabled)));}
@@ -178,7 +215,7 @@ window.WerkplaatsUitbreidingen=(()=>{
  function mount(){
   const dialog=document.getElementById('suite-settings');if(!dialog||panel)return;
   panel=document.createElement('details');panel.id='settings-extensions';panel.className='settings-section';const summary=document.createElement('summary'),intro=document.createElement('p'),help=document.createElement('p'),actions=document.createElement('div');intro.dataset.intro='';help.dataset.help='';actions.className='settings-actions wp-actions';
-  prepare=button('Map voorbereiden','Prepare folder',prepareFolder);refreshButton=button('Ververs','Refresh',()=>scan(true));actions.append(prepare,refreshButton);list=document.createElement('div');status=document.createElement('p');status.id='extensions-status';status.setAttribute('role','status');panel.append(summary,intro,help,actions,list,status);dialog.querySelector('.my-tools-actions').before(panel);dialog.addEventListener('settings-open',()=>scan());render();
+  prepare=button('Map voorbereiden','Prepare folder',prepareFolder);refreshButton=button('Ververs','Refresh',()=>scan(true));actions.append(prepare,refreshButton);list=document.createElement('div');status=document.createElement('p');status.id='extensions-status';status.setAttribute('role','status');available=document.createElement('div');available.dataset.extensionCatalog='';advanced=document.createElement('details');const advancedTitle=document.createElement('summary');advanced.append(advancedTitle,actions);panel.append(summary,intro,available,list,help,advanced,status);dialog.querySelector('.my-tools-actions').before(panel);dialog.addEventListener('settings-open',()=>scan());render();
  }
  try{channel=new BroadcastChannel('werkplaats-uitbreidingen');channel.onmessage=()=>scan();}catch{}
  for(const event of ['werkmap-herinnerd','werkmap-losgekoppeld','taal-gewijzigd'])document.addEventListener(event,()=>scan());

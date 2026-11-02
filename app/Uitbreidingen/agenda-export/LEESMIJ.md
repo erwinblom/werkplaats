@@ -10,10 +10,15 @@ Zet deadlines en datums uit Doen, Projecten, Contacten en Abonnementen in je eig
 
 ## Installeren
 
-1. Kies in Werkplaats bij Instellingen → Opslag je werkmap.
-2. Klik Instellingen → Uitbreidingen → Map voorbereiden.
-3. Kopieer deze hele map `agenda-export` naar `Uitbreidingen` in je werkmap. Kopieer naar je werkmap, niet naar de map met appbestanden.
-4. Klik Ververs → Zet aan. Kies bronnen en klik Download agenda (.ics).
+1. Open Instellingen → Uitbreidingen in een nieuwe Werkplaats-versie.
+2. Kies **Toevoegen** bij Agenda-export van Erik van Elten. Werkplaats plaatst de meegeleverde uitbreiding in je werkmap en zet haar aan. Kies eerst een werkmap bij Opslag als je die nog niet hebt.
+3. Kies de bronnen die je wilt meenemen en klik **Download agenda (.ics)**. Open of importeer het bestand in je agenda.
+
+Je hoeft geen apart pakket te downloaden, uit te pakken of mappen te kopiëren. De uitbreiding werkt op je computer zonder Python of een extra account. De export en de aansluiting blijven versie 0.2.0.
+
+### Handmatig installeren
+
+Voor eigen uitbreidingen blijft de handmatige route beschikbaar. Open onder Uitbreidingen **Zelf een uitbreiding toevoegen** en klik **Map voorbereiden**. In oudere Werkplaats-versies staat **Map voorbereiden** direct onder Uitbreidingen. Kopieer deze hele map `agenda-export` naar `Uitbreidingen` in je werkmap en klik Ververs → Zet aan. Kopieer naar je werkmap, niet naar de appbestanden. Een afwijkende bestaande Agenda-export wordt niet door de toevoegknop overschreven.
 
 Je keuzes worden direct in Uitbreidingen/instellingen.json bewaard. Uitzetten bewaart de keuzes en stopt de uitbreiding. Voor verwijderen: Zet uit, verwijder daarna alleen agenda-export uit je werkmap. Geen installer of wijziging aan werkmap.js nodig.
 

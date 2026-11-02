@@ -3428,6 +3428,12 @@ Object.assign(window.WerkplaatsVertalingen,{
   "Kies je werkmap bij Instellingen → Opslag en klik daarna Instellingen → Uitbreidingen → Map voorbereiden.": "Choose your workspace folder under Settings → Storage, then click Settings → Extensions → Prepare folder.",
   "Zet de map agenda-export in Uitbreidingen van je werkmap, buiten de appbestanden.": "Put the agenda-export folder in Extensions in your workspace folder, outside the app files.",
   "Klik Ververs → Zet aan. Kies je bronnen en klik Download agenda (.ics).": "Click Refresh → Enable. Choose your sources and click Download calendar (.ics).",
+  "Open Instellingen → Uitbreidingen.": "Open Settings → Extensions.",
+  "Klik op Toevoegen bij Agenda-export van Erik van Elten. Kies eerst bij Opslag een werkmap als je die nog niet hebt.": "Click Add next to Calendar export by Erik van Elten. Choose a workspace folder under Storage first if you have not already.",
+  "Kies je bronnen en klik Download agenda (.ics). Open of importeer het bestand in je agenda.": "Choose your sources and click Download calendar (.ics). Open or import the file in your calendar.",
+  "Je hoeft geen apart pakket te downloaden of mappen te kopiëren. Werkplaats installeert de meegeleverde uitbreiding en zet haar aan.": "You do not need to download a separate package or copy folders. Werkplaats installs the included extension and enables it.",
+  "Zelf een uitbreiding toevoegen": "Add an extension yourself",
+  "Voor eigen uitbreidingen en oudere versies blijft handmatig installeren mogelijk: bereid de map voor, kopieer de uitbreiding naar Uitbreidingen in je werkmap en klik Ververs → Zet aan. Een afwijkende bestaande Agenda-export wordt niet overschreven.": "Manual installation remains available for custom extensions and older versions: prepare the folder, copy the extension into Extensions in your workspace folder and click Refresh → Enable. An existing modified Calendar export is not overwritten.",
   "Lees hoe Agenda-export werkt": "Read how Calendar export works"
 });
 
