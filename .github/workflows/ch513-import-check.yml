@@ -11,11 +11,11 @@ on:
         type: choice
         options: [baseline, candidate]
       caseset:
-        description: Importproeven (all of restart)
+        description: Importproeven (all, restart of native)
         required: false
         default: all
         type: choice
-        options: [all, restart]
+        options: [all, restart, native]
 permissions:
   contents: read
 jobs:
@@ -27,7 +27,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     timeout-minutes: 40
     env:
-      CASESET: ${{ inputs.caseset || 'all' }}
+      CASESET: ${{ inputs.caseset || 'native' }}
       RUNTIME_VARIANT: ${{ inputs.runtimevariant || 'candidate' }}
     steps:
       - uses: actions/checkout@v4

@@ -115,7 +115,35 @@ function Shot([string]$name){$b=[System.Windows.Forms.SystemInformation]::Virtua
 Start-Sleep -Milliseconds 1400;Shot '${shot('file-before')}';$keys.SendKeys('%n');Start-Sleep -Milliseconds 300;$keys.SendKeys('${lit(file)}');Start-Sleep -Milliseconds 300;Shot '${shot('file-path')}';$keys.SendKeys('{ENTER}');Start-Sleep -Milliseconds 1200;Shot '${shot('file-after')}';`;
   cmd='powershell';args=['-NoProfile','-Command',script];
  }else{
-  cmd='bash';args=['-c','sleep 1.5; scrot "$2"; xdotool key --clearmodifiers ctrl+l; xdotool type --clearmodifiers -- "$1"; sleep 0.4; scrot "$3"; xdotool key Return; sleep 1; scrot "$4"','file',file,path.join(out,tag+'-file-before.png'),path.join(out,tag+'-file-path.png'),path.join(out,tag+'-file-after.png')];
+  const script=`
+set -u
+pattern='^(Open|Select|Choose|File Upload)'
+printf 'Visible window inventory:\n'
+for w in $(xdotool search --onlyvisible --name . 2>/dev/null || true); do printf '%s %s\n' "$w" "$(xdotool getwindowname "$w" 2>/dev/null || true)"; done
+picker=''
+for attempt in $(seq 1 40); do
+ picker=$(xdotool search --onlyvisible --name "$pattern" 2>/dev/null | tail -n 1 || true)
+ if [ -n "$picker" ]; then xdotool windowfocus --sync "$picker" || true; focused=$(xdotool getwindowfocus 2>/dev/null || true); if [ "$focused" = "$picker" ]; then break; fi; fi
+ picker='';sleep 0.25
+done
+scrot "$2"
+if [ -z "$picker" ]; then printf 'No identifiable focused file picker\n';exit 3;fi
+printf 'Focused picker %s: %s\n' "$picker" "$(xdotool getwindowname "$picker")"
+xdotool key --clearmodifiers ctrl+l
+xdotool type --clearmodifiers -- "$1"
+sleep 0.4;scrot "$3"
+xdotool key Return;sleep 1
+if xdotool search --onlyvisible --name "$pattern" 2>/dev/null | grep -Fx "$picker" >/dev/null; then
+ printf 'Picker remains visible after path: click Select in its own window\n'
+ eval "$(xdotool getwindowgeometry --shell "$picker")"
+ xdotool mousemove --window "$picker" "$((WIDTH-50))" "$((HEIGHT-24))" click 1
+ sleep 1
+fi
+scrot "$4"
+if xdotool search --onlyvisible --name "$pattern" 2>/dev/null | grep -Fx "$picker" >/dev/null; then printf 'File picker still visible\n';exit 4;fi
+printf 'File picker closed\n'
+`;
+  cmd='bash';args=['-c',script,'file',file,path.join(out,tag+'-file-before.png'),path.join(out,tag+'-file-path.png'),path.join(out,tag+'-file-after.png')];
  }
  const child=spawn(cmd,args,{stdio:['ignore','pipe','pipe']});let log='';child.stdout.on('data',d=>log+=d);child.stderr.on('data',d=>log+=d);
  return new Promise(resolve=>{let done=false;const finish=c=>{if(done)return;done=true;clearTimeout(timer);fs.writeFileSync(path.join(out,tag+'-filepicker.log'),log);resolve(c);};const timer=setTimeout(()=>{child.kill();finish(124)},20000);child.on('error',e=>{log+=String(e);finish(125)});child.on('close',finish)});
@@ -183,7 +211,11 @@ async function probe(kind,iteration,trace=false){
   }
   const picker=p.locator('#loose-input');await picker.waitFor({state:'attached'});entry.inputBefore=await picker.evaluate(e=>({count:e.files.length}));
   if(kind==='native-file'||kind==='candidate-native-roundtrip'){
+   // Observe only native change-event metadata; never set files or read File.text() here.
+   entry.nativeFileObserver='capture listener records name, size and count only; no additional file read';
+   await p.evaluate(()=>{window.__nativeFileEvidence=[];document.addEventListener('change',e=>{if(e.target?.id!=='loose-input')return;const f=e.target.files[0];const record={count:e.target.files.length,name:f?.name,size:f?.size};window.__nativeFileEvidence.push(record);},true);});
    const button=p.locator('#loose-open');if(!await button.isVisible()){const menu=p.locator('#folderMenu');if(await menu.count())await menu.locator('summary').click();}await button.click();entry.filePickerExit=await filePicker(source,tag);assert.equal(entry.filePickerExit,0);
+   await p.waitForFunction(()=>window.__nativeFileEvidence?.length>0,null,{timeout:15000});entry.nativeFileEvidence=await p.evaluate(()=>window.__nativeFileEvidence);const picked=entry.nativeFileEvidence.at(-1);assert.equal(picked.count,1);assert.equal(picked.name,inputName);assert.equal(picked.size,bytes.length);
   }else if(kind==='ready-path-same')await picker.setInputFiles(source);
   else await picker.setInputFiles({name:inputName,mimeType:'text/markdown',buffer:bytes});
   entry.events.push('file supplied');
@@ -212,6 +244,8 @@ async function probe(kind,iteration,trace=false){
    await p.goto(pathToFileURL(launcher).href);await p.waitForFunction(()=>window.Werkmap);await p.evaluate(()=>Werkmap.recall());const permission=await p.evaluate(async()=>{const {root}=await Werkmap.allAccess(false);return root.queryPermission({mode:'readwrite'});});entry.roundtrip.permissionAtRestart=permission;
    await p.getByRole('button',{name:'Verder werken',exact:true}).click();if(permission!=='granted'){entry.roundtrip.permissionHelperExit=await permissionInput(tag+'-roundtrip');assert.equal(entry.roundtrip.permissionHelperExit,0);}await p.waitForFunction(()=>/Werkmap geopend/.test(document.querySelector('#wm-message')?.textContent||''),null,{timeout:30000});assert.equal(await p.evaluate(async()=>{const {root}=await Werkmap.allAccess(false);return root.queryPermission({mode:'readwrite'});}), 'granted');
    await p.goto(pathToFileURL(path.join(app,'Apps','Werkbank','▶ Begin hier.html')).href+'?werkruimte=eigen');await p.waitForFunction(()=>window.SchrijfNotities&&window.Werkmap&&window.BewaarAlles);await p.evaluate(async()=>{await Werkmap.suiteReady;await BewaarAlles.ready;});await p.locator('.writing-views').getByRole('button',{name:'Documenten',exact:true}).click();
+   entry.roundtrip.restoreState=await p.evaluate(()=>({selectedProject:typeof selectedProject==='undefined'?null:selectedProject,converter:typeof converterFiles==='undefined'?null:[...converterFiles.entries()].map(([name,value])=>({name,content:value.content})),files:typeof files==='undefined'?null:files.map(f=>({name:f.name,path:f.relativePath,isVirtual:!!f.isVirtual}))}));
+   await p.locator('#projectSelect').selectOption('all');entry.roundtrip.selectedProjectAfterFilter=await p.locator('#projectSelect').inputValue();assert.equal(entry.roundtrip.selectedProjectAfterFilter,'all');
    const converter=p.locator('.tree-folder-header[data-folder-path="converter"]');await converter.waitFor({timeout:30000});if(await converter.getAttribute('aria-expanded')!=='true')await converter.click();await p.waitForFunction(()=>typeof files!=='undefined'&&files.some(f=>f.isVirtual&&f.name==='CH513 unieke import.md'),null,{timeout:30000});const importedIndex=await p.evaluate(()=>files.findIndex(f=>f.isVirtual&&f.name==='CH513 unieke import.md'));const imported=p.locator('.tree-folder-contents[data-path="converter"] .tree-file[data-index="'+importedIndex+'"]');await imported.waitFor();await imported.click();
    await p.waitForFunction(expected=>typeof activeFile!=='undefined'&&activeFile?.isVirtual&&activeFile.name==='CH513 unieke import.md'&&currentRawContent===expected,markdown,{timeout:30000});await p.locator('#content .markdown-content').getByRole('heading',{name:'CH513 document',exact:true}).waitFor();entry.roundtrip.reopenedExact=true;await p.screenshot({path:path.join(out,tag+'-reopened.png'),fullPage:true});
    entry.passed=entry.roundtrip.saveAllDiskExact&&entry.roundtrip.reopenedExact&&entry.errors.length===0;
@@ -225,23 +259,24 @@ async function probe(kind,iteration,trace=false){
  try{
   result.releaseSha256=sha(fs.readFileSync(path.resolve('fixture-release/Werkplaats.zip')));assert.equal(result.releaseSha256,SHA);result.version=fs.readFileSync(path.join(app,'feedback.js'),'utf8').match(/version='([^']+)'/)?.[1];assert.equal(result.version,'0.36.14');save();
   applyVariant();
-  const caseSet=process.env.CASESET||'all';assert(['all','restart'].includes(caseSet),'unknown CASESET');result.caseSet=caseSet;
-  const kinds=caseSet==='restart'?['saved-restart-startup']:['startup-buffer','ready-path-same','ready-buffer-same','ready-buffer-unique','native-file','saved-restart-startup'];
-  for(const kind of kinds)for(let n=1;n<=3;n++)await probe(kind,n);
-  await probe(caseSet==='restart'?'saved-restart-startup':'startup-buffer',1,true);
-  if(variant==='candidate'&&caseSet==='all')await probe('candidate-native-roundtrip',1);
-  const traceCase=result.cases.find(c=>c.instrumented);result.tracePassed=traceCase?.passed??false;result.traceFailure=traceCase?.passed?null:(traceCase?.failure||JSON.stringify(traceCase?.assertions||{}));if(!result.tracePassed)console.error('Separate instrumented trace failed:',result.traceFailure);
+  const caseSet=process.env.CASESET||'all';assert(['all','restart','native'].includes(caseSet),'unknown CASESET');result.caseSet=caseSet;
+  const kinds=caseSet==='native'?['native-file','startup-buffer']:caseSet==='restart'?['saved-restart-startup']:['startup-buffer','ready-path-same','ready-buffer-same','ready-buffer-unique','native-file','saved-restart-startup'];
+  for(const kind of kinds)for(let n=1;n<=(caseSet==='native'&&kind==='startup-buffer'?1:3);n++)await probe(kind,n);
+  if(caseSet!=='native')await probe(caseSet==='restart'?'saved-restart-startup':'startup-buffer',1,true);
+  if(variant==='candidate'&&['all','native'].includes(caseSet))await probe('candidate-native-roundtrip',1);
+  const traceCase=result.cases.find(c=>c.instrumented);result.tracePassed=traceCase?.passed??null;result.traceFailure=traceCase&&!traceCase.passed?(traceCase.failure||JSON.stringify(traceCase.assertions||{})):null;if(result.traceFailure)console.error('Separate instrumented trace failed:',result.traceFailure);
   const candidateRoundtrip=result.cases.find(c=>c.kind==='candidate-native-roundtrip');result.candidateRoundtripPassed=candidateRoundtrip?.passed??null;
-  const baseline=result.cases.filter(c=>!c.instrumented&&kinds.includes(c.kind)),expected=3*kinds.length;
-  result.allCasesAttempted=baseline.length===expected&&result.cases.filter(c=>c.instrumented).length===1&&(variant!=='candidate'||caseSet!=='all'||!!candidateRoundtrip);
+  const baseline=result.cases.filter(c=>!c.instrumented&&kinds.includes(c.kind)),expected=caseSet==='native'?4:3*kinds.length;
+  result.allCasesAttempted=baseline.length===expected&&result.cases.filter(c=>c.instrumented).length===(caseSet==='native'?0:1)&&(variant!=='candidate'||!['all','native'].includes(caseSet)||!!candidateRoundtrip);
   result.attemptedKinds=kinds;result.allAttemptedBaselinesPassed=baseline.length===expected&&baseline.every(c=>c.passed);
   const startup=baseline.filter(c=>c.kind==='startup-buffer'),restart=baseline.filter(c=>c.kind==='saved-restart-startup');
   result.startupPassedCount=startup.filter(c=>c.passed).length;result.savedRestartStartupPassedCount=restart.filter(c=>c.passed).length;
   result.savedRestartStartupAllPassed=restart.length===3&&restart.every(c=>c.passed);result.startupAllPassed=startup.length===3&&startup.every(c=>c.passed);
   result.readyCasesAllPassed=caseSet==='all'&&baseline.filter(c=>!['startup-buffer','saved-restart-startup'].includes(c.kind)).length===12&&baseline.filter(c=>!['startup-buffer','saved-restart-startup'].includes(c.kind)).every(c=>c.passed);
+  result.nativeCasesAllPassed=caseSet==='native'&&result.allCasesAttempted&&baseline.every(c=>c.passed)&&(variant!=='candidate'||result.candidateRoundtripPassed===true);
   result.allBaselinePassed=caseSet==='all'&&result.allCasesAttempted&&result.allAttemptedBaselinesPassed;
   result.masterImportAllPassed=result.allBaselinePassed&&(variant!=='candidate'||result.candidateRoundtripPassed===true);
   result.interpretation='Uninstrumented baseline cases are separate from the extra instrumented timeline with wrapped logging; the wrappers can perturb timing. An empty result does not by itself prove the cause.';save();
-  if(!result.allCasesAttempted||(variant==='candidate'&&caseSet==='all'&&!result.masterImportAllPassed))process.exitCode=1;
+  if(!result.allCasesAttempted||(variant==='candidate'&&caseSet==='all'&&!result.masterImportAllPassed)||(caseSet==='native'&&!result.nativeCasesAllPassed))process.exitCode=1;
  }catch(e){result.fatal=String(e.stack||e);save();console.error(result.fatal);process.exitCode=1;}
 })();
