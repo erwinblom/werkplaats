@@ -1,0 +1,47 @@
+name: CH513 release Windows and Linux check
+on:
+  push:
+    branches: [ch513-platform-check]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  browser:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-24.04, windows-2022]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22.16.0'
+      - name: Install pinned Playwright
+        run: npm install --no-save --package-lock=false playwright@1.56.1
+      - name: Download published ZIP
+        shell: bash
+        run: |
+          mkdir -p fixture-release platform-evidence
+          curl --fail --location --retry 3 -o fixture-release/Werkplaats.zip https://github.com/erwinblom/werkplaats/releases/download/v0.36.14/Werkplaats.zip
+      - name: Verify release hash, CRC and extract
+        shell: bash
+        run: >-
+          python -c "import hashlib,zipfile,pathlib,json; p=pathlib.Path('fixture-release/Werkplaats.zip'); h=hashlib.sha256(p.read_bytes()).hexdigest(); assert h=='98489dd9705b28ae2124ffcf7ade99b44fd264f3d3df548528cbe4c53eb43cc8',h; z=zipfile.ZipFile(p); assert z.testzip() is None; names=z.namelist(); assert len([n for n in names if n.startswith('Werkplaats/Bestanden/') and not n.endswith('/')])==241; assert all(not n.startswith('/') and '..' not in pathlib.PurePosixPath(n).parts for n in names); z.extractall('fixture-release/unpacked'); pathlib.Path('platform-evidence/release-verification.json').write_text(json.dumps({'sha256':h,'appFiles':241,'zipCrc':'pass'},indent=2))"
+      - name: Install Linux display and picker controls
+        if: runner.os == 'Linux'
+        run: sudo apt-get update && sudo apt-get install -y xvfb xdotool scrot dbus-x11 xdg-desktop-portal-gtk
+      - name: Real Chrome and OS folder on Linux
+        if: runner.os == 'Linux'
+        run: xvfb-run -a dbus-run-session -- node tests/ch513-platform-check.cjs
+      - name: Real Chrome and OS folder on Windows
+        if: runner.os == 'Windows'
+        run: node tests/ch513-platform-check.cjs
+      - name: Upload checks, OS evidence and screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ch513-platform-${{ runner.os }}
+          path: platform-evidence/
+          if-no-files-found: error
