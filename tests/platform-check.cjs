@@ -78,7 +78,8 @@ scrot "$3"
 }
 function listFiles(dir){return fs.readdirSync(dir,{withFileTypes:true}).flatMap(e=>e.isDirectory()?listFiles(path.join(dir,e.name)):[path.join(dir,e.name)]);}
 async function exercise(base,kind){
- const folder=fs.mkdtempSync(path.join(os.tmpdir(),'werkplaats-ch510-'));
+ const parent=process.platform==='win32'?path.join(os.homedir(),'Documents','Werkplaats CH510'):os.tmpdir();fs.mkdirSync(parent,{recursive:true});
+ const folder=fs.mkdtempSync(path.join(parent,'werkplaats-ch510-'));
  const profile=fs.mkdtempSync(path.join(os.tmpdir(),'werkplaats-profile-ch510-'));
  let ctx=await chromium.launchPersistentContext(profile,browserOptions);
  const entry={route:kind,nativePicker:false,folderPersistence:false,noteSaveReload:false,pageErrors:[],browser:ctx.browser()?.version()||'persistent Chromium',channel:process.env.RUN_CHROME==='1'?'chrome':'playwright-chromium',testFolder:folder};result.tests.push(entry);save();
@@ -138,13 +139,13 @@ async function exercise(base,kind){
  const server=http.createServer((req,res)=>{try{const rel=decodeURIComponent(new URL(req.url,'http://localhost').pathname);const file=path.join(root,rel);const ext=path.extname(file);res.setHeader('Content-Type',({'.js':'text/javascript','.css':'text/css','.svg':'image/svg+xml','.json':'application/json','.png':'image/png','.woff2':'font/woff2'})[ext]||'text/html; charset=utf-8');res.end(fs.readFileSync(file));}catch{res.statusCode=404;res.end();}});
  await new Promise(r=>server.listen(0,'127.0.0.1',r));
  try{
-  for(const [base,kind] of [[pathToFileURL(root+path.sep).href,'file'],[`http://127.0.0.1:${server.address().port}/`,'localhost']]){
+  for(const [base,kind] of (process.env.PRIMARY_ROUTE_ONLY==='1'?[[pathToFileURL(root+path.sep).href,'file']]:[[pathToFileURL(root+path.sep).href,'file'],[`http://127.0.0.1:${server.address().port}/`,'localhost']])){
    try{await exercise(base,kind);}catch(e){console.error(kind,e);if(!result.tests.some(t=>t.route===kind))result.tests.push({route:kind,nativePicker:false,failure:String(e.stack||e)});save();}
   }
  }
  finally{server.close();save();}
- result.nativeComplete=result.tests.length===2&&result.tests.every(t=>t.nativePicker&&t.osDiskReadback&&t.noteSaveReload);save();
+ result.nativeComplete=result.tests.length===(process.env.PRIMARY_ROUTE_ONLY==='1'?1:2)&&result.tests.every(t=>t.nativePicker&&t.osDiskReadback&&t.noteSaveReload);save();
  console.log(JSON.stringify(result,null,2));
- if(!result.nativeComplete)console.log('PARTIAL: real browser storage passes do not prove native folder selection. See result.json.');
+ if(!result.nativeComplete){console.log('PARTIAL: real browser storage passes do not prove native folder selection. See result.json.');process.exitCode=1;}
  if(result.tests.some(t=>t.failure))process.exitCode=1;
 })().catch(e=>{console.error(e);save();process.exitCode=1;});
