@@ -17,19 +17,64 @@ function nativeInput(folder,tag){
   const escape=s=>s.replace(/'/g,"''");
   const sendKeysLiteral=s=>s.replace(/[+^%~(){}]/g,c=>'{'+c+'}');
   const shot=name=>escape(path.join(out,tag+'-native-'+name+'.png'));
-  const script=`Add-Type -AssemblyName System.Windows.Forms; Add-Type -AssemblyName System.Drawing;
+  const script=`Add-Type -AssemblyName System.Windows.Forms; Add-Type -AssemblyName System.Drawing; Add-Type -AssemblyName UIAutomationClient; Add-Type -AssemblyName UIAutomationTypes; $keys=New-Object -ComObject WScript.Shell;
 function Shot([string]$name) { $bounds=[System.Windows.Forms.SystemInformation]::VirtualScreen; $bmp=New-Object System.Drawing.Bitmap $bounds.Width,$bounds.Height; $g=[System.Drawing.Graphics]::FromImage($bmp); $g.CopyFromScreen($bounds.Location,[System.Drawing.Point]::Empty,$bounds.Size); $bmp.Save($name,[System.Drawing.Imaging.ImageFormat]::Png); $g.Dispose(); $bmp.Dispose() }
+function InvokeNamed([string]$name,[int]$attempts=20) {
+ for($i=0;$i -lt $attempts;$i++) {
+  $cond=[System.Windows.Automation.PropertyCondition]::new([System.Windows.Automation.AutomationElement]::NameProperty,$name)
+  $matches=[System.Windows.Automation.AutomationElement]::RootElement.FindAll([System.Windows.Automation.TreeScope]::Descendants,$cond)
+  foreach($element in $matches) {
+   Write-Host ('UIA match: '+$element.Current.Name+' type='+$element.Current.ControlType.ProgrammaticName+' visible='+(-not $element.Current.IsOffscreen)+' enabled='+$element.Current.IsEnabled)
+   if($element.Current.IsOffscreen -or -not $element.Current.IsEnabled){continue}
+   try { $invoke=$element.GetCurrentPattern([System.Windows.Automation.InvokePattern]::Pattern); $invoke.Invoke(); Write-Host ('Invoked: '+$name); return $true } catch { Write-Host ('Invoke error: '+$_.Exception.Message) }
+  }
+  Start-Sleep -Milliseconds 250
+ }
+ Write-Host ('No invokable visible button: '+$name)
+ $buttons=[System.Windows.Automation.AutomationElement]::RootElement.FindAll([System.Windows.Automation.TreeScope]::Descendants,[System.Windows.Automation.PropertyCondition]::new([System.Windows.Automation.AutomationElement]::ControlTypeProperty,[System.Windows.Automation.ControlType]::Button))
+ $buttons | Select-Object -First 35 | ForEach-Object { Write-Host ('Visible candidate: '+$_.Current.Name+' visible='+(-not $_.Current.IsOffscreen)) }
+ return $false
+}
 Start-Sleep -Milliseconds 1400; Shot '${shot('before')}';
-[System.Windows.Forms.SendKeys]::SendWait('%d'); Start-Sleep -Milliseconds 300; [System.Windows.Forms.SendKeys]::SendWait('${escape(sendKeysLiteral(folder))}'); [System.Windows.Forms.SendKeys]::SendWait('{ENTER}'); Start-Sleep -Milliseconds 800; Shot '${shot('path')}';
-[System.Windows.Forms.SendKeys]::SendWait('%s'); Start-Sleep -Milliseconds 1000; Shot '${shot('after-select')}'; [System.Windows.Forms.SendKeys]::SendWait('{TAB}'); [System.Windows.Forms.SendKeys]::SendWait('{ENTER}'); Start-Sleep -Milliseconds 500; Shot '${shot('after-allow')}';`;
+$keys.SendKeys('%d'); Start-Sleep -Milliseconds 300; $keys.SendKeys('${escape(sendKeysLiteral(folder))}'); $keys.SendKeys('{ENTER}'); Start-Sleep -Milliseconds 800; Shot '${shot('path')}';
+$selected=InvokeNamed 'Select Folder'; Shot '${shot('after-select')}';
+if($selected) { Start-Sleep -Milliseconds 500; $allowed=InvokeNamed 'Allow'; Write-Host ('Permission invoked: '+$allowed) }
+Start-Sleep -Milliseconds 500; Shot '${shot('after-allow')}';`;
+
 
   cmd='powershell';args=['-NoProfile','-Command',script];
  }else{
-  const script='sleep 1.2; scrot "$4"; xdotool getwindowfocus getwindowname; xdotool key --clearmodifiers ctrl+l; xdotool type --clearmodifiers -- "$1"; xdotool key Return; sleep 0.8; scrot "$2"; xdotool key Tab; xdotool key Return; sleep 0.6; scrot "$3"';
+  const script=`
+ready=0
+for attempt in $(seq 1 40); do
+ title=$(xdotool getwindowfocus getwindowname 2>/dev/null || true)
+ case "$title" in "Select where this site can save changes") ready=1; break;; esac
+ sleep 0.25
+done
+printf 'Picker focus: %s\\n' "$title"
+scrot "$4"
+if [ "$ready" != 1 ]; then printf 'Native picker did not receive focus within 10 seconds\\n'; exit 3; fi
+xdotool key --clearmodifiers ctrl+l
+xdotool type --clearmodifiers -- "$1"
+xdotool key Return
+sleep 0.8
+scrot "$2"
+xdotool key Tab
+xdotool key Return
+sleep 0.6
+scrot "$3"
+`;
+
   cmd='bash';args=['-c',script,'picker',folder,path.join(out,tag+'-native-picker.png'),path.join(out,tag+'-native-after-allow.png'),path.join(out,tag+'-native-before.png')];
  }
  const proc=spawn(cmd,args,{stdio:['ignore','pipe','pipe']});let logs='';proc.stdout.on('data',x=>logs+=x);proc.stderr.on('data',x=>logs+=x);
- return new Promise(resolve=>proc.on('close',code=>{fs.writeFileSync(path.join(out,tag+'-picker.log'),logs);resolve(code);}));
+ return new Promise(resolve=>{
+  let done=false;
+  const finish=code=>{if(done)return;done=true;clearTimeout(timer);fs.writeFileSync(path.join(out,tag+'-picker.log'),logs);resolve(code);};
+  const timer=setTimeout(()=>{logs+='\nNative input helper exceeded 30 seconds; terminating only this owned helper process.\n';proc.kill();finish(124);},30000);
+  proc.on('error',error=>{logs+='\n'+String(error);finish(125);});
+  proc.on('close',finish);
+ });
 }
 function listFiles(dir){return fs.readdirSync(dir,{withFileTypes:true}).flatMap(e=>e.isDirectory()?listFiles(path.join(dir,e.name)):[path.join(dir,e.name)]);}
 async function exercise(base,kind){
@@ -43,7 +88,7 @@ async function exercise(base,kind){
  try{
   progress(kind,'open app');await init();progress(kind,'check storage API');assert.equal(await p.evaluate(()=>Werkmap.supported),true,'real browser exposes required folder APIs');
   progress(kind,'invoke native picker');await p.locator('#platform-native-choose').click();
-  progress(kind,'operate native picker');await nativeInput(folder,kind);
+  progress(kind,'operate native picker');entry.nativeHelperExit=await nativeInput(folder,kind);progress(kind,'native input helper exit '+entry.nativeHelperExit);
   try{
    await p.waitForFunction(()=>window.__pickerFinished&&Werkmap.active,null,{timeout:20000});
    assert(fs.existsSync(path.join(folder,'gereedschapskist-werkmap.json')),'native fixture metadata exists on OS disk');entry.nativePicker=true;progress(kind,'native picker + OS metadata confirmed');entry.storage='user-selected OS directory';
@@ -53,7 +98,7 @@ async function exercise(base,kind){
    try{await p.screenshot({path:path.join(out,kind+'-native-timeout-page.png'),timeout:2000});}catch{}
    save();
    // Close any unresolved native dialog and replace the whole context. No false native success.
-   if(process.platform==='win32')await new Promise(r=>spawn('powershell',['-NoProfile','-Command',"Add-Type -AssemblyName System.Windows.Forms; [System.Windows.Forms.SendKeys]::SendWait('{ESC}')"]).on('close',r));
+   if(process.platform==='win32')await new Promise(r=>spawn('powershell',['-NoProfile','-Command',"$keys=New-Object -ComObject WScript.Shell; $keys.SendKeys('{ESC}')"]).on('close',r));
    else await new Promise(r=>spawn('xdotool',['key','Escape']).on('close',r));
    await ctx.close();progress(kind,'start distinct OPFS fallback');
    ctx=await chromium.launchPersistentContext(fs.mkdtempSync(path.join(os.tmpdir(),'werkplaats-opfs-ch510-')),browserOptions);
