@@ -54,6 +54,13 @@ ready=0
 for attempt in $(seq 1 40); do
  title=$(xdotool getwindowfocus getwindowname 2>/dev/null || true)
  case "$title" in "Select where this site can save changes") ready=1; break;; esac
+ picker_id=$(xdotool search --onlyvisible --name '^Select where this site can save changes$' 2>/dev/null | tail -n 1 || true)
+ if [ -n "$picker_id" ]; then
+  printf 'Found visible disposable runner picker: %s\\n' "$picker_id"
+  xdotool windowfocus --sync "$picker_id" || true
+  title=$(xdotool getwindowfocus getwindowname 2>/dev/null || true)
+  if [ "$title" = 'Select where this site can save changes' ]; then ready=1; break; fi
+ fi
  sleep 0.25
 done
 printf 'Picker focus: %s\\n' "$title"
@@ -89,10 +96,13 @@ scrot "$3.after.png"
 const SHA='98489dd9705b28ae2124ffcf7ade99b44fd264f3d3df548528cbe4c53eb43cc8';
 const app=path.resolve('fixture-release/unpacked/Werkplaats/Bestanden'),launcher=path.resolve('fixture-release/unpacked/Werkplaats/Begin hier.html');
 const png='iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+/aZkAAAAASUVORK5CYII=';
+const sourceFixture=(id,title,summary,notes,projectId='')=>({...projectId?{projectId}:{},id,title,source:'Proefbron',url:`https://example.test/${id}`,category:'Technologie',uses:[],tags:id==='ch513-a'?['mobiliteit']:[],summary,notes,quote:'',checked:'',favorite:false});
+const projectFixture={id:'ch513-project',kind:'project',title:'CH513 platformproject',channel:'',state:'active',date:'',endDate:'',text:'Fictieve projecttekst',notes:'Projectnotitie blijft',url:'',duration:'ongoing',projectId:'',documentId:'',sourceIds:[]};
 const markdown=`# CH513 document\n\nContext: self-driving voertuigen in fictieve proef.\n\n![Omslag](data:image/png;base64,${png})\n\n![Herhaling](data:image/png;base64,${png})\n`;
 const sha=x=>crypto.createHash('sha256').update(x).digest('hex');
 const result={os:os.platform(),release:os.release(),node:process.version,playwright:require('playwright/package.json').version,releaseSha256:null,masterImportAllPassed:false,cases:[],diagnosticOnly:true};
 const save=()=>fs.writeFileSync(path.join(out,'result.json'),JSON.stringify(result,null,2));save();
+const permissionInput=tag=>nativeInput('',tag,true);
 const options={channel:'chrome',headless:false,acceptDownloads:true,viewport:{width:1440,height:1000},args:['--disable-features=Translate']};
 function filePicker(file,tag){
  let cmd,args;
@@ -116,21 +126,39 @@ async function probe(kind,iteration,trace=false){
  try{
   fs.mkdirSync(path.join(folder,'Schrijven'),{recursive:true});fs.writeFileSync(path.join(folder,'Schrijven','CH513 document.md'),markdown);
   // Complete legacy schema makes this an existing workspace, without any personal data.
-  fs.mkdirSync(path.join(folder,'Verzamelen'),{recursive:true});fs.writeFileSync(path.join(folder,'Verzamelen','gereedschapskist-verzamelen.json'),JSON.stringify({format:'bronnenkast',version:1,name:'Fictief',items:[]}));
-  fs.mkdirSync(path.join(folder,'Plannen'),{recursive:true});fs.writeFileSync(path.join(folder,'Plannen','gereedschapskist-plannen.json'),JSON.stringify({format:'publicatieplanner',version:2,items:[]}));
+  fs.mkdirSync(path.join(folder,'Verzamelen'),{recursive:true});fs.writeFileSync(path.join(folder,'Verzamelen','gereedschapskist-verzamelen.json'),JSON.stringify({format:'bronnenkast',version:1,name:'CH513 proefcollectie',items:[sourceFixture('ch513-a','Zelfrijdende auto voorbeeld','Autonomous driving met lokale zoekproef','Bewaar deze eigen notitie','ch513-project'),sourceFixture('ch513-b','Tweede bookmark','Tweede bron voor project','Behouden')]}));
+  fs.mkdirSync(path.join(folder,'Plannen'),{recursive:true});fs.writeFileSync(path.join(folder,'Plannen','gereedschapskist-plannen.json'),JSON.stringify({format:'publicatieplanner',version:2,items:[projectFixture]}));
   const inputName=kind==='ready-buffer-unique'?'CH513 unieke import.md':'CH513 document.md',source=path.join(inputDir,inputName);fs.writeFileSync(source,markdown);
   const bytes=fs.readFileSync(source);entry.source={file:source,size:bytes.length,sha256:sha(bytes),utf8Exact:bytes.toString('utf8')===markdown};assert(entry.source.utf8Exact);assert.equal(sha(bytes),sha(Buffer.from(markdown)));
   fs.mkdirSync(path.join(profile,'Default'),{recursive:true});fs.writeFileSync(path.join(profile,'Default','Preferences'),JSON.stringify({translate:{enabled:false}}));
   ctx=await chromium.launchPersistentContext(profile,options);
-  if(trace)await ctx.addInitScript(()=>{
+  const installTrace=async context=>{if(trace)await context.addInitScript(()=>{
    // Diagnostic observer only: capture before target handler resets input; this extra read and polling can affect timing.
-   window.__importTrace=[];document.addEventListener('change',e=>{if(e.target?.id!=='loose-input')return;const file=e.target.files[0];const row={event:'capture-before-handler',time:performance.now(),size:file?.size,name:file?.name,inputCount:e.target.files.length};window.__importTrace.push(row);if(file)file.text().then(t=>{row.text=t;row.afterRead=performance.now();row.inputCountAfterReset=e.target.files.length;});},true);
+   window.__importTrace=[];
+   // Instrumented case only: transparent wrappers record ordering, and may perturb timing.
+   const traceLog=row=>window.__importTrace.push({time:performance.now(),...row});
+   for(const method of ['get','set','clear']){const original=Map.prototype[method];Map.prototype[method]=function(...args){let target=false;try{target=typeof converterFiles!=='undefined'&&this===converterFiles}catch{};if(target)traceLog({event:'converter-map-'+method,key:args[0],valueLength:typeof args[1]?.content==='string'?args[1].content.length:null,sizeBefore:this.size});const output=Reflect.apply(original,this,args);if(target)traceLog({event:'converter-map-'+method+'-done',key:args[0],resultPresent:method==='get'?output!==undefined:null,sizeAfter:this.size});return output;};}
+   const originalText=File.prototype.text;File.prototype.text=function(...args){const f=this;traceLog({event:'file-text-start',name:f.name,size:f.size});return Reflect.apply(originalText,f,args).then(text=>{traceLog({event:'file-text-done',name:f.name,size:f.size,textLength:text.length,text});return text;});};
+   let readyObserved=false;const observeReady=setInterval(()=>{if(readyObserved||!window.BewaarAlles?.ready)return;readyObserved=true;clearInterval(observeReady);traceLog({event:'bewaar-alles-ready-observed'});window.BewaarAlles.ready.then(()=>traceLog({event:'bewaar-alles-ready-resolved'}),e=>traceLog({event:'bewaar-alles-ready-rejected',message:String(e)}));},20);
+   document.addEventListener('DOMContentLoaded',()=>{const target=document.getElementById('content');if(target)new MutationObserver(()=>{const node=target.querySelector('.markdown-content');traceLog({event:'render-change',heading:node?.querySelector('h1')?.textContent||null,textLength:node?.textContent.length||0});}).observe(target,{childList:true,subtree:true});});
+   document.addEventListener('change',e=>{if(e.target?.id!=='loose-input')return;const file=e.target.files[0];const row={event:'capture-before-handler',time:performance.now(),size:file?.size,name:file?.name,inputCount:e.target.files.length};window.__importTrace.push(row);if(file)file.text().then(t=>{row.text=t;row.afterRead=performance.now();row.inputCountAfterReset=e.target.files.length;});},true);
    const tick=()=>{if(!document.getElementById('loose-input'))return;try{window.__importTrace.push({event:'poll',time:performance.now(),map:typeof converterFiles==='undefined'?null:[...converterFiles.entries()].map(([k,v])=>({name:k,content:v.content})),active:typeof activeFile==='undefined'?null:activeFile?.relativePath||null,raw:typeof currentRawContent==='undefined'?null:currentRawContent,files:typeof fileContents==='undefined'?null:[...fileContents.entries()]});}catch(e){window.__importTrace.push({event:'poll-error',message:String(e)});}};setInterval(tick,100);
-  });
+  });};await installTrace(ctx);
   p=ctx.pages()[0]||await ctx.newPage();p.on('dialog',d=>d.accept());p.on('pageerror',e=>entry.errors.push(e.message));entry.browserUserAgent=await p.evaluate(()=>navigator.userAgent);
   await p.goto(pathToFileURL(launcher).href);await p.getByRole('button',{name:'Verder werken',exact:true}).click();entry.nativePickerExit=await nativeInput(folder,tag);assert.equal(entry.nativePickerExit,0);await p.waitForFunction(()=>window.Werkmap?.active&&Werkmap.name,null,{timeout:30000});assert.equal(await p.evaluate(()=>Werkmap.name),path.basename(folder));assert.equal(await p.evaluate(async()=>{const {root}=await Werkmap.allAccess(false);return root.queryPermission({mode:'readwrite'});}), 'granted');await p.waitForFunction(()=>/Werkmap geopend/.test(document.querySelector('#wm-message')?.textContent||''),null,{timeout:30000});entry.nativeFolder=true;
+  if(kind==='saved-restart-startup'){
+   await p.goto(pathToFileURL(path.join(app,'Apps','Bronnenkast','Start Bronnenkast.html')).href+'?werkruimte=eigen');await p.waitForFunction(()=>window.BewaarAlles&&window.Werkmap);await p.evaluate(async()=>{await Werkmap.suiteReady;await BewaarAlles.ready});
+   await p.getByRole('button',{name:'Bewaar alles',exact:true}).first().click();await p.waitForFunction(()=>/Alles bewaard\./.test(document.querySelector('#wm-message')?.textContent||''),null,{timeout:30000});
+   const rounds=path.join(folder,'Bewaard werk'),pointer=JSON.parse(fs.readFileSync(path.join(rounds,'actueel.json'))),roundDir=path.join(rounds,pointer.current),manifest=JSON.parse(fs.readFileSync(path.join(roundDir,'bewaar-alles.json')));const sessions=manifest.sessions.map(v=>JSON.parse(fs.readFileSync(path.join(roundDir,v.folder,'werksessie.json'))));
+   assert(sessions.find(v=>v.tool==='Bronnenkast')?.data.items.length===2);assert(sessions.find(v=>v.tool==='Publicatieplanner')?.data.items.some(x=>x.id==='ch513-project'));assert(sessions.find(v=>v.tool==='Werkbank')?.documents.some(d=>d.content===markdown));entry.savedRound={pointer,manifest,sessionTools:sessions.map(v=>v.tool)};entry.events.push('real save-all committed and read from OS');
+   const previous=ctx.browser();await ctx.close();assert(!previous||!previous.isConnected());ctx=await chromium.launchPersistentContext(profile,options);await installTrace(ctx);p=ctx.pages()[0]||await ctx.newPage();p.on('dialog',d=>d.accept());p.on('pageerror',e=>entry.errors.push(e.message));
+   await p.goto(pathToFileURL(launcher).href);await p.waitForFunction(()=>window.Werkmap);await p.evaluate(()=>Werkmap.recall());const access=await p.evaluate(async()=>{const {root}=await Werkmap.allAccess(false);return root.queryPermission({mode:'readwrite'});});entry.restartPermission=access;
+   await p.getByRole('button',{name:'Verder werken',exact:true}).click();if(access!=='granted'){entry.restartPermissionHelperExit=await permissionInput(tag+'-restart');assert.equal(entry.restartPermissionHelperExit,0);}await p.waitForFunction(()=>/Werkmap geopend/.test(document.querySelector('#wm-message')?.textContent||''),null,{timeout:30000});
+   assert.equal(await p.evaluate(async()=>{const {root}=await Werkmap.allAccess(false);return root.queryPermission({mode:'readwrite'});}), 'granted');entry.events.push('full browser restart and real workmap restored');
+   await p.goto(pathToFileURL(path.join(app,'Apps','Publicatieplanner','Start Publicatieplanner.html')).href+'?werkruimte=eigen');const card=p.locator('article.publication').filter({hasText:'CH513 platformproject'});await card.waitFor();await card.locator('.pub-title').click();await p.locator('dialog[open]').getByRole('link',{name:'Zelfrijdende auto voorbeeld',exact:true}).waitFor();entry.events.push('project and linked bookmark displayed after restart');
+  }
   await p.goto(pathToFileURL(path.join(app,'Apps','Werkbank','▶ Begin hier.html')).href+'?werkruimte=eigen');await p.waitForFunction(()=>window.SchrijfNotities);entry.events.push('SchrijfNotities available');
-  if(kind==='startup-buffer')await p.evaluate(()=>SchrijfNotities.view('documents'));
+  if(kind==='startup-buffer'||kind==='saved-restart-startup')await p.evaluate(()=>SchrijfNotities.view('documents'));
   else{
    await p.waitForFunction(()=>window.BewaarAlles&&window.Werkmap);await p.evaluate(async()=>{await Werkmap.suiteReady;await BewaarAlles.ready});entry.events.push('BewaarAlles.ready resolved');
    await p.locator('.writing-views').getByRole('button',{name:'Documenten',exact:true}).click();
@@ -167,14 +195,20 @@ async function probe(kind,iteration,trace=false){
 (async()=>{
  try{
   result.releaseSha256=sha(fs.readFileSync(path.resolve('fixture-release/Werkplaats.zip')));assert.equal(result.releaseSha256,SHA);result.version=fs.readFileSync(path.join(app,'feedback.js'),'utf8').match(/version='([^']+)'/)?.[1];assert.equal(result.version,'0.36.14');save();
-  // All fifteen are uninstrumented baselines; one additional startup probe records intrusive timing diagnostics.
-  for(const kind of ['startup-buffer','ready-path-same','ready-buffer-same','ready-buffer-unique','native-file'])for(let n=1;n<=3;n++)await probe(kind,n);
-  await probe('startup-buffer',1,true);
-  const baseline=result.cases.filter(c=>!c.instrumented),operational=baseline.filter(c=>c.kind!=='startup-buffer');
-  result.allCasesAttempted=baseline.length===15&&result.cases.filter(c=>c.instrumented).length===1;
-  result.readyCasesAllPassed=operational.length===12&&operational.every(c=>c.passed);
-  const startup=baseline.filter(c=>c.kind==='startup-buffer');result.startupPassedCount=startup.filter(c=>c.passed).length;result.startupAllPassed=startup.length===3&&startup.every(c=>c.passed);result.allBaselinePassed=baseline.length===15&&baseline.every(c=>c.passed);result.masterImportAllPassed=result.allCasesAttempted&&result.allBaselinePassed;
-  result.interpretation='Uninstrumented baseline cases are separate from the extra instrumented timeline; an empty result does not by itself prove the cause.';save();
+  const caseSet=process.env.CASESET||'all';assert(['all','restart'].includes(caseSet),'unknown CASESET');result.caseSet=caseSet;
+  const kinds=caseSet==='restart'?['saved-restart-startup']:['startup-buffer','ready-path-same','ready-buffer-same','ready-buffer-unique','native-file','saved-restart-startup'];
+  for(const kind of kinds)for(let n=1;n<=3;n++)await probe(kind,n);
+  await probe(caseSet==='restart'?'saved-restart-startup':'startup-buffer',1,true);
+  const baseline=result.cases.filter(c=>!c.instrumented),expected=3*kinds.length;
+  result.allCasesAttempted=baseline.length===expected&&result.cases.filter(c=>c.instrumented).length===1;
+  result.attemptedKinds=kinds;result.allAttemptedBaselinesPassed=baseline.length===expected&&baseline.every(c=>c.passed);
+  const startup=baseline.filter(c=>c.kind==='startup-buffer'),restart=baseline.filter(c=>c.kind==='saved-restart-startup');
+  result.startupPassedCount=startup.filter(c=>c.passed).length;result.savedRestartStartupPassedCount=restart.filter(c=>c.passed).length;
+  result.savedRestartStartupAllPassed=restart.length===3&&restart.every(c=>c.passed);result.startupAllPassed=startup.length===3&&startup.every(c=>c.passed);
+  result.readyCasesAllPassed=caseSet==='all'&&baseline.filter(c=>!['startup-buffer','saved-restart-startup'].includes(c.kind)).length===12&&baseline.filter(c=>!['startup-buffer','saved-restart-startup'].includes(c.kind)).every(c=>c.passed);
+  result.allBaselinePassed=caseSet==='all'&&result.allCasesAttempted&&result.allAttemptedBaselinesPassed;
+  result.masterImportAllPassed=result.allBaselinePassed;
+  result.interpretation='Uninstrumented baseline cases are separate from the extra instrumented timeline with wrapped logging; the wrappers can perturb timing. An empty result does not by itself prove the cause.';save();
   if(!result.allCasesAttempted)process.exitCode=1;
  }catch(e){result.fatal=String(e.stack||e);save();console.error(result.fatal);process.exitCode=1;}
 })();
