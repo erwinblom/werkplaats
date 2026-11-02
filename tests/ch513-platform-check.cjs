@@ -40,7 +40,7 @@ Start-Sleep -Milliseconds 500; Shot '${shot('after-allow')}';`}
 
   cmd='powershell';args=['-NoProfile','-Command',script];
  }else{
-  const script=permissionOnly ? 'sleep 0.7; scrot "$2"; xdotool key Tab; xdotool key Return; sleep 0.5; scrot "$3"' : `
+  const script=permissionOnly ? 'sleep 1.2; scrot "$2"; xdotool key --clearmodifiers Tab; xdotool key Return; sleep 0.8; scrot "$3"' : `
 ready=0
 for attempt in $(seq 1 40); do
  title=$(xdotool getwindowfocus getwindowname 2>/dev/null || true)
@@ -57,8 +57,13 @@ sleep 0.8
 scrot "$2"
 xdotool key Tab
 xdotool key Return
-sleep 0.6
+sleep 1.2
 scrot "$3"
+printf 'Permission dialog: advance from default Dont Allow to Allow\\n'
+xdotool key --clearmodifiers Tab
+xdotool key Return
+sleep 0.8
+scrot "$3.after.png"
 `;
 
   cmd='bash';args=['-c',script,'picker',folder,path.join(out,tag+'-native-picker.png'),path.join(out,tag+'-native-after-allow.png'),path.join(out,tag+'-native-before.png')];
@@ -83,7 +88,7 @@ const markdown=`# CH513 document\n\nContext: self-driving voertuigen in fictieve
 const source=(id,title,summary,notes)=>({id,title,source:'Fictieve proefbron',url:`https://example.test/${id}`,category:'Technologie',uses:[],tags:['mobiliteit'],summary,notes,quote:'',checked:'',favorite:false});
 const fixtures={format:'bronnenkast',version:1,name:'CH513 proefcollectie',items:[source('ch513-a','Zelfrijdende auto voorbeeld','Autonomous driving met lokale zoekproef','Bewaar deze eigen notitie'),source('ch513-b','Tweede bookmark','Tweede bron voor project','Behouden')]};
 const project={id:'ch513-project',kind:'project',title:'CH513 platformproject',channel:'',state:'active',date:'',endDate:'',text:'Fictieve projecttekst',notes:'Projectnotitie blijft',url:'',duration:'ongoing',projectId:'',documentId:'',sourceIds:[]};
-const result={os:os.platform(),release:os.release(),arch:os.arch(),node:process.version,playwright:require('playwright/package.json').version,allPassed:false,checks:{},pageErrors:[],consoleErrors:[]};
+const result={os:os.platform(),release:os.release(),arch:os.arch(),node:process.version,playwright:require('playwright/package.json').version,allPassed:false,checks:{},pageErrors:[],consoleErrors:[],requestFailures:[],expectedManifestErrors:[]};
 const save=()=>fs.writeFileSync(path.join(out,'result.json'),JSON.stringify(result,null,2));
 const pass=(name)=>{result.checks[name]=true;console.log('PASS',name);save();};
 const required=['releaseHash','releaseVersion','nativeFolder','searchExact','searchAnd','searchRelated','searchTypo','searchSourcesContext','searchClick','projectSearchMulti','projectLinkCounter','projectUnlinkCounter','sourceLinkRoundtrip','diskSave','reload','browserRestart','restartDiskExact','png','zipCrcBytesDedup','browserErrors'];
@@ -102,7 +107,8 @@ function readSaved(folder){
 function validateSaved(folder){
  const saved=readSaved(folder),s=saved.values.find(v=>v.tool==='Bronnenkast'),p=saved.values.find(v=>v.tool==='Publicatieplanner'),w=saved.values.find(v=>v.tool==='Werkbank');
  assert(s&&p&&w,'all three sessions exist in physical committed round');
- assert.deepEqual(s.data,{...fixtures,items:[{...fixtures.items[0],projectId:'ch513-project'},{...fixtures.items[1],projectId:''}]},'all bookmark fields retained and only selected relations changed');
+ const normalized={...s.data,items:s.data.items.map(item=>({...item,projectId:item.projectId??''}))};
+ assert.deepEqual(normalized,{...fixtures,items:[{...fixtures.items[0],projectId:'ch513-project'},{...fixtures.items[1],projectId:''}]},'all bookmark fields retained; absent and empty project relation are equivalent');
  assert.deepEqual(p.data.items.find(x=>x.id===project.id),project,'complete project unchanged');
  assert(w.documents.some(d=>d.content===markdown),'writing document exact on disk');
  fs.writeFileSync(path.join(out,'disk-readback.json'),JSON.stringify(saved,null,2));return saved;
@@ -115,12 +121,12 @@ function validateSaved(folder){
   const parent=process.platform==='win32'?path.join(os.homedir(),'Documents','Werkplaats CH513'):os.tmpdir();fs.mkdirSync(parent,{recursive:true});
   const folder=fs.mkdtempSync(path.join(parent,'werkplaats-ch513-')),profile=fs.mkdtempSync(path.join(os.tmpdir(),'ch513-profile-'));writeFixture(folder);result.testFolder=folder;
   ctx=await chromium.launchPersistentContext(profile,options);p=ctx.pages()[0]||await ctx.newPage();
-  const track=page=>{page.on('dialog',d=>d.accept());page.on('pageerror',e=>result.pageErrors.push(e.message));page.on('console',m=>{if(m.type()==='error')result.consoleErrors.push(m.text());});};track(p);
+  const track=page=>{page.on('dialog',d=>d.accept());page.on('pageerror',e=>result.pageErrors.push(e.message));page.on('console',m=>{if(m.type()==='error')result.consoleErrors.push({text:m.text(),location:m.location()});});page.on('requestfailed',r=>result.requestFailures.push({url:r.url(),error:r.failure()?.errorText||''}));};track(p);
   await p.goto(pathToFileURL(launcher).href);await p.getByRole('button',{name:'Verder werken',exact:true}).waitFor();
   await p.getByRole('button',{name:'Verder werken',exact:true}).click();result.pickerExit=await nativeInput(folder,'open');assert.equal(result.pickerExit,0,'native helper exit');
   await p.waitForFunction(()=>window.Werkmap?.active&&Werkmap.name,{timeout:30000});assert.equal(await p.evaluate(()=>Werkmap.name),path.basename(folder));await p.waitForFunction(()=>/Werkmap geopend/.test(document.querySelector('#wm-message')?.textContent||''),null,{timeout:30000});pass('nativeFolder');
   // Search via the product keyboard shortcut, with a real legacy disk fixture.
-  await p.locator('[data-open-search]').click();const dialog=p.locator('#all-search-dialog');await dialog.waitFor();await dialog.locator('ul').waitFor();await p.waitForFunction(()=>document.querySelector('#all-search-dialog ul')?.getAttribute('aria-busy')==='false');
+  await p.locator('[data-open-search]').click();const dialog=p.locator('#all-search-dialog');await dialog.waitFor();await dialog.locator('ul').waitFor({state:'attached'});await p.waitForFunction(()=>document.querySelector('#all-search-dialog ul')?.getAttribute('aria-busy')==='false');
   const input=dialog.locator('#all-search-input'),items=dialog.locator('li');
   await input.fill('Zelfrijdende auto voorbeeld');await items.getByText('Zelfrijdende auto voorbeeld',{exact:true}).waitFor();pass('searchExact');
   await input.fill('Zelfrijdende ontbrekendwoord');assert.equal(await items.count(),0);pass('searchAnd');
@@ -147,7 +153,7 @@ function validateSaved(folder){
   await p.getByRole('button',{name:'Bewaar alles',exact:true}).first().click();await p.waitForFunction(()=>/Alles bewaard\./.test(document.querySelector('#wm-message')?.textContent||''),null,{timeout:30000});validateSaved(folder);pass('diskSave');
   await p.reload();await p.goto(pathToFileURL(path.join(app,'Apps','Publicatieplanner','Start Publicatieplanner.html')).href+'?werkruimte=eigen');await card.waitFor();await p.waitForFunction(()=>[...document.querySelectorAll('.project-source-summary')].some(e=>/1/.test(e.textContent)));pass('reload');
   const old=ctx.browser();await ctx.close();assert(!old||!old.isConnected());ctx=await chromium.launchPersistentContext(profile,options);p=ctx.pages()[0]||await ctx.newPage();track(p);
-  await p.goto(pathToFileURL(launcher).href);await p.waitForFunction(()=>window.Werkmap);await p.evaluate(()=>Werkmap.recall());const permission=await p.evaluate(async()=>{const access=await Werkmap.allAccess(false);return access.root.queryPermission({mode:'readwrite'});});result.restartPermissionAtStart=permission;await p.getByRole('button',{name:'Verder werken',exact:true}).click();if(permission!=='granted'){result.restartPermissionHelperExit=await permissionInput('restart');assert.equal(result.restartPermissionHelperExit,0);}await p.waitForFunction(()=>window.Werkmap?.active,{timeout:30000});await p.goto(pathToFileURL(path.join(app,'Apps','Publicatieplanner','Start Publicatieplanner.html')).href+'?werkruimte=eigen');const restartCard=p.locator('article.publication').filter({hasText:project.title});await restartCard.waitFor();await p.waitForFunction(()=>[...document.querySelectorAll('.project-source-summary')].some(e=>/1/.test(e.textContent)));await restartCard.locator('.pub-title').click();const restartDetail=p.locator('dialog[open]').filter({hasText:project.title});await restartDetail.getByText('Zelfrijdende auto voorbeeld',{exact:true}).waitFor();assert.equal(await restartDetail.getByText('Tweede bookmark',{exact:true}).count(),0);await p.screenshot({path:path.join(out,'restart-project.png'),fullPage:true});pass('browserRestart');validateSaved(folder);pass('restartDiskExact');
+  await p.goto(pathToFileURL(launcher).href);await p.waitForFunction(()=>window.Werkmap);await p.evaluate(()=>Werkmap.recall());const permission=await p.evaluate(async()=>{const access=await Werkmap.allAccess(false);return access.root.queryPermission({mode:'readwrite'});});result.restartPermissionAtStart=permission;await p.getByRole('button',{name:'Verder werken',exact:true}).click();if(permission!=='granted'){result.restartPermissionHelperExit=await permissionInput('restart');assert.equal(result.restartPermissionHelperExit,0);}await p.waitForFunction(()=>window.Werkmap?.active,{timeout:30000});await p.waitForFunction(()=>/Werkmap geopend/.test(document.querySelector('#wm-message')?.textContent||''),null,{timeout:30000});await p.goto(pathToFileURL(path.join(app,'Apps','Publicatieplanner','Start Publicatieplanner.html')).href+'?werkruimte=eigen');const restartCard=p.locator('article.publication').filter({hasText:project.title});await restartCard.waitFor();await p.waitForFunction(()=>[...document.querySelectorAll('.project-source-summary')].some(e=>/1/.test(e.textContent)));await restartCard.locator('.pub-title').click();const restartDetail=p.locator('dialog[open]').filter({hasText:project.title});await restartDetail.getByText('Zelfrijdende auto voorbeeld',{exact:true}).waitFor();assert.equal(await restartDetail.getByText('Tweede bookmark',{exact:true}).count(),0);await p.screenshot({path:path.join(out,'restart-project.png'),fullPage:true});pass('browserRestart');validateSaved(folder);pass('restartDiskExact');
   // Real file input is supported test setup for a fictitious Markdown document; downloads use product UI.
   await p.goto(pathToFileURL(path.join(app,'Apps','Werkbank','▶ Begin hier.html')).href+'?werkruimte=eigen');await p.waitForFunction(()=>window.SchrijfNotities);await p.evaluate(()=>SchrijfNotities.view('documents'));
   await p.locator('#loose-input').setInputFiles({name:'CH513 document.md',mimeType:'text/markdown',buffer:Buffer.from(markdown)});await p.waitForSelector('#content .markdown-content img');
@@ -156,7 +162,20 @@ function validateSaved(folder){
   downloadPromise=p.waitForEvent('download');await imageDialog.getByRole('button',{name:'Download alle afbeeldingen (ZIP)',exact:true}).click();dl=await downloadPromise;const exported=path.join(out,'images.zip');await dl.saveAs(exported);
   const py="import sys,zipfile,base64; z=zipfile.ZipFile(sys.argv[1]); assert z.testzip() is None; n=z.namelist(); assert len(n)==1,n; assert z.read(n[0])==base64.b64decode(sys.argv[2]); print('CRC and exact original bytes; single deduplicated image:',n[0])";
   const check=spawnSync(process.platform==='win32'?'python':'python3',['-c',py,exported,png.toString('base64')],{encoding:'utf8'});fs.writeFileSync(path.join(out,'zip-validation.log'),check.stdout+'\n'+check.stderr);assert.equal(check.status,0,check.stderr);pass('zipCrcBytesDedup');await p.screenshot({path:path.join(out,'images.png'),fullPage:true});
-  assert.deepEqual(result.pageErrors,[]);assert.deepEqual(result.consoleErrors,[]);pass('browserErrors');
+  assert.deepEqual(result.pageErrors,[]);
+  // Chromium blocks this specific file:// web manifest. Other failed requests or console errors remain failures.
+  const manifestUrl=pathToFileURL(path.join(app,'App-iconen','app.webmanifest')).href;
+  const isManifest=url=>{try{return new URL(url).href===manifestUrl;}catch{return false;}};
+  const manifestRequest=result.requestFailures.filter(r=>isManifest(r.url)&&r.error==='net::ERR_FAILED');
+  const unexpectedRequests=result.requestFailures.filter(r=>!isManifest(r.url)||r.error!=='net::ERR_FAILED');
+  const unexpectedConsole=[];
+  for(const entry of result.consoleErrors){
+   const cors=entry.text.includes(`Access to manifest at '${manifestUrl}'`)&&entry.text.includes('blocked by CORS policy')&&manifestRequest.length>0;
+   const resource=entry.text==='Failed to load resource: net::ERR_FAILED'&&isManifest(entry.location.url)&&manifestRequest.length>0;
+   (cors||resource?result.expectedManifestErrors:unexpectedConsole).push(entry);
+  }
+  result.browserErrorClassification={manifestUrl,manifestRequestFailures:manifestRequest,unexpectedRequests,unexpectedConsole};save();
+  assert.deepEqual(unexpectedRequests,[],'unexpected failed browser requests');assert.deepEqual(unexpectedConsole,[],'unexpected browser console errors');pass('browserErrors');
   assert(required.every(key=>result.checks[key]===true),'all named proof checks required');result.allPassed=true;save();
  }catch(e){result.failure=String(e.stack||e);console.error(result.failure);if(p)try{await p.screenshot({path:path.join(out,'failure.png'),fullPage:true,timeout:3000});fs.writeFileSync(path.join(out,'failure.html'),await p.content());}catch{}process.exitCode=1;}
  finally{save();if(ctx)await ctx.close();}
