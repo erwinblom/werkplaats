@@ -14,6 +14,16 @@ function nativeInput(folder,tag,permissionOnly=false){
   const shot=name=>escape(path.join(out,tag+'-native-'+name+'.png'));
   const script=`Add-Type -AssemblyName System.Windows.Forms; Add-Type -AssemblyName System.Drawing; Add-Type -AssemblyName UIAutomationClient; Add-Type -AssemblyName UIAutomationTypes; $keys=New-Object -ComObject WScript.Shell;
 function Shot([string]$name) { $bounds=[System.Windows.Forms.SystemInformation]::VirtualScreen; $bmp=New-Object System.Drawing.Bitmap $bounds.Width,$bounds.Height; $g=[System.Drawing.Graphics]::FromImage($bmp); $g.CopyFromScreen($bounds.Location,[System.Drawing.Point]::Empty,$bounds.Size); $bmp.Save($name,[System.Drawing.Imaging.ImageFormat]::Png); $g.Dispose(); $bmp.Dispose() }
+function AssertPermissionClosed() {
+ $condition=[System.Windows.Automation.PropertyCondition]::new([System.Windows.Automation.AutomationElement]::NameProperty,'Allow this site to edit files?')
+ for($i=0;$i -lt 20;$i++) {
+  $all=[System.Windows.Automation.AutomationElement]::RootElement.FindAll([System.Windows.Automation.TreeScope]::Descendants,$condition)
+  $visible=@($all | Where-Object { -not $_.Current.IsOffscreen })
+  if($visible.Count -eq 0) { Write-Host 'Permission dialog no longer visible'; return $true }
+  Start-Sleep -Milliseconds 250
+ }
+ Write-Host 'Permission dialog remains visible'; return $false
+}
 function InvokeNamed([string]$name,[int]$attempts=20) {
  for($i=0;$i -lt $attempts;$i++) {
   $cond=[System.Windows.Automation.PropertyCondition]::new([System.Windows.Automation.AutomationElement]::NameProperty,$name)
@@ -30,11 +40,11 @@ function InvokeNamed([string]$name,[int]$attempts=20) {
  $buttons | Select-Object -First 35 | ForEach-Object { Write-Host ('Visible candidate: '+$_.Current.Name+' visible='+(-not $_.Current.IsOffscreen)) }
  return $false
 }
-${permissionOnly ? `Start-Sleep -Milliseconds 700; Shot '${shot('before')}'; $allowed=InvokeNamed 'Allow'; Write-Host ('Permission invoked: '+$allowed); Shot '${shot('after-allow')}';` : `Start-Sleep -Milliseconds 1400; Shot '${shot('before')}';
+${permissionOnly ? `Start-Sleep -Milliseconds 700; Shot '${shot('before')}'; $allowed=InvokeNamed 'Allow'; Write-Host ('Permission invoked: '+$allowed); if(!$allowed){exit 6}; $closed=AssertPermissionClosed; Shot '${shot('after-allow')}'; if(!$closed){exit 7};` : `Start-Sleep -Milliseconds 1400; Shot '${shot('before')}';
 $keys.SendKeys('%d'); Start-Sleep -Milliseconds 300; $keys.SendKeys('${escape(sendKeysLiteral(folder))}'); $keys.SendKeys('{ENTER}'); Start-Sleep -Milliseconds 800; Shot '${shot('path')}';
-$selected=InvokeNamed 'Select Folder'; Shot '${shot('after-select')}';
-if($selected) { Start-Sleep -Milliseconds 500; $allowed=InvokeNamed 'Allow'; Write-Host ('Permission invoked: '+$allowed) }
-Start-Sleep -Milliseconds 500; Shot '${shot('after-allow')}';`}
+$selected=InvokeNamed 'Select Folder'; Shot '${shot('after-select')}'; if(!$selected){exit 5}
+Start-Sleep -Milliseconds 500; $allowed=InvokeNamed 'Allow'; Write-Host ('Permission invoked: '+$allowed); if(!$allowed){exit 6};
+$closed=AssertPermissionClosed; Start-Sleep -Milliseconds 500; Shot '${shot('after-allow')}'; if(!$closed){exit 7};`}
 `;
 
 
@@ -93,7 +103,7 @@ const save=()=>fs.writeFileSync(path.join(out,'result.json'),JSON.stringify(resu
 const pass=(name)=>{result.checks[name]=true;console.log('PASS',name);save();};
 const required=['releaseHash','releaseVersion','nativeFolder','searchExact','searchAnd','searchRelated','searchTypo','searchSourcesContext','searchClick','projectSearchMulti','projectLinkCounter','projectUnlinkCounter','sourceLinkRoundtrip','diskSave','reload','browserRestart','restartDiskExact','savedDocumentOpen','png','zipCrcBytesDedup','browserErrors'];
 save();
-const options={channel:'chrome',headless:false,acceptDownloads:true,viewport:{width:1440,height:1000}};
+const options={channel:'chrome',headless:false,acceptDownloads:true,viewport:{width:1440,height:1000},args:['--disable-features=Translate']};
 function writeFixture(folder){
  fs.mkdirSync(path.join(folder,'Verzamelen'),{recursive:true});fs.mkdirSync(path.join(folder,'Plannen'),{recursive:true});fs.mkdirSync(path.join(folder,'Schrijven'),{recursive:true});
  fs.writeFileSync(path.join(folder,'Verzamelen','gereedschapskist-verzamelen.json'),JSON.stringify(fixtures,null,2));
@@ -119,12 +129,12 @@ function validateSaved(folder){
   assert.equal(crypto.createHash('sha256').update(fs.readFileSync(zip)).digest('hex'),SHA);result.zipSha256=SHA;pass('releaseHash');
   const version=fs.readFileSync(path.join(app,'feedback.js'),'utf8').match(/version='([^']+)'/)?.[1];assert.equal(version,'0.36.14');result.version=version;fs.writeFileSync(path.join(out,'manifest-version.json'),JSON.stringify({version,zipSha256:SHA,launcher:path.relative(process.cwd(),launcher)},null,2));pass('releaseVersion');
   const parent=process.platform==='win32'?path.join(os.homedir(),'Documents','Werkplaats CH513'):os.tmpdir();fs.mkdirSync(parent,{recursive:true});
-  const folder=fs.mkdtempSync(path.join(parent,'werkplaats-ch513-')),profile=fs.mkdtempSync(path.join(os.tmpdir(),'ch513-profile-'));writeFixture(folder);result.testFolder=folder;
+  const folder=fs.mkdtempSync(path.join(parent,'werkplaats-ch513-')),profile=fs.mkdtempSync(path.join(os.tmpdir(),'ch513-profile-'));fs.mkdirSync(path.join(profile,'Default'),{recursive:true});fs.writeFileSync(path.join(profile,'Default','Preferences'),JSON.stringify({translate:{enabled:false}}));writeFixture(folder);result.testFolder=folder;result.testProfile={translateDisabled:true};
   ctx=await chromium.launchPersistentContext(profile,options);p=ctx.pages()[0]||await ctx.newPage();
   const track=page=>{page.on('dialog',d=>d.accept());page.on('pageerror',e=>result.pageErrors.push(e.message));page.on('console',m=>{if(m.type()==='error')result.consoleErrors.push({text:m.text(),location:m.location()});});page.on('requestfailed',r=>result.requestFailures.push({url:r.url(),error:r.failure()?.errorText||''}));};track(p);result.browserUserAgent=await p.evaluate(()=>navigator.userAgent);assert.match(result.browserUserAgent,/Chrome\//);save();
   await p.goto(pathToFileURL(launcher).href);await p.getByRole('button',{name:'Verder werken',exact:true}).waitFor();
   await p.getByRole('button',{name:'Verder werken',exact:true}).click();result.pickerExit=await nativeInput(folder,'open');assert.equal(result.pickerExit,0,'native helper exit');
-  await p.waitForFunction(()=>window.Werkmap?.active&&Werkmap.name,{timeout:30000});assert.equal(await p.evaluate(()=>Werkmap.name),path.basename(folder));await p.waitForFunction(()=>/Werkmap geopend/.test(document.querySelector('#wm-message')?.textContent||''),null,{timeout:30000});pass('nativeFolder');
+  await p.waitForFunction(()=>window.Werkmap?.active&&Werkmap.name,{timeout:30000});assert.equal(await p.evaluate(()=>Werkmap.name),path.basename(folder));assert.equal(await p.evaluate(async()=>{const {root}=await Werkmap.allAccess(false);return root.queryPermission({mode:'readwrite'});}), 'granted','native OS folder read-write permission granted');await p.waitForFunction(()=>/Werkmap geopend/.test(document.querySelector('#wm-message')?.textContent||''),null,{timeout:30000});pass('nativeFolder');
   // Search via the product keyboard shortcut, with a real legacy disk fixture.
   await p.locator('[data-open-search]').click();const dialog=p.locator('#all-search-dialog');await dialog.waitFor();await dialog.locator('ul').waitFor({state:'attached'});await p.waitForFunction(()=>document.querySelector('#all-search-dialog ul')?.getAttribute('aria-busy')==='false');
   const input=dialog.locator('#all-search-input'),items=dialog.locator('li');
