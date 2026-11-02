@@ -1,5 +1,5 @@
 {
-  "date": "2026-11-02",
+  "date": "2026-11-02T18:29:36.566180+00:00",
   "version": "0.36.12",
   "source": "Existing public app plus scoped letter route",
   "files": {
@@ -100,9 +100,9 @@
     "Apps/Werkbank/Werkbank/Leren en bewaren/02 - Bronnen en ontdekkingen.md": "b344fbe5b3e8e621bf45fc0443a40be2c34ccb38179d2856134c29b4ffb3bc07",
     "Apps/Werkbank/Werkbank/Mijn notities/01 - Mijn week.md": "d4c955b0a63393178f77171476c6dd33db8717952558d2e047f183af45fe575a",
     "Apps/Werkbank/Werkbank/Mijn notities/02 - Ideeen en invallen.md": "b0d472282a1fe70ef04a1f8bed362d1a83cee1d5de3e585806252e2b85a5164a",
-    "Apps/Werkbank/\u25b6 Begin hier.html": "604a525945248fd9da260d9f71ec91c4d7d3a42c927c91fdc8ea4fb81895e8a1",
+    "Apps/Werkbank/▶ Begin hier.html": "604a525945248fd9da260d9f71ec91c4d7d3a42c927c91fdc8ea4fb81895e8a1",
     "BLOM-OS-VORMGEVING.md": "b9d664a1da3ed942abacaf28e60d69fa285e76147fa8c30497193ab7654bff79",
-    "Begin hier.html": "072b012d431ef35aac02837667a685338dab4f01b3daa8c0940495ee12a1dbd0",
+    "Begin hier.html": "83154f3fb78c9f5e8a9e76a9036c86dfdfe1eb8b8be2f712b3031698d472eb94",
     "Downloads/Link-Bewaren-lokaal/LEESMIJ.md": "540edf39977c37f0afbcd1af78aed60f55559c2e95efac766943996f4db798f6",
     "Downloads/Link-Bewaren-lokaal/LICENSE": "fd64b6d5e44d43612c7669602cb46041e65df520c3ac657daae35bd40f70210d",
     "Downloads/Link-Bewaren-lokaal/bridge.js": "a75f10c68f42117e1b28be73c3e3d2b332d783372bba4461a6af6a50cf58226b",
@@ -121,7 +121,7 @@
     "LEESMIJ.txt": "b04658c4985726115307e11e911b15df9455042016ef7fd6e352def9d67cb42e",
     "LICENSE": "fd64b6d5e44d43612c7669602cb46041e65df520c3ac657daae35bd40f70210d",
     "Link-bewaren.html": "2a1edc83807c122da4757dddb44ff9cdc4bfed49a7f1bec0a89764b08cdb4138",
-    "Over.html": "c58094baa36cf26e908323c8427b55163d889814fdb921d054bf1af4b9365bd0",
+    "Over.html": "01764f4693f6f1cc0599321a7dd7275656a77ac9dac0b807b1085bb7adc15cb4",
     "PRIVACY.md": "99760bcf6a0540fb080f5c9066927405bf6dfdea9948bbcf6155f95cf261090d",
     "Sjablonen/Werkplaats-boekhouding.xlsx": "8f3856b06aeab47a05ea1dc4ef2657e09b53a0e15b562be06ff99b287647cac5",
     "Symbolen/ONTWERP.md": "3c943513c59b282902c2e5206f7ef15301ecca18a63fc37b187ceaa8ceb5fcc2",
@@ -148,7 +148,7 @@
     "acties.css": "11c1cf97dccba8ae8005153449181a81cdb91c941e632c95299ce3d3cc034f18",
     "administratie-verfijning.css": "297469af6ebcf534ef75efb959179d8628a167f9a1658841f4deeaabedddece9",
     "belastingtarieven.js": "4fa77dc7a123cf6aed0ba903dd9e6cc4ce65e80de5ef3ee03df6ae443e0764e9",
-    "bewaar-alles.js": "ee2bc0e4736ed8d6dc3b80cb700eac190dc3a822024186eff3c5572eaea1878e",
+    "bewaar-alles.js": "2cae18adb74a633918194a372fb0966677b260fbdf389bc3d6e72e5ec5ab1336",
     "bibliotheek.css": "5e5ad0c6416dd70c313711761bef8864cd217a1f498b4a24bda51ff3c330c674",
     "bibliotheek.js": "7573499ccb6167f7a0319742f4262ea1cb8408e7d41c3f40a8a5220ae103a52f",
     "blom-os-tokens.css": "3b566bf870fd58b78a1e1e7daceddaa39475a2a76dc12beb47bd4c6bb0b24ac8",
@@ -179,7 +179,7 @@
     "factureren-tabs.css": "be95e56936b6ad6bb62dbd66d77fe06f71a76faaa3c91abc8be113785083572f",
     "factureren-tabs.js": "edee4c063e4fe0f4448d03671eb0b6810f7222b9a909c51d1ae30f8deee3eaf5",
     "factureren-verfijning.css": "708f75267f8c50848f4e25f08958651504281b02af7bd9e5aa722690e9daab63",
-    "feedback.js": "8a452a07aa823f976f038d344197fda6b41c538c67cfd627f77a521bdac64c33",
+    "feedback.js": "ce37b63897c47454eb51cf763298d6bb6b58913621e7582fa252c70c800c041a",
     "fonts/paper-mono/OFL.txt": "ae8bcaf5a046be7e096b5710a8532cdaa5a299462e182752b805dcfa44370e4c",
     "fonts/paper-mono/PaperMono.woff2": "57b28aaaffc46f85ed5b5adeda22bc7bce0fcdbf3e6f84850c327765fe6fdc6b",
     "gui/base-ui.md": "745ffae50b837910e9f262eac68d921f7e79f298061dad8209d3930d14b32871",
@@ -222,7 +222,7 @@
     "startinhoud.js": "3329d84e97108a1055b46e8f2e632a41e5fba8bacfaa33efb26a39b382c72b9e",
     "startwerkmap.js": "b5b220aa4d972a561c5a935d5e5f61b638e82a18c6e33269fab4ea82565b6aee",
     "suite-unified.css": "cdf5155f7247b5e91047a75f4da54d838086a269b391aa4638b9987c9a2ad43a",
-    "taal-woordenboek.js": "a1746282b1130a6075f00d0fb6a1a2f7a7fbc6b387a44f79e1f8848b96582151",
+    "taal-woordenboek.js": "afc6692626526144d434af23d77029c5f589e1d3345a56398a1f2142d57c0cc8",
     "taal.js": "dd0cd483fe419540ebf974b184e65f77b139977689be33215cc38f2d1f9f9d80",
     "tool-gedeeld.css": "682b7ed643e70db18f8a80630dfa0fbc20884cb37cc534fa187edf14b78f8f1d",
     "uitbreidingen.js": "4c2991671f24bb904d47f1a8cbd16b15860e103be97877f580c0b64030798ab4",
@@ -237,7 +237,8 @@
     "werkruimte-keuze.js": "ca727c53ae471a8c7fd3ce4b48032ff8b877dfc3177c7a94f683b1ccd59ffee1",
     "werkruimte-ui.css": "6562e65ce1e29bf16eab95e583ab8172131f8aa556a22dcd8f0e5be62925d097",
     "werkruimte-ui.js": "71f6d03c91c747cc3fb2be89502f67d75ad281d6338684bbae01865f6a1f8739",
-    "werkstatus.js": "f8bff0750bb26eb9a61f8b8fe04abefb0c6b81171d252609ae3394ec4ab0a92e",
+    "werkstatus.js": "6f2be05175f279297cf663f07285bcbca4dbc1b10b4f383f0b1ed85083aa1a2d",
     "zoeken-filters.js": "0fc7f9611fa588aada75c0a7713dc8111e0eaeae5bbfb033d969566943428213"
-  }
+  },
+  "feature": "0.36.13: bewaarmelding hersteld; echte Windows/Linux browserherstart en PDF gecontroleerd"
 }

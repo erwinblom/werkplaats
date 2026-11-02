@@ -170,3 +170,9 @@ Vul bij Instellingen → Mijn gegevens de organisatienaam, het adres en e-mailad
 Kies in Schrijven → Documenten → Nieuw → Nieuwe brief. Het briefhoofd en logo worden in het Markdown-bestand bewaard; latere organisatieaanpassingen veranderen bestaande brieven niet. Bewerk de brief en kies Bewaar. Met Pagina-einde in de opmaakbalk begint de volgende inhoud op een nieuwe afdrukpagina.
 
 Kies Meer → Paginaopmaak / PDF, stel A4-marges en paginanummers in en kies Afdrukken / PDF bewaren. Kies Bewaar als PDF in Chrome of Edge en zet de browseroptie Kop- en voetteksten uit. De definitieve pagina-indeling is zichtbaar in dat afdrukvenster. PDF werkt ook via het bestaande Exporteren-menu. Afbeeldingen moeten volledig geladen zijn voordat afdrukken beschikbaar wordt.
+
+## Windows, Linux en bewaren
+
+De lokale browserroute is met Chrome 156 getest op Ubuntu 24.04 en Windows Server 2022: echte maptoegang, notitie bewaren, volledige browserherstart en een PDF van twee A4-pagina’s. Open na uitpakken Begin hier.html in Chrome; laat Bestanden staan. Het .command-bestand is alleen voor de optionele Mac-startapp.
+
+Versie 0.36.13 herstelt de bewaarmelding na herladen. Werkplaats vergelijkt de actuele inhoud en notities opnieuw met de schijfkopie voordat zij bewaard meldt. Na een browserherstart kan Chrome opnieuw toestemming vragen; een ontbrekende bevestiging wordt niet als bewezen schijfopslag getoond. De geautomatiseerde PDFproef gebruikt de echte app-afdrukroute met Save as PDF; handmatige printerkeuze, fysieke Windows 11-pc’s en andere Linuxdistributies zijn niet integraal getest.

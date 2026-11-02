@@ -1,0 +1,10 @@
+{
+  "source": "canonical App and built Master for two changed runtime files; unchanged public 0.36.12 baseline for all other runtime files",
+  "runtime_sha256": {
+    "werkstatus.js": "6f2be05175f279297cf663f07285bcbca4dbc1b10b4f383f0b1ed85083aa1a2d",
+    "bewaar-alles.js": "2cae18adb74a633918194a372fb0966677b260fbdf389bc3d6e72e5ec5ab1336"
+  },
+  "excluded_pending_master_changes": "Unrelated canonical changes (local Schrijfmap helper and pre-existing work) retained locally, not included in this scoped public fix.",
+  "version": "0.36.13",
+  "files": 236
+}
