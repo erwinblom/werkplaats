@@ -1,5 +1,6 @@
 'use strict';
 window.WerkplaatsUitbreidingen=(()=>{
+ const scriptURL=document.currentScript?.src;
  const apiVersion=1,tools=['Werkbank','Projectbord','Bronnenkast','Contacten','Publicatieplanner','Ping','Offerte','Uren','Kasboek','Abonnementen'];
  const currentTool=document.querySelector('script[data-tool]')?.dataset.tool||'Home';
  const t=(nl,en)=>I18n.language==='en'?en:nl;
@@ -53,6 +54,29 @@ window.WerkplaatsUitbreidingen=(()=>{
   if(typeof name!=='string'||!name.trim()||name.length>150||/[\\/\u0000-\u001f]/.test(name)||typeof content!=='string'||new Blob([content]).size>5000000||typeof type!=='string'||type.length>100)throw Error(t('Ongeldige of te grote download (maximaal 5 MB).','Invalid or oversized download (maximum 5 MB).'));
   const url=URL.createObjectURL(new Blob([content],{type})),link=document.createElement('a');link.href=url;link.download=name;link.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
  }
+ function validateReport(report,declared){
+  if(!report||typeof report.title!=='string'||!report.title.trim()||report.title.length>160||typeof report.text!=='string'||report.text.length>500000||typeof report.filename!=='string'||!/^[a-zA-Z0-9][a-zA-Z0-9._-]{0,140}\.md$/.test(report.filename))throw Error(t('Ongeldig of te groot overzicht.','Invalid or oversized report.'));
+  const links=report.links??[];
+  if(!Array.isArray(links)||links.length>200||links.some(link=>!link||link.tool!=='Bronnenkast'||!declared.includes(link.tool)||typeof link.id!=='string'||!link.id||link.id.length>100||typeof link.label!=='string'||!link.label.trim()||link.label.length>200))throw Error(t('Ongeldige bronverwijzing in het overzicht.','Invalid source reference in report.'));
+  return {title:report.title,text:report.text,filename:report.filename,links:links.map(({tool,id,label})=>({tool,id,label}))};
+ }
+ async function openReportSource(active,link){
+  guard(active);if((await Werkmap.allInfo()).revision!==active.revision)throw Error(t('De werkmap is veranderd.','Workspace changed.'));
+  const session=await BewaarAlles.readTool('Bronnenkast');guard(active);
+  if((await Werkmap.allInfo()).revision!==active.revision||!session.data?.items?.some(item=>item.id===link.id))throw Error(t('Deze bron is niet meer beschikbaar. Maak een nieuw overzicht.','This source is no longer available. Create a new report.'));
+  if(currentTool==='Bronnenkast'&&typeof window.openSourceDetails==='function'){document.getElementById('suite-settings').close();window.openSourceDetails(link.id);return;}
+  const target=new URL('Apps/Bronnenkast/Start Bronnenkast.html',scriptURL);target.searchParams.set('werkruimte','eigen');target.searchParams.set('uitbreiding-bron',link.id);location.assign(target.href);
+ }
+ function reportView(active){
+  const report=active.report,box=document.createElement('section'),heading=document.createElement('h5'),text=document.createElement('textarea'),actions=document.createElement('div');
+  box.dataset.extensionReport=active.id;heading.textContent=report.title;text.value=report.text;text.readOnly=true;text.rows=14;text.setAttribute('aria-label',report.title);actions.className='settings-actions wp-actions';
+  const copy=button('Kopieer overzicht','Copy report',async()=>{guard(active);try{await navigator.clipboard.writeText(report.text);say(t('Overzicht gekopieerd.','Report copied.'));}catch{active.selectReport=true;say(t('Selectie klaar. Kopieer met Ctrl+C of ⌘C.','Text selected. Copy with Ctrl+C or ⌘C.'));}});
+  actions.append(copy,button('Download overzicht (.md)','Download report (.md)',()=>{guard(active);download(report.filename,report.text,'text/markdown;charset=utf-8');say(t('Download aangeboden. Controleer het gedownloade bestand.','Download offered. Check the downloaded file.'));}),button('Sluit overzicht','Close report',()=>{active.report=null;render();}));
+  box.append(heading,text,actions);
+  if(report.links.length){const sources=document.createElement('div');sources.className='settings-actions wp-actions';for(const link of report.links)sources.append(button(t('Open bron: ','Open source: ')+link.label,t('Open bron: ','Open source: ')+link.label,()=>openReportSource(active,link)));box.append(sources);}
+  if(active.selectReport)queueMicrotask(()=>{if(text.isConnected){text.focus();text.select();active.selectReport=false;}});
+  return box;
+ }
  function workerRuntime(token,context){
   const pending=new Map(),actions=[];let next=0,registered=false;
   const send=(kind,data={})=>postMessage({kind,token,...data});
@@ -60,6 +84,7 @@ window.WerkplaatsUitbreidingen=(()=>{
   const api=Object.freeze({...context,
    readTool:tool=>request('read',{tool}),
    download:(name,content,type='text/plain;charset=utf-8')=>request('download',{name,content,type}),
+   showReport:report=>request('report',{report}),
    addAction:({label,run,options=[]})=>{if(typeof label!=='string'||!label.trim()||label.length>80||typeof run!=='function'||actions.length>=10)throw Error('Invalid extension action');const choices=actionOptions(options);const action=actions.push(run)-1;send('action',{action,label,options:choices});}
   });
   addEventListener('message',async event=>{
@@ -93,11 +118,12 @@ window.WerkplaatsUitbreidingen=(()=>{
   if(data.kind==='failure'){active.reject(Error(String(data.error).slice(0,300)));if(active.started){stop(active.id);const item=items.find(item=>item.id===active.id);if(item)item.error=String(data.error).slice(0,300);render();}return;}
   if(data.kind==='action'){if(!Number.isInteger(data.action)||data.action<0||data.action>=10||typeof data.label!=='string'||!data.label.trim()||data.label.length>80)return;let options;try{options=actionOptions(data.options);}catch{return;}if(options.some(option=>active.actions.some(action=>action.options.some(existing=>existing.key===option.key))))return;if(!active.actions.some(item=>item.id===data.action))active.actions.push({id:data.action,label:data.label,options});return;}
   if(data.kind==='done'){const pending=active.pending.get(data.id);if(!pending)return;clearTimeout(pending.timer);active.pending.delete(data.id);data.error?pending.reject(Error(String(data.error).slice(0,300))):pending.resolve();return;}
-  if(!['read','download'].includes(data.kind)||!Number.isInteger(data.id))return;
+  if(!['read','download','report'].includes(data.kind)||!Number.isInteger(data.id))return;
   try{
    if((await Werkmap.allInfo()).revision!==active.revision)throw Error(t('De werkmap is veranderd. Herlaad het gereedschap.','Workspace changed. Reload the tool.'));
    let value;
    if(data.kind==='read'){if(!active.tools.includes(data.tool)||!tools.includes(data.tool))throw Error(t('Dit gereedschap is niet aangemeld voor de uitbreiding.','This tool is not declared by the extension.'));value=structuredClone(await BewaarAlles.readTool(data.tool));}
+   else if(data.kind==='report'){active.report=validateReport(data.report,active.tools);render();}
    else {download(data.name,data.content,data.type);active.downloads=(active.downloads||0)+1;}
    guard(active);if((await Werkmap.allInfo()).revision!==active.revision)throw Error(t('De werkmap is veranderd.','Workspace changed.'));send(active,'response',{id:data.id,value});
   }catch(error){if(active.alive)send(active,'response',{id:data.id,error:error.message});}
@@ -180,7 +206,7 @@ window.WerkplaatsUitbreidingen=(()=>{
   });
   channel?.postMessage('changed');await scan();const installed=items.find(item=>item.id===manifest.id);
   if(!installed?.enabled||installed.error||installed.tools.includes(currentTool)&&!loaded.has(manifest.id))throw Error(t('Bestanden bewaard, maar de uitbreiding kon niet starten. Bekijk de melding en probeer Ververs.','Files saved, but the extension could not start. Check the message and try Refresh.'));
-  say(t('Agenda-export is toegevoegd en staat aan. Kies je onderdelen en download je agenda.','Calendar export has been added and enabled. Choose your sources and download your calendar.'));
+  say((entry.displayName?t(entry.displayName.nl,entry.displayName.en):manifest.name)+t(' is toegevoegd en staat aan.',' has been added and enabled.'));
  }
  function render(){
   if(!panel)return;
@@ -190,14 +216,14 @@ window.WerkplaatsUitbreidingen=(()=>{
   available.replaceChildren();
   for(const entry of window.WerkplaatsUitbreidingenCatalogus||[]){
    if(items.some(item=>item.id===entry.id&&!item.error))continue;
-   const card=document.createElement('section'),heading=document.createElement('h4'),description=document.createElement('p'),rights=document.createElement('p');heading.textContent=entry.name+' · '+entry.maker;description.textContent=t(entry.description.nl,entry.description.en);rights.textContent=t('Leest gegevens uit je Werkplaats om een agendabestand te maken. Er wordt niets online verstuurd of aan je werk gewijzigd.','Reads your Werkplaats data to create a calendar file. Nothing is sent online or changed in your work.');
+   const card=document.createElement('section'),heading=document.createElement('h4'),description=document.createElement('p'),rights=document.createElement('p');heading.textContent=(entry.displayName?t(entry.displayName.nl,entry.displayName.en):entry.name)+' · '+entry.maker;description.textContent=t(entry.description.nl,entry.description.en);rights.textContent=t('Leest de genoemde Werkplaats-gegevens voor dit overzicht of deze export. Er wordt niets online verstuurd of aan je werk gewijzigd.','Reads the listed Werkplaats data for this report or export. Nothing is sent online or changed in your work.');
    const partial=items.some(item=>item.id===entry.id);const add=button(partial?'Installatie opnieuw proberen':'Toevoegen',partial?'Retry installation':'Add',()=>install(entry));add.disabled=busy||!Werkmap.active;add.classList.add('primary');card.append(heading,description,rights,add);available.append(card);
   }
   prepare.textContent=t('Map voorbereiden','Prepare folder');prepare.disabled=busy||!Werkmap.active;
   refreshButton.textContent=t('Ververs','Refresh');refreshButton.disabled=busy||!Werkmap.active;
   list.replaceChildren();
   for(const item of items){
-   const row=document.createElement('section'),heading=document.createElement('h4');heading.textContent=item.name+(item.id==='agenda-export'?' · Erik van Elten':'')+(item.version?' · '+item.version:'');row.append(heading);
+   const row=document.createElement('section'),heading=document.createElement('h4');const catalogEntry=(window.WerkplaatsUitbreidingenCatalogus||[]).find(entry=>entry.id===item.id);heading.textContent=(catalogEntry?.displayName?t(catalogEntry.displayName.nl,catalogEntry.displayName.en):item.name)+(catalogEntry?.maker?' · '+catalogEntry.maker:'')+(item.version?' · '+item.version:'');row.append(heading);
    const state=document.createElement('p');state.textContent=item.error?t('Niet geladen: ','Not loaded: ')+item.error:item.changed?t('Gewijzigd. Controleer de nieuwe code en zet opnieuw aan.','Changed. Review the new code and enable again.'):item.enabled?t('Aan','Enabled'):t('Uit','Disabled');row.append(state);
    const actions=document.createElement('div');actions.className='settings-actions wp-actions';
    if(!item.error||item.enabled){actions.append(button(item.enabled?'Zet uit':'Zet aan',item.enabled?'Disable':'Enable',()=>toggle(item,!item.enabled)));}
@@ -207,11 +233,24 @@ window.WerkplaatsUitbreidingen=(()=>{
      for(const option of action.options){const label=document.createElement('label'),input=document.createElement('input');input.type='checkbox';input.checked=Object.hasOwn(item.choices,option.key)?item.choices[option.key]:option.default;input.disabled=busy;input.dataset.extensionOption=option.key;input.onchange=()=>perform(()=>saveChoice(item,option.key,input.checked));label.className='business-choice';label.append(input,document.createTextNode(' '+option.label));fields.append(label);}row.append(fields);}
     const b=button(action.label,action.label,async()=>{await scan();guard(active);const fresh=items.find(entry=>entry.id===item.id);const values=Object.fromEntries(action.options.map(option=>[option.key,Object.hasOwn(fresh.choices,option.key)?fresh.choices[option.key]:option.default]));const before=active.downloads||0;await requestAction(active,action.id,values);say(active.downloads>before?t('Download aangeboden. Controleer het gedownloade bestand.','Download offered. Check the downloaded file.'):t('Actie uitgevoerd.','Action completed.'));});actions.append(b);
    }
-   row.append(actions);list.append(row);
+   row.append(actions);if(active?.report)row.append(reportView(active));list.append(row);
   }
  }
  const folderHelp='# Uitbreidingen voor Werkplaats\n\nBewaar elke uitbreiding in een eigen map. Deze map staat bij je werk en wordt niet vervangen door een nieuwe Werkplaats-download. Kies na een update dezelfde werkmap.\n\nElke uitbreiding bevat uitbreiding.json en uitbreiding.js. Zet haar daarna zelf aan via Instellingen → Uitbreidingen. Gewijzigde code vraagt opnieuw activering.\n\nDe technische handleiding en het voorbeeld staan in de appbestanden onder Uitbreidingen.\n\nDeze map valt buiten de bewaarrondes van Bewaar alles. Bewaar zelf een extra kopie van je uitbreidingen en instellingen.json. Alleen aanzetten als je de maker en code vertrouwt.\n';
  async function prepareFolder(){const {dir}=await access(true,true);try{await dir.getFileHandle('LEESMIJ.md');}catch(error){if(!missing(error))throw error;await write(dir,'LEESMIJ.md',folderHelp);}await scan();}
+ async function openRequestedSource(){
+  if(currentTool!=='Bronnenkast'||!Werkmap.active)return;
+  const target=new URL(location.href),id=target.searchParams.get('uitbreiding-bron');if(!id)return;
+  const revision=(await Werkmap.allInfo()).revision;
+  try{
+   if(id.length>100)throw Error(t('Ongeldige bronverwijzing.','Invalid source reference.'));
+   await BewaarAlles.ready;const session=await BewaarAlles.readTool('Bronnenkast');
+   if((await Werkmap.allInfo()).revision!==revision)return;
+   if(!session.data?.items?.some(item=>item.id===id)||typeof window.openSourceDetails!=='function')throw Error(t('Deze bron is niet meer beschikbaar. Maak een nieuw overzicht.','This source is no longer available. Create a new report.'));
+   window.openSourceDetails(id);
+  }catch(error){const message=document.createElement('p');message.className='link-result';message.setAttribute('role','status');message.textContent=error.message;document.querySelector('main')?.prepend(message);}
+  target.searchParams.delete('uitbreiding-bron');history.replaceState(null,'',target.href);
+ }
  function mount(){
   const dialog=document.getElementById('suite-settings');if(!dialog||panel)return;
   panel=document.createElement('details');panel.id='settings-extensions';panel.className='settings-section';const summary=document.createElement('summary'),intro=document.createElement('p'),help=document.createElement('p'),actions=document.createElement('div');intro.dataset.intro='';help.dataset.help='';actions.className='settings-actions wp-actions';
@@ -219,8 +258,8 @@ window.WerkplaatsUitbreidingen=(()=>{
  }
  try{channel=new BroadcastChannel('werkplaats-uitbreidingen');channel.onmessage=()=>scan();}catch{}
  for(const event of ['werkmap-herinnerd','werkmap-losgekoppeld','taal-gewijzigd'])document.addEventListener(event,()=>scan());
- document.addEventListener('werkmap-wisselt',()=>{switching=true;generation++;stopAll();});
- document.addEventListener('werkmap-gekozen',()=>{switching=false;scan();});
- const ready=(async()=>{await window.MijnGereedschappenReady;if(document.readyState==='loading')await new Promise(resolve=>document.addEventListener('DOMContentLoaded',resolve,{once:true}));mount();if(!panel){const observer=new MutationObserver(()=>{mount();if(panel)observer.disconnect();});observer.observe(document.body,{childList:true});}await scan();})();ready.catch(error=>say(error.message));
+ document.addEventListener('werkmap-wisselt',()=>{switching=true;generation++;stopAll();render();say(t('Werkmap wordt geopend…','Opening workspace…'));});
+ document.addEventListener('werkmap-gekozen',()=>{switching=false;scan().then(openRequestedSource).catch(error=>say(error.message));});
+ const ready=(async()=>{await window.MijnGereedschappenReady;if(document.readyState==='loading')await new Promise(resolve=>document.addEventListener('DOMContentLoaded',resolve,{once:true}));mount();if(!panel){const observer=new MutationObserver(()=>{mount();if(panel)observer.disconnect();});observer.observe(document.body,{childList:true});}await scan();await openRequestedSource();})();ready.catch(error=>say(error.message));
  return {version:apiVersion,ready,refresh:scan,validateManifest};
 })();

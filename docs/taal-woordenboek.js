@@ -3434,6 +3434,13 @@ Object.assign(window.WerkplaatsVertalingen,{
   "Je hoeft geen apart pakket te downloaden of mappen te kopiëren. Werkplaats installeert de meegeleverde uitbreiding en zet haar aan.": "You do not need to download a separate package or copy folders. Werkplaats installs the included extension and enables it.",
   "Zelf een uitbreiding toevoegen": "Add an extension yourself",
   "Voor eigen uitbreidingen en oudere versies blijft handmatig installeren mogelijk: bereid de map voor, kopieer de uitbreiding naar Uitbreidingen in je werkmap en klik Ververs → Zet aan. Een afwijkende bestaande Agenda-export wordt niet overschreven.": "Manual installation remains available for custom extensions and older versions: prepare the folder, copy the extension into Extensions in your workspace folder and click Refresh → Enable. An existing modified Calendar export is not overwritten.",
+  "Drie uitbreidingen om mee te beginnen": "Three extensions to get started",
+  "Open Instellingen → Uitbreidingen en klik Toevoegen bij de functie die je wilt gebruiken. De pakketten worden meegeleverd. Je hoeft niets uit te pakken of zelf te kopiëren.": "Open Settings → Extensions and click Add next to the feature you want to use. The packages are included. There is nothing to unzip or copy yourself.",
+  "Mijn weekoverzicht": "My weekly overview",
+  "Bekijk achterstallige taken, deadlines deze en volgende week, projecten met open taken en wat nu klaar is. Kopieer het overzicht of download het als Markdown. Er is geen historie van voltooiingsdatums; Nu klaar beschrijft de huidige kolom.": "View overdue tasks, deadlines this week and next, projects with open tasks and what is currently done. Copy the overview or download it as Markdown. Completion dates are not recorded; Currently done describes the current column.",
+  "Dubbele links vinden": "Find duplicate links",
+  "Vergelijk dezelfde links in Verzamelen, met hun notities, citaten en projectkoppelingen. Open de gewenste bron en bepaal daar zelf wat je wilt behouden. De uitbreiding verandert of verwijdert niets.": "Compare matching links in Collect, with their notes, quotes and project links. Open a source and decide what to keep there. The extension changes or deletes nothing.",
+  "Gebruik de uitbreidingen vanaf Home. Weekoverzicht werkt ook in Doen en Projecten; Dubbele links vinden ook in Verzamelen en Projecten.": "Use the extensions from Home. Weekly overview also works in Tasks and Projects; Find duplicate links also works in Collect and Projects.",
   "Lees hoe Agenda-export werkt": "Read how Calendar export works"
 });
 

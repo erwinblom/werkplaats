@@ -1,0 +1,10 @@
+'use strict';
+const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path'),vm=require('node:vm');
+const source=fs.readFileSync(path.join(__dirname,'../app/uitbreidingen.js'),'utf8').replace('return {version:apiVersion,ready,refresh:scan,validateManifest};','return {version:apiVersion,ready,refresh:scan,validateManifest,validateReport};');
+const listeners={},context={window:{MijnGereedschappenReady:new Promise(()=>{})},document:{querySelector:()=>null,addEventListener(){}},addEventListener:(name,fn)=>listeners[name]=fn,I18n:{language:'nl'},BroadcastChannel:class{},Promise};
+vm.runInNewContext(source,context);const validate=context.window.WerkplaatsUitbreidingen.validateReport;
+const report={title:'<img src=x onerror=alert(1)>',text:'<script>plain text</script>',filename:'rapport-2026-11-02.md',links:[{tool:'Bronnenkast',id:'id & = ? #',label:'Bron <x>'}]};
+const valid=validate(report,['Bronnenkast']);assert.equal(valid.text,report.text);assert.equal(valid.links[0].id,report.links[0].id,'ids retained for URLSearchParams encoding, never HTML');
+for(const filename of ['../report.md','report.html','report.md/evil','report\\evil.md','report.md?x'])assert.throws(()=>validate({...report,filename},['Bronnenkast']));
+assert.throws(()=>validate(report,['Projectbord']),'source access must be declared');assert.throws(()=>validate({...report,links:[{tool:'Werkbank',id:'a',label:'a'}]},['Werkbank']));assert.throws(()=>validate({...report,links:Array(201).fill(report.links[0])},['Bronnenkast']));assert.throws(()=>validate({...report,text:'x'.repeat(500001)},['Bronnenkast']));assert.throws(()=>validate({...report,title:''},['Bronnenkast']));
+(async()=>{await listeners.message({source:{},data:{kind:'report',id:1,token:'forged',report}});console.log('PASS: bounded plain-text reports, safe filenames, explicit source scope, forged report ignored.');})().catch(e=>{console.error(e);process.exitCode=1;});

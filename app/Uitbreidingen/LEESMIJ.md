@@ -11,13 +11,13 @@ Ik ben geen programmeur en geen designer. Met AI maak ik tools en skills die ik 
 3. Plaats een ontvangen uitbreidingsmap daarin, bijvoorbeeld `Uitbreidingen/agenda-export/`, met `uitbreiding.json` en `uitbreiding.js`.
 4. Klik Ververs en Zet aan. Open het bedoelde gereedschap; de extra acties staan in Instellingen → Uitbreidingen.
 
-Een aangezette uitbreiding mag de gegevens lezen van haar aangemelde gereedschappen. Controleer daarom de maker en de genoemde tools. Uitbreidingscode draait in een Worker binnen een verborgen sandbox-iframe met alleen `allow-scripts`, zonder toegang tot de Werkplaats-DOM, browseropslag, werkmap of netwerk. De berichtenbrug biedt alleen gereedschapsgegevens lezen en een download aanbieden. Berichten worden op het exacte iframe en een eigen sessietoken gecontroleerd. De Worker heeft geen navigeerbaar venster en erft de afgeschermde netwerkregels van het iframe. Schrijven staat alleen blobworkers toe voor deze aansluiting; het bestaande scriptbeleid blijft gelijk. Code- of metadatawijzigingen vragen bij de volgende controle opnieuw activering. Zet uit verwijdert het iframe en stopt de code direct. Laad- en actiefouten worden gemeld zonder de gewone appstart te blokkeren. Uitzetten stopt de Worker.
+Een aangezette uitbreiding mag de gegevens lezen van haar aangemelde gereedschappen. Controleer daarom de maker en de genoemde tools. Uitbreidingscode draait in een Worker binnen een verborgen sandbox-iframe met alleen `allow-scripts`, zonder toegang tot de Werkplaats-DOM, browseropslag, werkmap of netwerk. De berichtenbrug biedt gereedschapsgegevens lezen, een download aanbieden en een veilig tekstrapport tonen. Rapporten mogen verwijzen naar bronnen in Verzamelen wanneer die leesrechten zijn aangemeld; ze geven geen schrijfrechten. Berichten worden op het exacte iframe en een eigen sessietoken gecontroleerd. De Worker heeft geen navigeerbaar venster en erft de afgeschermde netwerkregels van het iframe. Schrijven staat alleen blobworkers toe voor deze aansluiting; het bestaande scriptbeleid blijft gelijk. Code- of metadatawijzigingen vragen bij de volgende controle opnieuw activering. Zet uit verwijdert het iframe en stopt de code direct. Laad- en actiefouten worden gemeld zonder de gewone appstart te blokkeren. Uitzetten stopt de Worker.
 
 ## Werkplaats bijwerken
 
 Vervang de appbestanden door een nieuwe download en kies dezelfde werkmap bij Opslag. De uitbreidingsmappen en `instellingen.json` blijven daar staan. Ze hoeven niet opnieuw in `werkmap.js` te worden aangesloten. De maker gebruikt de beschreven versie-1-aansluiting.
 
-Bewaar zelf een extra kopie van `Uitbreidingen/`, inclusief `instellingen.json`. Bewaar alles en Download back-up nemen deze map niet mee: zij bewaren de gereedschapsgegevens. Een appdownload bevat uitsluitend deze handleiding en het makersvoorbeeld, nooit je geïnstalleerde uitbreidingen.
+Bewaar zelf een extra kopie van `Uitbreidingen/`, inclusief `instellingen.json`. Bewaar alles en Download back-up nemen deze map niet mee: zij bewaren de gereedschapsgegevens. Een appdownload bevat de drie gecontroleerde startpakketten en het makersvoorbeeld. Je eigen geïnstalleerde uitbreidingen en instellingen blijven uitsluitend in je werkmap.
 
 ## Makersproef
 
@@ -68,3 +68,13 @@ Bij ontbrekende maprechten klik je Ververs en geef je opnieuw toegang. Werkplaat
 `api.addAction({label, options, run})` ondersteunt maximaal tien checkboxen per actie. Elke optie heeft `key` (kleine letters/cijfers/koppeltekens), `label` en een boolean `default`. Sleutels zijn uniek binnen de uitbreiding. `run(values)` ontvangt de actuele boolean-keuzes. Werkplaats bewaart de keuzes rechtstreeks in `Uitbreidingen/instellingen.json`, buiten de appbestanden; dezelfde keuzes blijven na een update beschikbaar. Alleen de host bewaart deze beperkte voorkeuren: de uitbreiding krijgt geen algemene opslag- of schrijf-API.
 
 Agenda-export is oorspronkelijk gemaakt door Erik van Elten; de exportkern en zijn MIT-licentie zijn behouden. Erwin Blom paste met Codex de aansluiting op Werkplaats aan. Agenda-export is beschikbaar als aparte kopieermap `agenda-export/`. Installeer die bewust in je werkmap; de appdownload zet haar niet vanzelf aan.
+
+## Meegeleverde startuitbreidingen
+
+Open Instellingen → Uitbreidingen en kies Toevoegen. Agenda-export van Erik van Elten, Mijn weekoverzicht en Dubbele links vinden worden meegeleverd. De catalogus wordt met `tests/maak-uitbreidingen-catalogus.cjs` afgeleid van de vier pakketbestanden; wijzig altijd eerst die pakketbron. De bronproef weigert een verouderde catalogus.
+
+## Tekstrapport tonen
+
+`await api.showReport({title, text, filename: 'mijn-overzicht.md', links: []})` toont uitsluitend platte tekst met kopiëren en downloaden. Maximaal 160 tekens voor de titel en 500.000 voor de tekst; de bestandsnaam bevat alleen letters, cijfers, punt, koppelteken of underscore en eindigt op `.md`. Geen HTML of netwerkinhoud.
+
+Optionele bronknoppen: `links: [{tool:'Bronnenkast', id:'bestaand-id', label:'Herkenbare bron'}]`. Maximaal 200 verwijzingen. Bronnenkast moet in tools staan. Bij openen controleert Werkplaats de huidige werkmap en of de bron nog bestaat. De bestaande bronbediening blijft verantwoordelijk voor bewerken en verwijderen. Rapporten verdwijnen bij uitzetten of werkmapwissel; opnieuw genereren leest de actuele gegevens.

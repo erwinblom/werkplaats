@@ -191,8 +191,18 @@ Deze drie uitbreidingen zijn met fictieve gegevens in Chrome op macOS gecontrole
 
 Losse Markdown- en tekstbestanden openen wacht nu op het herstel van de werksessie. De succesmelding verschijnt pas als het gekozen document met de juiste inhoud geopend is. Dit voorkomt een aangetoonde botsing tijdens het opstarten. Zie [uitgave 0.36.15](release/UITGAVE-0.36.15.md) voor controles en grenzen.
 
-## Nieuw in 0.36.16
+## Drie uitbreidingen om mee te beginnen — 0.36.16
 
-Agenda-export van Erik van Elten voeg je toe met één knop bij Instellingen → Uitbreidingen. De uitbreiding wordt meegeleverd en werkt zonder Python, extra account of netwerkverbinding voor de installatie. Eriks exportkern en MIT-licentie blijven behouden.
+Open **Instellingen → Uitbreidingen** en kies **Toevoegen** bij wat je wilt gebruiken. De pakketten worden meegeleverd: niets apart downloaden, uitpakken of kopiëren. Ze werken lokaal, zonder AI-account, Python of extra dienst.
 
-De installatie is in de volledige Werkplaats met Chrome op macOS gecontroleerd: echte tijdelijke werkmap, exacte bestandscontrole, agendabestand van een bewaarde taak, uit/aan en herladen met behoud van keuzes. Daarnaast slagen 48 broncontroles en een afzonderlijke Chrome-proef met 13 controles. De nieuwe installatieknop is niet opnieuw op Windows/Linux getest. Zie [controle 0.36.16](release/UITGAVE-0.36.16.md).
+| Uitbreiding | Wat je ermee kunt |
+|---|---|
+| Agenda-export van Erik van Elten | Deadlines en datums uit Werkplaats als bestand naar je agenda brengen. |
+| Mijn weekoverzicht | Achterstallige taken, deadlines deze en volgende week, projecten met open taken en wat nu klaar is bekijken, kopiëren of downloaden. |
+| Dubbele links vinden | Dezelfde links vergelijken met hun notities en projectkoppelingen. Open de bron in Verzamelen om zelf te kiezen wat je behoudt. |
+
+Gebruik ze vanaf Home. Weekoverzicht werkt ook in Doen en Projecten; Dubbele links vinden ook in Verzamelen en Projecten. Rapporten veranderen of verwijderen geen gegevens. Nu klaar is de huidige kolom Klaar, geen historie van afrondingen deze week. Duplicatenvergelijking behoudt pad, queryparameters en fragmenten.
+
+Bestaande aangepaste installaties worden niet overschreven. Uitbreidingen blijven bij je werkmap na een appupdate. Maak een aparte reservekopie: Bewaar alles neemt de map Uitbreidingen niet mee. De agenda-export is een momentopname, geen synchronisatie.
+
+Gecontroleerd: 51 bronproeven, onafhankelijke codecontrole, 15 volledige Chrome-browserproeven met fictieve gegevens en een echte tijdelijke werkmap op macOS. Inclusief toevoegen, rapporten, kopiëren/downloaden, bronknoppen, uit/aan en herladen. De nieuwe set is niet opnieuw op Windows/Linux getest. Zie [controle 0.36.16](release/UITGAVE-0.36.16.md).

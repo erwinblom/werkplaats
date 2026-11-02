@@ -1,7 +1,11 @@
-Met één klik Agenda-export toevoegen
+Drie uitbreidingen met één klik toevoegen
 
-Open Instellingen → Uitbreidingen en kies Toevoegen bij Agenda-export van Erik van Elten. Geen los pakket downloaden, uitpakken of mappen kopiëren. Kies je onderdelen en download het agendabestand.
+Open Instellingen → Uitbreidingen en kies Toevoegen:
 
-Bestaande eigen installaties worden niet overschreven. Eriks oorspronkelijke exportkern en licentie blijven behouden. De export is een momentopname; uitbreidingen vragen een aparte back-up.
+- Agenda-export van Erik van Elten: deadlines naar je eigen agenda.
+- Mijn weekoverzicht: taken en projecten bijeen, kopieerbaar en downloadbaar.
+- Dubbele links vinden: vergelijk gelijke links met hun eigen notities en open het juiste exemplaar.
 
-Getest: 48 broncontroles, onafhankelijke codecontrole, 13 aanvullende Chrome-proeven en volledige Werkplaats op macOS met echte tijdelijke werkmap, ICS-download, uit/aan en herladen. De nieuwe knop is niet opnieuw op Windows/Linux getest.
+Geen apart pakket uitpakken, Python of AI-account. Rapporten veranderen en verwijderen niets. Bestaande aangepaste installaties worden niet overschreven. Eriks credits en licentie blijven behouden.
+
+Gecontroleerd met 51 bronproeven, onafhankelijke Checker, 15 volledige Chrome-browserproeven en native tijdelijke werkmap op macOS. De nieuwe set is niet opnieuw op Windows/Linux getest. Maak een aparte back-up van Uitbreidingen; de agenda-export is een momentopname.
