@@ -1,0 +1,2 @@
+# Candidate fixtures are byte-verified on every OS; do not normalize line endings.
+*.js -text
