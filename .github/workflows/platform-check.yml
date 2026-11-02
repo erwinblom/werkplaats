@@ -1,0 +1,40 @@
+name: Werkplaats Windows and Linux check
+on:
+  push:
+    branches: [ch510-platform-check]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  browser:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22.16.0'
+      - name: Install pinned browser test dependency
+        run: npm install --no-save --package-lock=false playwright@1.56.1
+      - name: Install Chromium
+        run: npx playwright install chromium
+      - name: Install Linux display and picker controls
+        if: runner.os == 'Linux'
+        run: sudo apt-get update && sudo apt-get install -y xvfb xdotool scrot
+      - name: Browser and native folder check on Linux
+        if: runner.os == 'Linux'
+        run: xvfb-run -a node tests/platform-check.cjs
+      - name: Browser and native folder check on Windows
+        if: runner.os == 'Windows'
+        run: node tests/platform-check.cjs
+      - name: Upload result and screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: werkplaats-platform-${{ runner.os }}
+          path: platform-evidence/
+          if-no-files-found: error
