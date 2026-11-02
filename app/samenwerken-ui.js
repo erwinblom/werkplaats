@@ -184,7 +184,7 @@ function summarizeProjectTasks(list,day){
 (async()=>{
  if(document.querySelector('script[data-tool]')?.dataset.tool!=='Publicatieplanner')return;
  await Werkmap.suiteReady;await BewaarAlles.ready;
- const root=document.getElementById('content');let sources=[],state='loading',busy=false;
+ const root=document.getElementById('content');let sources=[],state='loading',busy=false,again=false;
  function decorateSources(){
   for(const button of root.querySelectorAll('[data-edit]')){
    const project=data.items.find(item=>item.id===button.dataset.edit&&item.kind==='project');if(!project)continue;
@@ -199,9 +199,9 @@ function summarizeProjectTasks(list,day){
    badge.append(chip);
   }
  }
- async function refresh(){if(busy)return;busy=true;try{sources=(await BewaarAlles.readTool('Bronnenkast')).data.items;state='ready';}catch{state='error';}finally{busy=false;decorateSources();}}
- new MutationObserver(decorateSources).observe(root,{childList:true,subtree:true});decorateSources();await refresh();
- window.addEventListener('focus',refresh);document.addEventListener('visibilitychange',()=>{if(!document.hidden)refresh();});document.addEventListener('werkbestand-geopend',refresh);
+ async function refresh(){if(busy){again=true;return;}busy=true;try{do{again=false;try{sources=(await BewaarAlles.readTool('Bronnenkast')).data.items;state='ready';}catch{state='error';}decorateSources();}while(again);}finally{busy=false;}}
+ new MutationObserver(decorateSources).observe(root,{childList:true,subtree:true});decorateSources();
+ window.addEventListener('focus',refresh);document.addEventListener('visibilitychange',()=>{if(!document.hidden)refresh();});document.addEventListener('werkbestand-geopend',refresh);document.addEventListener('project-sources-changed',refresh);await refresh();
 })();
 
 // Toon gekoppelde Schrijven-documenten direct op de projectkaart.

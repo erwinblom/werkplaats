@@ -18,6 +18,5 @@ Voor UI-werk: volg GUI.md en gebruik graphical-ui, graphical-convert of graphica
 
 - De negen iconen op Home zijn leidend. Toolkoppen en het geopende Zoekvenster gebruiken exact dezelfde SVG-vormen; controleer gelijkheid bij wijzigingen.
 
-
 ## Vaste FMT-appiconen
-Behoud App-iconen met goedgekeurde bron, browsermanifest en Mac-startappmaker. Controleer de bronhashes en neem de iconen in iedere download op. Witte tegel, zwart rooster en canoniek target rechtsboven met rode stip; geen wijziging van uitvoerstijl.
+Behoud App-iconen met goedgekeurde bron, browsermanifest en Mac-startappmaker. De Master-build controleert deze bron en neemt haar in iedere ZIP op. Witte tegel, zwart rooster en canoniek target rechtsboven met rode stip; geen wijziging van uitvoerstijl.

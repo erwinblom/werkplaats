@@ -43,3 +43,8 @@
 }
 
 @media screen {html body.compact-tools[data-tool=Kasboek] #rows .entry{border-bottom:0!important;box-shadow:inset 0 calc(-1 * var(--border-s)) var(--neutral-4)!important}html body.compact-tools[data-tool=Kasboek] #rows button[data-view]{border:0;background:none;padding:0;color:var(--cte-text-muted);font:var(--weight-ui-regular) var(--size-xs)/var(--line-xs) var(--font-ui);text-decoration:none}html body.compact-tools[data-tool=Kasboek] #toast{top:auto;bottom:var(--space-l);max-width:calc(100vw - 32px)}}
+
+@media(max-width:650px){html body.compact-tools[data-tool=Kasboek] .open-invoice>.actions{grid-column:1/-1;justify-content:flex-end}}
+
+html body.compact-tools[data-tool=Kasboek] .open-invoice>.actions{align-items:flex-end;flex-direction:column}
+html body.compact-tools[data-tool=Kasboek] .open-invoice button[data-invoice-delete]{font-size:var(--size-xs)!important;line-height:var(--line-xs)!important;padding:var(--space-xxs) var(--space-xs)!important;min-height:0!important;align-self:flex-end}

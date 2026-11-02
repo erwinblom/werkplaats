@@ -437,12 +437,34 @@ window.SchrijfNotities = (() => {
  window.addEventListener('focus',()=>{if(currentView==='notes'&&!document.querySelector('.note-dialog'))render();});
  const params=new URL(location.href).searchParams;
  const firstRun=params.get('startroute')==='1';
- view(params.has('document')||params.has('document-pad')?'documents':'notes').then(()=>{if(params.get('notitie'))return detail(params.get('notitie'));}).catch(e=>{error.textContent=e.message;});
+ view(params.has('document')||params.has('document-pad')?'documents':'notes').then(async()=>{
+  if(location.protocol==='file:'&&location.hash.startsWith('#fmt-klad='))return receiveFMTKladblok();
+  if(params.get('notitie'))return detail(params.get('notitie'));
+ }).catch(e=>{error.textContent=e.message;});
  if(firstRun){
   const hint=board.querySelector('.notes-save-hint');I18n.assign(hint,I18n.ui('Stap 2 van 3: schrijf je eerste notitie. Bewaar haar daarna in je werkmap.','Stap 2 van 3: schrijf je eerste notitie. Bewaar haar daarna in je werkmap.'),'textContent');
   ready().then(async()=>{await Werkmap.ready;if(!Werkmap.active){I18n.assign(error,I18n.ui('Kies eerst op de homepage een werkmap. Je kunt hier wel alvast een notitie maken.','Kies eerst op de homepage een werkmap. Je kunt hier wel alvast een notitie maken.'),'textContent');return;}await edit();}).catch(e=>{error.textContent=e.message;});
  }
  document.addEventListener('taal-gewijzigd',()=>{if(currentView==='notes')render();});
+ async function receiveFMTKladblok(){
+  const raw=location.hash.slice('#fmt-klad='.length);history.replaceState(null,'',location.pathname+location.search);
+  if(raw.length>100000)throw Error('De klad is te groot. Je oorspronkelijke klad blijft behouden.');
+  const note=JSON.parse(new TextDecoder('utf-8',{fatal:true}).decode(Uint8Array.from(atob(raw.replace(/-/g,'+').replace(/_/g,'/')),c=>c.charCodeAt(0))));
+  if(!note||!/^fmt-klad-[0-9a-f-]{36}$/i.test(note.id)||typeof note.title!=='string'||!note.title.trim()||note.title.length>200||typeof note.body!=='string'||!note.body.trim()||new TextEncoder().encode(note.body).length>48000)throw Error('Geen geldige klad ontvangen. Je klad blijft in FMT Kladblok.');
+  await Werkmap.ready;if(!Werkmap.active)throw Error('Kies eerst je lokale werkmap en klik daarna opnieuw op Sla op in Werkplaats in Kladblok.');
+  await read();
+  const digest=async n=>Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256',new TextEncoder().encode(JSON.stringify([n.title,n.body])))),b=>b.toString(16).padStart(2,'0')).join('');
+  const original=notes.find(n=>n.id===note.id),hash=await digest(note);
+  if(original&&await digest(original)!==hash&&(!original.fmtKladblokHash||await digest(original)!==original.fmtKladblokHash))throw Error('Deze lokale notitie is gewijzigd. Kladblok overschrijft haar niet.');
+  if(!original||await digest(original)!==hash){
+   const next={...(original||{}),id:note.id,title:note.title,body:note.body,topic:original?.topic||'Kladblok',sourceIds:original?.sourceIds||[],updatedAt:new Date().toISOString(),fmtKladblokHash:hash};
+   await write(next,original?.updatedAt||null);
+  }
+  await BewaarAlles.save();
+  const {root}=await Werkmap.allAccess(false),round=await BewaarAlles.readRound(root),stored=round?.shared?.writingNotes?.find(n=>n.id===note.id);
+  if(!stored||stored.title!==note.title||stored.body!==note.body)throw Error('Lokale opslag nog niet bevestigd. Klik in Werkplaats op Bewaar alles. Je klad blijft in Kladblok.');
+  await render();await detail(note.id);showNotification('Bewaard in lokale Werkplaats · Notities. Volledige tekst teruggelezen.','success');
+ }
  async function createFromKladblok(body,file){
   const text=String(body||'').trim();if(!text)throw Error(I18n.value(I18n.ui('Het kladblok is leeg.','Het kladblok is leeg.')));
   await read();const first=text.split(/\r?\n/).find(line=>line.trim())||I18n.t('Kladblok');const now=new Date().toISOString();

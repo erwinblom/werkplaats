@@ -176,3 +176,11 @@ Kies Meer → Paginaopmaak / PDF, stel A4-marges en paginanummers in en kies Afd
 De lokale browserroute is met Chrome 156 getest op Ubuntu 24.04 en Windows Server 2022: echte maptoegang, notitie bewaren, volledige browserherstart en een PDF van twee A4-pagina’s. Open na uitpakken Begin hier.html in Chrome; laat Bestanden staan. Het .command-bestand is alleen voor de optionele Mac-startapp.
 
 Versie 0.36.13 herstelt de bewaarmelding na herladen. Werkplaats vergelijkt de actuele inhoud en notities opnieuw met de schijfkopie voordat zij bewaard meldt. Na een browserherstart kan Chrome opnieuw toestemming vragen; een ontbrekende bevestiging wordt niet als bewezen schijfopslag getoond. De geautomatiseerde PDFproef gebruikt de echte app-afdrukroute met Save as PDF; handmatige printerkeuze, fysieke Windows 11-pc’s en andere Linuxdistributies zijn niet integraal getest.
+
+## Nieuw in 0.36.14
+
+- **Zoeken:** filter op Verzamelen, Schrijven of Projecten, met aantallen en tekstcontext. Schrijfvarianten, beperkte typefouten en een kleine expliciete begrippenlijst werken zonder AI.
+- **Projectbronnen:** kies in een project Meer → Bookmark koppelen, zoek en selecteer meerdere bronnen. Vanuit Verzamelen kan dit via Koppelingen → Project. Ontkoppelen bewaart de bron; klik daarna Bewaar alles.
+- **Afbeeldingenexport:** kies bij een document Meer → Download afbeeldingen, of klik op een beeld. Download ingesloten originelen los of als ZIP. De oorspronkelijke bytes blijven behouden; webverwijzingen worden niet opgehaald.
+
+Deze drie uitbreidingen zijn met fictieve gegevens in Chrome op macOS gecontroleerd, inclusief bewaren, heropenen en de echte afbeeldingen-download. De eerdere Windows/Linux-basisproef is hierboven beschreven; deze nieuwe functies zijn daar niet opnieuw integraal doorlopen.

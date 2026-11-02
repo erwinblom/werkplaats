@@ -145,7 +145,7 @@ async function updateConnectedDocument(parent,handle,expected,next){
    // Guard explicit updates before replacing the visible session.
    if((s.documents||[]).some(d=>typeof d.expectedContent==='string')&&wysiwygDirty)throw Error('Bewaar eerst het open document en Sync daarna opnieuw.');
    // Resolve saved documents before replacing the visible session.
-   if(Werkmap.active){
+   if(Werkmap.active&&!window.WerkplaatsSchrijfmap){
     const access=await Werkmap.allAccess(false);
     try{const dir=await access.root.getDirectoryHandle('Schrijven');await dir.values().next();}catch(error){const saved=await getSavedDirectoryHandles();const writing=saved.find(handle=>handle.name==='Schrijven');if(writing){try{await writing.values().next();directoryHandles=[writing];selectedProject='Schrijven';await loadFiles({skipRestore:true});for(const path of folderHandlesByPath.keys())expandedFolders.add(path);renderFileList();return;}catch{}}showWritingAccessRequired();return;}
    }
@@ -159,7 +159,7 @@ async function updateConnectedDocument(parent,handle,expected,next){
    if(retainedFolders.length>readableFolders.length){showWritingAccessRequired(retainedFolders);return;}
    const previousProject=typeof selectedProject==='string'?selectedProject:'all';
    const previousPath=activeFile?.relativePath;
-   try{const access=await Werkmap.allAccess(false);const dir=await access.root.getDirectoryHandle('Schrijven');
+   try{const dir=window.WerkplaatsSchrijfmap?await WerkplaatsSchrijfmap.ready():await(await Werkmap.allAccess(false)).root.getDirectoryHandle('Schrijven');
     await dir.values().next();diskFolder=dir;
    }catch{}
    const diskDocuments=[],diskTexts=new Map();

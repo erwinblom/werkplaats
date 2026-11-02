@@ -4,7 +4,8 @@ window.WerkplaatsVertalingen={
   "Werkplaats is bedacht door Erwin Blom en gebouwd met AI, voortbouwend op werk van andere makers. De broncode staat openbaar op": "Werkplaats was conceived by Erwin Blom and built with AI, building on work by other makers. The source code is public on",
   ". De projectbijdragen zijn beschikbaar onder MIT; oorspronkelijke onderdelen behouden hun eigen licenties en credits. Organisaties kunnen de tools ook op hun eigen website of intranet aanbieden.": ". Project contributions are available under MIT; original components retain their own licences and credits. Organisations can also offer the tools on their own website or intranet.",
 
-
+  "Deze factuur uit Boekhouding naar de prullenbak verplaatsen? De factuur in Facturen en bestaande betalingen blijven behouden.": "Move this invoice from Accounting to the trash? The original invoice and existing payments are kept.",
+  "Factuur verplaatst naar de prullenbak. Gebruik Bewaar alles voor je werkmap.": "Invoice moved to the trash. Use Save all to save your workspace.",
   "Beheer en notities": "Management and notes",
   "Datums en status": "Dates and status",
   "Abonnement en kosten": "Subscription and cost",
@@ -173,7 +174,7 @@ window.WerkplaatsVertalingen={
   "Meer gegevens": "More details",
   "Onderwerpen (optioneel, gescheiden door komma’s)": "Topics (optional, separated by commas)",
   "Bewaar en werk verder": "Save and keep working",
-  "Kies Bewaar in mijn werkmap bij je notitie. Voeg daarna een volgend idee toe, werk je notitie uit of open een andere tool. Later verdergaan? Open dezelfde werkmap.": "Choose Save in my work folder for your note. Then add another idea, develop your note or open another tool. To continue later, open the same work folder.",
+  "Kies Bewaar bij je notitie. Voeg daarna een volgend idee toe, werk je notitie uit of open een andere tool. Later verdergaan? Open dezelfde werkmap.": "Choose Save for your note. Then add another idea, develop your note or open another tool. To continue later, open the same work folder.",
   "Voeg een volgend idee toe, werk je notitie uit of open een andere tool. Later verdergaan? Open dezelfde werkmap.": "Add another idea, develop your note or open another tool. To continue later, open the same work folder.",
 
   "Notitieacties": "Note actions",
@@ -207,7 +208,7 @@ window.WerkplaatsVertalingen={
   "Geef je idee een titel en schrijf een paar regels.": "Give your idea a title and write a few lines.",
   "Maak mijn eerste notitie": "Create my first note",
   "Bewaar en kom later terug": "Save and return later",
-  "Kies Bewaar in mijn werkmap bij je notitie. Open morgen Begin hier.html en kies Verder werken met dezelfde map.": "Choose Save in my work folder in your note. Tomorrow, open Begin hier.html and choose Continue working with the same folder.",
+  "Kies Bewaar bij je notitie. Open morgen Begin hier.html en kies Verder werken met dezelfde map.": "Choose Save in your note. Tomorrow, open Begin hier.html and choose Continue working with the same folder.",
   "Stap 2 van 3: schrijf je eerste notitie. Bewaar haar daarna in je werkmap.": "Step 2 of 3: write your first note, then save it in your work folder.",
   "Kies eerst op de homepage een werkmap. Je kunt hier wel alvast een notitie maken.": "Choose a work folder on the home page first. You can already create a note here.",
   "Schrijf een titel en een paar regels. Met de knop hieronder bewaar je de notitie in je eigen werkmap.": "Write a title and a few lines. Use the button below to save the note in your own work folder.",
@@ -215,7 +216,6 @@ window.WerkplaatsVertalingen={
   "Bewaren kon niet worden bevestigd. Probeer opnieuw.": "Saving could not be confirmed. Please try again.",
   "Je eerste notitie staat in werkmap:": "Your first note is saved in work folder:",
   "Open morgen Begin hier.html en kies Verder werken met dezelfde map.": "Tomorrow, open Begin hier.html and choose Continue working with the same folder.",
-  "Bewaar in mijn werkmap": "Save in my work folder",
 
   "De projectkoppelingen zijn in een ander venster gewijzigd. Heropen de notitie om de nieuwste koppelingen te zien.": "The project links were changed in another window. Reopen the note to see the latest links.",
   "Een gekozen project is niet meer beschikbaar. Heropen de projectkeuze.": "A selected project is no longer available. Reopen the project picker.",
@@ -602,6 +602,10 @@ window.WerkplaatsVertalingen={
   "Bijwerken mislukt.": "Could not update.",
   "Binnen {0}": "Within {0}",
   "Boek betaling": "Record payment",
+  "Betaling registreren": "Record payment",
+  "Opgenomen in Boekhouding": "Included in Bookkeeping",
+  "Nog niet opgenomen in Boekhouding": "Not yet included in Bookkeeping",
+  "openstaand": "outstanding",
   "Boek je tijd per klant en project. Bekijk je week en exporteer je uren.": "Track time by customer and project. View your week and export your hours.",
   "Boekhouden": "Bookkeeping",
   "Boekhoudstatus niet geladen. Herlaad de pagina.": "Bookkeeping status not loaded. Reload the page.",
@@ -856,7 +860,7 @@ window.WerkplaatsVertalingen={
   "Deze taken staan al op dit bord.": "These tasks are already on this board.",
   "Deze tool is in een ander venster gewijzigd. Download eventueel je huidige invoer als kopie en herlaad voordat je de werkmap bijwerkt.": "This tool has changed in another window. Download your current input as a copy if needed and reload before updating the workspace folder.",
   "Deze tool is in een ander venster gewijzigd. Herlaad eerst.": "This tool has changed in another window. Reload first.",
-  "Deze uitleg beschrijft versie 0.36.13 van Werkplaats, 2 november 2026.": "This help describes Werkplaats version 0.36.13, 15 October 2026.",
+  "Deze uitleg beschrijft versie 0.36.13 van Werkplaats, 27 oktober 2026.": "This help describes Werkplaats version 0.36.13, 15 October 2026.",
   "Dat is de kracht van open source: je hoeft niet vanaf nul te beginnen en je zit ook niet vast aan onze keuzes. Je kunt een werkende basis gebruiken, haar persoonlijk maken en verbeteringen weer met anderen delen.": "That is the strength of open source: you do not have to start from scratch and you are not locked into our choices. You can use a working foundation, make it personal and share improvements with others.",
   "Download de broncode of maak een eigen kopie op GitHub. Je kunt functies en complete tools toevoegen, aanpassen of verwijderen.": "Download the source code or make your own copy on GitHub. You can add, change or remove features and complete tools.",
   "Een AI-codeassistent kan de gewone HTML-, CSS- en JavaScriptbestanden met je aanpassen. Werk vanuit een kopie, beschrijf concreet wat je wilt en controleer daarna of bewaren en heropenen blijven werken.": "An AI coding assistant can help you change the plain HTML, CSS and JavaScript files. Work from a copy, describe precisely what you want and then verify that saving and reopening still work.",
@@ -3406,7 +3410,7 @@ window.WerkplaatsVertalingen={
 "Stap 2 van 3 · Geef je notitie een titel en schrijf een paar regels.": "Step 2 of 3 \u00b7 Give your note a title and write a few lines.",
 "Bewaard in je werkmap": "Saved in your workspace folder",
 "Nog niet bewaard in je werkmap": "Not yet saved in your workspace folder",
-"Bewaar in mijn werkmap slaat je notitie op.": "Save to my workspace folder saves your note.",
+"Bewaar slaat je notitie op.": "Save saves your note.",
 "Maak hem van jou · 1 minuut": "Make it yours \u00b7 1 minute",
 "Bronnen{0}": "Sources{0}"
 };
@@ -3457,23 +3461,6 @@ Object.assign(window.WerkplaatsVertalingen,{
   "Bestaande werkmap openen": "Open existing work folder",
   "Naar Home": "Go to Home",
   "Geef opnieuw toegang tot je werkmap. Je bestanden blijven staan.": "Grant access to your work folder again. Your files remain in place."
-});
-
-Object.assign(window.WerkplaatsVertalingen,{
-  "Kies een PNG-, JPEG- of WebP-afbeelding.": "Choose a PNG, JPEG or WebP image.",
-  "Kies een logo van maximaal 2 MB.": "Choose a logo no larger than 2 MB.",
-  "Dit bestand is geen geldige PNG-, JPEG- of WebP-afbeelding.": "This file is not a valid PNG, JPEG or WebP image.",
-  "Het logo kon niet worden gelezen. Kies een andere afbeelding.": "The logo could not be read. Choose another image.",
-  "De afbeelding is te groot. Kies een kleiner logo.": "The image is too large. Choose a smaller logo.",
-  "Het logo kon niet worden verwerkt.": "The logo could not be processed.",
-  "Logo voor brieven": "Logo for letters",
-  "PNG, JPEG of WebP, maximaal 2 MB. Het logo wordt lokaal verkleind en in nieuwe brieven opgenomen.": "PNG, JPEG or WebP, up to 2 MB. The logo is resized locally and included in new letters.",
-  "Voorbeeld organisatielogo": "Organisation logo preview",
-  "Logo verwijderen": "Remove logo",
-  "Logo verwerken…": "Processing logo…",
-  "Logo gereed. Kies Bewaar gegevens om het te bewaren.": "Logo ready. Choose Save details to save it.",
-  "Deze gegevens verschijnen automatisch op nieuwe brieven, offertes en conceptfacturen. Bestaande documenten behouden hun eigen gegevens.": "These details appear automatically on new letters, quotes and draft invoices. Existing documents keep their own details.",
-  "Mijn organisatie bewaard voor nieuwe brieven, offertes en facturen. Gebruik Bewaar alles om de gegevens in je werkmap vast te leggen.": "Organisation saved for new letters, quotes and invoices. Use Save all to save these details to your workspace folder."
 });
 
 Object.assign(window.WerkplaatsVertalingen,{

@@ -91,6 +91,14 @@
         }
 
         async function saveDirectoryHandles(handles) {
+            if(window.WerkplaatsSchrijfmap){
+                const stored=await getStoredDirectoryHandles();
+                handles=handles.filter(handle=>!handle.werkplaatsLokaal);
+                for(const handle of stored){
+                    let permitted=false;try{permitted=await handle.queryPermission({mode:'read'})==='granted';}catch{}
+                    if((handle.name==='Schrijven'||!permitted)&&!handles.some(other=>other.name===handle.name))handles.push(handle);
+                }
+            }
             try {
                 const db = await openDB();
                 const tx = db.transaction(STORE_NAME, 'readwrite');
@@ -107,6 +115,17 @@
         }
 
         async function getSavedDirectoryHandles() {
+            const stored=await getStoredDirectoryHandles();
+            if(!window.WerkplaatsSchrijfmap)return stored;
+            const handles=[await WerkplaatsSchrijfmap.ready()];
+            for(const handle of stored){
+                if(handle.name==='Schrijven')continue;
+                try{if(await handle.queryPermission({mode:'read'})==='granted')handles.push(handle);}catch{}
+            }
+            return handles;
+        }
+
+        async function getStoredDirectoryHandles() {
             try {
                 const db = await openDB();
                 const tx = db.transaction(STORE_NAME, 'readonly');
@@ -194,6 +213,7 @@
         async function addFolder(selectAddedProject = false) {
             if (GereedschapskistMode.example) { GereedschapskistMode.go('own'); return; }
             try {
+                if(window.WerkplaatsSchrijfmap){const writing=await WerkplaatsSchrijfmap.ready();directoryHandles=[writing,...directoryHandles.filter(handle=>handle.name!=='Schrijven')];selectedProject='Schrijven';await loadFiles({skipRestore:true});return;}
                 await Werkmap.recall();
                 if(Werkmap.active){
                     const access=await Werkmap.allAccess();
@@ -373,16 +393,18 @@
             const panel=document.createElement('div');panel.id='writingAccessRequired';panel.className='sidebar-footer';
             list.before(panel);
             const message=document.createElement('p');message.textContent=I18n.t('Geef toegang om je schrijfmappen te openen.');message.style.cssText='font:14px/1.5 Arial;margin:0 0 12px;overflow-wrap:anywhere';
-            const button=document.createElement('button');button.type='button';button.className='edit-btn';button.style.cssText='font:600 14px Arial;padding:10px 14px;border:1px solid #bbb;background:#fff;color:#222;cursor:pointer';button.textContent=I18n.t('Geef opnieuw toegang');
+            const button=document.createElement('button');button.type='button';button.className='edit-btn';button.style.cssText='font:600 14px Arial;padding:10px 14px;border:1px solid #bbb;background:#fff;color:#222;cursor:pointer';button.textContent=I18n.t(window.WerkplaatsSchrijfmap?'Opnieuw proberen':'Geef opnieuw toegang');
             button.onclick=async()=>{
                 // Request access immediately from this click, before any other await.
                 button.disabled=true;message.textContent=I18n.t('Toegang controleren…');
                 try{
-                    const accessRequest = savedHandles
+                    const accessRequest = window.WerkplaatsSchrijfmap ? WerkplaatsSchrijfmap.ready().then(()=>['granted']) : savedHandles
                         ? Promise.all(savedHandles.map(handle => handle.requestPermission({mode:'read'})))
                         : Werkmap.requestReadAccess();
                     const permissions=await accessRequest;
-                    if(savedHandles){
+                    if(window.WerkplaatsSchrijfmap){
+                        directoryHandles=await getSavedDirectoryHandles();
+                    }else if(savedHandles){
                         if(permissions.some(state=>state!=='granted'))throw Error(I18n.t('Geef toegang om je schrijfmappen te openen.'));
                         directoryHandles=savedHandles;
                     }else{
@@ -399,6 +421,7 @@
             };
             const choose=document.createElement('button');choose.type='button';choose.className='edit-btn';choose.textContent=I18n.t('Schrijven-map opnieuw koppelen');choose.style.cssText=button.style.cssText+';margin-top:10px';
             choose.onclick=async()=>{const selection=window.showDirectoryPicker({id:'writing-reconnect',mode:'read'});choose.disabled=true;try{const writing=await selection;if(writing.name!=='Schrijven')throw Error(I18n.t('Kies de map Schrijven binnen Mijn werk.'));directoryHandles=[writing];await saveDirectoryHandles(directoryHandles);selectedProject='Schrijven';activeFile=null;await loadFiles({skipRestore:true});for(const path of folderHandlesByPath.keys())expandedFolders.add(path);renderFileList();}catch(error){if(error.name!=='AbortError'){message.textContent=error.message;message.setAttribute('role','alert');}}finally{choose.disabled=false;}};
+            choose.hidden=!!window.WerkplaatsSchrijfmap;
             panel.append(message,button,choose);
         }
         async function restoreSavedFolders() {
@@ -406,6 +429,23 @@
             if(window.WerkplaatsDocumentBridge)return await WerkplaatsDocumentBridge.open();
             await GereedschapskistMode.ready;
             if (GereedschapskistMode.redirecting) return;
+            if(window.WerkplaatsSchrijfmap){
+                try{
+                    directoryHandles=[];
+                    for(const handle of await getSavedDirectoryHandles()){
+                        try{if(await handle.queryPermission({mode:'read'})==='granted')directoryHandles.push(handle);}catch{}
+                    }
+                    selectedProject='Schrijven';
+                    await loadFiles();
+                    for(const path of folderHandlesByPath.keys())expandedFolders.add(path);
+                    renderFileList();
+                }catch(error){
+                    showWritingAccessRequired();
+                    const message=document.querySelector('#writingAccessRequired p');
+                    if(message){message.textContent=error.message;message.setAttribute('role','alert');}
+                }
+                return;
+            }
             // The workmap's writing folder is the canonical starting point.
             if(window.Werkmap){
                 await Werkmap.ready;
