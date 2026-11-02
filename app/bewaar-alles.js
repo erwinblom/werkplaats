@@ -417,8 +417,9 @@
    const saved=round?.values.find(value=>value.tool===tool);
    if(!saved||live.revision!==revision||savedContent(live)!==savedContent(saved)||sharedContent(shared)!==sharedContent(round.shared))return false;
    // Disk reads can yield to editing, another tab or a changed round. Recheck before acknowledging.
-   if(savedContent(await snapshot())!==savedContent(live)||sharedContent(await readShared())!==sharedContent(shared)||await currentRoundName(root)!==round.name)return false;
-   return Werkstatus.verifiedWritten(checkpoint);
+   const after=await snapshot(),current=await Werkmap.allAccess(false);
+   if(after.revision!==revision||current.revision!==revision||!await root.isSameEntry(current.root)||savedContent(after)!==savedContent(live)||sharedContent(await readShared())!==sharedContent(shared)||await currentRoundName(root)!==round.name)return false;
+   return Werkstatus.verifiedWritten(checkpoint,round.date);
   }catch{return false;} // Denied access or an unreadable round must never produce a saved status.
  }
  async function hydrate(){

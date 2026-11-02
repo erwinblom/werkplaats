@@ -83,7 +83,7 @@ async function exercise(base,kind){
  const parent=process.platform==='win32'?path.join(os.homedir(),'Documents','Werkplaats CH510'):os.tmpdir();fs.mkdirSync(parent,{recursive:true});
  const folder=fs.mkdtempSync(path.join(parent,'werkplaats-ch510-'));
  const profile=fs.mkdtempSync(path.join(os.tmpdir(),'werkplaats-profile-ch510-'));
- const pdfDir=path.join(folder,'PDF exports');fs.mkdirSync(pdfDir,{recursive:true});
+ const pdfDir=fs.mkdtempSync(path.join(parent,'werkplaats-pdf-ch510-'));
  fs.mkdirSync(path.join(profile,'Default'),{recursive:true});
  fs.writeFileSync(path.join(profile,'Default','Preferences'),JSON.stringify({printing:{print_preview_sticky_settings:{appState:JSON.stringify({recentDestinations:[{id:'Save as PDF',origin:'local',account:''}],selectedDestinationId:'Save as PDF',version:2,isHeaderFooterEnabled:false,isCssBackgroundEnabled:true})}},savefile:{default_directory:pdfDir},download:{default_directory:pdfDir}}));
  const launchOptions={...browserOptions,args:[...(browserOptions.args||[]),'--kiosk-printing']};
@@ -98,12 +98,14 @@ async function exercise(base,kind){
   progress(kind,'operate native picker');entry.nativeHelperExit=await nativeInput(folder,kind);progress(kind,'native input helper exit '+entry.nativeHelperExit);
   try{
    await p.waitForFunction(()=>window.__pickerFinished&&Werkmap.active,null,{timeout:20000});
+   entry.selectedFolder=await p.evaluate(()=>Werkmap.name);assert.equal(entry.selectedFolder,path.basename(folder),'native picker must select the exact intended fixture');
    assert(fs.existsSync(path.join(folder,'gereedschapskist-werkmap.json')),'native fixture metadata exists on OS disk');entry.nativePicker=true;progress(kind,'native picker + OS metadata confirmed');entry.storage='user-selected OS directory';
   }catch(e){
    entry.nativePickerError=String(e);entry.nativePicker=false;progress(kind,'native picker not proven: '+e.message);
    try{entry.nativePageStatus=await Promise.race([p.evaluate(()=>({message:document.getElementById('wm-message')?.textContent,finished:window.__pickerFinished,active:window.Werkmap?.active})),new Promise((_,reject)=>setTimeout(()=>reject(Error('native status read timed out')),2000))]);}catch(statusError){entry.nativeStatusError=String(statusError);}
    try{await p.screenshot({path:path.join(out,kind+'-native-timeout-page.png'),timeout:2000});}catch{}
    save();
+   if(process.env.PRIMARY_ROUTE_ONLY==='1')throw e;
    // Close any unresolved native dialog and replace the whole context. No false native success.
    if(process.platform==='win32')await new Promise(r=>spawn('powershell',['-NoProfile','-Command',"$keys=New-Object -ComObject WScript.Shell; $keys.SendKeys('{ESC}')"]).on('close',r));
    else await new Promise(r=>spawn('xdotool',['key','Escape']).on('close',r));
@@ -162,7 +164,8 @@ async function exercise(base,kind){
   await p.evaluate(()=>SchrijfNotities.view('notes'));
   await p.getByRole('button').filter({has:p.getByRole('heading',{name:title,exact:true})}).waitFor();
   entry.browserRestart.status=await p.locator('#file-status').innerText();
-  if(process.env.CHECK_SAVED_STATUS==='1')assert(!/nog niet in werkmap/i.test(entry.browserRestart.status),'saved note must not show false unsaved status after browser restart');
+  entry.browserRestart.statusCorrect=!/nog niet in werkmap/i.test(entry.browserRestart.status);
+  if(process.env.CHECK_SAVED_STATUS==='1'&&!entry.browserRestart.statusCorrect)(entry.validationErrors??=[]).push('saved note shows false unsaved status after browser restart');
   entry.browserRestart.exactNoteOnDisk=true;entry.browserRestart.uiNotePresent=true;entry.browserRestart.passed=true;
   await p.screenshot({path:path.join(out,kind+'-browser-restarted.png'),fullPage:true});save();
   // Real application print route in headed Chrome; kiosk only automates Save as PDF in this disposable profile.
@@ -186,6 +189,7 @@ async function exercise(base,kind){
   assert.equal(parse.status,0,'PDF text/A4/page-number check: '+parse.stderr);
   entry.pdf={...JSON.parse(parse.stdout),method:'headed Chrome window.print through app DocumentPrint; disposable kiosk Save as PDF, not headless page.pdf',passed:true};
   fs.copyFileSync(pdfFile,path.join(out,kind+'-export.pdf'));save();progress(kind,'browser restart and two-page PDF verified');
+  assert.equal((entry.validationErrors||[]).length,0,(entry.validationErrors||[]).join('; '));
 
  }catch(e){entry.failure=String(e.stack||e);progress(kind,'FAILED: '+e.message);try{await p.screenshot({path:path.join(out,kind+'-failed.png'),fullPage:true});fs.writeFileSync(path.join(out,kind+'-failed.html'),await p.content());}catch{}throw e;}
  finally{save();await ctx.close();}
