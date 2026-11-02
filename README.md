@@ -84,7 +84,7 @@ Wil je tussen website en download wisselen? Bewaar eerst, sluit de vorige versie
 
 </details>
 
-## Trek je werkkleren aan
+## Aan de slag
 
 Zie je iets dat slimmer kan? Pak je gereedschap — of je favoriete AI — en probeer het in een kopie. Een bug melden of een idee delen mag natuurlijk ook. Je hoeft niet op mijn planning te wachten om iets naar jouw hand te zetten.
 
