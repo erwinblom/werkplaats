@@ -1,12 +1,12 @@
 'use strict';
 // Shared local records. Tool files remain the open JSON/Markdown interchange format.
 window.Samenwerken=(()=>{
- const businessKeys=['name','address','email','iban','kvk','vat'];
+ const businessKeys=['name','address','email','iban','kvk','vat','logo'];
  async function contacts(){return (await BewaarAlles.readTool('Contacten')).data.contacts;}
  async function projects(){const [plans,shared]=await Promise.all([BewaarAlles.readTool('Publicatieplanner'),BewaarAlles.readShared()]);const all=[...plans.data.items.filter(i=>i.kind==='project').map(i=>({id:i.id,name:i.title})),...(shared.projects||[])];return all.filter((p,n)=>all.findIndex(x=>x.id===p.id)===n);}
  async function identify(client,project){const book=await contacts(),list=await projects();const c=book.find(c=>(c.organization||c.name)===client),matches=list.filter(p=>p.name===project);return {contactId:c?.id||'',projectId:matches.length===1?matches[0].id:''};}
  async function business(){return (await BewaarAlles.readShared()).business||null;}
- async function setBusiness(value){const next=Object.fromEntries(businessKeys.map(k=>[k,String(value[k]||'')]));await BewaarAlles.updateShared(s=>s.business=next);}
+ async function setBusiness(value){const next=Object.fromEntries(businessKeys.filter(k=>k!=='logo'||Object.hasOwn(value,k)).map(k=>[k,String(value[k]||'')]));await BewaarAlles.updateShared(s=>s.business={...(s.business||{}),...next});}
  function completeDraftBusiness(source,profile){
   const draft={...source};
   if(!profile?.name?.trim()||!draft.name?.trim()||draft.name.trim().toLocaleLowerCase('nl')!==profile.name.trim().toLocaleLowerCase('nl'))return draft;

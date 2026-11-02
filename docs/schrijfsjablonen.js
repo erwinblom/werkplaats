@@ -1,11 +1,15 @@
 'use strict';
 window.Schrijfsjablonen=(()=>{
  const regels=value=>String(value||'').trim().split(/\r?\n/).map(line=>line.trim()).filter(Boolean);
- function brief(bedrijf,datum=new Date()){
-  if(!bedrijf?.name?.trim())throw Error(I18n.value(I18n.ui("Vul eerst je bedrijfsnaam in via Werkmap → Mijn organisatie.",'Vul eerst je bedrijfsnaam in via Werkmap → Mijn organisatie.')));
-  const afzender=[...regels(bedrijf.address),bedrijf.email?.trim()||''].filter(Boolean);
+ function brief(bedrijf,datum=new Date(),titel='Brief'){
+  if(!bedrijf?.name?.trim())throw Error(I18n.value(I18n.ui("Vul eerst je bedrijfsnaam in via Instellingen → Mijn organisatie.",'Vul eerst je bedrijfsnaam in via Instellingen → Mijn organisatie.')));
+  const tekst=value=>String(value||'').replace(/[\r\n]+/g,' ').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/[\\`*_{}\[\]#|]/g,'\\$&').trim();
+  const afzender=[...regels(bedrijf.address),bedrijf.email?.trim()||''].filter(Boolean).map(tekst);
   const vandaag=new Intl.DateTimeFormat(I18n.locale(),{day:'numeric',month:'long',year:'numeric'}).format(datum);
-  return '# '+bedrijf.name.trim()+'\n\n'+(afzender.length?afzender.join('  \n')+'\n\n':'')+
+  const logo=/^data:image\/(?:png|jpeg|webp);base64,[A-Za-z0-9+/=]+$/.test(bedrijf.logo||'')?'![Briefhoofd]('+bedrijf.logo+')\n\n':'';
+  const rawTitle=String(titel||'Brief').replace(/[\r\n]+/g,' ').trim()||'Brief';
+  const title=tekst(rawTitle);
+  return '---\ntitle: '+JSON.stringify(rawTitle)+'\ntype: brief\n---\n\n# '+title+'\n\n'+logo+'**'+tekst(bedrijf.name)+'**\n\n'+(afzender.length?afzender.join('  \n')+'\n\n':'')+
    '---\n\n**Aan:** [Naam ontvanger]  \n**Adres:** [Adres ontvanger]\n\n'+vandaag+
    '\n\n**Onderwerp:** [Onderwerp]\n\nBeste [naam],\n\n[Schrijf hier je brief.]\n\nMet vriendelijke groet,\n\n[Naam afzender]\n';
  }
@@ -99,7 +103,7 @@ window.Schrijfsjablonen=(()=>{
    '## Open vragen\n\n- [Wat moet nog worden uitgezocht?]\n';
  }
  async function maak(soort,titel){
-  if(soort==='brief')return brief((await BewaarAlles.readShared()).business);
+  if(soort==='brief')return brief((await BewaarAlles.readShared()).business,new Date(),titel);
   if(soort==='artikel')return artikel(titel);
   if(soort==='nieuwsbrief')return nieuwsbrief(titel);
   if(soort==='gespreksverslag')return gespreksverslag(titel);

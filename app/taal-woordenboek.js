@@ -856,7 +856,7 @@ window.WerkplaatsVertalingen={
   "Deze taken staan al op dit bord.": "These tasks are already on this board.",
   "Deze tool is in een ander venster gewijzigd. Download eventueel je huidige invoer als kopie en herlaad voordat je de werkmap bijwerkt.": "This tool has changed in another window. Download your current input as a copy if needed and reload before updating the workspace folder.",
   "Deze tool is in een ander venster gewijzigd. Herlaad eerst.": "This tool has changed in another window. Reload first.",
-  "Deze uitleg beschrijft versie 0.36.11 van Werkplaats, 27 oktober 2026.": "This help describes Werkplaats version 0.36.11, 15 October 2026.",
+  "Deze uitleg beschrijft versie 0.36.12 van Werkplaats, 2 november 2026.": "This help describes Werkplaats version 0.36.12, 15 October 2026.",
   "Dat is de kracht van open source: je hoeft niet vanaf nul te beginnen en je zit ook niet vast aan onze keuzes. Je kunt een werkende basis gebruiken, haar persoonlijk maken en verbeteringen weer met anderen delen.": "That is the strength of open source: you do not have to start from scratch and you are not locked into our choices. You can use a working foundation, make it personal and share improvements with others.",
   "Download de broncode of maak een eigen kopie op GitHub. Je kunt functies en complete tools toevoegen, aanpassen of verwijderen.": "Download the source code or make your own copy on GitHub. You can add, change or remove features and complete tools.",
   "Een AI-codeassistent kan de gewone HTML-, CSS- en JavaScriptbestanden met je aanpassen. Werk vanuit een kopie, beschrijf concreet wat je wilt en controleer daarna of bewaren en heropenen blijven werken.": "An AI coding assistant can help you change the plain HTML, CSS and JavaScript files. Work from a copy, describe precisely what you want and then verify that saving and reopening still work.",
@@ -2212,7 +2212,7 @@ window.WerkplaatsVertalingen={
   "Verplaatst naar {0}. Bewaar alles om je werkmap bij te werken.": "Moved to {0}. Use Save all to update your workspace folder.",
   "Verschil": "Difference",
   "Versie": "Version",
-  "Versie 0.36.11": "Version 0.36.11",
+  "Versie 0.36.12": "Version 0.36.12",
   "Versie en download": "Version and download",
   "Verstuurd": "Sent",
   "Verwerken en bewaren": "Process and save",
@@ -3457,4 +3457,39 @@ Object.assign(window.WerkplaatsVertalingen,{
   "Bestaande werkmap openen": "Open existing work folder",
   "Naar Home": "Go to Home",
   "Geef opnieuw toegang tot je werkmap. Je bestanden blijven staan.": "Grant access to your work folder again. Your files remain in place."
+});
+
+Object.assign(window.WerkplaatsVertalingen,{
+  "Kies een PNG-, JPEG- of WebP-afbeelding.": "Choose a PNG, JPEG or WebP image.",
+  "Kies een logo van maximaal 2 MB.": "Choose a logo no larger than 2 MB.",
+  "Dit bestand is geen geldige PNG-, JPEG- of WebP-afbeelding.": "This file is not a valid PNG, JPEG or WebP image.",
+  "Het logo kon niet worden gelezen. Kies een andere afbeelding.": "The logo could not be read. Choose another image.",
+  "De afbeelding is te groot. Kies een kleiner logo.": "The image is too large. Choose a smaller logo.",
+  "Het logo kon niet worden verwerkt.": "The logo could not be processed.",
+  "Logo voor brieven": "Logo for letters",
+  "PNG, JPEG of WebP, maximaal 2 MB. Het logo wordt lokaal verkleind en in nieuwe brieven opgenomen.": "PNG, JPEG or WebP, up to 2 MB. The logo is resized locally and included in new letters.",
+  "Voorbeeld organisatielogo": "Organisation logo preview",
+  "Logo verwijderen": "Remove logo",
+  "Logo verwerken…": "Processing logo…",
+  "Logo gereed. Kies Bewaar gegevens om het te bewaren.": "Logo ready. Choose Save details to save it.",
+  "Deze gegevens verschijnen automatisch op nieuwe brieven, offertes en conceptfacturen. Bestaande documenten behouden hun eigen gegevens.": "These details appear automatically on new letters, quotes and draft invoices. Existing documents keep their own details.",
+  "Mijn organisatie bewaard voor nieuwe brieven, offertes en facturen. Gebruik Bewaar alles om de gegevens in je werkmap vast te leggen.": "Organisation saved for new letters, quotes and invoices. Use Save all to save these details to your workspace folder."
+});
+
+Object.assign(window.WerkplaatsVertalingen,{
+  "Kies een PNG-, JPEG- of WebP-afbeelding.": "Choose a PNG, JPEG or WebP image.",
+  "Kies een logo van maximaal 2 MB.": "Choose a logo no larger than 2 MB.",
+  "Dit bestand is geen geldige PNG-, JPEG- of WebP-afbeelding.": "This file is not a valid PNG, JPEG or WebP image.",
+  "Het logo kon niet worden gelezen. Kies een andere afbeelding.": "The logo could not be read. Choose another image.",
+  "De afbeelding is te groot. Kies een kleiner logo.": "The image is too large. Choose a smaller logo.",
+  "Het logo kon niet worden verwerkt.": "The logo could not be processed.",
+  "Logo voor brieven": "Logo for letters",
+  "PNG, JPEG of WebP, maximaal 2 MB. Het logo wordt lokaal verkleind en in nieuwe brieven opgenomen.": "PNG, JPEG or WebP, up to 2 MB. The logo is resized locally and included in new letters.",
+  "Voorbeeld organisatielogo": "Organisation logo preview",
+  "Logo verwijderen": "Remove logo",
+  "Logo verwerken…": "Processing logo…",
+  "Logo gereed. Kies Bewaar gegevens om het te bewaren.": "Logo ready. Choose Save details to save it.",
+  "Deze gegevens verschijnen automatisch op nieuwe brieven, offertes en conceptfacturen. Bestaande documenten behouden hun eigen gegevens.": "These details appear automatically on new letters, quotes and draft invoices. Existing documents keep their own details.",
+  "Mijn organisatie bewaard voor nieuwe brieven, offertes en facturen. Gebruik Bewaar alles om de gegevens in je werkmap vast te leggen.": "Organisation saved for new letters, quotes and invoices. Use Save all to save these details to your workspace folder.",
+  "Voor nieuwe brieven, offertes en facturen. Bestaande documenten behouden hun gegevens.": "For new letters, quotes and invoices. Existing documents keep their details."
 });

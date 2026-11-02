@@ -161,3 +161,12 @@ Agenda-export is oorspronkelijk gemaakt door **Erik van Elten**. Zijn [MIT-licen
 De projectbijdragen zijn beschikbaar onder de [MIT-licentie](LICENSE); oorspronkelijke onderdelen behouden hun eigen licenties en credits. Organisaties kunnen Werkplaats ook op een eigen website of intranet aanbieden.
 
 Bedacht en uitgeprobeerd door [Erwin Blom](https://github.com/erwinblom), gebouwd met AI en werk van andere makers.
+
+
+## Brief maken en als PDF bewaren
+
+Vul bij Instellingen → Mijn gegevens de organisatienaam, het adres en e-mailadres in. Kies desgewenst een logo (PNG, JPEG of WebP, maximaal 2 MB) en klik Bewaar gegevens. Deze briefgegevens zijn ook beschikbaar wanneer Administratie uit staat.
+
+Kies in Schrijven → Documenten → Nieuw → Nieuwe brief. Het briefhoofd en logo worden in het Markdown-bestand bewaard; latere organisatieaanpassingen veranderen bestaande brieven niet. Bewerk de brief en kies Bewaar. Met Pagina-einde in de opmaakbalk begint de volgende inhoud op een nieuwe afdrukpagina.
+
+Kies Meer → Paginaopmaak / PDF, stel A4-marges en paginanummers in en kies Afdrukken / PDF bewaren. Kies Bewaar als PDF in Chrome of Edge en zet de browseroptie Kop- en voetteksten uit. De definitieve pagina-indeling is zichtbaar in dat afdrukvenster. PDF werkt ook via het bestaande Exporteren-menu. Afbeeldingen moeten volledig geladen zijn voordat afdrukken beschikbaar wordt.

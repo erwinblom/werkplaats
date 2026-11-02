@@ -1,0 +1,14 @@
+{
+  "baseline": "849f791f1d9e77412183f8fb142fbf2f6456b3c0",
+  "version": "0.36.12",
+  "scope": "Letterhead/logo settings, portable Markdown letter, A4 preview/margins/page numbers/page breaks; existing features retained",
+  "sourceCommit": "c5a0203",
+  "privateData": false,
+  "tests": {
+    "canonicalSource": "42/42 PASS",
+    "publicFullLetterRoute": "PASS",
+    "independentChecker": "PASS",
+    "nativeLocalDiskAndPDF": "PASS"
+  },
+  "legacyTestHarness": "Unchanged older tests contain missing mocks; they are not an acceptance claim for this release."
+}

@@ -1,4 +1,29 @@
 'use strict';
+// Organisation logos are decoded and re-encoded locally; no upload is made.
+window.WerkplaatsOrganizationLogo=(()=>{
+ async function fromFile(file){
+  if(!file||!['image/png','image/jpeg','image/webp'].includes(file.type))throw Error(I18n.t('Kies een PNG-, JPEG- of WebP-afbeelding.'));
+  if(!file.size||file.size>2000000)throw Error(I18n.t('Kies een logo van maximaal 2 MB.'));
+  const bytes=new Uint8Array(await file.slice(0,12).arrayBuffer());
+  const png=bytes[0]===137&&bytes[1]===80&&bytes[2]===78&&bytes[3]===71&&bytes[4]===13&&bytes[5]===10&&bytes[6]===26&&bytes[7]===10;
+  const jpeg=bytes[0]===255&&bytes[1]===216&&bytes[2]===255;
+  const webp=String.fromCharCode(...bytes.slice(0,4))==='RIFF'&&String.fromCharCode(...bytes.slice(8,12))==='WEBP';
+  if(!(file.type==='image/png'&&png||file.type==='image/jpeg'&&jpeg||file.type==='image/webp'&&webp))throw Error(I18n.t('Dit bestand is geen geldige PNG-, JPEG- of WebP-afbeelding.'));
+  const url=await new Promise((resolve,reject)=>{const reader=new FileReader();reader.onload=()=>resolve(reader.result);reader.onerror=()=>reject(Error(I18n.t('Het logo kon niet worden gelezen. Kies een andere afbeelding.')));reader.readAsDataURL(file);}),image=new Image();
+  {
+   await new Promise((resolve,reject)=>{image.onload=resolve;image.onerror=()=>reject(Error(I18n.t('Het logo kon niet worden gelezen. Kies een andere afbeelding.')));image.src=url;});
+   if(!image.naturalWidth||!image.naturalHeight||image.naturalWidth*image.naturalHeight>40000000)throw Error(I18n.t('De afbeelding is te groot. Kies een kleiner logo.'));
+   const scale=Math.min(1,800/image.naturalWidth,400/image.naturalHeight),canvas=document.createElement('canvas');
+   canvas.width=Math.max(1,Math.round(image.naturalWidth*scale));canvas.height=Math.max(1,Math.round(image.naturalHeight*scale));
+   const context=canvas.getContext('2d');if(!context)throw Error(I18n.t('Het logo kon niet worden verwerkt.'));
+   context.drawImage(image,0,0,canvas.width,canvas.height);
+   const result=canvas.toDataURL('image/png');if(!/^data:image\/png;base64,[A-Za-z0-9+/]+=*$/.test(result))throw Error(I18n.t('Het logo kon niet worden verwerkt.'));
+   return result;
+  }
+ }
+ function previewable(value){return typeof value==='string'&&/^data:image\/(?:png|jpeg|webp);base64,[A-Za-z0-9+/]+=*$/.test(value);}
+ return {fromFile,previewable};
+})();
 (()=>{
  const script=document.currentScript,base=new URL('.',script.src),tool=document.querySelector('script[data-tool]')?.dataset.tool;
  const tools={Publicatieplanner:['Projecten','Start Publicatieplanner.html'],Bronnenkast:['Verzamelen','Start Bronnenkast.html'],Werkbank:['Schrijven','▶ Begin hier.html'],Projectbord:['Doen','Start Projectbord.html'],Contacten:['Contacten','Start Contacten.html'],Offerte:['Offertes','Start Offerte.html'],Uren:['Uren','Start Uren.html'],Ping:['Facturen','Start Ping.html'],Kasboek:['Boekhouding','Start Kasboek.html'],Abonnementen:['Abonnementen','Start Abonnementen.html']};
@@ -423,14 +448,26 @@
     const dialog=document.createElement('dialog');dialog.id='wm-organization-dialog';dialog.setAttribute('aria-labelledby','wm-organization-title');
     const form=document.createElement('form');form.method='dialog';
     const title=document.createElement('h2');title.id='wm-organization-title';I18n.assign(title,I18n.ui("Mijn organisatie",'Mijn organisatie'),"textContent");
-    const intro=document.createElement('p');I18n.assign(intro,I18n.ui("Deze gegevens verschijnen automatisch op nieuwe offertes en conceptfacturen. Bestaande documenten behouden hun eigen gegevens.",'Deze gegevens verschijnen automatisch op nieuwe offertes en conceptfacturen. Bestaande documenten behouden hun eigen gegevens.'),"textContent");
+    const intro=document.createElement('p');I18n.assign(intro,I18n.ui("Deze gegevens verschijnen automatisch op nieuwe brieven, offertes en conceptfacturen. Bestaande documenten behouden hun eigen gegevens.",'Deze gegevens verschijnen automatisch op nieuwe brieven, offertes en conceptfacturen. Bestaande documenten behouden hun eigen gegevens.'),"textContent");
     const fields=[['name','Bedrijfsnaam',200],['address','Adres',2000],['email','E-mail',254],['iban','IBAN',80],['kvk','KvK-nummer',100],['vat','Btw-id',100]];
     const inputs={};form.append(title,intro);
     for(const [key,labelText,max] of fields){const label=document.createElement('label');I18n.assign(label,I18n.ui(labelText,labelText));const input=document.createElement(key==='address'?'textarea':'input');input.name=key;input.maxLength=max;if(key==='email')input.type='email';if(key==='name')input.required=true;if(key==='address')input.rows=3;label.append(input);form.append(label);inputs[key]=input;}
+    let organizationLogo='',logoGeneration=0,logoBusy=false;
+    const logoField=document.createElement('div');logoField.className='organization-logo';
+    const logoLabel=document.createElement('label');logoLabel.textContent=I18n.t('Logo voor brieven');
+    const logoInput=document.createElement('input');logoInput.type='file';logoInput.accept='image/png,image/jpeg,image/webp';logoInput.setAttribute('aria-label',I18n.t('Logo voor brieven'));logoLabel.append(logoInput);
+    const logoHint=document.createElement('p');logoHint.textContent=I18n.t('PNG, JPEG of WebP, maximaal 2 MB. Het logo wordt lokaal verkleind en in nieuwe brieven opgenomen.');
+    const logoPreview=document.createElement('img');logoPreview.alt=I18n.t('Voorbeeld organisatielogo');logoPreview.style.cssText='display:block;max-width:200px;max-height:100px;object-fit:contain';
+    const logoRemove=document.createElement('button');logoRemove.type='button';logoRemove.textContent=I18n.t('Logo verwijderen');
+    const showLogo=()=>{const visible=WerkplaatsOrganizationLogo.previewable(organizationLogo);logoPreview.hidden=!visible;logoPreview.style.display=visible?'block':'none';if(visible)logoPreview.src=organizationLogo;else logoPreview.removeAttribute('src');logoRemove.hidden=!organizationLogo;};
+    logoRemove.onclick=()=>{logoGeneration++;organizationLogo='';logoInput.value='';logoBusy=false;save.disabled=false;message.textContent='';showLogo();};
+    logoInput.onchange=async()=>{const generation=++logoGeneration,file=logoInput.files?.[0];if(!file)return;logoBusy=true;save.disabled=true;message.textContent=I18n.t('Logo verwerken…');try{const result=await WerkplaatsOrganizationLogo.fromFile(file);if(generation!==logoGeneration||!dialog.open)return;organizationLogo=result;showLogo();message.textContent=I18n.t('Logo gereed. Kies Bewaar gegevens om het te bewaren.');}catch(error){if(generation===logoGeneration&&dialog.open)message.textContent=error.message;}finally{if(generation===logoGeneration){logoBusy=false;save.disabled=false;logoInput.value='';}}};
+    dialog.addEventListener('close',()=>{logoGeneration++;logoBusy=false;logoInput.value='';save.disabled=false;});
+    logoField.append(logoLabel,logoHint,logoPreview,logoRemove);form.append(logoField);
     const message=document.createElement('p');message.className='organization-message';message.setAttribute('role','status');form.append(message);
     const actions=document.createElement('div');actions.className='organization-actions wp-actions';const cancel=document.createElement('button');cancel.type='button';I18n.assign(cancel,I18n.ui("Annuleer",'Annuleer'),"textContent");cancel.onclick=()=>dialog.close();const save=document.createElement('button');save.type='submit';save.className='primary action-primary';I18n.assign(save,I18n.ui("Bewaar gegevens",'Bewaar gegevens'),"textContent");actions.append(cancel,save);form.append(actions);dialog.append(form);document.body.append(dialog);
-    organization.onclick=async()=>{try{const saved=(await BewaarAlles.readShared()).business;const current=saved?.name?saved:tool==='Offerte'?(typeof working!=='undefined'?working?.business:null)||saved||{}:tool==='Ping'?window.invoiceBusiness?.()||saved||{}:saved||{};for(const [key] of fields)inputs[key].value=current[key]||'';message.textContent='';mapMenu.open=false;dialog.showModal();inputs.name.focus();}catch(e){report(e);}};
-    form.onsubmit=async event=>{event.preventDefault();if(!form.reportValidity())return;save.disabled=true;try{const next=Object.fromEntries(fields.map(([key])=>[key,inputs[key].value.trim()]));await BewaarAlles.updateShared(shared=>{shared.business=next;});document.dispatchEvent(new CustomEvent('organisatie-gewijzigd'));dialog.close();Koppelingen.notice(I18n.value(I18n.ui("Mijn organisatie bewaard voor nieuwe offertes en facturen. Gebruik Bewaar alles om de gegevens in je werkmap vast te leggen.",'Mijn organisatie bewaard voor nieuwe offertes en facturen. Gebruik Bewaar alles om de gegevens in je werkmap vast te leggen.')));}catch(e){message.textContent=e.message;}finally{save.disabled=false;}};
+    organization.onclick=async()=>{try{const saved=(await BewaarAlles.readShared()).business;const current=saved?.name?saved:tool==='Offerte'?(typeof working!=='undefined'?working?.business:null)||saved||{}:tool==='Ping'?window.invoiceBusiness?.()||saved||{}:saved||{};for(const [key] of fields)inputs[key].value=current[key]||'';organizationLogo=typeof current.logo==='string'?current.logo:'';logoGeneration++;logoBusy=false;logoInput.value='';save.disabled=false;showLogo();message.textContent='';mapMenu.open=false;dialog.showModal();inputs.name.focus();}catch(e){report(e);}};
+    form.onsubmit=async event=>{event.preventDefault();if(logoBusy||!form.reportValidity())return;save.disabled=true;try{const next=Object.fromEntries(fields.map(([key])=>[key,inputs[key].value.trim()]));await BewaarAlles.updateShared(shared=>{shared.business={...(shared.business||{}),...next,logo:organizationLogo};});document.dispatchEvent(new CustomEvent('organisatie-gewijzigd'));dialog.close();Koppelingen.notice(I18n.value(I18n.ui("Mijn organisatie bewaard voor nieuwe brieven, offertes en facturen. Gebruik Bewaar alles om de gegevens in je werkmap vast te leggen.",'Mijn organisatie bewaard voor nieuwe brieven, offertes en facturen. Gebruik Bewaar alles om de gegevens in je werkmap vast te leggen.')));}catch(e){message.textContent=e.message;}finally{save.disabled=false;}};
    }
 
    for(const id of ['wm-all-open','wm-open','wm-zip','wm-previous','wm-forget']){const button=$(id);if(button)moreManagement.append(button);}
