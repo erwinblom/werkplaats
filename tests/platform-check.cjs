@@ -3,14 +3,14 @@
 const {chromium}=require('playwright');
 const fs=require('node:fs'),path=require('node:path'),os=require('node:os'),assert=require('node:assert/strict');
 const {pathToFileURL}=require('node:url');
-const {spawn}=require('node:child_process');
+const {spawn,spawnSync}=require('node:child_process');
 const http=require('node:http');
 const root=path.resolve(__dirname,'../app'),out=path.resolve('platform-evidence');fs.mkdirSync(out,{recursive:true});
 const result={os:os.platform(),release:os.release(),arch:os.arch(),node:process.version,playwright:require('playwright/package.json').version,tests:[]};
 const progress=(tag,phase)=>console.log(new Date().toISOString(),tag,phase);
 const browserOptions={headless:false,acceptDownloads:true,viewport:{width:1440,height:1000},...(process.env.RUN_CHROME==='1'?{channel:'chrome'}:{})};
 const save=()=>fs.writeFileSync(path.join(out,'result.json'),JSON.stringify(result,null,2));
-function nativeInput(folder,tag){
+function nativeInput(folder,tag,permissionOnly=false){
  // This helper operates only the disposable runner's folder dialog. Never the author's desktop.
  let cmd,args;
  if(process.platform==='win32'){
@@ -35,16 +35,17 @@ function InvokeNamed([string]$name,[int]$attempts=20) {
  $buttons | Select-Object -First 35 | ForEach-Object { Write-Host ('Visible candidate: '+$_.Current.Name+' visible='+(-not $_.Current.IsOffscreen)) }
  return $false
 }
-Start-Sleep -Milliseconds 1400; Shot '${shot('before')}';
+${permissionOnly ? `Start-Sleep -Milliseconds 700; Shot '${shot('before')}'; $allowed=InvokeNamed 'Allow'; Write-Host ('Permission invoked: '+$allowed); Shot '${shot('after-allow')}';` : `Start-Sleep -Milliseconds 1400; Shot '${shot('before')}';
 $keys.SendKeys('%d'); Start-Sleep -Milliseconds 300; $keys.SendKeys('${escape(sendKeysLiteral(folder))}'); $keys.SendKeys('{ENTER}'); Start-Sleep -Milliseconds 800; Shot '${shot('path')}';
 $selected=InvokeNamed 'Select Folder'; Shot '${shot('after-select')}';
 if($selected) { Start-Sleep -Milliseconds 500; $allowed=InvokeNamed 'Allow'; Write-Host ('Permission invoked: '+$allowed) }
-Start-Sleep -Milliseconds 500; Shot '${shot('after-allow')}';`;
+Start-Sleep -Milliseconds 500; Shot '${shot('after-allow')}';`}
+`;
 
 
   cmd='powershell';args=['-NoProfile','-Command',script];
  }else{
-  const script=`
+  const script=permissionOnly ? 'sleep 0.7; scrot "$2"; xdotool key Tab; xdotool key Return; sleep 0.5; scrot "$3"' : `
 ready=0
 for attempt in $(seq 1 40); do
  title=$(xdotool getwindowfocus getwindowname 2>/dev/null || true)
@@ -76,12 +77,17 @@ scrot "$3"
   proc.on('close',finish);
  });
 }
+const permissionInput=tag=>nativeInput('',tag,true);
 function listFiles(dir){return fs.readdirSync(dir,{withFileTypes:true}).flatMap(e=>e.isDirectory()?listFiles(path.join(dir,e.name)):[path.join(dir,e.name)]);}
 async function exercise(base,kind){
  const parent=process.platform==='win32'?path.join(os.homedir(),'Documents','Werkplaats CH510'):os.tmpdir();fs.mkdirSync(parent,{recursive:true});
  const folder=fs.mkdtempSync(path.join(parent,'werkplaats-ch510-'));
  const profile=fs.mkdtempSync(path.join(os.tmpdir(),'werkplaats-profile-ch510-'));
- let ctx=await chromium.launchPersistentContext(profile,browserOptions);
+ const pdfDir=path.join(folder,'PDF exports');fs.mkdirSync(pdfDir,{recursive:true});
+ fs.mkdirSync(path.join(profile,'Default'),{recursive:true});
+ fs.writeFileSync(path.join(profile,'Default','Preferences'),JSON.stringify({printing:{print_preview_sticky_settings:{appState:JSON.stringify({recentDestinations:[{id:'Save as PDF',origin:'local',account:''}],selectedDestinationId:'Save as PDF',version:2,isHeaderFooterEnabled:false,isCssBackgroundEnabled:true})}},savefile:{default_directory:pdfDir},download:{default_directory:pdfDir}}));
+ const launchOptions={...browserOptions,args:[...(browserOptions.args||[]),'--kiosk-printing']};
+ let ctx=await chromium.launchPersistentContext(profile,launchOptions);
  const entry={route:kind,nativePicker:false,folderPersistence:false,noteSaveReload:false,pageErrors:[],browser:ctx.browser()?.version()||'persistent Chromium',channel:process.env.RUN_CHROME==='1'?'chrome':'playwright-chromium',testFolder:folder};result.tests.push(entry);save();
  let p=ctx.pages()[0]||await ctx.newPage();p.on('pageerror',e=>entry.pageErrors.push(e.message));
  const uri=rel=>base+rel.split('/').map(encodeURIComponent).join('/');
@@ -129,9 +135,58 @@ async function exercise(base,kind){
   progress(kind,'reload saved note');await p.reload();await p.waitForFunction(()=>window.SchrijfNotities);await p.evaluate(()=>SchrijfNotities.view('notes'));
   await p.getByRole('button').filter({has:p.getByRole('heading',{name:title,exact:true})}).waitFor();
   const restored=await p.evaluate(async id=>(await BewaarAlles.readShared()).writingNotes.find(n=>n.id===id),diskNote.id);
-  assert.equal(restored.title,title);assert.equal(restored.body,body);entry.noteSaveReload=true;progress(kind,'note saved + reloaded exact');
+  assert.equal(restored.title,title);assert.equal(restored.body,body);entry.noteSaveReload=true;entry.statusAfterReload=await p.locator('#file-status').innerText();progress(kind,'note saved + reloaded exact');
   await p.screenshot({path:path.join(out,kind+'-saved-reloaded.png'),fullPage:true});
   entry.browser=ctx.browser()?.version()||'persistent Chromium';
+  // Full owned browser process shutdown, then a fresh process with the same disk profile.
+  progress(kind,'close full browser for restart');
+  const oldBrowser=ctx.browser();await ctx.close();
+  entry.browserRestart={oldBrowserDisconnected:oldBrowser?!oldBrowser.isConnected():true,permissionReconfirmed:false};
+  assert.equal(entry.browserRestart.oldBrowserDisconnected,true);
+  ctx=await chromium.launchPersistentContext(profile,launchOptions);p=ctx.pages()[0]||await ctx.newPage();
+  p.on('pageerror',e=>entry.pageErrors.push(e.message));
+  await p.goto(uri('Apps/Werkbank/▶ Begin hier.html')+'?werkruimte=eigen');
+  await p.waitForFunction(()=>window.Werkmap?.active&&window.SchrijfNotities);
+  const permission=await p.evaluate(async()=>{const {root}=await Werkmap.allAccess(false);return root.queryPermission({mode:'readwrite'});});
+  entry.browserRestart.permissionAtStart=permission;
+  if(permission!=='granted'){
+   await p.evaluate(()=>{const b=document.createElement('button');b.id='restart-map-permission';b.textContent='Give test folder permission';b.onclick=()=>{window.__restartPermission=false;Werkmap.allAccess().then(()=>window.__restartPermission=true).catch(e=>window.__restartPermissionError=e.message);};document.body.prepend(b);});
+   await p.locator('#restart-map-permission').click();
+   await permissionInput(kind+'-restart');
+   await p.waitForFunction(()=>window.__restartPermission===true,null,{timeout:15000});entry.browserRestart.permissionReconfirmed=true;
+  }
+  const restarted=await p.evaluate(async id=>{const {root}=await Werkmap.allAccess(false);return (await BewaarAlles.readRound(root)).shared.writingNotes.find(n=>n.id===id);},diskNote.id);
+  assert.equal(restarted.title,title);assert.equal(restarted.body,body);
+  const freshDisk=listFiles(folder).filter(f=>f.endsWith('bewaar-alles.json')).map(f=>JSON.parse(fs.readFileSync(f,'utf8')));
+  assert(freshDisk.some(r=>r.shared?.writingNotes?.some(n=>n.id===diskNote.id&&n.body===body)));
+  await p.evaluate(()=>SchrijfNotities.view('notes'));
+  await p.getByRole('button').filter({has:p.getByRole('heading',{name:title,exact:true})}).waitFor();
+  entry.browserRestart.status=await p.locator('#file-status').innerText();
+  if(process.env.CHECK_SAVED_STATUS==='1')assert(!/nog niet in werkmap/i.test(entry.browserRestart.status),'saved note must not show false unsaved status after browser restart');
+  entry.browserRestart.exactNoteOnDisk=true;entry.browserRestart.uiNotePresent=true;entry.browserRestart.passed=true;
+  await p.screenshot({path:path.join(out,kind+'-browser-restarted.png'),fullPage:true});save();
+  // Real application print route in headed Chrome; kiosk only automates Save as PDF in this disposable profile.
+  progress(kind,'open fictitious document for app PDF route');
+  await p.evaluate(()=>SchrijfNotities.view('documents'));
+  const markdown='# CH510 PDF FIRST PAGE\n\nFictieve brief: café en een bedrag van € 12,50.\n\n::: pagina-einde :::\n\n# CH510 PDF SECOND PAGE\n\nTweede pagina voor de platformproef.\n';
+  await p.locator('#loose-input').setInputFiles({name:'CH510-platform-pdf.md',mimeType:'text/markdown',buffer:Buffer.from(markdown)});
+  await p.waitForFunction(()=>typeof activeFile!=='undefined'&&activeFile?.name==='CH510-platform-pdf.md');
+  // This calls the same existing export entry point as the document's PDF menu, without replacing print().
+  await p.evaluate(()=>printDocumentExport(currentRawContent,'CH510-platform-pdf'));
+  const printDialog=p.locator('dialog.document-print-dialog[open]');
+  await printDialog.getByRole('button',{name:'Afdrukken / PDF bewaren',exact:true}).waitFor({state:'visible'});
+  await p.waitForFunction(()=>!document.querySelector('.document-print-dialog button.action-primary')?.disabled);
+  await p.screenshot({path:path.join(out,kind+'-pdf-preview.png'),fullPage:true});
+  await printDialog.getByRole('button',{name:'Afdrukken / PDF bewaren',exact:true}).click();
+  const deadline=Date.now()+30000;let pdfFile;
+  while(Date.now()<deadline){pdfFile=listFiles(pdfDir).find(f=>f.toLowerCase().endsWith('.pdf'));if(pdfFile&&fs.statSync(pdfFile).size>100)break;await new Promise(r=>setTimeout(r,250));}
+  assert(pdfFile&&fs.readFileSync(pdfFile).subarray(0,5).toString()==='%PDF-','headed Chrome app print produces actual PDF');
+  const parse=spawnSync(process.platform==='win32'?'python':'python3',[path.join(__dirname,'validate-platform-pdf.py'),pdfFile],{encoding:'utf8'});
+  fs.writeFileSync(path.join(out,kind+'-pdf-validation.log'),parse.stdout+'\n'+parse.stderr);
+  assert.equal(parse.status,0,'PDF text/A4/page-number check: '+parse.stderr);
+  entry.pdf={...JSON.parse(parse.stdout),method:'headed Chrome window.print through app DocumentPrint; disposable kiosk Save as PDF, not headless page.pdf',passed:true};
+  fs.copyFileSync(pdfFile,path.join(out,kind+'-export.pdf'));save();progress(kind,'browser restart and two-page PDF verified');
+
  }catch(e){entry.failure=String(e.stack||e);progress(kind,'FAILED: '+e.message);try{await p.screenshot({path:path.join(out,kind+'-failed.png'),fullPage:true});fs.writeFileSync(path.join(out,kind+'-failed.html'),await p.content());}catch{}throw e;}
  finally{save();await ctx.close();}
 }
@@ -144,7 +199,7 @@ async function exercise(base,kind){
   }
  }
  finally{server.close();save();}
- result.nativeComplete=result.tests.length===(process.env.PRIMARY_ROUTE_ONLY==='1'?1:2)&&result.tests.every(t=>t.nativePicker&&t.osDiskReadback&&t.noteSaveReload);save();
+ result.nativeComplete=result.tests.length===(process.env.PRIMARY_ROUTE_ONLY==='1'?1:2)&&result.tests.every(t=>t.nativePicker&&t.osDiskReadback&&t.noteSaveReload&&t.browserRestart?.passed&&t.pdf?.passed);save();
  console.log(JSON.stringify(result,null,2));
  if(!result.nativeComplete){console.log('PARTIAL: real browser storage passes do not prove native folder selection. See result.json.');process.exitCode=1;}
  if(result.tests.some(t=>t.failure))process.exitCode=1;

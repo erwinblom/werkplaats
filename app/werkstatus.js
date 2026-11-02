@@ -4,7 +4,7 @@ window.Werkstatus = (() => {
  const mode=GereedschapskistMode,tool=document.querySelector('script[data-tool]').dataset.tool;
  const storageKey=document.querySelector('script[data-key]').dataset.key+'-file-info';
  let read=()=>null,pending=()=>false,info={},box,timer,saveState=null;
- const guards=[],dialogGuards=new Map();let initialSignature=null,allCheckpoint=null;
+ const guards=[],dialogGuards=new Map();let initialSignature=null,allCheckpoint=null,editRevision=0;
  try{info=JSON.parse(mode.storage.getItem(storageKey)||'{}');if(!info||typeof info!=='object'||Array.isArray(info))info={};}catch{}
  function signature(value){const s=JSON.stringify(value,(_,v)=>v&&typeof v==='object'&&!Array.isArray(v)?Object.fromEntries(Object.keys(v).sort().map(k=>[k,v[k]])):v);let a=2166136261,b=5381;for(let i=0;i<s.length;i++){a=Math.imul(a^s.charCodeAt(i),16777619);b=Math.imul(b,33)^s.charCodeAt(i);}return s.length+':'+(a>>>0)+':'+(b>>>0);}
  function persist(){try{mode.storage.setItem(storageKey,JSON.stringify(info));}catch{}}
@@ -71,10 +71,11 @@ window.Werkstatus = (() => {
   box=document.createElement('p');box.id='file-status';box.className='file-status';box.setAttribute('role','status');
   const anchor=document.querySelector('.example-mode,.brandbar,header');anchor.after(box);update();
  });
+ for(const event of ['input','change'])document.addEventListener(event,()=>{editRevision++;});
  for(const event of ['input','change','click','submit'])document.addEventListener(event,schedule);
  window.addEventListener('beforeunload',e=>{if(unfinished()){e.preventDefault();e.returnValue='';}});
  window.addEventListener('beforeunload',e=>{if(window.GereedschapskistNavigating)e.stopImmediatePropagation();},true);
- return {saving(){saveState={kind:"saving"};update();},failed(error){saveState={kind:"error",committed:!!error?.saveCommitted};update();},changed(){allCheckpoint=null;info.baseline='changed';delete info.written;persist();update();},allWritten(){saveState=null;info.allTime=new Date().toLocaleTimeString(I18n.locale(),{hour:'2-digit',minute:'2-digit'});allCheckpoint=signature([read(),fields(document.body)]);update();},hasPending:unfinished,confirmInput,register(getData,hasPending=()=>false){read=getData;pending=hasPending;initialSignature=signature(read());schedule();},update:schedule,guardDialog,resetDialog(id){dialogGuards.get(id)?.reset();},protectRestoredDialog(id){dialogGuards.get(id)?.protectRestored();},
+ return {saving(){saveState={kind:"saving"};update();},failed(error){saveState={kind:"error",committed:!!error?.saveCommitted};update();},changed(){editRevision++;allCheckpoint=null;info.baseline='changed';delete info.written;persist();update();},allWritten(){saveState=null;info.allTime=new Date().toLocaleTimeString(I18n.locale(),{hour:'2-digit',minute:'2-digit'});allCheckpoint=signature([read(),fields(document.body)]);update();},savedCheckpoint:()=>editRevision,verifiedWritten(checkpoint){if(checkpoint!==editRevision||unfinished())return false;this.allWritten();return true;},hasPending:unfinished,confirmInput,register(getData,hasPending=()=>false){read=getData;pending=hasPending;initialSignature=signature(read());schedule();},update:schedule,guardDialog,resetDialog(id){dialogGuards.get(id)?.reset();},protectRestoredDialog(id){dialogGuards.get(id)?.protectRestored();},
   opened(name){saveState=null;allCheckpoint=null;info={name,opened:signature(read()),baseline:signature(read())};persist();update();document.dispatchEvent(new CustomEvent("werkbestand-geopend"));},
   downloaded(name,administration=true){if(administration){info.download=name;info.downloaded=signature(read());info.baseline=info.downloaded;persist();}schedule();},
   written(){saveState=null;info.writtenTime=new Date().toLocaleTimeString(I18n.locale(),{hour:"2-digit",minute:"2-digit"});info.written=signature(read());info.baseline=info.written;persist();update();},

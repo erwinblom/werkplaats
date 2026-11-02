@@ -109,7 +109,7 @@
  }
  async function init(){
   await Werkmap.ready;await ready;
-  if(own&&tool){await Werkmap.adapterReady;await hydrate();}
+  if(own&&tool){await Werkmap.adapterReady;await hydrate();await verifySavedStatus();}
   if(own&&tool){
    const add=()=>{for(const actions of document.querySelectorAll('dialog .form-actions')){if(actions.querySelector('.gk-save-all'))continue;const button=document.createElement('button');button.type='button';button.className='gk-save-all';I18n.assign(button,I18n.ui("Bewaar alles",'Bewaar alles'),"textContent");button.onclick=async()=>{button.disabled=true;try{await saveWithStatus()}catch(e){say(I18n.ui("Niet alles bewaard: {0}",'Niet alles bewaard: '+e.message))}finally{button.disabled=false}};const more=document.createElement('details');more.className='context-actions dialog-save-more';const title=document.createElement('summary');I18n.assign(title,I18n.ui('Meer','Meer'),'textContent');const panel=document.createElement('div');panel.className='context-actions-panel';panel.append(button);more.append(title,panel);actions.append(more);const status=document.createElement('p');status.className='all-dialog-status';status.setAttribute('role','status');actions.after(status);}};
    add();new MutationObserver(add).observe(document.body,{childList:true,subtree:true});
@@ -401,10 +401,30 @@
   try{await Werkmap.allRestore(s);await restoreDraft(s.draft);windowVersions=clone(s.windowVersions||[]);}
   finally{restoring=false;}
  }
+ // A browser-cache restore is not a disk receipt. Confirm the current contents without prompting or writing.
+ function savedContent(value){
+  const content=[value.data??null,value.documents??[],value.draft??null,value.activeDocument??null,value.windowVersions??[]];
+  return JSON.stringify(content,(_,v)=>v&&typeof v==='object'&&!Array.isArray(v)?Object.fromEntries(Object.keys(v).sort().map(k=>[k,v[k]])):v);
+ }
+ function sharedContent(value){return JSON.stringify(value,(_,v)=>v&&typeof v==='object'&&!Array.isArray(v)?Object.fromEntries(Object.keys(v).sort().map(k=>[k,v[k]])):v);}
+ async function verifySavedStatus(){
+  if(!Werkmap.active||!window.Werkstatus?.verifiedWritten)return false;
+  const checkpoint=Werkstatus.savedCheckpoint();
+  try{
+   const {root,revision}=await Werkmap.allAccess(false);
+   if(await root.queryPermission({mode:'readwrite'})!=='granted')return false;
+   const live=await snapshot(),shared=await readShared(),round=await readRound(root,false,tool);
+   const saved=round?.values.find(value=>value.tool===tool);
+   if(!saved||live.revision!==revision||savedContent(live)!==savedContent(saved)||sharedContent(shared)!==sharedContent(round.shared))return false;
+   // Disk reads can yield to editing, another tab or a changed round. Recheck before acknowledging.
+   if(savedContent(await snapshot())!==savedContent(live)||sharedContent(await readShared())!==sharedContent(shared)||await currentRoundName(root)!==round.name)return false;
+   return Werkstatus.verifiedWritten(checkpoint);
+  }catch{return false;} // Denied access or an unreadable round must never produce a saved status.
+ }
  async function hydrate(){
   let s=await storedSession(tool);
   if(!s&&Werkmap.active){const {root,revision}=await Werkmap.allAccess(false);if(await root.queryPermission({mode:'readwrite'})!=='granted')return;const round=await readRound(root,false,tool);s=round?.values.find(v=>v.tool===tool);if(s)s={...s,revision};}
-  if(s){await applySession(s);if(s.fromDisk)Werkstatus.allWritten();say(Werkmap.active?I18n.ui("Werkmap geopend. Je werk en eventuele conceptinvoer staan klaar.",'Werkmap geopend. Je werk en eventuele conceptinvoer staan klaar.'):I18n.ui("Je eigen werk en eventuele conceptinvoer zijn hersteld uit deze browser. Gebruik Bewaar alles om ze in een map vast te leggen.",'Je eigen werk en eventuele conceptinvoer zijn hersteld uit deze browser. Gebruik Bewaar alles om ze in een map vast te leggen.'));}
+  if(s){await applySession(s);say(Werkmap.active?I18n.ui("Werkmap geopend. Je werk en eventuele conceptinvoer staan klaar.",'Werkmap geopend. Je werk en eventuele conceptinvoer staan klaar.'):I18n.ui("Je eigen werk en eventuele conceptinvoer zijn hersteld uit deze browser. Gebruik Bewaar alles om ze in een map vast te leggen.",'Je eigen werk en eventuele conceptinvoer zijn hersteld uit deze browser. Gebruik Bewaar alles om ze in een map vast te leggen.'));}
  }
  async function restore(previous=false){
   await registration;
