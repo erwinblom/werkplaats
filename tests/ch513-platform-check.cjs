@@ -128,10 +128,10 @@ function validateSaved(folder){
   // Search via the product keyboard shortcut, with a real legacy disk fixture.
   await p.locator('[data-open-search]').click();const dialog=p.locator('#all-search-dialog');await dialog.waitFor();await dialog.locator('ul').waitFor({state:'attached'});await p.waitForFunction(()=>document.querySelector('#all-search-dialog ul')?.getAttribute('aria-busy')==='false');
   const input=dialog.locator('#all-search-input'),items=dialog.locator('li');
-  await input.fill('Zelfrijdende auto voorbeeld');await items.getByText('Zelfrijdende auto voorbeeld',{exact:true}).waitFor();pass('searchExact');
+  await input.fill('Zelfrijdende auto voorbeeld');await items.getByRole('link',{name:'Zelfrijdende auto voorbeeld',exact:true}).waitFor();pass('searchExact');
   await input.fill('Zelfrijdende ontbrekendwoord');assert.equal(await items.count(),0);pass('searchAnd');
-  await input.fill('selfdriving');await items.getByText('Zelfrijdende auto voorbeeld',{exact:true}).waitFor();assert.match(await items.first().innerText(),/Verwant begrip|self.?driving|Autonomous/i);pass('searchRelated');
-  await input.fill('zelfrijdnde');await items.getByText('Zelfrijdende auto voorbeeld',{exact:true}).waitFor();pass('searchTypo');
+  await input.fill('selfdriving');await items.getByRole('link',{name:'Zelfrijdende auto voorbeeld',exact:true}).waitFor();assert.match(await items.first().innerText(),/Verwant begrip|self.?driving|Autonomous/i);pass('searchRelated');
+  await input.fill('zelfrijdnde');await items.getByRole('link',{name:'Zelfrijdende auto voorbeeld',exact:true}).waitFor();pass('searchTypo');
   await input.fill('selfdriving');await dialog.getByRole('button',{name:/Verzamelen \([1-9]/}).click();assert.match(await dialog.locator('.all-search-sources').innerText(),/Alles \(\d+\)/);assert.match(await items.first().innerText(),/Autonomous|zelfrijdend|self.?driving/i);await p.screenshot({path:path.join(out,'search.png'),fullPage:true});pass('searchSourcesContext');
   await items.getByRole('link',{name:'Zelfrijdende auto voorbeeld',exact:true}).click();await p.waitForURL(/Bronnenkast/);await p.getByText('Zelfrijdende auto voorbeeld',{exact:true}).first().waitFor();pass('searchClick');
   await p.goto(pathToFileURL(path.join(app,'Apps','Publicatieplanner','Start Publicatieplanner.html')).href+'?werkruimte=eigen');
