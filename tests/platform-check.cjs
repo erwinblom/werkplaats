@@ -15,17 +15,18 @@ function nativeInput(folder,tag){
  let cmd,args;
  if(process.platform==='win32'){
   const escape=s=>s.replace(/'/g,"''");
+  const sendKeysLiteral=s=>s.replace(/[+^%~(){}]/g,c=>'{'+c+'}');
   const shot=name=>escape(path.join(out,tag+'-native-'+name+'.png'));
   const script=`Add-Type -AssemblyName System.Windows.Forms; Add-Type -AssemblyName System.Drawing;
 function Shot([string]$name) { $bounds=[System.Windows.Forms.SystemInformation]::VirtualScreen; $bmp=New-Object System.Drawing.Bitmap $bounds.Width,$bounds.Height; $g=[System.Drawing.Graphics]::FromImage($bmp); $g.CopyFromScreen($bounds.Location,[System.Drawing.Point]::Empty,$bounds.Size); $bmp.Save($name,[System.Drawing.Imaging.ImageFormat]::Png); $g.Dispose(); $bmp.Dispose() }
 Start-Sleep -Milliseconds 1400; Shot '${shot('before')}';
-[System.Windows.Forms.SendKeys]::SendWait('%d'); Start-Sleep -Milliseconds 300; [System.Windows.Forms.SendKeys]::SendWait('${escape(folder)}'); [System.Windows.Forms.SendKeys]::SendWait('{ENTER}'); Start-Sleep -Milliseconds 800; Shot '${shot('path')}';
+[System.Windows.Forms.SendKeys]::SendWait('%d'); Start-Sleep -Milliseconds 300; [System.Windows.Forms.SendKeys]::SendWait('${escape(sendKeysLiteral(folder))}'); [System.Windows.Forms.SendKeys]::SendWait('{ENTER}'); Start-Sleep -Milliseconds 800; Shot '${shot('path')}';
 [System.Windows.Forms.SendKeys]::SendWait('%s'); Start-Sleep -Milliseconds 1000; Shot '${shot('after-select')}'; [System.Windows.Forms.SendKeys]::SendWait('{TAB}'); [System.Windows.Forms.SendKeys]::SendWait('{ENTER}'); Start-Sleep -Milliseconds 500; Shot '${shot('after-allow')}';`;
 
   cmd='powershell';args=['-NoProfile','-Command',script];
  }else{
-  const script='sleep 1.2; xdotool key --clearmodifiers ctrl+l; xdotool type --clearmodifiers -- "$1"; xdotool key Return; sleep 0.8; scrot "$2"; xdotool key Tab; xdotool key Return; sleep 0.6; scrot "$3"';
-  cmd='bash';args=['-c',script,'picker',folder,path.join(out,tag+'-native-picker.png'),path.join(out,tag+'-native-after-allow.png')];
+  const script='sleep 1.2; scrot "$4"; xdotool getwindowfocus getwindowname; xdotool key --clearmodifiers ctrl+l; xdotool type --clearmodifiers -- "$1"; xdotool key Return; sleep 0.8; scrot "$2"; xdotool key Tab; xdotool key Return; sleep 0.6; scrot "$3"';
+  cmd='bash';args=['-c',script,'picker',folder,path.join(out,tag+'-native-picker.png'),path.join(out,tag+'-native-after-allow.png'),path.join(out,tag+'-native-before.png')];
  }
  const proc=spawn(cmd,args,{stdio:['ignore','pipe','pipe']});let logs='';proc.stdout.on('data',x=>logs+=x);proc.stderr.on('data',x=>logs+=x);
  return new Promise(resolve=>proc.on('close',code=>{fs.writeFileSync(path.join(out,tag+'-picker.log'),logs);resolve(code);}));
@@ -35,7 +36,7 @@ async function exercise(base,kind){
  const folder=fs.mkdtempSync(path.join(os.tmpdir(),'werkplaats-ch510-'));
  const profile=fs.mkdtempSync(path.join(os.tmpdir(),'werkplaats-profile-ch510-'));
  let ctx=await chromium.launchPersistentContext(profile,browserOptions);
- const entry={route:kind,nativePicker:false,folderPersistence:false,noteSaveReload:false,pageErrors:[],browser:ctx.browser()?.version()||'persistent Chromium',channel:process.env.RUN_CHROME==='1'?'chrome':'playwright-chromium'};result.tests.push(entry);save();
+ const entry={route:kind,nativePicker:false,folderPersistence:false,noteSaveReload:false,pageErrors:[],browser:ctx.browser()?.version()||'persistent Chromium',channel:process.env.RUN_CHROME==='1'?'chrome':'playwright-chromium',testFolder:folder};result.tests.push(entry);save();
  let p=ctx.pages()[0]||await ctx.newPage();p.on('pageerror',e=>entry.pageErrors.push(e.message));
  const uri=rel=>base+rel.split('/').map(encodeURIComponent).join('/');
  const init=async()=>{await p.goto(uri('Begin hier.html')+'?werkruimte=eigen');await p.waitForFunction(()=>window.Werkmap&&window.BewaarAlles);await p.evaluate(()=>{const b=document.createElement('button');b.id='platform-native-choose';b.textContent='Choose fixture folder';b.onclick=()=>{window.__pickerFinished=false;Werkmap.choose().finally(()=>window.__pickerFinished=true);};document.body.prepend(b);});};
@@ -65,7 +66,7 @@ async function exercise(base,kind){
   progress(kind,'open writing tool');await p.goto(uri('Apps/Werkbank/▶ Begin hier.html')+'?werkruimte=eigen');
   await p.waitForFunction(()=>window.Werkmap?.active&&window.SchrijfNotities);
   await p.evaluate(()=>SchrijfNotities.view('notes'));
-  progress(kind,'create note');await p.locator('#note-new').click();
+  progress(kind,'create note');if(await p.locator('#note-new').isVisible())await p.locator('#note-new').click();else await p.getByRole('button',{name:'Maak een notitie',exact:true}).click();
   const title=`CH510 ${kind} ${process.platform}`,body='Fictieve platformproef: één notitie, café, € 12,50.\n\n**Vet** en een tweede alinea.';
   const dialog=p.locator('dialog.note-dialog[open]');
   await dialog.getByLabel('Titel',{exact:true}).fill(title);

@@ -24,10 +24,10 @@ jobs:
         run: npm install --no-save --package-lock=false playwright@1.56.1
       - name: Install Linux display and picker controls
         if: runner.os == 'Linux'
-        run: sudo apt-get update && sudo apt-get install -y xvfb xdotool scrot
+        run: sudo apt-get update && sudo apt-get install -y xvfb xdotool scrot dbus-x11 xdg-desktop-portal-gtk
       - name: Browser and native folder check on Linux
         if: runner.os == 'Linux'
-        run: xvfb-run -a node tests/platform-check.cjs
+        run: xvfb-run -a dbus-run-session -- node tests/platform-check.cjs
       - name: Browser and native folder check on Windows
         if: runner.os == 'Windows'
         run: node tests/platform-check.cjs
