@@ -22,6 +22,8 @@ Beschrijf wat je wilt kunnen doen en welk probleem het oplost. Een concreet voor
 
 ## Deel een uitbreiding
 
-Beschrijf wat je hebt gebouwd en voor wie het handig is. Voeg code, een ZIP of een link toe, plus een korte gebruiksaanwijzing, je naam en de licentie waaronder je het wilt delen. Gebruik de [vaste uitbreidingenaansluiting](app/Uitbreidingen/LEESMIJ.md); [Agenda-export van Erik van Elten](app/Uitbreidingen/agenda-export/) is een werkend voorbeeld.
+Begin bij **[Een uitbreiding voor Werkplaats maken](UITBREIDINGEN-MAKEN.md)**. Daar staan de gebruikersafspraken, een compleet eerste voorbeeld, de huidige mogelijkheden en grenzen en hoe je een eigen pakket test. De [technische aansluiting](app/Uitbreidingen/LEESMIJ.md) blijft beschikbaar als naslag.
 
-Een bijdrage wordt gecontroleerd vóór opname. Er is geen automatische installatie of toezegging dat iedere bijdrage wordt opgenomen. Bij opname blijft de oorspronkelijke maker vermeld en behouden we de bijbehorende licentie.
+Deel een complete uitbreidingsmap met code, gebruiksaanwijzing, makersnaam, versie en licentie. Vermeld voor wie de functie nuttig is en wat je werkelijk hebt getest. Gebruik fictieve gegevens. De [drie startuitbreidingen](app/Uitbreidingen/) zijn voorbeelden; Agenda-export is oorspronkelijk gemaakt door Erik van Elten.
+
+Een bijdrage wordt gecontroleerd vóór opname. Een eigen pakket test je eerst handmatig. Alleen gecontroleerde, meegeleverde pakketten verschijnen voor eindgebruikers onder Toevoegen. Er is geen toezegging dat iedere bijdrage wordt opgenomen. Bij opname blijft de oorspronkelijke maker vermeld en behouden we de bijbehorende licentie.

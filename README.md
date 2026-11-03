@@ -98,6 +98,8 @@ Erik van Elten maakte bijvoorbeeld Agenda-export. Na controle kreeg die een plek
 
 [Hoe je kunt bijdragen](CONTRIBUTING.md)
 
+**[Maak je eigen uitbreiding](UITBREIDINGEN-MAKEN.md)** — afspraken voor makers, een compleet eerste voorbeeld en de route naar de meegeleverde catalogus. Ook zonder programmeerkennis kun je met hulp van AI beginnen.
+
 ## Agenda-export van Erik van Elten
 
 Met Agenda-export zet je deadlines en datums uit Doen, Projecten, Contacten en Abonnementen in je eigen agenda. Kies welke onderdelen je wilt meenemen en download een .ics-bestand. Open of importeer dat in je agenda. Afgeronde items en herinneringen zijn optioneel.
