@@ -22,13 +22,21 @@ Voor dagelijks gebruik hoeft AI niet mee te draaien: Werkplaats werkt in je brow
 2. Schrijf je idee in de eerste notitie die wordt geopend.
 3. Klik **Bewaar**. Open later dezelfde werkmap via **Verder werken**.
 
-## Nieuw in 0.36.17: je eigen databases
+## Nieuw in 0.36.18: Databases voor beginners en gevorderden
 
-Open **Databases** op Home. Maak een SQLite-database, voeg tabellen en rijen toe of importeer een CSV-bestand. **Bewaar** in het formulier schrijft direct naar je eigen werkmap. Met **Download .sqlite** neem je een gewone database mee naar een ander programma.
+Maak je eigen overzichten, van boekenlijst tot voorraad. Open **Databases** op Home en kies hoe je wilt beginnen:
 
-Je hebt geen account of databaseserver nodig. De SQLite-engine wordt meegeleverd en werkt offline. Je bestanden blijven lokaal; wie toegang heeft tot je werkmap kan ze lezen. Maximaal 20 MB per database en 5.000 rijen per CSV-import.
+- **Boeken**: titel, schrijver en leesstatus.
+- **Uitleenlijst**: wat je uitleent, aan wie en wanneer het terugkomt.
+- **Voorraad**: artikel, aantal, eenheid en plek.
 
-[Handleiding en aanpassen met AI](app/Databases.md) · [Uitgave 0.36.17](release/UITGAVE-0.36.17.md) · [Windows/Linux-controle](release/PLATFORM-0.36.17.md)
+De kolommen staan klaar; er worden geen verzonnen gegevens opgeslagen. Een korte begeleiding helpt je **je eerste eigen rij toevoegen, bewaren, opnieuw openen en terugvinden**. Zoeken kijkt in alle rijen van je tabel.
+
+Werk je liever met je eigen indeling? Kies **Zelf beginnen**. Met **Bestaande database openen** voeg je een eigen kopie van een SQLite-bestand toe. Eigen tabellen, rijen bewerken, CSV-import en een SQLite-download blijven beschikbaar onder **Meer**.
+
+Je hebt geen account of databaseserver nodig. De SQLite-engine wordt meegeleverd en werkt offline. Je bestanden blijven in je eigen werkmap. Maximaal 20 MB per database en 5.000 rijen per CSV-import. Gebruik na een update dezelfde werkmap om verder te werken.
+
+[Handleiding en aanpassen met AI](app/Databases.md) · [Wat is nieuw in 0.36.18?](release/UITGAVE-0.36.18.md)
 
 <details>
 <summary>Offline gebruiken, bijwerken en overstappen</summary>

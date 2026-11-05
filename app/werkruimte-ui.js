@@ -31,7 +31,7 @@ window.WerkplaatsOrganizationLogo=(()=>{
  const $=id=>document.getElementById(id);
  const mode=()=>window.GereedschapskistMode?.example?'voorbeeld':'eigen';
  function report(e){document.documentElement.removeAttribute('data-workspace-building');const message=$('wm-message');if(message)I18n.assign(message,I18n.ui("Dit onderdeel kon niet worden geladen. Vernieuw de pagina en probeer het opnieuw.",'Dit onderdeel kon niet worden geladen. Vernieuw de pagina en probeer het opnieuw.'),"textContent");console.error(e);}
- const helpSteps={Databases:['Databases','Maak een database en voeg tabellen toe of importeer een CSV-bestand.','Bewaar in het formulier schrijft meteen naar je werkmap. Download .sqlite maakt een losse kopie. Je gegevens blijven lokaal.'],
+ const helpSteps={Databases:['Databases','Kies Boeken, Uitleenlijst of Voorraad en bekijk de kolommen. Geef je overzicht een eigen naam.','Voeg je eerste eigen rij toe en kies Bewaar. Ga via Naar mijn overzichten terug, open je overzicht en zoek je invoer terug. Je gegevens blijven lokaal.'],
   Abonnementen:['Abonnementen','Voeg naam, bedrag, betaalperiode, verlenging en uiterste opzegdatum toe.','Open een abonnement om de gegevens te bekijken. Bewaar alles bewaart je overzicht in je werkmap.'],
   Werkbank:['Schrijven','Kies + Nieuw → Nieuw document, Brief, Artikel of Gespreksverslag. Geef het een naam en bewerk de starttekst.','Bewaar werkt het document bij op de getoonde opslagplek. Een los document gaat naar Schrijven in je werkmap. Bewaar alles bewaart daarnaast de hele Werkplaats.'],
   Ping:['Facturen','Kies Nieuwe factuur, vul klant en factuurregels in en controleer het voorbeeld.','Maak de factuur pas definitief nadat je alles hebt nagekeken. Bewaar alles legt je concepten en facturen vast.'],

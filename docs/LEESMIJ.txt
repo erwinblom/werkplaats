@@ -4,12 +4,16 @@ WAAROM IK DIT DEEL
 Ik ben geen programmeur en geen designer. Met AI maak ik tools en skills die ik zelf nodig heb. Ik deel ze om te laten zien wat er nu mogelijk is, je enthousiast te maken en je op gang te helpen. Gebruik dit als vertrekpunt: bouw erop voort en maak het passend bij jouw werk, smaak en wensen.
 Begin klein: laat ChatGPT of Claude in een aparte kopie één kleur of knop aanpassen. Open, bewaar en heropen daarna iets om te controleren of alles nog werkt. Bugs melden is welkom; zelf iets moois bouwen ook. Credits en licenties van oorspronkelijke makers blijven staan.
 
+NIEUW IN 0.36.18 — DATABASES VOOR IEDER NIVEAU
+Begin met Boeken, Uitleenlijst of Voorraad: de kolommen staan klaar, zonder verzonnen gegevens. De begeleiding helpt je een eigen rij toevoegen, bewaren, opnieuw openen en terugvinden. Met Zoeken doorzoek je alle rijen.
+Liever je eigen indeling? Kies Zelf beginnen. Heb je al een SQLite-bestand? Kies Bestaande database openen; Werkplaats bewaart een eigen kopie. Eigen tabellen, CSV-import en SQLite-download blijven beschikbaar. Uitleg: Databases.md.
+
 Begin met Begin hier.html, of gebruik de online versie.
 Voor bewaren in een map: gebruik Chrome of Edge op je computer.
 Safari, Firefox en ingebouwde browsers bieden deze mapkeuze niet.
 Je hoeft geen broncode aan te passen.
 
-1. Kies Nieuw beginnen en kies een opslagplek. De app maakt Mijn Werkplaats met negen submappen. Blokkeert de browser de plek? Kies de handmatige optie: maak en selecteer zelf een lege hoofdmap.
+1. Kies Nieuw beginnen en kies een opslagplek. De app maakt Mijn Werkplaats met de submappen. Blokkeert de browser de plek? Kies de handmatige optie: maak en selecteer zelf een lege hoofdmap.
 2. Gebruik de tools. Via de keuzelijst bovenaan wissel je van tool.
 3. Klik op Bewaar alles. Je werk en concepten uit alle tools gaan mee.
 4. Kies een volgende keer Verder werken om alles terug te halen.
@@ -40,4 +44,5 @@ UITBREIDINGEN
 Instellingen → Uitbreidingen → Map voorbereiden maakt een vaste plek bij je eigen werk. Plaats ontvangen uitbreidingsmappen daarin, klik Ververs en zet ze aan. Kies na een nieuwe Werkplaats-download dezelfde werkmap. Handleiding en makersvoorbeeld: Uitbreidingen/LEESMIJ.md in de appbestanden. Agenda-export van Erik van Elten is beschikbaar. Zet de map agenda-export in Uitbreidingen van je werkmap en kies Ververs → Zet aan. Uitleg: Uitbreidingen/agenda-export/LEESMIJ.md of Uitleg.html → Agenda-export. Bewaar zelf een kopie van je uitbreidingenmap; Bewaar alles neemt die niet mee.
 
 DATABASES
-Kies Databases op Home. Maak SQLite-bestanden, voeg tabellen en rijen toe of importeer CSV. Bewaar in het formulier schrijft direct naar je werkmap; Download .sqlite maakt een losse kopie. Alles blijft lokaal. Zie Databases.md voor gebruik, grenzen, vorige versies en aanpassen met AI.
+Maak je eigen overzichten, bijvoorbeeld Boeken, Uitleenlijst of Voorraad. Begin met een voorbeeld, bekijk de kolommen en geef je overzicht een naam. Voeg daarna je eerste eigen rij toe en kies Bewaar. Via Naar mijn overzichten open je het overzicht opnieuw en zoek je je invoer terug. De voorbeelden voegen geen verzonnen gegevens toe.
+Je werk blijft in je eigen werkmap. Bestaande databases blijven gewoon te openen. Onder Meer vind je de extra mogelijkheden, zoals een lege tabel maken, CSV importeren en een SQLite-kopie downloaden. Zie Databases.md voor de stap-voor-staproute, opslag en aanpassen met AI.

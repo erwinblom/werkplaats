@@ -1,3 +1,7 @@
+# Controle 0.36.18 — Databases voor ieder niveau
+
+57/57 brontestbestanden,schone 262bestandenMaster,website/ZIPgelijk,lokaleassets/privacy/licenties gecontroleerd. Eigen nativeChromecontrole op macOS voor toevoegen/bewaren/heropenen/zoeken en startkeuzes; onafhankelijke code/routecontrole. Geen echte beginnerstest of nieuwe Windows/Linux-browserronde voor 0.36.18. [Uitgave en grenzen](UITGAVE-0.36.18.md).
+
 # Controle 0.36.17 — lokale SQLite-databases
 
 55/55 bron-testbestanden geslaagd; schone 260-bestanden-Master, alle nieuwe lokale assets, JavaScript, privacy, licenties en bytegelijke website/ZIP gecontroleerd. Windows en Linux ieder20/20 met onafhankelijke artifactcontrole. [Uitgave en exacte hashes](UITGAVE-0.36.17.md), [platformbewijs en grenzen](PLATFORM-0.36.17.md).
