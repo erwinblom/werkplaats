@@ -42,7 +42,7 @@
  const clear=document.createElement('button');clear.type='button';I18n.assign(clear,I18n.ui("Wis filters",'Wis filters'),"textContent");clear.className='suite-clear-filters';
  row.append(summary,clear);bar.append(row,panel,state);
  bar.id='suite-search-bar';bar.hidden=true;
- const toggle=document.createElement('button');toggle.type='button';toggle.id='suite-search-toggle';I18n.assign(toggle,I18n.ui("Zoeken",'Zoeken'),"textContent");toggle.setAttribute('aria-controls',bar.id);toggle.setAttribute('aria-expanded','false');I18n.assign(toggle,I18n.ui("Zoeken (⌘K / Ctrl+K)",'Zoeken (⌘K / Ctrl+K)'),"title");
+ const toggle=document.createElement('button');toggle.hidden=!!document.getElementById('workspace-search');toggle.type='button';toggle.id='suite-search-toggle';I18n.assign(toggle,I18n.ui("Zoeken",'Zoeken'),"textContent");toggle.setAttribute('aria-controls',bar.id);toggle.setAttribute('aria-expanded','false');I18n.assign(toggle,I18n.ui("Zoeken (⌘K / Ctrl+K)",'Zoeken (⌘K / Ctrl+K)'),"title");
  function placeSearch(){
   const strip=document.querySelector('.workspace-strip');
   if(!strip)return;
@@ -51,10 +51,11 @@
  }
  placeSearch();document.addEventListener('writing-view-changed',placeSearch);
  function openSearch(){bar.hidden=false;toggle.setAttribute('aria-expanded','true');search.focus();}
- function closeSearch(){setOpen(false);bar.hidden=true;toggle.setAttribute('aria-expanded','false');toggle.focus();}
+ function closeSearch(){setOpen(false);bar.hidden=true;toggle.setAttribute('aria-expanded','false');(document.getElementById('workspace-search')||toggle).focus();}
  function toggleSearch(){if(bar.hidden){openSearch();search.select();}else closeSearch();}
  toggle.onclick=toggleSearch;
  document.addEventListener('keydown',event=>{
+  if(document.getElementById('workspace-search'))return;
   if((event.metaKey||event.ctrlKey)&&event.key.toLowerCase()==='k'){event.preventDefault();event.stopImmediatePropagation();if(!event.repeat)toggleSearch();}
  },true);
  bar.addEventListener('keydown',event=>{if(event.key==='Escape'&&event.target===search)closeSearch();});
@@ -72,6 +73,7 @@
   if(tool==='Uren'&&$('period').value==='week')terms.push($('week-label').textContent);
   if(tool==='Kasboek'&&$('period').value!=='all')terms.push($( $('period').value==='month'?'month':'year').value);
   I18n.assign(toggle,(terms.length?I18n.ui("Zoeken · actief",'Zoeken · actief'):I18n.ui("Zoeken",'Zoeken')),"textContent");
+  toggle.dataset.active=String(terms.length>0);toggle.hidden=!!document.getElementById('workspace-search');document.dispatchEvent(new CustomEvent('zoekfilters-gewijzigd'));
   const text=terms.length?I18n.value(I18n.ui('Actief: {0}','Actief: '+terms.join(' · '))):'';
   if(state.textContent!==text)state.textContent=text;state.hidden=!terms.length;clear.hidden=!terms.length;
   const title='Filters'+(selected.length?' ('+selected.length+')':'');if(summary.textContent!==title)summary.textContent=title;
@@ -87,7 +89,7 @@
  document.addEventListener('input',refresh);document.addEventListener('change',refresh);
  const observer=new MutationObserver(refresh);observer.observe(target,{childList:true,subtree:true});
  for(const id of ['categories','filters'])if($(id))observer.observe($(id),{childList:true,subtree:true,attributes:true,attributeFilter:['aria-pressed']});
- const help=document.querySelector('.context-help');if(help){const p=document.createElement('p');I18n.assign(p,I18n.ui("Klik op Zoeken naast Bewaar alles of gebruik ⌘K / Ctrl+K. De zoekbalk opent direct onder de kop. Nogmaals ⌘K / Ctrl+K sluit hem. Een actieve zoekterm of filter blijft behouden en herkenbaar aan Zoeken · actief. In Schrijven zoekt het in Notities of de gekozen documenten. Open Filters voor extra keuzes. Actieve filters blijven zichtbaar; Wis filters toont de volledige lijst. Bewaar alles bewaart ook het werk dat door een filter verborgen is.",'Klik op Zoeken naast Bewaar alles of gebruik ⌘K / Ctrl+K. De zoekbalk opent direct onder de kop. Nogmaals ⌘K / Ctrl+K sluit hem. Een actieve zoekterm of filter blijft behouden en herkenbaar aan Zoeken · actief. In Schrijven zoekt het in Notities of de gekozen documenten. Open Filters voor extra keuzes. Actieve filters blijven zichtbaar; Wis filters toont de volledige lijst. Bewaar alles bewaart ook het werk dat door een filter verborgen is.'),"textContent");help.append(p);}
+ const help=document.querySelector('.context-help');if(help){const p=document.createElement('p');I18n.assign(p,I18n.ui("Kies Zoeken of gebruik ⌘K / Ctrl+K om in je werk te zoeken. Via Filter dit overzicht open je de lokale zoekbalk en filters. Zoeken · filters actief betekent dat de lijst is beperkt. Wis filters toont de volledige lijst. In Schrijven doorzoek je lokaal Notities of de gekozen documenten. Bewaar alles bewaart ook verborgen werk.",'Kies Zoeken of gebruik ⌘K / Ctrl+K om in je werk te zoeken. Via Filter dit overzicht open je de lokale zoekbalk en filters. Zoeken · filters actief betekent dat de lijst is beperkt. Wis filters toont de volledige lijst. In Schrijven doorzoek je lokaal Notities of de gekozen documenten. Bewaar alles bewaart ook verborgen werk.'),"textContent");help.append(p);}
  if(tool==='Werkbank'&&help){
   const noteHelp=document.createElement('details');noteHelp.className='help-search';
   const title=document.createElement('summary'),copy=document.createElement('p');I18n.assign(title,I18n.ui('Notities','Notities'));

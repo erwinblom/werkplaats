@@ -1,3 +1,7 @@
+# Controle 0.36.19 — Ordenen en geïntegreerd zoeken
+
+61/61 brontestbestanden, 264 schone Master-bestanden; bron, website en ZIP gecontroleerd. Native macOS-Chrome-gebruikersroutes eerder in deze werkronde beproefd. Geen nieuwe Windows/Linux-ronde of echte beginnerstest. [Uitgave en grenzen](UITGAVE-0.36.19.md).
+
 # Controle 0.36.18 — Databases voor ieder niveau
 
 57/57 brontestbestanden,schone 262bestandenMaster,website/ZIPgelijk,lokaleassets/privacy/licenties gecontroleerd. Eigen nativeChromecontrole op macOS voor toevoegen/bewaren/heropenen/zoeken en startkeuzes; onafhankelijke code/routecontrole. Geen echte beginnerstest of nieuwe Windows/Linux-browserronde voor 0.36.18. [Uitgave en grenzen](UITGAVE-0.36.18.md).

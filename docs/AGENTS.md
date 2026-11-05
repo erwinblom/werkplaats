@@ -14,9 +14,9 @@ Voor UI-werk: volg GUI.md en gebruik graphical-ui, graphical-convert of graphica
 - Actieve filters, relevante deadlines, aandacht en bewaarfouten blijven herkenbaar.
 - Boekhoudtotalen tonen een direct wijzigbare periode.
 - Bugs en Requests blijft in de persoonlijke ontwikkelversie altijd bereikbaar; de publieke versie gebruikt Hulp.
-- Controleer alle tien tools samen, inclusief Nederlands/Engels; meld ontbrekend browserbewijs afzonderlijk.
+- Controleer alle negen tools samen, inclusief Nederlands/Engels; meld ontbrekend browserbewijs afzonderlijk.
 
-- De tien iconen op Home zijn leidend. Toolkoppen en het geopende Zoekvenster gebruiken exact dezelfde SVG-vormen; controleer gelijkheid bij wijzigingen.
+- De negen iconen op Home zijn leidend. Toolkoppen en het geopende Zoekvenster gebruiken exact dezelfde SVG-vormen; controleer gelijkheid bij wijzigingen.
 
 ## Vaste FMT-appiconen
 Behoud App-iconen met goedgekeurde bron, browsermanifest en Mac-startappmaker. De Master-build controleert deze bron en neemt haar in iedere ZIP op. Witte tegel, zwart rooster en canoniek target rechtsboven met rode stip; geen wijziging van uitvoerstijl.

@@ -1,10 +1,10 @@
-# Je eigen overzichten in Databases
+# Ordenen — je eigen databases en overzichten
 
-Met Databases houd je bijvoorbeeld je boeken, uitgeleende spullen of voorraad bij. Je hebt geen account nodig. Alles blijft in de werkmap op je eigen computer. Gebruik de lokale Werkplaats in Chrome of Edge om daar te kunnen bewaren.
+Met Ordenen maak je je eigen databases en overzichten, bijvoorbeeld voor boeken, voorraad of informatieverzoeken. Je hebt geen account nodig. Alles blijft in de werkmap op je eigen computer. Gebruik de lokale Werkplaats in Chrome of Edge om daar te kunnen bewaren.
 
 ## Begin met iets dat je zelf wilt bijhouden
 
-1. Open **Databases** op Home of via de toolkeuze.
+1. Open **Ordenen** op Home of via de toolkeuze.
 2. Kies een voorbeeld. Je ziet eerst welke kolommen het overzicht krijgt.
 3. Geef je overzicht een herkenbare naam. De voorgestelde naam kun je aanpassen.
 4. Voeg je eerste eigen rij toe. Vul iets in dat je zelf wilt bewaren en kies **Bewaar**.
@@ -16,17 +16,17 @@ Zo heb je meteen het hele rondje gedaan: iets maken, bewaren en weer terugvinden
 
 | Voorbeeld | Voorgestelde naam | Kolommen | Wat je ermee kunt bijhouden |
 | --- | --- | --- | --- |
-| Boeken | Mijn boeken | Titel, Schrijver, Status | Boeken die je wilt lezen, aan het lezen bent of uit hebt. |
-| Uitleenlijst | Mijn uitleenlijst | Voorwerp, Aan wie, Uitgeleend op, Terug op | Wat je hebt uitgeleend en wanneer het terugkomt. |
-| Voorraad | Mijn voorraad | Artikel, Aantal, Eenheid, Plek | Welke spullen je hebt, hoeveel en waar ze liggen. |
+| Persoonlijk — Boeken | Mijn boeken | Titel, Schrijver, Status | Boeken die je wilt lezen, aan het lezen bent of uit hebt. |
+| Zakelijk — Voorraad | Mijn voorraad | Artikel, Aantal, Eenheid, Plek | Welke spullen je hebt, hoeveel en waar ze liggen. |
+| Overheid — Informatieverzoeken | Mijn informatieverzoeken | Onderwerp, Ontvangstdatum, Verantwoordelijke, Status, Volgende actie | Welke informatie is gevraagd, wie het oppakt en wat er moet gebeuren. |
 
 De voorbeelden maken alleen de kolommen voor je klaar. De voorbeeldtekst in de uitleg wordt niet als jouw gegevens bewaard. Je begint met een leeg overzicht en voegt je eigen rij toe.
 
-Een rij is één boek, één uitgeleend voorwerp of één voorraadartikel. Een kolom is een eigenschap daarvan. Alleen Aantal in het voorraadvoorbeeld verwacht een geheel getal. De andere voorbeeldvelden zijn tekst; ook datums kun je zelf leesbaar invullen.
+Een rij is één boek, één informatieverzoek of één voorraadartikel. Een kolom is een eigenschap daarvan. Alleen Aantal in het voorraadvoorbeeld verwacht een geheel getal. De andere voorbeeldvelden zijn tekst; ook datums kun je zelf leesbaar invullen.
 
 ## Later verderwerken
 
-Open dezelfde Werkplaats-werkmap en kies **Databases**. Je eigen overzichten staan in de lijst. Open een overzicht om de rijen te bekijken. Met **Rij toevoegen** voeg je iets toe; met **Bewerk** verander je een bestaande rij. **Bewaar** in het formulier schrijft de wijziging direct naar je werkmap.
+Open dezelfde Werkplaats-werkmap en kies **Ordenen**. Je eigen overzichten staan in de lijst. Open een overzicht om de rijen te bekijken. Met **Rij toevoegen** voeg je iets toe; met **Bewerk** verander je een bestaande rij. **Bewaar** in het formulier schrijft de wijziging direct naar je werkmap.
 
 Zoeken kijkt in alle rijen van de gekozen tabel, ook als ze niet op de huidige pagina staan. De weergave toont maximaal 100 rijen per pagina. Wis de zoektekst om weer alles te zien.
 
@@ -58,6 +58,24 @@ Maximaal 20 MB per bestand, 100 eigen kolommen per nieuwe tabel, 5.000 rijen per
 
 ## Aanpassen met AI
 
-Begin met een aparte kopie van Werkplaats en een proefbestand. Vraag bijvoorbeeld: “Voeg aan Databases een voorbeeld voor mijn planten toe. Laat mij eerst de kolommen bekijken, bewaar geen verzonnen rijen en behoud het bewaren en heropenen van gewone SQLite-bestanden.”
+Begin met een aparte kopie van Werkplaats en een proefbestand. Vraag bijvoorbeeld: “Voeg aan Ordenen een voorbeeld voor mijn planten toe. Laat mij eerst de kolommen bekijken, bewaar geen verzonnen rijen en behoud het bewaren en heropenen van gewone SQLite-bestanden.”
 
 De interface staat in `databases.js`, de SQLite-bewerkingen in `databases-core.js` en de bestandsopslag in `databases-storage.js`. De drie voorbeelden staan in `tabellen-voorbeelden.js`. De engine en licentie staan in `vendor/sqljs/`; de tests in `tests/databases-*.test.cjs`. Verander tijdens een proef nooit je echte bestanden.
+
+## Ontdek met voorbeeldgegevens
+
+Kies Ontdek met voorbeeldgegevens en maak bewust een eigen oefendatabase met twintig volledig fictieve artikelen. De drie startvoorbeelden blijven leeg. De oefendatabase bevat artikelen, vaste personen/organisaties/onderwerpen en koppelingen daartussen.
+
+1. Vind artikelen over lokale opslag. Zoekwoorden worden gecombineerd: ieder woord moet ergens in het artikel of de gekoppelde entiteiten voorkomen.
+2. Combineer Organisatie Gemeente Voorbeeldstad met Onderwerp Digitale vaardigheden. Beide criteria gelden tegelijk.
+3. Open een artikel en klik op een persoon of organisatie. Je ziet de andere artikelen met precies diezelfde vermelding. Onder Wie en wat komen vaker terug zie je aantallen over de hele oefendatabase.
+
+Met Bekijk de gekoppelde tabellen zie je Artikelen, Entiteiten en ArtikelEntiteiten. Die laatste tabel verbindt de nummers van artikelen en entiteiten. Ook na downloaden en heropenen blijft dit gewone SQLite. Je kunt de tabellen bewerken; aantallen en zoekresultaten worden opnieuw uit de gegevens berekend. De oefenopdrachten zijn gemaakt voor de oorspronkelijke voorbeeldgegevens.
+
+Dit is een lokale oefening: geen automatische artikelimport, AI-herkenning of feitelijke uitspraken over genoemde personen en organisaties.
+
+## Vragen aan je verzameling
+
+In de oefendatabase staan drie vaste vragen: organisaties op frequentie, onderwerpen in artikelen waarin zowel gemeente als bibliotheek voorkomen, en artikelen met meerdere organisaties. De antwoorden worden bij openen uit de huidige tabellen berekend en gebruiken de hele oefendatabase, onafhankelijk van je zoekfilters. Organisaties en artikelen worden uniek geteld; een terugkerende naam wordt niet als nieuwe organisatie geteld.
+
+Open een antwoordregel voor de onderbouwende artikelen, inclusief hun gekoppelde organisaties en onderwerpen. Open daarna het artikel zelf om de tekst en koppelingen te controleren. Terug naar het antwoord brengt je terug bij de telling. Een gedeelde vermelding toont een geregistreerde koppeling; lees het artikel om de betekenis daarvan te beoordelen. Na een eigen tabelwijziging en bewaren rekent de weergave opnieuw.

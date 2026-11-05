@@ -14,29 +14,27 @@ Voor dagelijks gebruik hoeft AI niet mee te draaien: Werkplaats werkt in je brow
 
 [Bekijk de uitlegvideo](https://erwinblom.github.io/werkplaats/Video/Werkplaats-uitlegvideo.mp4) · [Download voor offline gebruik](https://github.com/erwinblom/werkplaats/releases/latest/download/Werkplaats.zip)
 
-<a href="https://erwinblom.github.io/werkplaats/"><img src="images/werkplaats-home.jpg" alt="Werkplaats: je werk en je gereedschap" width="640"></a>
-
 ## Beginnen
 
 1. Kies **Nieuw beginnen** en bevestig een opslagplek, bijvoorbeeld het bureaublad. Werkplaats maakt zelf **Mijn Werkplaats** met de submappen aan. Elke tool vraagt eerst om een nieuwe of bestaande werkmap.
 2. Schrijf je idee in de eerste notitie die wordt geopend.
 3. Klik **Bewaar**. Open later dezelfde werkmap via **Verder werken**.
 
-## Nieuw in 0.36.18: Databases voor beginners en gevorderden
+## Nieuw in 0.36.19: Ordenen, ontdekken en je antwoorden controleren
 
-Maak je eigen overzichten, van boekenlijst tot voorraad. Open **Databases** op Home en kies hoe je wilt beginnen:
+**Databases heet nu Ordenen.** Maak privé je eigen SQLite-bestanden, vind informatie terug en ontdek verbanden. Open **Ordenen** op Home:
 
-- **Boeken**: titel, schrijver en leesstatus.
-- **Uitleenlijst**: wat je uitleent, aan wie en wanneer het terugkomt.
-- **Voorraad**: artikel, aantal, eenheid en plek.
+- **Persoonlijk — Boeken**, **Zakelijk — Voorraad** en **Overheid — Informatieverzoeken** geven je lege tabellen met passende kolommen. De beginnersroute helpt je een eigen rij toevoegen, bewaren, opnieuw openen en terugvinden.
+- **Ontdek met voorbeeldgegevens** maakt op jouw verzoek een aparte oefendatabase met twintig fictieve artikelen en gekoppelde personen, organisaties en onderwerpen. Probeer zoeken, filters combineren en doorklikken naar verbanden.
+- **Vragen aan je verzameling** toont drie voorbeeldvragen: welke organisaties komen het vaakst voor, welke onderwerpen verbinden gemeente en bibliotheek, en welke artikelen noemen meerdere organisaties? De antwoorden worden berekend uit je actuele oefengegevens. Met **Bekijk onderbouwing** lees je de artikelen en koppelingen achter ieder antwoord. Bij de tweede vraag tellen artikelen die zowel gemeente als bibliotheek noemen.
 
-De kolommen staan klaar; er worden geen verzonnen gegevens opgeslagen. Een korte begeleiding helpt je **je eerste eigen rij toevoegen, bewaren, opnieuw openen en terugvinden**. Zoeken kijkt in alle rijen van je tabel.
+Gevorderden kunnen **Zelf beginnen**, **Bestaande database openen**, tabellen en rijen bewerken, CSV importeren en een echt `.sqlite`-bestand downloaden. De SQLite-engine werkt offline; geen account, databaseserver of AI nodig. Maximaal 20 MB per database en 5.000 rijen per CSV-import. Bestaande bestanden blijven bruikbaar.
 
-Werk je liever met je eigen indeling? Kies **Zelf beginnen**. Met **Bestaande database openen** voeg je een eigen kopie van een SQLite-bestand toe. Eigen tabellen, rijen bewerken, CSV-import en een SQLite-download blijven beschikbaar onder **Meer**.
+**Zoeken zit voortaan op Home en in iedere tool**, ook via ⌘K/Ctrl+K. De aparte Zoeken-tegel vervalt. **Filter dit overzicht** opent de lokale filters. De inhoud van SQLite-bestanden doorzoek je binnen Ordenen.
 
-Je hebt geen account of databaseserver nodig. De SQLite-engine wordt meegeleverd en werkt offline. Je bestanden blijven in je eigen werkmap. Maximaal 20 MB per database en 5.000 rijen per CSV-import. Gebruik na een update dezelfde werkmap om verder te werken.
+De publieke versie heet standaard alleen **Werkplaats**. Een persoonlijke naam kies je zelf in Instellingen.
 
-[Handleiding en aanpassen met AI](app/Databases.md) · [Wat is nieuw in 0.36.18?](release/UITGAVE-0.36.18.md)
+[Handleiding en aanpassen met AI](app/Databases.md) · [Wat is nieuw in 0.36.19?](release/UITGAVE-0.36.19.md)
 
 <details>
 <summary>Offline gebruiken, bijwerken en overstappen</summary>
@@ -60,8 +58,7 @@ Bestaande gebruikers: bewaar eerst je actuele werk in de oude versie. Open na de
 |---|---|
 | Verzamelen | Links en citaten bewaren; kiezen tussen Lezen, Luisteren, Kijken, Proberen en Inspireren |
 | Schrijven | Notities en documenten; gekoppelde bronnen, afbeeldingen en ander materiaal |
-| Zoeken | Je eigen werk doorzoeken |
-| Databases | Eigen SQLite-bestanden, tabellen en rijen; CSV importeren en downloaden |
+| Ordenen | Eigen SQLite-bestanden; oefenen met zoeken, verbanden en controleerbare antwoorden |
 | Projecten | Tijdelijke en doorlopende projecten met gekoppeld materiaal |
 | Doen | Taken, deadlines en prioriteiten |
 | Contacten | Contactgegevens, gesprekken en vervolgacties |

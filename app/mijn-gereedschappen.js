@@ -1,7 +1,7 @@
 'use strict';
 window.MijnGereedschappen=(()=>{
  const base=new URL('.',document.currentScript.src),businessTools=['Offerte','Ping','Uren','Kasboek','Abonnementen'];
- const catalog={Bronnenkast:['Verzamelen','Start Bronnenkast.html'],Werkbank:['Schrijven','▶ Begin hier.html'],Zoeken:['Zoeken',null],Publicatieplanner:['Projecten','Start Publicatieplanner.html'],Projectbord:['Doen','Start Projectbord.html'],Contacten:['Contacten','Start Contacten.html'],Ping:['Facturen','Start Ping.html'],Abonnementen:['Abonnementen','Start Abonnementen.html'],Kasboek:['Boekhouding','Start Kasboek.html'],Databases:['Databases','Start Databases.html']};
+ const catalog={Bronnenkast:['Verzamelen','Start Bronnenkast.html'],Werkbank:['Schrijven','▶ Begin hier.html'],Publicatieplanner:['Projecten','Start Publicatieplanner.html'],Projectbord:['Doen','Start Projectbord.html'],Contacten:['Contacten','Start Contacten.html'],Ping:['Facturen','Start Ping.html'],Abonnementen:['Abonnementen','Start Abonnementen.html'],Kasboek:['Boekhouding','Start Kasboek.html'],Databases:['Ordenen','Start Databases.html']};
  let preferences={},channel,mounted=false;
  const business=()=>preferences.business===true;
  for(const entry of Object.values(catalog)){const source=entry[0];Object.defineProperty(entry,0,{get:()=>I18n.t(source),enumerable:true});}
@@ -61,7 +61,7 @@ window.MijnGereedschappen=(()=>{
  function renderHome(){
   const layers=[...document.querySelectorAll('.shell main>.tool-layer')];if(!layers.length)return;
   if(!homeCards){homeCards=new Map();homeParents=new Map();for(const card of document.querySelectorAll('.shell .tool-layer .card')){
-   const link=card.querySelector('a'),id=link?Object.keys(catalog).find(id=>catalog[id][1]&&link.getAttribute('href').includes('Apps/'+id+'/')):'Zoeken';
+   const link=card.querySelector('a'),id=link?Object.keys(catalog).find(id=>catalog[id][1]&&link.getAttribute('href').includes('Apps/'+id+'/')):null;
    if(id){const heading=card.querySelector('h2,h3');if(heading)I18n.assign(heading,I18n.ui(catalog[id][0],catalog[id][0]));if(businessTools.includes(id))card.dataset.business='';homeCards.set(id,card);homeParents.set(id,card.parentElement);}
   }}
   if(!preferences.order&&!preferences.hidden?.length){document.getElementById('personal-tools')?.remove();for(const [id,card]of homeCards){card.hidden=false;homeParents.get(id).append(card);}for(const layer of layers)layer.hidden=false;return;}
@@ -241,8 +241,10 @@ window.MijnGereedschappen=(()=>{
  let previousSearch={query:'',tool:'',kind:'',project:''};
  function search(){
   if(document.getElementById('all-search-dialog'))return;
+  const localToggle=document.getElementById('suite-search-toggle'),localBar=document.getElementById('suite-search-bar');if(localBar){localBar.hidden=true;localToggle?.setAttribute('aria-expanded','false');}
   const d=document.createElement('dialog');d.id='all-search-dialog';d.className='my-tools-dialog';d.setAttribute('aria-labelledby','all-search-title');d.innerHTML="<h2 id=\"all-search-title\"><span data-i18n=\"Zoeken in je werk\">Zoeken in je werk</span></h2><label for=\"all-search-input\"><span data-i18n=\"Zoekterm\">Zoekterm</span></label><input id=\"all-search-input\" type=\"search\" placeholder=\"Een titel, naam of woord uit je tekst\" data-i18n-placeholder=\"Een titel, naam of woord uit je tekst\"><p class=\"my-tools-status\" role=\"status\"><span data-i18n=\"Je werk wordt geladen…\">Je werk wordt geladen…</span></p><ul class=\"all-search-results\"></ul>";
   const actions=document.createElement('div');actions.className='my-tools-actions wp-actions';actions.append(I18n.mark(button('Sluit',()=>d.close()),"Sluit"));const heading=document.createElement('div');heading.className='all-search-heading';const searchTitle=d.querySelector('h2');searchTitle.insertAdjacentHTML('afterbegin',"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 34\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.4\" stroke-linecap=\"square\" stroke-linejoin=\"miter\" class=\"tool-symbol\" aria-hidden=\"true\" focusable=\"false\"><circle cx=\"13\" cy=\"13\" r=\"9\"/><path d=\"M20 20L29 29\"/></svg>");heading.append(searchTitle,actions);d.prepend(heading);document.body.append(d);d.addEventListener('close',()=>d.remove(),{once:true});d.showModal();const input=d.querySelector('input'),status=d.querySelector('[role=status]'),list=d.querySelector('ul');input.value=previousSearch.query;input.focus();let rows=[],errors=[],loading=true,limit=100;const more=I18n.mark(button('Meer resultaten',()=>{limit+=100;render();}), 'Meer resultaten');more.className='all-search-more';more.hidden=true;list.after(more);input.setAttribute('aria-describedby','all-search-status');status.id='all-search-status';
+  if(localToggle){const localAction=I18n.mark(button('Filter dit overzicht',()=>{d.close();localToggle.click();}), 'Filter dit overzicht');localAction.setAttribute('aria-controls','suite-search-bar');d.querySelector('.my-tools-actions').prepend(localAction);}
   const filters=document.createElement('details');filters.className='all-search-filters';
   const filterTitle=document.createElement('summary');I18n.assign(filterTitle,I18n.ui('Filters','Filters'),'textContent');filters.append(filterTitle);
   const toolFilter=document.createElement('select'),kindFilter=document.createElement('select'),projectFilter=document.createElement('select');
@@ -287,6 +289,13 @@ window.MijnGereedschappen=(()=>{
   Promise.allSettled(ids.map(async id=>{const session=await BewaarAlles.readTool(id);return searchRows(id,session,id==='Werkbank'?await BewaarAlles.readShared():{});})).then(results=>{if(!d.open)return;results.forEach((result,i)=>{if(result.status==='fulfilled')rows.push(...result.value);else errors.push(ids[i]==='Uren'?'Uren':ids[i]==='Offerte'?'Offertes':catalog[ids[i]][0]);});loading=false;fillFilters();for(const control of [toolFilter,kindFilter,projectFilter,clear])control.disabled=false;toolFilter.value=previousSearch.tool;kindFilter.value=previousSearch.kind;projectFilter.value=previousSearch.project;render();});
   document.addEventListener('gereedschappen-gewijzigd',render);document.addEventListener('taal-gewijzigd',render);d.addEventListener('close',()=>{previousSearch={query:input.value,tool:toolFilter.value,kind:kindFilter.value,project:projectFilter.value};document.removeEventListener('gereedschappen-gewijzigd',render);document.removeEventListener('taal-gewijzigd',render);},{once:true});
  }
+ function mountSearch(){
+  const host=document.querySelector('.workspace-strip')||document.querySelector('.suite-navigation')||document.querySelector('.shell > header');if(!host)return;
+  let control=document.getElementById('workspace-search');if(!control){control=button('Zoeken',search);control.id='workspace-search';control.className='my-tools-trigger';control.setAttribute('aria-haspopup','dialog');control.setAttribute('aria-controls','all-search-dialog');control.setAttribute('aria-keyshortcuts','Meta+K Control+K');host.append(control);}
+  const label=()=>{const active=document.getElementById('suite-search-toggle')?.dataset.active==='true';I18n.assign(control,I18n.ui(active?'Zoeken · filters actief':'Zoeken',active?'Zoeken · filters actief':'Zoeken'),'textContent');};label();document.addEventListener('taal-gewijzigd',label);document.addEventListener('zoekfilters-gewijzigd',label);
+  const local=document.getElementById('suite-search-toggle');if(local)local.hidden=true;
+  window.addEventListener('keydown',event=>{if(event.isComposing||event.altKey||event.shiftKey||!(event.metaKey||event.ctrlKey)||event.key.toLowerCase()!=='k')return;const open=document.querySelector('dialog[open]');event.preventDefault();event.stopImmediatePropagation();if(open&&open.id!=='all-search-dialog')return;if(!event.repeat){if(open)open.close();else search();}},true);
+ }
  async function mount(){
   await ready;if(mounted)return;mounted=true;
   const style=document.createElement('link');style.rel='stylesheet';style.href=new URL('mijn-gereedschappen.css?v=20261010-personalisatie-6',base).href;document.head.insertBefore(style,document.querySelector('link[href*="blom-os-tokens.css"]'));
@@ -302,6 +311,7 @@ window.MijnGereedschappen=(()=>{
   });
 
   const parent=document.querySelector('.suite-navigation')||document.querySelector('.shell > header');mountSettings(parent);
+  mountSearch();
   function welcome(){const box=document.getElementById('business-onboarding');if(box)box.hidden=typeof preferences.business==='boolean'||Array.isArray(preferences.order);}
   document.getElementById('choose-business')?.addEventListener('click',settings);welcome();document.addEventListener('gereedschappen-gewijzigd',welcome);
   document.addEventListener('werkmap-gekozen',()=>reload().catch(console.error));document.addEventListener('werkruimte-klaar',()=>reload().catch(console.error));window.addEventListener('focus',()=>reload().catch(console.error));

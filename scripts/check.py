@@ -20,7 +20,10 @@ assert actual==manifest['files'],'Publieksbron wijkt af van schone Master; wijzi
 for directory in [root/'app',root/'docs']:
  for p in directory.rglob('*.html'):Links(p).feed(p.read_text())
  for p in directory.rglob('*.js'):subprocess.run(['node','--check',str(p)],check=True,capture_output=True)
- start=(directory/'Begin hier.html').read_text();assert len(re.findall(r'<li class="card active">',start))==10
+ start=(directory/'Begin hier.html').read_text();assert len(re.findall(r'<li class="card active">',start))==9
+ assert 'wordmark-brand' not in start and 'Blom Bouwt' not in start
+ assert 'Versie 0.36.19' in start
+ assert 'Apps/Zoeken/' not in start
  for p in directory.rglob('*'):
   if p.is_file() and p.suffix in ['.html','.js','.json','.md','.txt']:
    text=p.read_text(errors='replace')
