@@ -13,9 +13,9 @@ function linuxAllowFromScreenshot(before,after,log){
  fs.writeFileSync(before+'.tsv',ocr.stdout);
  const words=ocr.stdout.split(/\r?\n/).slice(1).map(line=>{const v=line.split('\t');return {left:+v[6],top:+v[7],width:+v[8],height:+v[9],confidence:+v[10],text:(v.slice(11).join('\t')||'').trim()};}).filter(w=>w.text&&w.confidence>=20);
  const all=words.map(w=>w.text).join(' ');if(!/Allow this site to edit files\?/i.test(all))throw Error('Expected native edit-files permission title not visible in OCR: '+all);
- const allows=words.filter(w=>w.text==='Allow'&&w.left>width*.4&&w.top<height*.5),denials=words.filter(w=>/^Don['’]?t$/i.test(w.text));
- const candidates=allows.filter(w=>denials.some(d=>Math.abs((d.top+d.height/2)-(w.top+w.height/2))<18&&d.left<w.left));
- candidates.sort((a,b)=>b.left-a.left);if(!candidates.length)throw Error('No unambiguous native Allow button beside Don’t Allow was found.');
+ const title=words.find(w=>w.text==='Allow'&&w.top<height*.3&&w.confidence>=80);if(!title)throw Error('Native permission heading location is ambiguous.');
+ const candidates=words.filter(w=>w.text==='Allow'&&w.confidence>=80&&w.left>width*.5&&w.top>title.top+40&&w.top<title.top+180);
+ if(candidates.length!==1)throw Error('Expected exactly one visible Allow button below the native permission title; found '+candidates.length);
  const target=candidates[0],x=Math.round(target.left+target.width/2),y=Math.round(target.top+target.height/2);log('OCR native permission dimensions='+width+'x'+height+'; click observed Allow at '+x+','+y);
  const click=spawnSync('xdotool',['mousemove','--sync',String(x),String(y),'click','1'],{encoding:'utf8',timeout:5000});if(click.status!==0)throw Error('Native Allow click failed: '+click.stderr);
  const shot=spawnSync('bash',['-c','sleep 0.8; scrot "$1"','after-allow',after],{encoding:'utf8',timeout:5000});if(shot.status!==0)throw Error('Native after-Allow screenshot failed: '+shot.stderr);
