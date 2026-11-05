@@ -16,7 +16,7 @@ jobs:
     env:
       RUN_CHROME: '1'
       RELEASE_ZIP: fixtures/Werkplaats-CH535.zip
-      EXPECTED_ZIP_SHA256: c3695c5204a556fb3ee6d7287f61e21b939e19b3af464d3a3e14b47d4fc50d75
+      EXPECTED_ZIP_SHA256: 4de97d730e130dee2d64fc777d6eaeb5e45b467c195a4fe646928097869dc883
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4

@@ -2,7 +2,7 @@ from pathlib import Path,PurePosixPath
 import hashlib,zipfile,shutil,json
 candidate=Path('fixtures/Werkplaats-CH535.zip')
 h=hashlib.sha256(candidate.read_bytes()).hexdigest()
-assert h=="c3695c5204a556fb3ee6d7287f61e21b939e19b3af464d3a3e14b47d4fc50d75",h
+assert h=="4de97d730e130dee2d64fc777d6eaeb5e45b467c195a4fe646928097869dc883",h
 out=Path('platform-evidence');out.mkdir(exist_ok=True)
 with zipfile.ZipFile(candidate) as z:
  assert z.testzip() is None
@@ -15,5 +15,5 @@ with zipfile.ZipFile(candidate) as z:
  for name in files:
   path=Path('app')/name[len(prefix):];path.parent.mkdir(parents=True,exist_ok=True);path.write_bytes(z.read(name))
  assert (Path('app')/'databases.js').is_file()
-(out/'candidate.json').write_text(json.dumps({'sha256':h,'appFiles':len(files),'zipCRC':'pass','sourceCommit':'8100202e0bd809fba3075a715e4bb57104d17371'},indent=2))
+(out/'candidate.json').write_text(json.dumps({'sha256':h,'appFiles':len(files),'zipCRC':'pass','sourceCommit':'ea07567'},indent=2))
 print('Exact CH535 candidate verified and extracted: '+h)
