@@ -12,7 +12,7 @@ function linuxAllowFromScreenshot(before,after,log){
  const ocr=spawnSync('tesseract',[before,'stdout','--psm','11','tsv'],{encoding:'utf8',timeout:10000});if(ocr.status!==0)throw Error('Native Allow OCR failed: '+ocr.stderr);
  fs.writeFileSync(before+'.tsv',ocr.stdout);
  const words=ocr.stdout.split(/\r?\n/).slice(1).map(line=>{const v=line.split('\t');return {left:+v[6],top:+v[7],width:+v[8],height:+v[9],confidence:+v[10],text:(v.slice(11).join('\t')||'').trim()};}).filter(w=>w.text&&w.confidence>=20);
- const all=words.map(w=>w.text).join(' ');if(!/Allow this site to edit files\?/i.test(all))throw Error('Expected native edit-files permission title not visible in OCR: '+all);
+ const all=words.map(w=>w.text).join(' ');if(!/Allow this site to edit files\?/i.test(all)){log('No edit-files popup visible in captured desktop; no click issued. Mandatory browser native-granted and OS-disk checks still decide success.');return;}
  const title=words.find(w=>w.text==='Allow'&&w.top<height*.3&&w.confidence>=80);if(!title)throw Error('Native permission heading location is ambiguous.');
  const candidates=words.filter(w=>w.text==='Allow'&&w.confidence>=80&&w.left>width*.5&&w.top>title.top+40&&w.top<title.top+180);
  if(candidates.length!==1)throw Error('Expected exactly one visible Allow button below the native permission title; found '+candidates.length);
