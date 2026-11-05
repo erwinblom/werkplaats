@@ -1,0 +1,45 @@
+name: CH535 SQLite Windows and Linux check
+on:
+  push:
+    branches: [ch535-platform-check]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  browser:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-24.04, windows-2022]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 25
+    env:
+      RUN_CHROME: '1'
+      RELEASE_ZIP: fixtures/Werkplaats-CH535.zip
+      EXPECTED_ZIP_SHA256: c3695c5204a556fb3ee6d7287f61e21b939e19b3af464d3a3e14b47d4fc50d75
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22.16.0'
+      - name: Verify exact candidate ZIP and extract clean app
+        shell: bash
+        run: python tests/ch535-extract.py
+      - name: Install pinned browser test dependency
+        run: npm install --no-save --package-lock=false playwright@1.56.1
+      - name: Install native Linux display and picker tools
+        if: runner.os == 'Linux'
+        run: sudo apt-get update && sudo apt-get install -y xvfb xdotool scrot dbus-x11 xdg-desktop-portal-gtk
+      - name: Real Chrome and OS files on Linux
+        if: runner.os == 'Linux'
+        run: xvfb-run -a dbus-run-session -- node tests/ch535-platform-check.cjs
+      - name: Real Chrome and OS files on Windows
+        if: runner.os == 'Windows'
+        run: node tests/ch535-platform-check.cjs
+      - name: Keep platform evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ch535-platform-${{ runner.os }}
+          path: platform-evidence/
+          if-no-files-found: error
