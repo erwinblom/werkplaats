@@ -6,6 +6,20 @@ const {pathToFileURL}=require('node:url');
 const {spawn,spawnSync}=require('node:child_process');
 const root=path.resolve(process.env.APP_ROOT||path.join(__dirname,'../app'));
 const out=path.resolve('platform-evidence');fs.mkdirSync(out,{recursive:true});
+function linuxAllowFromScreenshot(before,after,log){
+ // Read actual native dialog pixels. Never assume focus or button coordinates.
+ const png=fs.readFileSync(before);assert.equal(png.subarray(1,4).toString(),'PNG');const width=png.readUInt32BE(16),height=png.readUInt32BE(20);
+ const ocr=spawnSync('tesseract',[before,'stdout','--psm','11','tsv'],{encoding:'utf8',timeout:10000});if(ocr.status!==0)throw Error('Native Allow OCR failed: '+ocr.stderr);
+ fs.writeFileSync(before+'.tsv',ocr.stdout);
+ const words=ocr.stdout.split(/\r?\n/).slice(1).map(line=>{const v=line.split('\t');return {left:+v[6],top:+v[7],width:+v[8],height:+v[9],confidence:+v[10],text:(v.slice(11).join('\t')||'').trim()};}).filter(w=>w.text&&w.confidence>=20);
+ const all=words.map(w=>w.text).join(' ');if(!/Allow this site to edit files\?/i.test(all))throw Error('Expected native edit-files permission title not visible in OCR: '+all);
+ const allows=words.filter(w=>w.text==='Allow'&&w.left>width*.4&&w.top<height*.5),denials=words.filter(w=>/^Don['’]?t$/i.test(w.text));
+ const candidates=allows.filter(w=>denials.some(d=>Math.abs((d.top+d.height/2)-(w.top+w.height/2))<18&&d.left<w.left));
+ candidates.sort((a,b)=>b.left-a.left);if(!candidates.length)throw Error('No unambiguous native Allow button beside Don’t Allow was found.');
+ const target=candidates[0],x=Math.round(target.left+target.width/2),y=Math.round(target.top+target.height/2);log('OCR native permission dimensions='+width+'x'+height+'; click observed Allow at '+x+','+y);
+ const click=spawnSync('xdotool',['mousemove','--sync',String(x),String(y),'click','1'],{encoding:'utf8',timeout:5000});if(click.status!==0)throw Error('Native Allow click failed: '+click.stderr);
+ const shot=spawnSync('bash',['-c','sleep 0.8; scrot "$1"','after-allow',after],{encoding:'utf8',timeout:5000});if(shot.status!==0)throw Error('Native after-Allow screenshot failed: '+shot.stderr);
+}
 function nativeInput(folder,tag,permissionOnly=false){
  // This helper operates only the disposable runner's folder dialog. Never the author's desktop.
  let cmd,args;
@@ -51,7 +65,7 @@ $closed=AssertPermissionClosed; Start-Sleep -Milliseconds 500; Shot '${shot('aft
 
   cmd='powershell';args=['-NoProfile','-Command',script];
  }else{
-  const script=permissionOnly ? 'sleep 1.2; scrot "$2"; xdotool key --clearmodifiers Tab; xdotool key Return; sleep 0.8; scrot "$3"' : `
+  const script=permissionOnly ? 'sleep 1.2; scrot "$3"' : `
 ready=0
 for attempt in $(seq 1 40); do
  title=$(xdotool getwindowfocus getwindowname 2>/dev/null || true)
@@ -70,11 +84,7 @@ xdotool key Tab
 xdotool key Return
 sleep 1.2
 scrot "$3"
-printf 'Permission dialog: advance from default Dont Allow to Allow\\n'
-xdotool key --clearmodifiers Tab
-xdotool key Return
-sleep 0.8
-scrot "$3.after.png"
+printf 'Permission dialog captured; named Allow will be located from screenshot OCR\\n'
 `;
 
   cmd='bash';args=['-c',script,'picker',folder,path.join(out,tag+'-native-picker.png'),path.join(out,tag+'-native-after-allow.png'),path.join(out,tag+'-native-before.png')];
@@ -82,7 +92,7 @@ scrot "$3.after.png"
  const proc=spawn(cmd,args,{stdio:['ignore','pipe','pipe']});let logs='';proc.stdout.on('data',x=>logs+=x);proc.stderr.on('data',x=>logs+=x);
  return new Promise(resolve=>{
   let done=false;
-  const finish=code=>{if(done)return;done=true;clearTimeout(timer);fs.writeFileSync(path.join(out,tag+'-picker.log'),logs);resolve(code);};
+  const finish=code=>{if(done)return;done=true;clearTimeout(timer);if(code===0&&process.platform==='linux'){try{linuxAllowFromScreenshot(path.join(out,tag+'-native-after-allow.png'),path.join(out,tag+'-native-after-allow-click.png'),line=>logs+='\n'+line+'\n');}catch(error){logs+='\n'+String(error)+'\n';code=8;}}fs.writeFileSync(path.join(out,tag+'-picker.log'),logs);resolve(code);};
   const timer=setTimeout(()=>{logs+='\nNative input helper exceeded 30 seconds; terminating only this owned helper process.\n';proc.kill();finish(124);},30000);
   proc.on('error',error=>{logs+='\n'+String(error);finish(125);});
   proc.on('close',finish);
@@ -111,7 +121,7 @@ function browserProcesses(profile){
  }
  const run=spawnSync('ps',['-eo','pid=,args='],{encoding:'utf8'});assert.equal(run.status,0,run.stderr);return run.stdout.split('\n').filter(line=>line.includes('--user-data-dir='+profile)).map(line=>{const match=line.trim().match(/^(\d+)\s+(.*)$/);assert(match);return {pid:Number(match[1]),executable:fs.readlinkSync('/proc/'+match[1]+'/exe'),command:match[2]};});
 }
-function track(p){p.on('dialog',d=>{result.jsDialogs??=[];const expected=d.type()==='confirm'&&d.message()==='Open de bewaarde Werkplaats in Mijn Werkplaats? Dit vervangt je huidige browserwerk. Bewaar dat eerst als je het wilt houden.';result.jsDialogs.push({type:d.type(),message:d.message(),expected});(expected?d.accept():d.dismiss()).catch(error=>result.pageErrors.push('Dialog handler: '+error.message));});p.on('pageerror',e=>result.pageErrors.push(e.message));p.on('console',m=>{if(m.type()==='error')result.consoleErrors.push({text:m.text(),location:m.location()});});p.on('requestfailed',r=>result.requestFailures.push({url:r.url(),error:r.failure()?.errorText||''}));}
+function track(p){p.on('dialog',d=>{result.jsDialogs??=[];const expected=d.type()==='confirm'&&['Open de bewaarde Werkplaats in Mijn Werkplaats? Dit vervangt je huidige browserwerk. Bewaar dat eerst als je het wilt houden.','De bewaarde werkruimte openen? Je huidige browserwerk wordt vervangen. Bewaar eerst als je dat wilt houden.'].includes(d.message());result.jsDialogs.push({type:d.type(),message:d.message(),expected});(expected?d.accept():d.dismiss()).catch(error=>result.pageErrors.push('Dialog handler: '+error.message));});p.on('pageerror',e=>result.pageErrors.push(e.message));p.on('console',m=>{if(m.type()==='error')result.consoleErrors.push({text:m.text(),location:m.location()});});p.on('requestfailed',r=>result.requestFailures.push({url:r.url(),error:r.failure()?.errorText||''}));}
 async function savedDialog(p){const d=p.locator('#database-dialog');await d.waitFor({state:'hidden'});assert.match(await p.locator('#database-status').innerText(),/bewaard|Bewaard/);}
 async function databasePage(p){await p.goto(uri('Apps/Databases/Start Databases.html')+'?werkruimte=eigen');await p.locator('#new').waitFor();await p.waitForFunction(()=>!document.querySelector('#new').disabled,null,{timeout:30000});}
 async function openDatabase(p){await p.locator('#database-list button').filter({hasText:databaseName}).click();await p.locator('#database-title').getByText(databaseName,{exact:true}).waitFor();}
