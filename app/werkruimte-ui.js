@@ -26,12 +26,12 @@ window.WerkplaatsOrganizationLogo=(()=>{
 })();
 (()=>{
  const script=document.currentScript,base=new URL('.',script.src),tool=document.querySelector('script[data-tool]')?.dataset.tool;
- const tools={Publicatieplanner:['Projecten','Start Publicatieplanner.html'],Bronnenkast:['Verzamelen','Start Bronnenkast.html'],Werkbank:['Schrijven','▶ Begin hier.html'],Projectbord:['Doen','Start Projectbord.html'],Contacten:['Contacten','Start Contacten.html'],Offerte:['Offertes','Start Offerte.html'],Uren:['Uren','Start Uren.html'],Ping:['Facturen','Start Ping.html'],Kasboek:['Boekhouding','Start Kasboek.html'],Abonnementen:['Abonnementen','Start Abonnementen.html']};
+ const tools={Publicatieplanner:['Projecten','Start Publicatieplanner.html'],Bronnenkast:['Verzamelen','Start Bronnenkast.html'],Werkbank:['Schrijven','▶ Begin hier.html'],Projectbord:['Doen','Start Projectbord.html'],Contacten:['Contacten','Start Contacten.html'],Offerte:['Offertes','Start Offerte.html'],Uren:['Uren','Start Uren.html'],Ping:['Facturen','Start Ping.html'],Kasboek:['Boekhouding','Start Kasboek.html'],Abonnementen:['Abonnementen','Start Abonnementen.html'],Databases:['Databases','Start Databases.html']};
  const shortcutText=()=>window.MijnGereedschappen?.shortcutText()||'';
  const $=id=>document.getElementById(id);
  const mode=()=>window.GereedschapskistMode?.example?'voorbeeld':'eigen';
  function report(e){document.documentElement.removeAttribute('data-workspace-building');const message=$('wm-message');if(message)I18n.assign(message,I18n.ui("Dit onderdeel kon niet worden geladen. Vernieuw de pagina en probeer het opnieuw.",'Dit onderdeel kon niet worden geladen. Vernieuw de pagina en probeer het opnieuw.'),"textContent");console.error(e);}
- const helpSteps={
+ const helpSteps={Databases:['Databases','Maak een database en voeg tabellen toe of importeer een CSV-bestand.','Bewaar in het formulier schrijft meteen naar je werkmap. Download .sqlite maakt een losse kopie. Je gegevens blijven lokaal.'],
   Abonnementen:['Abonnementen','Voeg naam, bedrag, betaalperiode, verlenging en uiterste opzegdatum toe.','Open een abonnement om de gegevens te bekijken. Bewaar alles bewaart je overzicht in je werkmap.'],
   Werkbank:['Schrijven','Kies + Nieuw → Nieuw document, Brief, Artikel of Gespreksverslag. Geef het een naam en bewerk de starttekst.','Bewaar werkt het document bij op de getoonde opslagplek. Een los document gaat naar Schrijven in je werkmap. Bewaar alles bewaart daarnaast de hele Werkplaats.'],
   Ping:['Facturen','Kies Nieuwe factuur, vul klant en factuurregels in en controleer het voorbeeld.','Maak de factuur pas definitief nadat je alles hebt nagekeken. Bewaar alles legt je concepten en facturen vast.'],
@@ -270,10 +270,10 @@ window.WerkplaatsOrganizationLogo=(()=>{
    const nav=document.createElement('select');nav.id='tool-switcher';I18n.attribute(nav,'aria-label',I18n.ui("Wissel van tool",'Wissel van tool'));
    const shortcutPrefix=/Mac|iPhone|iPad/.test(navigator.platform)?'⌥':'Alt+';
    function updateNavigation(){
-    nav.replaceChildren(...myTools.entries().map(([id,[name]],index)=>new Option(shortcutPrefix+(index+1)+'  '+name,id)));
+    nav.replaceChildren(...myTools.entries().map(([id,[name]],index)=>new Option((index<9?shortcutPrefix+(index+1)+'  ':'')+name,id)));
     const active=['Uren','Offerte'].includes(tool)?'Ping':tool;
     if(![...nav.options].some(o=>o.value===active))nav.add(I18n.mark(new Option(tools[tool][0]+' (verborgen)',active),"{0} (verborgen)"));
-    nav.value=active;I18n.assign(nav,I18n.ui("Wissel van gereedschap met {0}1 t/m {1}{2}",'Wissel van gereedschap met '+shortcutPrefix+'1 t/m '+shortcutPrefix+myTools.entries().length),"title");
+    nav.value=active;I18n.assign(nav,I18n.ui("Wissel van gereedschap met {0}1 t/m {1}{2}",'Wissel van gereedschap met '+shortcutPrefix+'1 t/m '+shortcutPrefix+Math.min(9,myTools.entries().length)),"title");
     for(const p of document.querySelectorAll('.help-tool-shortcuts'))p.textContent=shortcutText();
    }
    updateNavigation();document.addEventListener('gereedschappen-gewijzigd',updateNavigation);

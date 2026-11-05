@@ -454,7 +454,7 @@ html body .all-search-heading h2 .tool-symbol{display:inline-block;vertical-alig
  @media(max-width:650px){body #contact-picker .picker-results{grid-template-columns:minmax(0,1fr)}}
 }
 
-/* Paper Mono draagt de interfacekoppen en korte labels; inhoud blijft Arial. */
+/* De FMT-toolfamilie deelt Arial voor interfacekoppen, korte labels en inhoud. Code behoudt monospace. */
 @media screen {
  html body :is(h1,h2,h3,h4,h5,h6,.brand,.wordmark) {font-family:var(--font-brand)!important}
  html body :is(label,legend,th,.edition,.section-label,.layer-heading h2,.notes-eyebrow,.card-foot>span:first-child) {font-family:var(--font-label)!important}

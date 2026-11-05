@@ -1,7 +1,7 @@
 'use strict';
 // One directory handle per installation/origin; files remain ordinary user files.
 window.Werkmap=(()=>{
- const catalog={Werkbank:['Schrijven',null],Ping:['Factureren','factureren'],Projectbord:['Doen','doen'],Bronnenkast:['Verzamelen','verzamelen'],Uren:['Uren schrijven','uren-schrijven'],Contacten:['Contact houden','contact-houden'],Publicatieplanner:['Plannen','plannen'],Offerte:['Offreren','offreren'],Kasboek:['Boekhouden','boekhouden'],Abonnementen:['Abonnementen','abonnementen']};
+ const catalog={Werkbank:['Schrijven',null],Ping:['Factureren','factureren'],Projectbord:['Doen','doen'],Bronnenkast:['Verzamelen','verzamelen'],Uren:['Uren schrijven','uren-schrijven'],Contacten:['Contact houden','contact-houden'],Publicatieplanner:['Plannen','plannen'],Offerte:['Offreren','offreren'],Kasboek:['Boekhouden','boekhouden'],Abonnementen:['Abonnementen','abonnementen'],Databases:['Databases',null]};
  const tool=document.querySelector('script[data-tool]')?.dataset.tool,example=window.GereedschapskistMode?.example;
  function storageSupport(){
   if(window.isSecureContext===false)return {supported:false,message:'Open Werkplaats via https of de lokale download in Chrome of Edge op je computer om een opslagmap te kiezen.'};

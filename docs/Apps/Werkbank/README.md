@@ -73,7 +73,7 @@ Klik op **+ Project toevoegen** en kies deze meegeleverde map **Werkbank**. De d
 
 Editor, zoeken, mapbeheer en lokale afbeeldingen werken zonder internet. Een ingevoegde afbeelding vanaf je computer (maximaal 2 MB) wordt in de Markdown-tekst opgenomen en reist met het bestand mee.
 
-Afbeeldingen via een webadres vragen internet en worden bij weergave van de tekst geladen. Een YouTube-link blijft een gewone link in Markdown; de speler maakt pas verbinding na klikken op **YouTube-video afspelen**. Zonder internet blijft de rest van de Werkbank bruikbaar. Geen analytics of automatische AI-aanroepen.
+Afbeeldingen via een webadres vragen internet en worden bij weergave van de tekst geladen. Een YouTube-link blijft een gewone link in Markdown; de thumbnail wordt bij weergave van de video geladen, de speler pas na klikken op **YouTube-video afspelen**. Als de thumbnail niet laadt, blijft de afspeelknop beschikbaar. Zonder internet blijft de rest van de Werkbank bruikbaar. Geen analytics of automatische AI-aanroepen.
 
 ## Grenzen en bestandsveiligheid
 

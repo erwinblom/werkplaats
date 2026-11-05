@@ -65,7 +65,7 @@ body[data-tool=Publicatieplanner] #workspace-help-toggle:hover,body[data-tool=Pu
 .compact-tools .invoice-btn.active small,.compact-tools .quote-button.selected span{color:#454545}
 
 /* Dezelfde grafische omlijsting als de homepage, met voorrang voor werkruimte. */
-html:has(body.compact-tools){min-height:100%;background-color:#171717!important;background-image:radial-gradient(circle at 101% 1%,var(--wp-accent,#e32720) 0 220px,transparent 221px),radial-gradient(ellipse at -7% 26%,#eeeae0 0 235px,transparent 236px),radial-gradient(circle at 5% 82%,var(--wp-accent,#e32720) 0 65px,transparent 66px),linear-gradient(90deg,var(--wp-accent,#e32720) 0 22px,transparent 22px),linear-gradient(135deg,transparent 70%,#242424 70%)!important;background-attachment:fixed!important}
+html:has(body.compact-tools){min-height:100%;background-color:#171717!important;background-image:radial-gradient(circle at 101% 1%,var(--wp-accent,#e32720) 0 220px,transparent 221px),radial-gradient(ellipse at -7% 26%,#e5e5e5 0 235px,transparent 236px),radial-gradient(circle at 5% 82%,var(--wp-accent,#e32720) 0 65px,transparent 66px),linear-gradient(90deg,var(--wp-accent,#e32720) 0 22px,transparent 22px),linear-gradient(135deg,transparent 70%,#242424 70%)!important;background-attachment:fixed!important}
 body.compact-tools{width:auto;max-width:1800px;margin:24px clamp(16px,3vw,64px);min-height:calc(100vh - 48px);background:#fff!important;border-radius:26px;box-shadow:0 16px 60px #0004}
 body.compact-tools>header,body.compact-tools>.brandbar{border-radius:26px 26px 0 0;background:#fff}
 body.compact-tools>main{border-radius:0 0 26px 26px;padding-bottom:24px}

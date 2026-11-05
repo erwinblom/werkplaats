@@ -1,7 +1,7 @@
 /* The sheet and its research stay separate, including when printing. */
 #content:has(>.document-materials[open]){display:grid;grid-template-columns:minmax(0,1fr) 280px;column-gap:24px;align-content:start;align-items:start}
 #content:has(>.document-materials[open])>.markdown-content,#content:has(>.document-materials[open])>.editor-container{grid-column:1;grid-row:2;min-width:0}
-#content>.document-materials{box-sizing:border-box;grid-column:2;grid-row:2;border:1px solid var(--border,#ddd);background:var(--bg-secondary,#fafaf8);padding:16px;margin:0;min-width:0}
+#content>.document-materials{box-sizing:border-box;grid-column:2;grid-row:2;border:1px solid var(--border,#ddd);background:var(--bg-secondary,#f7f7f7);padding:16px;margin:0;min-width:0}
 .document-materials>summary{font:600 15px/1.4 Arial;cursor:pointer;overflow-wrap:anywhere}
 .material-panel-body{font:13px/1.5 Arial}
 .material-panel-body>p{color:var(--text-secondary,#666)}

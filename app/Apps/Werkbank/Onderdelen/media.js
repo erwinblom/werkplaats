@@ -20,8 +20,19 @@ function renderYouTubePlayers(root) {
         const id = youtubeId(link.href);
         if (!id) return;
         const button = document.createElement('button');
-        I18n.assign(button,I18n.ui("▶ YouTube-video afspelen",'▶ YouTube-video afspelen'),"textContent");
-        button.style.cssText = 'display:block;width:100%;aspect-ratio:16/9;border:1px solid #888;border-radius:8px;background:#181818;color:white;font:inherit;cursor:pointer;margin-bottom:8px';
+        const label = document.createElement('span');
+        I18n.assign(label,I18n.ui("▶ YouTube-video afspelen",'▶ YouTube-video afspelen'),"textContent");
+        button.style.cssText = 'position:relative;display:block;width:100%;aspect-ratio:16/9;overflow:hidden;padding:0;border:1px solid #888;border-radius:8px;background:#181818;color:white;font:inherit;cursor:pointer;margin-bottom:8px';
+        const thumbnail = document.createElement('img');
+        thumbnail.alt = ''; // The button label supplies the accessible name.
+        thumbnail.loading = 'lazy';
+        thumbnail.decoding = 'async';
+        thumbnail.referrerPolicy = 'no-referrer';
+        thumbnail.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;max-width:none;margin:0;object-fit:cover';
+        thumbnail.onerror = () => thumbnail.remove(); // Keep a usable play button offline or without a thumbnail.
+        thumbnail.src = 'https://i.ytimg.com/vi/' + id + '/hqdefault.jpg';
+        label.style.cssText = 'position:relative;display:inline-block;padding:var(--space-s,12px) var(--space-m,16px);background:var(--neutral-10,#181818);color:var(--neutral-1,#fff);font:inherit';
+        button.append(thumbnail, label);
         button.onclick = () => {
             const frame = document.createElement('iframe');
             frame.src = 'https://www.youtube-nocookie.com/embed/' + id;

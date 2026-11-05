@@ -1,7 +1,7 @@
 'use strict';
 window.MijnGereedschappen=(()=>{
  const base=new URL('.',document.currentScript.src),businessTools=['Offerte','Ping','Uren','Kasboek','Abonnementen'];
- const catalog={Bronnenkast:['Verzamelen','Start Bronnenkast.html'],Werkbank:['Schrijven','▶ Begin hier.html'],Zoeken:['Zoeken',null],Publicatieplanner:['Projecten','Start Publicatieplanner.html'],Projectbord:['Doen','Start Projectbord.html'],Contacten:['Contacten','Start Contacten.html'],Ping:['Facturen','Start Ping.html'],Abonnementen:['Abonnementen','Start Abonnementen.html'],Kasboek:['Boekhouding','Start Kasboek.html']};
+ const catalog={Bronnenkast:['Verzamelen','Start Bronnenkast.html'],Werkbank:['Schrijven','▶ Begin hier.html'],Zoeken:['Zoeken',null],Publicatieplanner:['Projecten','Start Publicatieplanner.html'],Projectbord:['Doen','Start Projectbord.html'],Contacten:['Contacten','Start Contacten.html'],Ping:['Facturen','Start Ping.html'],Abonnementen:['Abonnementen','Start Abonnementen.html'],Kasboek:['Boekhouding','Start Kasboek.html'],Databases:['Databases','Start Databases.html']};
  let preferences={},channel,mounted=false;
  const business=()=>preferences.business===true;
  for(const entry of Object.values(catalog)){const source=entry[0];Object.defineProperty(entry,0,{get:()=>I18n.t(source),enumerable:true});}
@@ -10,7 +10,7 @@ window.MijnGereedschappen=(()=>{
  const entries=()=>ordered().filter(visible).map(id=>[id,catalog[id]]);
  const startTool=()=>preferences.startTool!=='Zoeken'&&visible(preferences.startTool)?preferences.startTool:'';
  const shortcut=number=>entries()[number-1]||null;
- const shortcutText=()=>entries().map(([id,[name]],index)=>(index+1)+' '+name).join(' · ');
+ const shortcutText=()=>entries().slice(0,9).map(([id,[name]],index)=>(index+1)+' '+name).join(' · ');
  const toolURL=(id,params={})=>{const file=id==='Uren'?'Start Uren.html':id==='Offerte'?'Start Offerte.html':catalog[id][1],url=new URL('Apps/'+id+'/'+file,base);for(const [key,value]of Object.entries(params))if(value)url.searchParams.set(key,value);return GereedschapskistKeuze.url(url).href;};
  function apply(){I18n.set(preferences.language||I18n.language);window.WerkplaatsUiterlijk?.apply(preferences.appearance);document.documentElement.dataset.business=business()?'on':'off';renderHome();window.WerkplaatsPersonalisatie?.renderHome();document.dispatchEvent(new CustomEvent('gereedschappen-gewijzigd'));}
  async function reload(){preferences=(await BewaarAlles.readShared()).toolPreferences||{};await window.WerkplaatsPersonalisatie?.reload();apply();}
@@ -237,7 +237,7 @@ window.MijnGereedschappen=(()=>{
   if(cursor===0&&terms.length===1&&terms[0].length>=5){const matches=[...text.matchAll(/[\p{L}\p{N}]+/gu)];for(let i=0;i<matches.length;i++){let joined='';for(let j=i;j<matches.length&&j<i+5;j++){joined+=normalize(matches[j][0]);if(joined.includes(terms[0])){const start=matches[i].index,end=matches[j].index+matches[j][0].length;p.append(document.createTextNode(text.slice(0,start)));const mark=document.createElement('mark');mark.textContent=text.slice(start,end);p.append(mark);cursor=end;break;}if(joined.length>terms[0].length*2)break;}if(cursor)break;}}
   p.append(document.createTextNode(text.slice(cursor)));parent.append(p);
  }
- const icons={"Magazine": "<path d=\"M3 4h12l2 2h12v24H17l-2-2H3z M17 6v24 M7 10h5 M7 15h5 M7 20h5 M21 12h4 M21 17h4 M21 22h4\"></path>", "Bronnenkast": "<path d=\"M3 6h6v20H3z M9 3h7v23H9z M20 5l6-1 4 21-6 1z M2 29h28 M4 11h4 M11 8h3\"></path>", "Werkbank": "<path d=\"M7 3h12l6 6v20H7z M19 3v7h6 M11 15h10 M11 20h10 M11 25h6\"></path>", "Publicatieplanner": "<path d=\"M4 7h24v22H4z M10 3v8 M22 3v8 M4 14h24 M10 20h3v3h-3z M20 20h3\"></path>", "Projectbord": "<path d=\"M3 5h6v22H3z M13 5h6v22h-6z M23 5h6v22h-6z M3 13h6 M13 18h6 M23 11h6\"></path>", "Contacten": "<path d=\"M5 4h7v8H5z M20 4h7v8h-7z M2 28v-9l4-3h5l4 3v9 M17 28v-9l4-3h5l4 3v9\"></path>", "Ping": "<path d=\"M6 23h20l-3-5v-7l-4-4h-6l-4 4v7z M16 3v4 M13 28h6 M3 8l3-3 M26 5l3 3\"></path>", "Abonnementen": "<path d=\"M6 3h13l6 6v7 M6 3v26h9 M19 3v7h6 M10 15h5 M16 19h8l6 6-6 6-8-8z\"></path><path d=\"M21 23h.01\" stroke-width=\"3\"></path>", "Kasboek": "<path d=\"M3 9h12 M9 3v12 M18 23h12 M4 29L28 3\"></path>", "Uren": "<path d=\"M10 3h12l7 7v12l-7 7H10l-7-7V10z M16 8v9h7\"/>", "Offerte": "<path d=\"M6 3h13l6 6v7 M6 3v26h9 M19 3v7h6 M10 15h5 M16 19h8l6 6-6 6-8-8z\"/><path d=\"M21 23h.01\" stroke-width=\"3\"/>"};
+ const icons={Databases:"<path d=\"M4 7c0-3 24-3 24 0v20c0 3-24 3-24 0z M4 7c0 3 24 3 24 0 M4 17c0 3 24 3 24 0\"></path>","Magazine": "<path d=\"M3 4h12l2 2h12v24H17l-2-2H3z M17 6v24 M7 10h5 M7 15h5 M7 20h5 M21 12h4 M21 17h4 M21 22h4\"></path>", "Bronnenkast": "<path d=\"M3 6h6v20H3z M9 3h7v23H9z M20 5l6-1 4 21-6 1z M2 29h28 M4 11h4 M11 8h3\"></path>", "Werkbank": "<path d=\"M7 3h12l6 6v20H7z M19 3v7h6 M11 15h10 M11 20h10 M11 25h6\"></path>", "Publicatieplanner": "<path d=\"M4 7h24v22H4z M10 3v8 M22 3v8 M4 14h24 M10 20h3v3h-3z M20 20h3\"></path>", "Projectbord": "<path d=\"M3 5h6v22H3z M13 5h6v22h-6z M23 5h6v22h-6z M3 13h6 M13 18h6 M23 11h6\"></path>", "Contacten": "<path d=\"M5 4h7v8H5z M20 4h7v8h-7z M2 28v-9l4-3h5l4 3v9 M17 28v-9l4-3h5l4 3v9\"></path>", "Ping": "<path d=\"M6 23h20l-3-5v-7l-4-4h-6l-4 4v7z M16 3v4 M13 28h6 M3 8l3-3 M26 5l3 3\"></path>", "Abonnementen": "<path d=\"M6 3h13l6 6v7 M6 3v26h9 M19 3v7h6 M10 15h5 M16 19h8l6 6-6 6-8-8z\"></path><path d=\"M21 23h.01\" stroke-width=\"3\"></path>", "Kasboek": "<path d=\"M3 9h12 M9 3v12 M18 23h12 M4 29L28 3\"></path>", "Uren": "<path d=\"M10 3h12l7 7v12l-7 7H10l-7-7V10z M16 8v9h7\"/>", "Offerte": "<path d=\"M6 3h13l6 6v7 M6 3v26h9 M19 3v7h6 M10 15h5 M16 19h8l6 6-6 6-8-8z\"/><path d=\"M21 23h.01\" stroke-width=\"3\"/>"};
  let previousSearch={query:'',tool:'',kind:'',project:''};
  function search(){
   if(document.getElementById('all-search-dialog'))return;
@@ -249,7 +249,7 @@ window.MijnGereedschappen=(()=>{
   const kindOf=row=>row.item.kind||row.item.type||row.id;
   const option=(select,value,text,content=false)=>{const node=document.createElement('option');node.value=value;node.textContent=text;if(!content){const key=I18n.language==='en'?Object.entries(window.WerkplaatsVertalingen||{}).find(([,translation])=>translation===text)?.[0]||text:text;I18n.mark(node,key);}select.append(node);};
   for(const [select,label]of [[toolFilter,'Tool'],[kindFilter,'Soort'],[projectFilter,'Project']]){const field=document.createElement('label');field.append(I18n.node(label),select);filters.append(field);option(select,'',I18n.t('Alles'));}
-  for(const id of Object.keys(catalog).filter(id=>id!=='Zoeken'&&(business()||!businessTools.includes(id))))option(toolFilter,id,catalog[id][0]);
+  for(const id of Object.keys(catalog).filter(id=>!['Zoeken','Databases'].includes(id)&&(business()||!businessTools.includes(id))))option(toolFilter,id,catalog[id][0]);
   if(business()){option(toolFilter,'Offerte',I18n.t('Offertes'));option(toolFilter,'Uren',I18n.t('Uren'));}
   const clear=I18n.mark(button('Wis filters',()=>{toolFilter.value=kindFilter.value=projectFilter.value='';limit=100;render();}),'Wis filters');filters.append(clear);input.after(filters);
   const sourceFilters=document.createElement('div');sourceFilters.className='all-search-sources';sourceFilters.setAttribute('role','group');sourceFilters.setAttribute('aria-label',I18n.language==='en'?'Filter by source':'Filter op bron');filters.before(sourceFilters);
@@ -283,7 +283,7 @@ window.MijnGereedschappen=(()=>{
    }
   }
   input.oninput=()=>{limit=100;render();};
-  const ids=Object.keys(catalog).filter(id=>id!=='Zoeken'&&(business()||!businessTools.includes(id)));if(business())ids.push('Offerte','Uren');
+  const ids=Object.keys(catalog).filter(id=>!['Zoeken','Databases'].includes(id)&&(business()||!businessTools.includes(id)));if(business())ids.push('Offerte','Uren');
   Promise.allSettled(ids.map(async id=>{const session=await BewaarAlles.readTool(id);return searchRows(id,session,id==='Werkbank'?await BewaarAlles.readShared():{});})).then(results=>{if(!d.open)return;results.forEach((result,i)=>{if(result.status==='fulfilled')rows.push(...result.value);else errors.push(ids[i]==='Uren'?'Uren':ids[i]==='Offerte'?'Offertes':catalog[ids[i]][0]);});loading=false;fillFilters();for(const control of [toolFilter,kindFilter,projectFilter,clear])control.disabled=false;toolFilter.value=previousSearch.tool;kindFilter.value=previousSearch.kind;projectFilter.value=previousSearch.project;render();});
   document.addEventListener('gereedschappen-gewijzigd',render);document.addEventListener('taal-gewijzigd',render);d.addEventListener('close',()=>{previousSearch={query:input.value,tool:toolFilter.value,kind:kindFilter.value,project:projectFilter.value};document.removeEventListener('gereedschappen-gewijzigd',render);document.removeEventListener('taal-gewijzigd',render);},{once:true});
  }

@@ -22,6 +22,14 @@ Voor dagelijks gebruik hoeft AI niet mee te draaien: Werkplaats werkt in je brow
 2. Schrijf je idee in de eerste notitie die wordt geopend.
 3. Klik **Bewaar**. Open later dezelfde werkmap via **Verder werken**.
 
+## Nieuw in 0.36.17: je eigen databases
+
+Open **Databases** op Home. Maak een SQLite-database, voeg tabellen en rijen toe of importeer een CSV-bestand. **Bewaar** in het formulier schrijft direct naar je eigen werkmap. Met **Download .sqlite** neem je een gewone database mee naar een ander programma.
+
+Je hebt geen account of databaseserver nodig. De SQLite-engine wordt meegeleverd en werkt offline. Je bestanden blijven lokaal; wie toegang heeft tot je werkmap kan ze lezen. Maximaal 20 MB per database en 5.000 rijen per CSV-import.
+
+[Handleiding en aanpassen met AI](app/Databases.md) · [Uitgave 0.36.17](release/UITGAVE-0.36.17.md) · [Windows/Linux-controle](release/PLATFORM-0.36.17.md)
+
 <details>
 <summary>Offline gebruiken, bijwerken en overstappen</summary>
 
@@ -45,6 +53,7 @@ Bestaande gebruikers: bewaar eerst je actuele werk in de oude versie. Open na de
 | Verzamelen | Links en citaten bewaren; kiezen tussen Lezen, Luisteren, Kijken, Proberen en Inspireren |
 | Schrijven | Notities en documenten; gekoppelde bronnen, afbeeldingen en ander materiaal |
 | Zoeken | Je eigen werk doorzoeken |
+| Databases | Eigen SQLite-bestanden, tabellen en rijen; CSV importeren en downloaden |
 | Projecten | Tijdelijke en doorlopende projecten met gekoppeld materiaal |
 | Doen | Taken, deadlines en prioriteiten |
 | Contacten | Contactgegevens, gesprekken en vervolgacties |

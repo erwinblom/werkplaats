@@ -4,7 +4,7 @@ window.WerkplaatsUiterlijk=(()=>{
  const colors={red:['Rood','#c51d17'],blue:['Blauw','#175b94'],green:['Groen','#247047'],purple:['Paars','#743b91']};
  const desktops={
   erwin:['Erwin Grafisch','Zwart, grafische vormen en jouw accentkleur.'],
-  calm:['Rustig','Een warm, stil vlak zonder versiering.'],
+  calm:['Rustig','Een neutraal grijs vlak zonder versiering.'],
   paper:['Papier','Licht papier met een analoge structuur.'],
   grid:['Raster','Een helder technisch raster.'],
   night:['Nacht','Donker met licht en een accentlijn.'],

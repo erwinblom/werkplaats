@@ -36,5 +36,5 @@ document.addEventListener('DOMContentLoaded',()=>{
   if(detail.classList.contains('help')||/^Bewaar|^Hoe werkt bewaren/.test(title))panel.append(detail);
  }
  const preview=document.querySelector('body[data-tool=Ping] .preview');if(preview){const actions=document.createElement('div');actions.className='link-actions';for(const id of ['invoice-bookkeeping','invoice-received','invoice-hours-receipt']){const b=document.getElementById(id);if(b)actions.append(b);}preview.append(actions);}
- if(!document.querySelector('link[href*="compact.css"]')){const style=document.createElement('link');style.rel='stylesheet';style.href='../../compact.css?v=20261008-stabiel-1';document.head.insertBefore(style,document.querySelector('link[href*="blom-os-tokens.css"]'));}
+ if(!document.querySelector('link[href*="compact.css"]')){const style=document.createElement('link');style.rel='stylesheet';style.href='../../compact.css?v=ch523-gray-2';document.head.insertBefore(style,document.querySelector('link[href*="blom-os-tokens.css"]'));}
 });

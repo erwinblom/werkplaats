@@ -95,8 +95,8 @@
   --weight-ui-regular: 400;
   --weight-ui-medium: 500;
   --weight-ui-heavy: 600;
-  --font-brand: "Paper Mono", "Courier New", monospace;
-  --font-label: "Paper Mono", "Courier New", monospace;
+  --font-brand: Arial, Helvetica, sans-serif;
+  --font-label: Arial, Helvetica, sans-serif;
   --weight-brand-regular: 400;
   --weight-brand-medium: 500;
   --weight-brand-heavy: 600;
@@ -258,8 +258,8 @@ html[data-theme="dark"] {
   --weight-ui-regular: 400;
   --weight-ui-medium: 500;
   --weight-ui-heavy: 600;
-  --font-brand: "Paper Mono", "Courier New", monospace;
-  --font-label: "Paper Mono", "Courier New", monospace;
+  --font-brand: Arial, Helvetica, sans-serif;
+  --font-label: Arial, Helvetica, sans-serif;
   --weight-brand-regular: 400;
   --weight-brand-medium: 500;
   --weight-brand-heavy: 600;
@@ -280,8 +280,8 @@ html[data-theme="dark"] {
   --color-2-transparent: #9974b833;
   --color-3: #94b8a4;
   --color-3-transparent: #94b8a433;
-  --color-4: #c6a492;
-  --color-4-transparent: #c6a49233;
+  --color-4: #aaaaaa;
+  --color-4-transparent: #aaaaaa33;
   --neutral-1: #171719;
   --neutral-1-transparent: #17171933;
   --neutral-2: #202023;

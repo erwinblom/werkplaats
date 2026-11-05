@@ -20,13 +20,15 @@ assert actual==manifest['files'],'Publieksbron wijkt af van schone Master; wijzi
 for directory in [root/'app',root/'docs']:
  for p in directory.rglob('*.html'):Links(p).feed(p.read_text())
  for p in directory.rglob('*.js'):subprocess.run(['node','--check',str(p)],check=True,capture_output=True)
- start=(directory/'Begin hier.html').read_text();assert len(re.findall(r'<li class="card active">',start))==9
+ start=(directory/'Begin hier.html').read_text();assert len(re.findall(r'<li class="card active">',start))==10
  for p in directory.rglob('*'):
   if p.is_file() and p.suffix in ['.html','.js','.json','.md','.txt']:
    text=p.read_text(errors='replace')
    assert not any(x in text for x in ['/Users/','persoonlijke-notities-sync.js','persoonlijke-feedback.js','persoonlijk-projectherstel.js','persoonlijke-nahv-','NAHV-export']),f'Privéreferentie in {p}'
  for name in ['Over.html','Uitleg.html','LEESMIJ.txt']:
   assert not any(x in (directory/name).read_text() for x in ['Proeftuin','Bekijk voorbeelden','Begin met mijn eigen werk']),f'Achterhaalde uitleg in {name}'
+assert 'Apps/Databases/Start Databases.html' in actual
+assert 'vendor/sqljs/sql-wasm-inline.js' in actual
 for name in actual:
  if name=='Begin hier.html':continue # Website adds the development notice.
  assert (root/'docs'/name).read_bytes()==(root/'app'/name).read_bytes(),f'Website wijkt af: {name}'

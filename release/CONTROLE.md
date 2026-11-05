@@ -1,3 +1,7 @@
+# Controle 0.36.17 — lokale SQLite-databases
+
+55/55 bron-testbestanden geslaagd; schone 260-bestanden-Master, alle nieuwe lokale assets, JavaScript, privacy, licenties en bytegelijke website/ZIP gecontroleerd. Windows en Linux ieder20/20 met onafhankelijke artifactcontrole. [Uitgave en exacte hashes](UITGAVE-0.36.17.md), [platformbewijs en grenzen](PLATFORM-0.36.17.md).
+
 # Controle 0.36.13 — bewaarmelding, browserherstart en PDF
 
 43/43 canonieke testbestanden geslaagd; onafhankelijke bronreview akkoord. Op echte Chrome 156 op Ubuntu 24.04 en Windows Server 2022 zijn native maptoegang, fysieke notitieopslag, volledige browserherstart met gewone hernieuwde toestemming en PDF-export van twee A4-pagina’s gecontroleerd. Na herladen verschijnt de geverifieerde bewaarstatus; na herstart zonder bevestigde schijfcontrole blijft de status neutraal.

@@ -1,5 +1,10 @@
 # Blom-OS in Werkplaats
 
+## Actuele correctie · 3 november 2026 · CH-523
+
+Erwin heeft de FMT-toolfamilie goedgekeurd: een witte home zonder standaard buitenornament, de originele tooliconen, één herkenbare bovenbalk, Arial voor interfacekoppen en bediening, zware koppen, scherpe hoeken, zwarte tegels en rode hoofdacties. Het kleurenpalet is rood, zwart en wit, met neutraal grijs; geen beige, crème of warme papierkleuren. Deze expliciete correctie gaat voor botsende historische keuzes hieronder. Bestaande optionele persoonlijke achtergronden, kleurkeuzes, alle gereedschappen, routes en opslag blijven behouden. De standaard Erwin Grafisch is nu wit; de bewaarde keuze en invoer worden niet gewist. Papier- en rustige vlakken zijn neutraal grijs gemaakt.
+
+
 Blom-OS is de vaste basis voor nieuwe interfacewijzigingen. Erwin wil dat de home en alle tools vergelijkbaar blijven voelen met de voorgaande Werkplaats: zwart, wit en rood, stevige koppen, zwarte starttegels en een grafische omlijsting. De gedownloade GraphicalUI-export levert de gedeelde ontwerpwoordenschat. De toepassing wordt beoordeeld op duidelijkheid, werkgemak en het herkenbare Werkplaats-karakter; dezelfde tokens verplichten niet tot dezelfde visuele behandeling van iedere klikbare functie. De bestaande indeling, functionaliteit, opslag en persoonlijke inhoud blijven intact.
 
 ## Bronnen en toepassing

@@ -4,7 +4,7 @@ html[data-theme="dark"] {
   --bg-secondary: #202020;
   --bg-tertiary: #303030;
   --text-primary: #f5f5f2;
-  --text-secondary: #c9c9c5;
+  --text-secondary: #d2d2d2;
   --text-muted: #aaa;
   --accent: #ff746b;
   --accent-dim: #f15d54;
@@ -12,7 +12,7 @@ html[data-theme="dark"] {
   --line: #666;
   --code-bg: #303030;
   --link: #ff8c84;
-  --muted: #c9c9c5;
+  --muted: #d2d2d2;
   background: var(--bg-primary) !important;
   color: var(--text-primary);
 }

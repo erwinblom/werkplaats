@@ -1,0 +1,30 @@
+{
+  "version": "0.36.17",
+  "sourceCommit": "7926908b79bda47222bc824794fedc5392986082",
+  "publicBase": "7c49dc8311cd5372c0145e49d85403f3572a82d9",
+  "appFiles": 260,
+  "downloadSHA256": "d215cb7f348662492ce3583f4c855d2bba2bb32a1741907cb726060acdb5d9cb",
+  "downloadBytes": 16185197,
+  "runtimeEquivalence": {
+    "testedSHA256": "4de97d730e130dee2d64fc777d6eaeb5e45b467c195a4fe646928097869dc883",
+    "releaseSHA256": "d215cb7f348662492ce3583f4c855d2bba2bb32a1741907cb726060acdb5d9cb",
+    "bytes": 16185197,
+    "added": [
+      "Werkplaats/Bestanden/vendor/sqljs/AUTHORS"
+    ],
+    "changedOnlyLicenseOrVersionMetadata": [
+      "Werkplaats/Bestanden/Begin hier.html",
+      "Werkplaats/Bestanden/databases-core.js",
+      "Werkplaats/Bestanden/databases-storage.js",
+      "Werkplaats/Bestanden/taal-woordenboek.js"
+    ],
+    "removed": [],
+    "allOtherBytesIdentical": true,
+    "databaseBehaviorCodeUnchanged": true
+  },
+  "platformJobs": {
+    "windows": "https://github.com/erwinblom/werkplaats/actions/runs/42003679627/job/127164965633",
+    "linux": "https://github.com/erwinblom/werkplaats/actions/runs/42004425849/job/127167482618"
+  },
+  "privateDataIncluded": false
+}
