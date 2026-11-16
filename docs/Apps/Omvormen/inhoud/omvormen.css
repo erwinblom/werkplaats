@@ -1,0 +1,1354 @@
+#omvormen-app {
+  --surface: #ffffff;
+  --text: #111111;
+  --muted: #595959;
+  --subtle: #f7f7f7;
+  --line: #e5e5e5;
+  --accent: #c51d17;
+  --accent-soft: #c51d1733;
+  --font-ui: Arial, Helvetica, sans-serif;
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-heavy: 600;
+  --size-xxl: 48px;
+  --line-xxl: 52px;
+  --letter-xxl: -0.035em;
+  --size-xl: 36px;
+  --line-xl: 40px;
+  --letter-xl: -0.025em;
+  --size-l: 24px;
+  --line-l: 32px;
+  --letter-l: -0.02em;
+  --size-m: 16px;
+  --line-m: 24px;
+  --letter-m: -0.01em;
+  --size-s: 14px;
+  --line-s: 20px;
+  --letter-s: -0.005em;
+  --size-xs: 12px;
+  --line-xs: 16px;
+  --space-xxs: 4px;
+  --space-xs: 8px;
+  --space-s: 12px;
+  --space-m: 16px;
+  --space-l: 24px;
+  --space-xl: 32px;
+  --space-xxl: 48px;
+  --radius-zero: 0;
+  --border-s: 1px;
+  --motion-duration: 0.12s;
+}
+#omvormen-app * {
+  box-sizing: border-box;
+}
+#omvormen-app {
+  margin: 0;
+  color: var(--text);
+  background: var(--surface);
+  font-family: var(--font-ui);
+  font-size: var(--size-m);
+  line-height: var(--line-m);
+  letter-spacing: var(--letter-m);
+}
+#omvormen-app button,
+#omvormen-app input,
+#omvormen-app textarea,
+#omvormen-app select {
+  font: inherit;
+  color: inherit;
+}
+#omvormen-app button,
+#omvormen-app a,
+#omvormen-app input,
+#omvormen-app textarea,
+#omvormen-app select {
+  touch-action: manipulation;
+}
+#omvormen-app button {
+  cursor: pointer;
+  border: 0;
+  border-radius: var(--radius-zero);
+  background: var(--surface);
+  padding: var(--space-xs) var(--space-m);
+  box-shadow: inset 0 0 0 var(--border-s) var(--text);
+  font-weight: var(--weight-heavy);
+  transition: background var(--motion-duration) ease;
+}
+#omvormen-app button:hover {
+  background: var(--subtle);
+}
+#omvormen-app button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+#omvormen-app button:focus-visible,
+#omvormen-app a:focus-visible,
+#omvormen-app input:focus-visible,
+#omvormen-app select:focus-visible,
+#omvormen-app textarea:focus-visible,
+#omvormen-app [tabindex]:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+#omvormen-app a {
+  color: inherit;
+  text-underline-offset: 3px;
+}
+#omvormen-app .plain {
+  box-shadow: none;
+  background: none;
+}
+#omvormen-app .small {
+  font-size: var(--size-s);
+  line-height: var(--line-s);
+}
+#omvormen-app .muted {
+  color: var(--muted);
+}
+#omvormen-app .full {
+  width: 100%;
+}
+#omvormen-app .accent {
+  background: var(--accent);
+  color: var(--surface);
+  box-shadow: none;
+}
+#omvormen-app .accent:hover {
+  background: var(--text);
+}
+#omvormen-app h1,
+#omvormen-app h2,
+#omvormen-app h3,
+#omvormen-app p {
+  margin: 0;
+}
+#omvormen-app h1 {
+  font-size: var(--size-xxl);
+  line-height: var(--line-xxl);
+  letter-spacing: var(--letter-xxl);
+  font-weight: var(--weight-heavy);
+}
+#omvormen-app h2 {
+  font-size: var(--size-xl);
+  line-height: var(--line-xl);
+  letter-spacing: var(--letter-xl);
+  font-weight: var(--weight-heavy);
+}
+#omvormen-app h3 {
+  font-size: var(--size-l);
+  line-height: var(--line-l);
+  letter-spacing: var(--letter-l);
+  font-weight: var(--weight-heavy);
+}
+#omvormen-app svg {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  vertical-align: middle;
+}
+#omvormen-app .topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-l);
+  min-height: 118px;
+  margin: 0 var(--space-xl);
+  padding: var(--space-m) var(--space-xs);
+  box-shadow: inset 0 -2px var(--text);
+}
+#omvormen-app .brand {
+  display: flex;
+  align-items: center;
+  gap: var(--space-m);
+  text-decoration: none;
+  min-width: 0;
+}
+#omvormen-app .brand-icon {
+  width: 76px;
+  height: 76px;
+  flex-shrink: 0;
+}
+#omvormen-app .brand-copy {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xxs);
+  min-width: 0;
+}
+#omvormen-app .brand .brand-name {
+  font-size: 28px;
+  line-height: 32px;
+  letter-spacing: 0;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+#omvormen-app .brand small {
+  font-size: var(--size-xs);
+  line-height: var(--line-xs);
+  font-weight: var(--weight-heavy);
+  text-transform: uppercase;
+  color: var(--muted);
+}
+#omvormen-app .masthead {
+  padding: var(--space-l) var(--space-xxl) var(--space-m);
+}
+#omvormen-app .masthead p {
+  font-size: var(--size-m);
+  line-height: var(--line-m);
+  color: var(--muted);
+}
+#omvormen-app .layout {
+  display: grid;
+  grid-template-columns: 260px minmax(0, 1fr);
+  min-height: calc(100vh - 200px);
+}
+#omvormen-app aside {
+  padding: var(--space-l);
+  background: var(--subtle);
+  box-shadow: inset -1px 0 var(--text);
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+#omvormen-app aside h2 {
+  font-size: var(--size-l);
+  line-height: var(--line-l);
+  letter-spacing: var(--letter-l);
+}
+#omvormen-app .folder-name {
+  display: flex;
+  gap: var(--space-xs);
+  align-items: flex-start;
+  margin: var(--space-m) 0;
+  overflow-wrap: anywhere;
+}
+#omvormen-app .folder-name svg {
+  width: 32px;
+  height: 32px;
+}
+#omvormen-app .folder-name small {
+  display: block;
+  color: var(--muted);
+  font-size: var(--size-s);
+  line-height: var(--line-s);
+  margin-top: var(--space-xxs);
+}
+#omvormen-app .file-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: inset 0 1px var(--line);
+  margin-top: var(--space-l);
+  padding-top: var(--space-m);
+  gap: var(--space-xs);
+}
+#omvormen-app .file-heading h3 {
+  font-size: var(--size-m);
+  line-height: var(--line-m);
+  white-space: nowrap;
+}
+#omvormen-app .file-heading button {
+  padding: 0;
+}
+#omvormen-app .selection-controls {
+  display: flex;
+  gap: var(--space-xs);
+  margin: var(--space-xs) 0;
+}
+#omvormen-app .selection-controls button {
+  padding: 0;
+}
+#omvormen-app .file-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  max-height: 45vh;
+  overflow: auto;
+}
+#omvormen-app .file-list li {
+  margin: 0;
+}
+#omvormen-app .file-list label {
+  display: flex;
+  gap: var(--space-xs);
+  align-items: flex-start;
+  padding: var(--space-xs) 0;
+  overflow-wrap: anywhere;
+  font-size: var(--size-s);
+  line-height: var(--line-s);
+  cursor: pointer;
+}
+#omvormen-app .file-list label > span:last-child {
+  min-width: 0;
+}
+#omvormen-app .file-list small {
+  display: block;
+  color: var(--muted);
+  font-size: var(--size-xs);
+}
+#omvormen-app input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--accent);
+  flex-shrink: 0;
+  margin: 3px 0;
+}
+#omvormen-app .mini-icon svg {
+  width: 18px;
+  height: 22px;
+}
+#omvormen-app .empty {
+  color: var(--muted);
+  font-size: var(--size-s);
+  line-height: var(--line-s);
+  padding: var(--space-m) 0;
+}
+#omvormen-app .sidebar-foot {
+  margin-top: auto;
+  padding-top: var(--space-l);
+  font-size: var(--size-s);
+  line-height: var(--line-s);
+}
+#omvormen-app .sidebar-foot button {
+  padding: var(--space-xs) 0;
+  text-decoration: underline;
+}
+#omvormen-app .sidebar-foot p {
+  color: var(--muted);
+}
+#omvormen-app main {
+  min-width: 0;
+  padding: var(--space-l);
+  max-width: 1600px;
+}
+#omvormen-app .section-head {
+  display: flex;
+  gap: var(--space-m);
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-m);
+}
+#omvormen-app .search {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  padding: var(--space-xs);
+  box-shadow: inset 0 0 0 1px var(--text);
+  width: 280px;
+}
+#omvormen-app .search input {
+  background: transparent;
+  width: 100%;
+  min-width: 0;
+  border: 0;
+  font-size: var(--size-s);
+  line-height: var(--line-s);
+  outline-offset: 4px;
+}
+#omvormen-app .search svg {
+  width: 18px;
+  height: 18px;
+}
+#omvormen-app .dropzone {
+  display: flex;
+  align-items: center;
+  gap: var(--space-m);
+  padding: var(--space-m);
+  box-shadow: inset 0 0 0 1px var(--text);
+  margin-bottom: var(--space-m);
+  cursor: pointer;
+}
+#omvormen-app .dropzone.dragging {
+  background: var(--accent-soft);
+  outline: 2px solid var(--accent);
+}
+#omvormen-app .dropzone strong {
+  display: block;
+  font-size: var(--size-l);
+  line-height: var(--line-l);
+  letter-spacing: var(--letter-l);
+}
+#omvormen-app .dropzone p {
+  font-size: var(--size-s);
+  line-height: var(--line-s);
+}
+#omvormen-app .drop-icon {
+  padding-right: var(--space-m);
+  box-shadow: inset -1px 0 var(--line);
+}
+#omvormen-app .drop-icon svg {
+  width: 42px;
+  height: 42px;
+}
+#omvormen-app .dropzone .choose {
+  margin-left: auto;
+  white-space: nowrap;
+}
+#omvormen-app .status {
+  padding: var(--space-xs) 0 var(--space-m);
+  font-size: var(--size-s);
+  line-height: var(--line-s);
+}
+#omvormen-app .status:empty {
+  display: none;
+}
+#omvormen-app .error {
+  color: var(--accent);
+  overflow-wrap: anywhere;
+}
+#omvormen-app .tools {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-m);
+}
+#omvormen-app .tool {
+  display: flex;
+  align-items: center;
+  text-align: left;
+  padding: var(--space-m);
+  gap: var(--space-m);
+  min-width: 0;
+  box-shadow: inset 0 0 0 1px var(--text);
+  font-weight: var(--weight-regular);
+}
+#omvormen-app .tool-icon {
+  box-shadow: inset -1px 0 var(--line);
+  padding-right: var(--space-m);
+  flex-shrink: 0;
+}
+#omvormen-app .tool-icon svg {
+  width: 40px;
+  height: 48px;
+}
+#omvormen-app .tool-copy {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xxs);
+  min-width: 0;
+}
+#omvormen-app .tool-copy strong {
+  font-size: var(--size-l);
+  line-height: var(--line-l);
+  letter-spacing: var(--letter-l);
+  font-weight: var(--weight-heavy);
+}
+#omvormen-app .tool-copy > span {
+  font-size: var(--size-s);
+  line-height: var(--line-s);
+}
+#omvormen-app .tool-copy small {
+  color: var(--muted);
+  margin-top: var(--space-xs);
+  font-size: var(--size-xs);
+  line-height: var(--line-xs);
+}
+#omvormen-app .tool .arrow {
+  margin-left: auto;
+  flex-shrink: 0;
+}
+#omvormen-app .primary-tool {
+  grid-column: 1/-1;
+  box-shadow:
+    inset 0 0 0 1px var(--text),
+    inset 0 4px var(--accent);
+  padding: var(--space-l);
+  min-height: 150px;
+}
+#omvormen-app .primary-tool .tool-copy strong {
+  font-size: var(--size-xl);
+  line-height: var(--line-xl);
+  letter-spacing: var(--letter-xl);
+}
+#omvormen-app .primary-tool .tool-copy > span {
+  font-size: var(--size-m);
+  line-height: var(--line-m);
+}
+#omvormen-app .primary-tool .tool-icon svg {
+  width: 60px;
+  height: 72px;
+}
+#omvormen-app .control-tool {
+  min-height: 135px;
+}
+#omvormen-app .source-note {
+  display: flex;
+  gap: var(--space-m);
+  align-items: center;
+  margin-top: var(--space-l);
+  padding-top: var(--space-m);
+  box-shadow: inset 0 1px var(--text);
+}
+#omvormen-app .source-note svg {
+  width: 40px;
+  height: 48px;
+}
+#omvormen-app .source-note h3 {
+  font-size: var(--size-l);
+  line-height: var(--line-l);
+  letter-spacing: var(--letter-l);
+}
+#omvormen-app .source-note p {
+  font-size: var(--size-s);
+  line-height: var(--line-s);
+  margin-top: var(--space-xxs);
+}
+#omvormen-app .results {
+  margin-top: var(--space-l);
+  padding-top: var(--space-l);
+  box-shadow: inset 0 2px var(--text);
+}
+#omvormen-app .results h2 {
+  font-size: var(--size-l);
+  line-height: var(--line-l);
+}
+#omvormen-app .results > p {
+  font-size: var(--size-s);
+  line-height: var(--line-s);
+}
+#omvormen-app .result-list {
+  padding: 0;
+  list-style: none;
+}
+#omvormen-app .result-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-m);
+  padding: var(--space-m) 0;
+  box-shadow: inset 0 1px var(--line);
+}
+#omvormen-app .result-list strong {
+  overflow-wrap: anywhere;
+}
+#omvormen-app .result-list small {
+  display: block;
+  color: var(--muted);
+  font-size: var(--size-s);
+  line-height: var(--line-s);
+}
+#omvormen-app .result-list .warning {
+  color: var(--accent);
+}
+#omvormen-app .actions {
+  display: flex;
+  gap: var(--space-xs);
+  flex-wrap: wrap;
+}
+#omvormen-app .actions button {
+  font-size: var(--size-s);
+  line-height: var(--line-s);
+}
+#omvormen-app dialog {
+  border: 0;
+  border-radius: 0;
+  padding: var(--space-l);
+  max-width: min(1100px, calc(100vw - 40px));
+  width: 100%;
+  max-height: calc(100dvh - 40px);
+  box-shadow: 0 0 0 2px var(--text);
+  color: var(--text);
+  background: var(--surface);
+  overflow: auto;
+}
+#omvormen-app dialog::backdrop {
+  background: #1116;
+}
+#omvormen-app #picker,
+#omvormen-app #settings {
+  max-width: min(650px, calc(100vw - 32px));
+}
+#omvormen-app .dialog-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-m);
+  padding-bottom: var(--space-m);
+  margin-bottom: var(--space-m);
+  box-shadow: inset 0 -1px var(--text);
+}
+#omvormen-app .dialog-head h2 {
+  font-size: var(--size-l);
+  line-height: var(--line-l);
+  letter-spacing: var(--letter-l);
+}
+#omvormen-app .back {
+  font-size: var(--size-s);
+  line-height: var(--line-s);
+  padding: 0;
+  margin-bottom: var(--space-xs);
+}
+#omvormen-app .icon-button {
+  padding: var(--space-xxs);
+}
+#omvormen-app #picker p,
+#omvormen-app #settings p {
+  margin: var(--space-xs) 0 var(--space-m);
+}
+#omvormen-app #settings h3 {
+  font-size: var(--size-m);
+  line-height: var(--line-m);
+  margin-top: var(--space-m);
+}
+#omvormen-app .editor-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-l);
+  margin: var(--space-m) 0;
+}
+#omvormen-app .editor-grid > section {
+  min-width: 0;
+}
+#omvormen-app .editor-grid h3,
+#omvormen-app .preview-section h3 {
+  font-size: var(--size-m);
+  line-height: var(--line-m);
+  margin-bottom: var(--space-xs);
+}
+#omvormen-app textarea {
+  display: block;
+  resize: vertical;
+  width: 100%;
+  min-height: 280px;
+  padding: var(--space-m);
+  background: var(--surface);
+  border: 0;
+  border-radius: 0;
+  box-shadow: inset 0 0 0 1px var(--line);
+  font-family: var(--font-ui);
+  font-size: var(--size-s);
+  line-height: var(--line-s);
+  margin-bottom: var(--space-xs);
+}
+#omvormen-app pre {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  font-family: var(--font-ui);
+  font-size: var(--size-s);
+  line-height: var(--line-s);
+  padding: var(--space-m);
+  box-shadow: inset 0 0 0 1px var(--line);
+  margin: 0 0 var(--space-m);
+  max-height: 400px;
+  overflow: auto;
+  min-height: 120px;
+}
+#omvormen-app select {
+  display: block;
+  max-width: 100%;
+  width: 100%;
+  padding: var(--space-xs);
+  border: 0;
+  border-radius: 0;
+  background: var(--surface);
+  box-shadow: inset 0 0 0 1px var(--line);
+  margin-top: var(--space-xxs);
+}
+#omvormen-app .select-label {
+  display: block;
+  max-width: 100%;
+  font-size: var(--size-s);
+  line-height: var(--line-s);
+  margin-bottom: var(--space-m);
+}
+#omvormen-app .field-label {
+  display: block;
+  font-size: var(--size-m);
+  font-weight: var(--weight-heavy);
+  margin-bottom: var(--space-xs);
+}
+#omvormen-app .hint {
+  padding: var(--space-xs) var(--space-m);
+  box-shadow: inset 3px 0 var(--accent);
+  background: var(--subtle);
+  font-size: var(--size-s);
+  line-height: var(--line-s);
+  margin: var(--space-m) 0;
+}
+#omvormen-app .entities {
+  margin-top: var(--space-m);
+  max-height: 300px;
+  overflow: auto;
+}
+#omvormen-app .entity {
+  display: flex;
+  gap: var(--space-xs);
+  padding: var(--space-xs);
+  box-shadow: inset 0 1px var(--line);
+  cursor: pointer;
+}
+#omvormen-app .entity small {
+  display: block;
+  color: var(--muted);
+  font-size: var(--size-xs);
+  line-height: var(--line-xs);
+}
+#omvormen-app .entity strong {
+  overflow-wrap: anywhere;
+  font-size: var(--size-s);
+  line-height: var(--line-s);
+}
+#omvormen-app .work-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-m);
+  margin-top: var(--space-m);
+  padding-top: var(--space-m);
+  box-shadow: inset 0 1px var(--line);
+}
+#omvormen-app .preview-section {
+  margin-top: var(--space-m);
+}
+#omvormen-app .table-wrap {
+  overflow: auto;
+  margin: var(--space-m) 0;
+}
+#omvormen-app table {
+  border-collapse: collapse;
+  width: 100%;
+  text-align: left;
+  font-size: var(--size-s);
+  line-height: var(--line-s);
+}
+#omvormen-app th,
+#omvormen-app td {
+  padding: var(--space-xs);
+  vertical-align: top;
+  box-shadow: inset 0 -1px var(--line);
+  overflow-wrap: anywhere;
+  max-width: 400px;
+}
+#omvormen-app thead {
+  background: var(--subtle);
+}
+#omvormen-app .compact-files {
+  list-style: none;
+  padding: 0;
+  max-height: 250px;
+  overflow: auto;
+}
+#omvormen-app .compact-files li {
+  padding: var(--space-xs) 0;
+}
+#omvormen-app .compact-files svg {
+  width: 18px;
+  height: 22px;
+}
+#omvormen-app .output-edit {
+  min-height: 50vh;
+}
+#omvormen-app .diff .added,
+#omvormen-app .diff-label.added {
+  background: var(--subtle);
+  font-weight: var(--weight-heavy);
+}
+#omvormen-app .diff .removed,
+#omvormen-app .diff-label.removed {
+  color: var(--accent);
+  text-decoration: line-through;
+}
+#omvormen-app .diff-label {
+  padding: var(--space-xxs) var(--space-xs);
+  font-size: var(--size-s);
+}
+#omvormen-app .diff {
+  margin-top: var(--space-m);
+}
+#omvormen-app .busy {
+  cursor: progress;
+}
+#omvormen-app #model-progress {
+  font-size: var(--size-s);
+  line-height: var(--line-s);
+  margin-bottom: var(--space-xs);
+}
+@media (min-width: 1700px) {
+  #omvormen-app .layout {
+    grid-template-columns: 300px minmax(0, 1fr);
+  }
+  #omvormen-app main {
+    padding: var(--space-xl);
+  }
+}
+@media (max-width: 1050px) {
+  #omvormen-app .layout {
+    grid-template-columns: 220px minmax(0, 1fr);
+  }
+  #omvormen-app main,
+  #omvormen-app aside {
+    padding: var(--space-m);
+  }
+  #omvormen-app .dropzone {
+    flex-wrap: wrap;
+  }
+  #omvormen-app .dropzone .choose {
+    margin-left: 58px;
+  }
+  #omvormen-app .tool {
+    gap: var(--space-xs);
+    padding: var(--space-m);
+  }
+  #omvormen-app .tool-icon {
+    padding-right: var(--space-xs);
+  }
+  #omvormen-app .tool-icon svg {
+    width: 28px;
+    height: 36px;
+  }
+  #omvormen-app .tool-copy strong {
+    font-size: var(--size-m);
+    line-height: var(--line-m);
+  }
+  #omvormen-app .section-head h2 {
+    font-size: var(--size-l);
+    line-height: var(--line-l);
+  }
+  #omvormen-app .search {
+    width: 220px;
+  }
+  #omvormen-app .ribbon {
+    font-size: var(--size-m);
+    line-height: var(--line-m);
+    right: -70px;
+    top: 26px;
+    width: 290px;
+  }
+  #omvormen-app .masthead h1 {
+    padding-right: 210px;
+  }
+  #omvormen-app .masthead p {
+    max-width: calc(100% - 200px);
+  }
+}
+@media (max-width: 760px) {
+  #omvormen-app .masthead {
+    padding: var(--space-m);
+    padding-top: var(--space-l);
+  }
+  #omvormen-app .masthead h1 {
+    font-size: var(--size-xl);
+    line-height: var(--line-xl);
+    letter-spacing: var(--letter-xl);
+    padding-right: 0;
+    margin-top: var(--space-m);
+  }
+  #omvormen-app .masthead p {
+    max-width: 100%;
+    font-size: var(--size-s);
+    line-height: var(--line-s);
+  }
+  #omvormen-app .ribbon {
+    font-size: var(--size-xs);
+    line-height: var(--line-xs);
+    top: 9px;
+    right: -40px;
+    width: 220px;
+    transform: rotate(14deg);
+    padding: var(--space-xxs) 0;
+  }
+  #omvormen-app .layout {
+    display: flex;
+    flex-direction: column;
+  }
+  #omvormen-app aside {
+    box-shadow: inset 0 -1px var(--text);
+    padding: var(--space-m);
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: var(--space-xs) var(--space-m);
+  }
+  #omvormen-app aside h2 {
+    grid-column: 1/-1;
+  }
+  #omvormen-app .folder-name {
+    margin: 0;
+  }
+  #omvormen-app .file-heading,
+  #omvormen-app .selection-controls,
+  #omvormen-app .file-list {
+    grid-column: 1/-1;
+  }
+  #omvormen-app .file-heading {
+    margin-top: var(--space-xs);
+    padding-top: var(--space-xs);
+  }
+  #omvormen-app .file-list {
+    max-height: 160px;
+  }
+  #omvormen-app .sidebar-foot {
+    grid-column: 1/-1;
+    padding-top: var(--space-xs);
+  }
+  #omvormen-app .sidebar-foot p {
+    display: none;
+  }
+  #omvormen-app .sidebar-foot button {
+    padding: 0;
+  }
+  #omvormen-app .section-head {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: var(--space-xs);
+  }
+  #omvormen-app .search {
+    width: 100%;
+  }
+  #omvormen-app .topbar {
+    padding: var(--space-xs) var(--space-m);
+  }
+  #omvormen-app .brand {
+    font-size: var(--size-m);
+    line-height: var(--line-m);
+    gap: var(--space-xs);
+  }
+  #omvormen-app .topbar button {
+    font-size: var(--size-s);
+    line-height: var(--line-s);
+  }
+  #omvormen-app .dropzone .choose {
+    margin-left: 0;
+    width: 100%;
+  }
+  #omvormen-app .dropzone strong {
+    font-size: var(--size-m);
+    line-height: var(--line-m);
+  }
+  #omvormen-app .drop-icon {
+    display: none;
+  }
+  #omvormen-app .tools {
+    grid-template-columns: 1fr;
+  }
+  #omvormen-app .primary-tool {
+    min-height: 140px;
+  }
+  #omvormen-app .primary-tool .tool-copy strong {
+    font-size: var(--size-l);
+    line-height: var(--line-l);
+  }
+  #omvormen-app .primary-tool .tool-copy > span {
+    font-size: var(--size-s);
+    line-height: var(--line-s);
+  }
+  #omvormen-app .primary-tool .tool-icon svg {
+    width: 36px;
+    height: 48px;
+  }
+  #omvormen-app .control-tool {
+    min-height: 110px;
+  }
+  #omvormen-app .tool-copy strong {
+    font-size: var(--size-l);
+    line-height: var(--line-l);
+  }
+  #omvormen-app .source-note h3 {
+    font-size: var(--size-m);
+    line-height: var(--line-m);
+  }
+  #omvormen-app .editor-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-m);
+  }
+  #omvormen-app dialog {
+    max-width: calc(100vw - 20px);
+    max-height: calc(100dvh - 20px);
+    padding: var(--space-m);
+  }
+  #omvormen-app .work-footer,
+  #omvormen-app .result-list li {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+  #omvormen-app .result-list .actions {
+    width: 100%;
+  }
+  #omvormen-app .results .section-head {
+    align-items: stretch;
+  }
+  #omvormen-app textarea {
+    min-height: 240px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  #omvormen-app * {
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}
+@media (min-width: 761px) {
+  #omvormen-app .ribbon {
+    font-size: var(--size-m);
+    line-height: var(--line-m);
+    right: -55px;
+    top: 24px;
+    width: 320px;
+    padding: var(--space-xs) 0;
+  }
+}
+#omvormen-app .merge-list {
+  padding-left: var(--space-l);
+  margin: var(--space-m) 0;
+}
+#omvormen-app .merge-list li {
+  padding: var(--space-xs);
+  box-shadow: inset 0 -1px var(--line);
+}
+#omvormen-app .merge-list li > span {
+  display: inline-block;
+  overflow-wrap: anywhere;
+  margin-bottom: var(--space-xs);
+}
+#omvormen-app .merge-list .actions {
+  float: right;
+  margin-left: var(--space-m);
+}
+#omvormen-app .merge-list li:after {
+  content: "";
+  display: block;
+  clear: both;
+}
+#omvormen-app .select-label input {
+  display: block;
+  width: 100%;
+  border: 0;
+  border-radius: 0;
+  box-shadow: inset 0 0 0 1px var(--line);
+  padding: var(--space-xs);
+  margin-top: var(--space-xxs);
+}
+@media (max-width: 760px) {
+  #omvormen-app .merge-list .actions {
+    float: none;
+    margin-left: 0;
+  }
+}
+#omvormen-app .header-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-m);
+  font-size: var(--size-s);
+  line-height: var(--line-s);
+}
+#omvormen-app .header-actions a {
+  text-decoration: none;
+}
+#omvormen-app .header-actions a:hover {
+  text-decoration: underline;
+}
+#omvormen-app .download-link {
+  padding: var(--space-xs) var(--space-s);
+  box-shadow: inset 0 0 0 1px var(--text);
+  font-weight: var(--weight-heavy);
+}
+#omvormen-app .header-actions button {
+  font-size: inherit;
+  line-height: inherit;
+}
+@media (max-width: 760px) {
+  #omvormen-app .topbar {
+    flex-wrap: wrap;
+    gap: var(--space-xs);
+  }
+  #omvormen-app .header-actions {
+    gap: var(--space-s);
+    width: 100%;
+    justify-content: space-between;
+  }
+  #omvormen-app .header-actions button {
+    padding: var(--space-xs) 0;
+  }
+}
+#omvormen-app .model-gate {
+  border: 2px solid var(--ink, #111);
+  border-left: 6px solid var(--accent, #c51d17);
+  padding: 16px 20px;
+  margin: 20px 0;
+  background: #f5f5f5;
+}
+#omvormen-app .model-gate strong {
+  font-size: 1.15rem;
+}
+#omvormen-app .model-gate p {
+  margin: 8px 0 0;
+}
+#omvormen-app #source-text[readonly] {
+  background: #f1f1f1;
+  cursor: default;
+}
+#omvormen-app {
+  box-shadow: inset 0 6px var(--accent);
+}
+#omvormen-app .layout {
+  grid-template-columns: 294px minmax(0, 1fr);
+  gap: 40px;
+  margin: var(--space-m) var(--space-xxl) var(--space-xxl);
+  min-height: calc(100vh - 300px);
+}
+#omvormen-app aside {
+  padding: var(--space-l);
+  box-shadow: none;
+}
+#omvormen-app aside h2 {
+  font-size: var(--size-m);
+  line-height: var(--line-m);
+  letter-spacing: 0;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+#omvormen-app main {
+  padding: 0;
+  max-width: none;
+}
+#omvormen-app .section-head {
+  margin-bottom: var(--space-l);
+}
+#omvormen-app .section-head > h2 {
+  text-transform: uppercase;
+  font-size: 30px;
+  line-height: 36px;
+  font-weight: 700;
+  letter-spacing: 0;
+}
+#omvormen-app .dropzone {
+  padding: var(--space-l);
+  margin-bottom: var(--space-xl);
+  min-height: 108px;
+  box-shadow: inset 0 0 0 1px var(--muted);
+}
+#omvormen-app .drop-icon,
+#omvormen-app .tool-icon {
+  display: none;
+}
+#omvormen-app .dropzone strong {
+  font-weight: 700;
+}
+#omvormen-app .dropzone p {
+  color: var(--muted);
+  margin-top: var(--space-xxs);
+}
+#omvormen-app .tools {
+  gap: var(--space-l);
+}
+#omvormen-app .tool {
+  padding: var(--space-l);
+  box-shadow: inset 0 0 0 1px var(--line);
+  min-height: 128px;
+}
+#omvormen-app .tool-copy strong {
+  font-weight: 700;
+}
+#omvormen-app .tool-copy > span {
+  color: var(--muted);
+}
+#omvormen-app .primary-tool {
+  min-height: 140px;
+  box-shadow:
+    inset 0 0 0 1px var(--muted),
+    inset 6px 0 var(--accent);
+}
+#omvormen-app .primary-tool .tool-copy strong {
+  font-size: 30px;
+  line-height: 36px;
+  letter-spacing: 0;
+}
+#omvormen-app .source-note {
+  box-shadow: none;
+  margin-top: var(--space-xl);
+}
+#omvormen-app .source-note > svg {
+  display: none;
+}
+#omvormen-app .source-note h3 {
+  font-size: var(--size-s);
+  line-height: var(--line-s);
+  letter-spacing: 0;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+#omvormen-app .source-note p {
+  color: var(--muted);
+}
+#omvormen-app .app-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-l);
+  margin: 0 var(--space-xl);
+  padding: var(--space-l) var(--space-xs);
+  box-shadow: inset 0 1px var(--muted);
+  font-size: var(--size-xs);
+  line-height: var(--line-xs);
+  color: var(--muted);
+}
+#omvormen-app .app-footer strong {
+  text-transform: uppercase;
+  font-weight: var(--weight-heavy);
+}
+@media (max-width: 1200px) {
+  #omvormen-app .brand .brand-name {
+    font-size: 24px;
+    line-height: 28px;
+  }
+  #omvormen-app .layout {
+    grid-template-columns: 250px minmax(0, 1fr);
+    gap: var(--space-l);
+    margin-left: var(--space-xl);
+    margin-right: var(--space-xl);
+  }
+  #omvormen-app .header-actions {
+    gap: var(--space-s);
+  }
+  #omvormen-app .section-head {
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+  #omvormen-app .search {
+    width: 240px;
+  }
+  #omvormen-app .tool-copy strong {
+    font-size: 21px;
+    line-height: 28px;
+  }
+}
+@media (max-width: 900px) {
+  #omvormen-app .topbar {
+    flex-wrap: wrap;
+    gap: var(--space-s);
+  }
+  #omvormen-app .header-actions {
+    margin-left: 92px;
+  }
+  #omvormen-app .layout {
+    grid-template-columns: 220px minmax(0, 1fr);
+    gap: var(--space-l);
+  }
+  #omvormen-app .tools {
+    grid-template-columns: 1fr;
+  }
+  #omvormen-app .tool {
+    min-height: 110px;
+  }
+  #omvormen-app .primary-tool {
+    grid-column: auto;
+  }
+  #omvormen-app .dropzone {
+    padding: var(--space-m);
+  }
+  #omvormen-app .dropzone .choose {
+    margin-left: 0;
+  }
+  #omvormen-app .masthead {
+    padding-left: var(--space-xl);
+    padding-right: var(--space-xl);
+  }
+}
+@media (max-width: 760px) {
+  #omvormen-app .topbar {
+    margin: 0 var(--space-m);
+    min-height: 0;
+    padding: var(--space-m) 0;
+  }
+  #omvormen-app .brand-icon {
+    width: 56px;
+    height: 56px;
+  }
+  #omvormen-app .brand {
+    gap: var(--space-s);
+  }
+  #omvormen-app .brand .brand-name {
+    font-size: 22px;
+    line-height: 26px;
+  }
+  #omvormen-app .brand small {
+    font-size: 10px;
+    line-height: 14px;
+  }
+  #omvormen-app .header-actions {
+    margin-left: 0;
+    width: 100%;
+    justify-content: space-between;
+  }
+  #omvormen-app .masthead {
+    padding: var(--space-m);
+  }
+  #omvormen-app .masthead p {
+    font-size: var(--size-s);
+    line-height: var(--line-s);
+    max-width: 100%;
+    margin: 0;
+  }
+  #omvormen-app .layout {
+    display: flex;
+    gap: var(--space-l);
+    margin: 0 var(--space-m) var(--space-l);
+    min-height: 0;
+  }
+  #omvormen-app aside {
+    padding: var(--space-m);
+  }
+  #omvormen-app main {
+    padding: 0;
+  }
+  #omvormen-app .section-head > h2 {
+    font-size: 24px;
+    line-height: 30px;
+  }
+  #omvormen-app .search {
+    width: 100%;
+  }
+  #omvormen-app .primary-tool .tool-copy strong {
+    font-size: 26px;
+    line-height: 32px;
+  }
+  #omvormen-app .tool-copy strong {
+    font-size: 22px;
+    line-height: 28px;
+  }
+  #omvormen-app .app-footer {
+    margin: 0 var(--space-m);
+    padding: var(--space-m) 0;
+    align-items: flex-start;
+    flex-direction: column;
+    gap: var(--space-xs);
+  }
+}
+#omvormen-app .term-dialog {
+  width: 520px;
+}
+#omvormen-app .term-dialog form {
+  display: grid;
+  gap: var(--space-m);
+}
+#omvormen-app .term-dialog input {
+  width: 100%;
+  padding: var(--space-xs);
+  border: 0;
+  box-shadow: inset 0 0 0 1px var(--text);
+}
+#omvormen-app .term-dialog label {
+  font-weight: var(--weight-heavy);
+}
+#omvormen-app .term-dialog .actions {
+  justify-content: flex-end;
+}
+#omvormen-app {
+  box-shadow: none;
+  display: block;
+  min-width: 0;
+}
+#omvormen-app .omvormen-module-intro {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-m);
+  padding: var(--space-m) var(--space-l);
+}
+#omvormen-app .omvormen-module-intro p {
+  color: var(--muted);
+}
+#omvormen-app .layout {
+  margin: var(--space-m) var(--space-l);
+  gap: var(--space-l);
+}
+#omvormen-app dialog {
+  margin: auto;
+}

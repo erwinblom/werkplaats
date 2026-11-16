@@ -26,12 +26,12 @@ window.WerkplaatsOrganizationLogo=(()=>{
 })();
 (()=>{
  const script=document.currentScript,base=new URL('.',script.src),tool=document.querySelector('script[data-tool]')?.dataset.tool;
- const tools={Publicatieplanner:['Projecten','Start Publicatieplanner.html'],Bronnenkast:['Verzamelen','Start Bronnenkast.html'],Werkbank:['Schrijven','▶ Begin hier.html'],Projectbord:['Doen','Start Projectbord.html'],Contacten:['Contacten','Start Contacten.html'],Offerte:['Offertes','Start Offerte.html'],Uren:['Uren','Start Uren.html'],Ping:['Facturen','Start Ping.html'],Kasboek:['Boekhouding','Start Kasboek.html'],Abonnementen:['Abonnementen','Start Abonnementen.html'],Databases:['Ordenen','Start Databases.html']};
+ const tools={Publicatieplanner:['Projecten','Start Publicatieplanner.html'],Bronnenkast:['Verzamelen','Start Bronnenkast.html'],Werkbank:['Schrijven','▶ Begin hier.html'],Omvormen:['Omvormen','Start Omvormen.html'],Projectbord:['Doen','Start Projectbord.html'],Contacten:['Contacten','Start Contacten.html'],Offerte:['Offertes','Start Offerte.html'],Uren:['Uren','Start Uren.html'],Ping:['Facturen','Start Ping.html'],Kasboek:['Boekhouding','Start Kasboek.html'],Abonnementen:['Abonnementen','Start Abonnementen.html'],Databases:['Ordenen','Start Databases.html']};
  const shortcutText=()=>window.MijnGereedschappen?.shortcutText()||'';
  const $=id=>document.getElementById(id);
  const mode=()=>window.GereedschapskistMode?.example?'voorbeeld':'eigen';
  function report(e){document.documentElement.removeAttribute('data-workspace-building');const message=$('wm-message');if(message)I18n.assign(message,I18n.ui("Dit onderdeel kon niet worden geladen. Vernieuw de pagina en probeer het opnieuw.",'Dit onderdeel kon niet worden geladen. Vernieuw de pagina en probeer het opnieuw.'),"textContent");console.error(e);}
- const helpSteps={Databases:['Ordenen','Kies Persoonlijk (boeken), Zakelijk (voorraad) of Overheid (informatieverzoeken) en bekijk de kolommen. Geef je overzicht een eigen naam.','Voeg je eerste eigen rij toe en kies Bewaar. Ga via Naar mijn overzichten terug, open je overzicht en zoek je invoer terug. Je gegevens blijven lokaal.'],
+ const helpSteps={Omvormen:['Omvormen','Kies Probeer een voorbeeld of kies je eigen bestanden. Zet ze om, scherm gegevens af, controleer metadata, voeg teksten samen of vergelijk versies.','Download je resultaat als Markdown of ZIP. Resultaten blijven in je werkmap bewaard; bronbestanden kies je na heropenen opnieuw. AI-herkenning is optioneel en heeft internet nodig.'],Databases:['Ordenen','Kies Persoonlijk (boeken), Zakelijk (voorraad) of Overheid (informatieverzoeken) en bekijk de kolommen. Geef je overzicht een eigen naam.','Voeg je eerste eigen rij toe en kies Bewaar. Ga via Naar mijn overzichten terug, open je overzicht en zoek je invoer terug. Je gegevens blijven lokaal.'],
   Abonnementen:['Abonnementen','Voeg naam, bedrag, betaalperiode, verlenging en uiterste opzegdatum toe.','Open een abonnement om de gegevens te bekijken. Bewaar alles bewaart je overzicht in je werkmap.'],
   Werkbank:['Schrijven','Kies + Nieuw → Nieuw document, Brief, Artikel of Gespreksverslag. Geef het een naam en bewerk de starttekst.','Bewaar werkt het document bij op de getoonde opslagplek. Een los document gaat naar Schrijven in je werkmap. Bewaar alles bewaart daarnaast de hele Werkplaats.'],
   Ping:['Facturen','Kies Nieuwe factuur, vul klant en factuurregels in en controleer het voorbeeld.','Maak de factuur pas definitief nadat je alles hebt nagekeken. Bewaar alles legt je concepten en facturen vast.'],
@@ -55,10 +55,12 @@ window.WerkplaatsOrganizationLogo=(()=>{
     await Werkmap.ready;await Werkmap.recall();
     if(!Werkmap.active&&!await Werkmap.startNew())return;
    }
+   await window.WerkplaatsDesktop?.flush();
    window.WerkplaatsOvergangen?.leave();
    await BewaarAlles.flush();
    window.GereedschapskistNavigating=true;
    const destination=GereedschapskistKeuze.url(url,mode());if(destination.pathname===new URL('Begin hier.html',base).pathname)destination.searchParams.set('home','1');
+   window.WerkplaatsDesktop?.allowNavigation();
    location.assign(destination.href);
    setTimeout(()=>window.GereedschapskistNavigating=false,1000);
   }catch(e){

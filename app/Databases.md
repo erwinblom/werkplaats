@@ -70,7 +70,7 @@ Kies Ontdek met voorbeeldgegevens en maak bewust een eigen oefendatabase met twi
 2. Combineer Organisatie Gemeente Voorbeeldstad met Onderwerp Digitale vaardigheden. Beide criteria gelden tegelijk.
 3. Open een artikel en klik op een persoon of organisatie. Je ziet de andere artikelen met precies diezelfde vermelding. Onder Wie en wat komen vaker terug zie je aantallen over de hele oefendatabase.
 
-Met Bekijk de gekoppelde tabellen zie je Artikelen, Entiteiten en ArtikelEntiteiten. Die laatste tabel verbindt de nummers van artikelen en entiteiten. Ook na downloaden en heropenen blijft dit gewone SQLite. Je kunt de tabellen bewerken; aantallen en zoekresultaten worden opnieuw uit de gegevens berekend. De oefenopdrachten zijn gemaakt voor de oorspronkelijke voorbeeldgegevens.
+Met **Meer → Bekijk de gekoppelde tabellen** bij de geopende database zie je Artikelen, Entiteiten en ArtikelEntiteiten. Die laatste tabel verbindt de nummers van artikelen en entiteiten. Ook na downloaden en heropenen blijft dit gewone SQLite. Je kunt de tabellen bewerken; aantallen en zoekresultaten worden opnieuw uit de gegevens berekend. De oefenopdrachten zijn gemaakt voor de oorspronkelijke voorbeeldgegevens.
 
 Dit is een lokale oefening: geen automatische artikelimport, AI-herkenning of feitelijke uitspraken over genoemde personen en organisaties.
 
@@ -79,3 +79,5 @@ Dit is een lokale oefening: geen automatische artikelimport, AI-herkenning of fe
 In de oefendatabase staan drie vaste vragen: organisaties op frequentie, onderwerpen in artikelen waarin zowel gemeente als bibliotheek voorkomen, en artikelen met meerdere organisaties. De antwoorden worden bij openen uit de huidige tabellen berekend en gebruiken de hele oefendatabase, onafhankelijk van je zoekfilters. Organisaties en artikelen worden uniek geteld; een terugkerende naam wordt niet als nieuwe organisatie geteld.
 
 Open een antwoordregel voor de onderbouwende artikelen, inclusief hun gekoppelde organisaties en onderwerpen. Open daarna het artikel zelf om de tekst en koppelingen te controleren. Terug naar het antwoord brengt je terug bij de telling. Een gedeelde vermelding toont een geregistreerde koppeling; lees het artikel om de betekenis daarvan te beoordelen. Na een eigen tabelwijziging en bewaren rekent de weergave opnieuw.
+
+De drie vragen staan voorop. **Help me ontdekken** opent de oefenstappen. In **Databases beheren** vind je Bestaande database openen en Opnieuw laden; **Meer** bij je database bevat de tabellen, CSV-import en download.

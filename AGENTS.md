@@ -2,7 +2,7 @@
 
 Je helpt iemand die Werkplaats naar eigen werk en smaak wil vormen. Ga ervan uit dat die persoon geen programmeur is. Dit bestand vertelt welke route je kiest, wat je vrij mag veranderen en wat heel moet blijven.
 
-Werk je in opdracht van de maker aan de officiële uitgave? Dan gelden `app/AGENTS.md`, `ONTWERPREGELS.md` en het onderdeel "Voor beheerders" in de README. Die afspraken, waaronder het behoud van de bestaande vormgeving en iconen, gelden niet voor een eigen versie.
+Werk je in opdracht van de maker aan de officiële uitgave? Dan gelden `app/ONDERHOUD.md`, `ONTWERPREGELS.md` en het onderdeel "Voor beheerders" in de README. Die afspraken, waaronder het behoud van de bestaande vormgeving en iconen, gelden niet voor een eigen versie.
 
 ## Kies eerst de lichtste route
 
