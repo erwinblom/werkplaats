@@ -1,9 +1,10 @@
 'use strict';
 // One directory handle per installation/origin; files remain ordinary user files.
 window.Werkmap=(()=>{
- const catalog={Werkbank:['Schrijven',null],Ping:['Factureren','factureren'],Projectbord:['Doen','doen'],Bronnenkast:['Verzamelen','verzamelen'],Uren:['Uren schrijven','uren-schrijven'],Contacten:['Contact houden','contact-houden'],Publicatieplanner:['Plannen','plannen'],Offerte:['Offreren','offreren'],Kasboek:['Boekhouden','boekhouden'],Abonnementen:['Abonnementen','abonnementen'],Databases:['Databases',null]};
+ const catalog={Werkbank:['Schrijven',null],Ping:['Factureren','factureren'],Projectbord:['Doen','doen'],Bronnenkast:['Verzamelen','verzamelen'],Uren:['Uren schrijven','uren-schrijven'],Contacten:['Contact houden','contact-houden'],Publicatieplanner:['Plannen','plannen'],Offerte:['Offreren','offreren'],Kasboek:['Boekhouden','boekhouden'],Abonnementen:['Abonnementen','abonnementen'],Databases:['Databases',null],Omvormen:['Omvormen',null]};
  const tool=document.querySelector('script[data-tool]')?.dataset.tool,example=window.GereedschapskistMode?.example;
  function storageSupport(){
+  if(window.WerkplaatsNative)return {supported:true,message:'Je werk wordt automatisch op deze Mac bewaard.'};
   if(window.isSecureContext===false)return {supported:false,message:'Open Werkplaats via https of de lokale download in Chrome of Edge op je computer om een opslagmap te kiezen.'};
   if(typeof window.showDirectoryPicker!=='function')return {supported:false,message:'Deze browser kan geen opslagmap kiezen. Open Werkplaats in Chrome of Edge op je computer. Je hoeft geen broncode aan te passen.'};
   if(!window.indexedDB)return {supported:false,message:'Deze browser kan de mapkeuze niet onthouden. Gebruik Chrome of Edge op je computer met browseropslag ingeschakeld.'};
@@ -22,7 +23,7 @@ window.Werkmap=(()=>{
  function pickerStopped(){return 'De browser heeft geen map doorgegeven. Het kiezen kan zijn afgebroken of de maptoegang kan zijn geweigerd. Heb je wel een map bevestigd? Gebruik Chrome of Edge op je computer en kies dezelfde map. Je huidige werk blijft behouden.';}
  function database(){return new Promise((resolve,reject)=>{const r=indexedDB.open(dbName,1);r.onupgradeneeded=()=>r.result.createObjectStore('settings');r.onsuccess=()=>resolve(r.result);r.onerror=()=>reject(r.error);});}
  function setting(action,value){return new Promise((resolve,reject)=>{const tx=db.transaction('settings',action==='get'?'readonly':'readwrite'),s=tx.objectStore('settings'),r=action==='get'?s.get('root'):action==='delete'?s.delete('root'):s.put(value,'root');tx.oncomplete=()=>resolve(r.result);tx.onerror=()=>reject(tx.error);tx.onabort=()=>reject(tx.error||Error(I18n.value(I18n.ui("Mapkeuze niet bewaard.",'Mapkeuze niet bewaard.'))));});}
- const ready=(async()=>{if(!supported||example)return;try{db=await database();const saved=await setting('get');root=saved?.handle||null;revision=saved?.revision||null;}catch{message(I18n.value(I18n.ui("De mapkeuze kon niet worden onthouden. Kies de map opnieuw.",'De mapkeuze kon niet worden onthouden. Kies de map opnieuw.')));}})();
+ const ready=(async()=>{if(window.WerkplaatsDesktop){const own=await WerkplaatsDesktop.bootstrap();root=own.root;revision=own.revision;return;}if(!supported||example)return;try{db=await database();const saved=await setting('get');root=saved?.handle||null;revision=saved?.revision||null;}catch{message(I18n.value(I18n.ui("De mapkeuze kon niet worden onthouden. Kies de map opnieuw.",'De mapkeuze kon niet worden onthouden. Kies de map opnieuw.')));}})();
  async function recall(){
   await ready;
   if(root||!db||example)return !!root;

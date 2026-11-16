@@ -1,0 +1,30 @@
+/* Existing Werkplaats tokens frame the embedded text tools. */
+body[data-tool=Omvormen]>main{padding:var(--space-l)}
+.omvormen-intro{font:var(--size-m)/var(--line-m) var(--font-ui);margin:0 0 var(--space-s)}
+#omvormen-save-status{font:var(--size-s)/var(--line-s) var(--font-ui);color:var(--cte-text-muted)}
+#omvormen-save-status[data-error=true]{color:var(--error)}
+.omvormen-writing-link{display:inline-flex;align-items:center;gap:var(--space-xs);font:inherit;padding:var(--space-s);text-underline-offset:3px}
+
+body[data-tool=Omvormen]>header{display:flex;align-items:center;flex-wrap:wrap}
+.omvormen-summary{display:flex;align-items:center;justify-content:space-between;gap:var(--space-m);margin-bottom:var(--space-m)}
+.omvormen-summary-actions{display:flex;gap:var(--space-s);flex-shrink:0;flex-wrap:wrap}
+.omvormen-summary #omvormen-save-status{margin:var(--space-xs) 0 0}
+#omvormen-app .omvormen-module-intro{display:none}
+#omvormen-app .layout{margin:0;gap:var(--space-l);grid-template-columns:220px minmax(0,1fr);min-height:0}
+#omvormen-app aside{padding:var(--space-m)}
+#omvormen-app .section-head{margin-bottom:var(--space-m)}
+#omvormen-app .section-head>h2{font-size:var(--size-l);line-height:var(--line-l)}
+#omvormen-app .dropzone{min-height:0;padding:var(--space-m);margin-bottom:var(--space-m)}
+#omvormen-app .tools{gap:var(--space-s)}
+#omvormen-app .tool{min-height:0;padding:var(--space-m)}
+#omvormen-app .primary-tool .tool-copy strong{font-size:var(--size-l);line-height:var(--line-l)}
+#omvormen-app .source-note{margin-top:var(--space-l)}
+@media(max-width:760px){.omvormen-summary{align-items:flex-start;flex-direction:column}#omvormen-app .layout{grid-template-columns:1fr}#omvormen-app aside{padding:var(--space-m)}}
+
+/* Local compact chrome: keep the existing roles, remove unused header space. */
+body.compact-tools[data-tool=Omvormen]>header{padding:var(--space-m)!important;min-height:0!important}
+body[data-tool=Omvormen] .suite-navigation .suite-meta{position:static!important;margin:0!important}
+body[data-tool=Omvormen] .suite-back{color:inherit}
+body[data-tool=Omvormen] .workspace-strip #desktop-save-status{margin:0!important;padding:0;flex:1;font:var(--size-s)/var(--line-s) var(--font-ui)}
+.omvormen-summary-actions>button{background:var(--cte-surface,#fff);color:var(--cte-text,#111);border:0;box-shadow:inset 0 0 0 1px var(--cte-text-muted,#666);padding:var(--space-s) var(--space-m);font:700 var(--size-s)/var(--line-s) var(--font-ui);min-height:var(--space-xl);cursor:pointer}
+@media(max-width:760px){body[data-tool=Omvormen] .suite-navigation{flex-wrap:wrap}}

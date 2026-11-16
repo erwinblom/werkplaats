@@ -1,0 +1,2 @@
+'use strict';
+document.addEventListener('DOMContentLoaded',()=>{const host=document.querySelector('.writing-views')||document.querySelector('header');if(!host)return;const a=document.createElement('a');a.className='omvormen-writing-link';a.href='../../Apps/Omvormen/Start%20Omvormen.html';I18n.assign(a,I18n.ui('Omvormen','Omvormen'));I18n.assign(a,I18n.ui('Teksten en bestanden omzetten, controleren en vergelijken','Teksten en bestanden omzetten, controleren en vergelijken'),'title');host.append(a);});

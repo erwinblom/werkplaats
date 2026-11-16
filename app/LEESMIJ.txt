@@ -52,3 +52,8 @@ Maak bewust een eigen oefendatabase met twintig fictieve artikelen over informat
 
 VRAGEN AAN JE VERZAMELING
 In de oefendatabase kies je drie vragen: welke organisaties komen het vaakst voor, welke onderwerpen staan bij artikelen met gemeente én bibliotheek en welke artikelen noemen meerdere organisaties? Antwoorden worden uit de hele actuele verzameling berekend. Open Bekijk onderbouwing om de meegetelde artikelen en koppelingen te zien en open het artikel om de tekst te lezen. Na een eigen wijziging worden de antwoorden opnieuw berekend.
+
+OMVORMEN — TEKSTEN EN BESTANDEN BRUIKBAAR MAKEN
+Open Omvormen bij Informatie of via Schrijven. De vijf bestaande tekstfuncties zijn Naar Markdown, Persoonsgegevens afschermen, Metadata controleren, Documenten samenvoegen en Versies vergelijken. Probeer een voorbeeld, maak Markdown en bekijk/download het resultaat.
+Je resultaten en hun bewerkte tekst worden in je werkmap bewaard; de App bewaart automatisch. Je oorspronkelijke bronbestanden worden niet overschreven of automatisch gekopieerd en kies je na heropenen opnieuw. Tussenselecties bij afschermen horen nog niet bij een gemaakt resultaat.
+Handmatig afschermen kan zonder model; automatische herkenning is optioneel, met officiële modeldownloads en een licentiesignaal op internet. Controleer zelf wat moet worden afgeschermd. Gebruik Stop controle voor een lopende scan. Uitleg, grenzen en broncredits: Apps/Omvormen/LEESMIJ.md en Uitleg en privacy in de tool.

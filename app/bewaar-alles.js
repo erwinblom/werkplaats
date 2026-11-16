@@ -6,11 +6,11 @@
  const keys={Ping:'ping-local-v1',Projectbord:'projectbord-v1',Bronnenkast:'bronnenkast-v1',Uren:'uren-v1',Contacten:'contacten-v1',Publicatieplanner:'publicatieplanner-v1',Offerte:'offerte-v1',Kasboek:'kasboek-v1',Abonnementen:'abonnementen-v1'};
  // Databases writes real SQLite files directly; do not serialize binary databases as JSON sessions.
  const selectedTool=document.querySelector('script[data-tool]')?.dataset.tool;
- const tool=selectedTool==='Databases'?null:selectedTool,own=!window.GereedschapskistMode?.example,id=crypto.randomUUID();
+ const tool=['Databases','Omvormen'].includes(selectedTool)?null:selectedTool,own=!window.GereedschapskistMode?.example,id=crypto.randomUUID();
  const storage=window.GereedschapskistMode?.storage||window.localStorage;
  const lockPrefix='gk-all:'+scope+':tab:',channelName='gk-all:'+scope,dbName='gereedschapskist-bewaar-alles-v1';
  let db,channel,frozen=false,active=false,cacheTimer,unlock,registration,seen,restoring=false,recoveredForms=[],windowVersions=[];
- const say=text=>{const el=document.getElementById('wm-message');if(el)I18n.assign(el,text);for(const el of document.querySelectorAll('dialog[open] .all-dialog-status'))el.textContent=text;};
+ const say=text=>{const el=document.getElementById('wm-message');if(el)I18n.assign(el,text);for(const el of document.querySelectorAll('dialog[open] .all-dialog-status'))I18n.assign(el,text);};
  async function browseSavedDirectory(directory,path){
   const dialog=document.createElement('dialog');
   I18n.attribute(dialog,'aria-label',I18n.ui("Bewaard werk",'Bewaard werk'));
@@ -92,7 +92,7 @@
  async function cache(full=false,strict=false){if(!active||frozen||restoring)return;try{const value=await snapshot(full);await transact('readwrite',s=>s.put({id,scope,tool,value,updated:Date.now()}));}catch(e){say(I18n.ui("Tussentijdse gezamenlijke kopie niet bijgewerkt: {0}",'Tussentijdse gezamenlijke kopie niet bijgewerkt: '+e.message));if(strict)throw e;}}
  function schedule(){clearTimeout(cacheTimer);cacheTimer=setTimeout(cache,350);}
  function freeze(value){frozen=value;document.documentElement.setAttribute('aria-busy',String(value));}
- for(const event of ['beforeinput','click','keydown','submit','drop','cancel'])document.addEventListener(event,e=>{if(frozen){e.preventDefault();e.stopImmediatePropagation();}},true);
+ for(const event of ['beforeinput','click','keydown','submit','drop','cancel'])document.addEventListener(event,e=>{if(frozen&&!window.WerkplaatsDesktop?.backgroundSaving){e.preventDefault();e.stopImmediatePropagation();}},true);
  for(const event of ['input','change','click','close'])document.addEventListener(event,schedule,true);
  window.addEventListener('pagehide',()=>{unlock?.();});
  async function peers(){const locks=await navigator.locks.query();return (locks.held||[]).filter(l=>l.name.startsWith(lockPrefix)).map(l=>l.name.slice(lockPrefix.length)).sort();}
@@ -111,6 +111,7 @@
  }
  async function init(){
   await Werkmap.ready;await ready;
+  if(window.WerkplaatsDesktop){const access=await Werkmap.allAccess(false),existing=await records();if(!existing.some(record=>record.id===roundKey)){const opening=await readRound(access.root);await transact('readwrite',store=>store.put({id:roundKey,scope,revision:access.revision,current:opening?.name||null}));}}
   if(own&&tool){await Werkmap.adapterReady;await hydrate();await verifySavedStatus();}
   if(own&&tool){
    const add=()=>{for(const actions of document.querySelectorAll('dialog .form-actions')){if(actions.querySelector('.gk-save-all'))continue;const button=document.createElement('button');button.type='button';button.className='gk-save-all';I18n.assign(button,I18n.ui("Bewaar alles",'Bewaar alles'),"textContent");button.onclick=async()=>{button.disabled=true;try{await saveWithStatus()}catch(e){say(I18n.ui("Niet alles bewaard: {0}",'Niet alles bewaard: '+e.message))}finally{button.disabled=false}};const more=document.createElement('details');more.className='context-actions dialog-save-more';const title=document.createElement('summary');I18n.assign(title,I18n.ui('Meer','Meer'),'textContent');const panel=document.createElement('div');panel.className='context-actions-panel';panel.append(button);more.append(title,panel);actions.append(more);const status=document.createElement('p');status.className='all-dialog-status';status.setAttribute('role','status');actions.after(status);}};
@@ -225,7 +226,7 @@
   return result;
  }
  async function saveWithStatus(resolution=null){
-  await globalThis.window?.WerkplaatsDatabases?.flush();
+  await globalThis.window?.WerkplaatsDatabases?.flush();await globalThis.window?.WerkplaatsOmvormen?.flush();
   window.Werkstatus?.saving?.();
   try{return await saveAll(resolution);}
   catch(error){
@@ -319,7 +320,7 @@
     if((previous?.current||null)!==expectedRound)throw Error(I18n.value(I18n.ui("De werkmap is tijdens het bewaren bijgewerkt. Open werkmap voordat je opnieuw bewaart.",'De werkmap is tijdens het bewaren bijgewerkt. Open werkmap voordat je opnieuw bewaart.')));
     const pointer={format:'gereedschapskist-bewaard-werk',version:1,current:roundName,previous:previous?.current||null};
     pointerStarted=true;await write(rounds,'actueel.json',JSON.stringify(pointer,null,2));
-    committed=true;window.Werkstatus?.allWritten();channel.postMessage({type:'saved',ids:live.map(s=>s.id)});
+    committed=true;if(!window.WerkplaatsDesktop?.changedDuringSave)window.Werkstatus?.allWritten();channel.postMessage({type:'saved',ids:live.map(s=>s.id)});
     await transact('readwrite',store=>store.put({id:roundKey,scope,revision:meta.revision,current:roundName}));
     if(!resolution&&previous?.previous&&previous.previous!==pointer.current&&previous.previous!==pointer.previous&&/^\d{4}-.*-[a-f0-9]{8}$/.test(previous.previous)){
      try{const old=await rounds.getDirectoryHandle(previous.previous);const m=JSON.parse(await(await(await old.getFileHandle('bewaar-alles.json')).getFile()).text());if(m.format==='gereedschapskist-bewaarronde')await rounds.removeEntry(previous.previous,{recursive:true});}catch{/* Cleanup is optional; saving remains successful. */}
@@ -329,7 +330,7 @@
     const extra=snapshots.reduce((n,item)=>n+(item.value.windowVersions?.length||0),0);
     const receiptCount=snapshots.find(item=>item.value.tool==='Kasboek')?.value.data?.entries?.filter(entry=>entry.receipt).length||0;
     saySavedRound(extra,roundName,roundDir,receiptCount);
-   }catch(e){e.saveCommitted=committed;if(!pointerStarted&&roundDir)try{await rounds.removeEntry(roundName,{recursive:true});}catch{}e.message=(committed?'Je werk is bewaard, maar de browserkopie kon niet worden bijgewerkt. ':pointerStarted?'De nieuwe bewaarkopie kon niet worden bevestigd. De vorige complete kopie blijft beschikbaar voor herstel. ':'De vorige bewaarkopie blijft actief. ')+e.message;say(e.message);throw e;}
+   }catch(e){if(!pointerStarted&&roundDir)try{await rounds.removeEntry(roundName,{recursive:true});}catch{}const error=new Error((committed?'Je werk is bewaard, maar de browserkopie kon niet worden bijgewerkt. ':pointerStarted?'De nieuwe bewaarkopie kon niet worden bevestigd. De vorige complete kopie blijft beschikbaar voor herstel. ':'De vorige bewaarkopie blijft actief. ')+(e.message||String(e)),{cause:e});error.name=e.name||'Error';error.code=e.code;error.saveCommitted=committed;say(error.message);throw error;}
    finally{freeze(false);channel.postMessage({type:'release',saved:committed});schedule();}
   });
  }
@@ -464,6 +465,7 @@
   if(tool&&own)await applySession({...values.find(s=>s.tool===tool),switchWorkspace:true});
  }
  async function downloadBackup(){
+  await globalThis.window?.WerkplaatsOmvormen?.flush();
   const {root}=await Werkmap.allAccess();
   if(!window.GereedschapskistBackup)await new Promise((resolve,reject)=>{const s=document.createElement('script');s.src=new URL('werkmap-backup.js',base).href;s.onload=resolve;s.onerror=()=>reject(Error(I18n.value(I18n.ui("Back-upfunctie niet geladen.",'Back-upfunctie niet geladen.'))));document.head.append(s);});
   const {blob}=await GereedschapskistBackup(root),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='gereedschapskist-backup-'+new Date().toISOString().replace(/[:.]/g,'-')+'.zip';a.click();setTimeout(()=>URL.revokeObjectURL(url),60000);
@@ -528,5 +530,5 @@
    return next;
   }));
  }
- window.BewaarAlles={startEmpty,readTool,updateTool,readShared,updateShared,flush:async()=>{await globalThis.window?.WerkplaatsDatabases?.flush();await registration;if(!own||!tool)return;if(!active||frozen||restoring)throw Error(I18n.value(I18n.ui('De tussentijdse bewaarkopie is nog niet beschikbaar. Je invoer blijft open.','De tussentijdse bewaarkopie is nog niet beschikbaar. Je invoer blijft open.')));const surfaces=[document.body,...document.querySelectorAll("dialog[open]")],previous=surfaces.map(node=>node.inert);surfaces.forEach(node=>node.inert=true);try{await cache(false,true);}finally{surfaces.forEach((node,index)=>node.inert=previous[index]);}},isToolOpen:async t=>{await registration;const online=await peers(),known=await records();return known.some(r=>r.tool===t&&online.includes(r.id));},canChoose:async()=>!channel||!(await peers()).some(peer=>peer!==id),save:saveWithStatus,restore,readRound,openChosen,downloadBackup,ready:registration,session:storedSession};
+ window.BewaarAlles={startEmpty,readTool,updateTool,readShared,updateShared,flush:async()=>{await globalThis.window?.WerkplaatsDatabases?.flush();await globalThis.window?.WerkplaatsOmvormen?.flush();await registration;if(!own||!tool)return;if(!active||frozen||restoring)throw Error(I18n.value(I18n.ui('De tussentijdse bewaarkopie is nog niet beschikbaar. Je invoer blijft open.','De tussentijdse bewaarkopie is nog niet beschikbaar. Je invoer blijft open.')));const surfaces=[document.body,...document.querySelectorAll("dialog[open]")],previous=surfaces.map(node=>node.inert);surfaces.forEach(node=>node.inert=true);try{await cache(false,true);}finally{surfaces.forEach((node,index)=>node.inert=previous[index]);}},isToolOpen:async t=>{await registration;const online=await peers(),known=await records();return known.some(r=>r.tool===t&&online.includes(r.id));},canChoose:async()=>!channel||!(await peers()).some(peer=>peer!==id),save:saveWithStatus,restore,readRound,openChosen,downloadBackup,ready:registration,session:storedSession};
 })();

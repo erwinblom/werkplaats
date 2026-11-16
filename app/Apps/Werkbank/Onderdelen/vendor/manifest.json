@@ -13,13 +13,15 @@
   {
     "name": "dompurify",
     "file": "purify.min.js",
-    "sha256": "f263b05369e050fa175d4ecb9c9358eb4253602d510297adfb31df48b2f1c4d5",
+    "sha256": "0fe9ffd6cbbfbb1af80eae4e7513e20b2b3985d68ddacf9809407172e0b5f018",
     "matched_version": "3.4.15",
     "license": "(MPL-2.0 OR Apache-2.0)",
     "source": "https://registry.npmjs.org/dompurify/-/dompurify-3.4.15.tgz",
     "upstream_path": "dist/purify.min.js",
     "dependencies": {},
-    "exact": true
+    "exact": false,
+    "upstream_sha256": "f263b05369e050fa175d4ecb9c9358eb4253602d510297adfb31df48b2f1c4d5",
+    "modification": "Reformatted with Prettier 3.9.10 and long string literals split; not byte-identical to upstream."
   },
   {
     "name": "turndown",

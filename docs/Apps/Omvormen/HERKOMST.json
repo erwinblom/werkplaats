@@ -1,0 +1,30 @@
+{
+  "name": "Tools voor Teksten",
+  "version": "1.0.3",
+  "commit": "ce0143b441ea17cf82341c8aa1cc522842133488",
+  "license": "MIT with bundled third-party notices",
+  "upstream": "https://github.com/erwinblom/tools-voor-teksten",
+  "adaptation": "Werkplaats Omvormen: local classic bundle; scoped UI; result-only persistence; Worker isolation/Stop/deadlines; explicit SDK initialization factory; exact NFKC constructor adapter under strict CSP",
+  "originalSourceHashes": {
+    "src/core.js": "fbeb6fd97a65ec74ce52bd55503b17dadd2436d567c95cabe63f0e3d8aef5e03",
+    "src/tokens.css": "7edc9ab1b3fb67c3903570de7ae8db63a3b1ec2ad7668ddaeba96c5ebacb9985",
+    "src/models.js": "c21277602e17e28e5e705bc94273b1f41866246fd67f5fe77054bdc58836d383",
+    "src/main.js": "e83fcf8c735a4dff26d84357521f5bc27e2363e5b8f1741c3c4cf044cd6d7557",
+    "src/style.css": "611257c097bde126f74714881763e172f071058dea547907eef96d87b1af3ed3",
+    "src/examples.js": "a2ee983fea6130502558601c3907da2357ec3939574e9c9e2a1995485ffdfea4"
+  },
+  "sdkAdapters": {
+    "initialization": "Entry top-level initialization becomes an explicit async factory after module evaluation.",
+    "cspConstructor": {
+      "exactArguments": [
+        "s",
+        "return s.normalize('NFKC')"
+      ],
+      "replacement": "Precompiled function(s){return s.normalize('NFKC')}",
+      "unknownDynamicFunctions": "Refused; no eval or CSP relaxation.",
+      "wasmSha256": "960f9b9d498ac984f37f6baf8c5bc674b0d4fe0bc4a6ea23570a10a9cf4a9558"
+    },
+    "worker": "Dedicated classic Worker; terminate on Stop or 120s load / 60s inference deadline.",
+    "retained": "Original model files, inference algorithms and required licence usage signal."
+  }
+}

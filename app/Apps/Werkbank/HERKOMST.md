@@ -17,7 +17,7 @@ De toestemming is privé vastgelegd; de mail en persoonlijke contactgegevens wor
 - Drie neutrale voorbeeldprojecten met zeven Markdown-bestanden.
 - Startinstructies, privacy-uitleg en licentieoverzicht.
 - Turndown uit de officiële browserdistributie van versie 7.2.0.
-- Marked 15.0.12, DOMPurify 3.4.15 en turndown-plugin-gfm 1.0.2 vergeleken met officiële distributies.
+- Marked 15.0.12, DOMPurify 3.4.15 en turndown-plugin-gfm 1.0.2 vergeleken met officiële distributies. De meegeleverde DOMPurify is nadien opgemaakt en is niet bytegelijk aan upstream; zie het vendormanifest voor beide hashes.
 - Onbereikbare Word-importfuncties en de daarvoor geladen Mammoth-bundel weggelaten; Word-import behoort niet tot de beschreven offline interface.
 - Geen persoonlijke Chief-gegevens, hostingkoppeling, AI-sleutels of privégeschiedenis in dit pakket.
 

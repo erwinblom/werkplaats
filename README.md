@@ -39,6 +39,7 @@ Bestaande gebruikers: bewaar eerst je actuele werk in de oude versie. Open na de
 |---|---|
 | Verzamelen | Links en citaten bewaren; kiezen tussen Lezen, Luisteren, Kijken, Proberen en Inspireren |
 | Schrijven | Notities en documenten; gekoppelde bronnen, afbeeldingen en ander materiaal |
+| Omvormen | Documenten omzetten, samenvoegen en vergelijken; metadata en persoonsgegevens controleren |
 | Ordenen | Eigen SQLite-bestanden; oefenen met zoeken, verbanden en controleerbare antwoorden |
 | Projecten | Tijdelijke en doorlopende projecten met gekoppeld materiaal |
 | Doen | Taken, deadlines en prioriteiten |
@@ -144,7 +145,7 @@ Kopieer deze opdracht:
 3. Een uitbreiding die je taken van vandaag als lijst kopieert.
 4. Een uitbreiding die je uren per project optelt en als CSV downloadt.
 5. Een eigen briefsjabloon of factuuropmaak.
-6. Een compleet nieuw gereedschap naast de bestaande negen.
+6. Een compleet nieuw gereedschap naast de bestaande tien.
 
 ## Waar blijft mijn werk
 

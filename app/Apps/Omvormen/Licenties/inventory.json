@@ -1,0 +1,378 @@
+{
+  "checked_at": "2026-11-03",
+  "basis": "package-lock.json non-dev packages installed on build host; permissive runtime set, optional native PDF dependencies conservatively included",
+  "packages": [
+    {
+      "name": "@bjorn3/browser_wasi_shim",
+      "version": "0.3.0",
+      "license": "MIT OR Apache-2.0",
+      "source": "https://github.com/bjorn3/browser_wasi_shim.git",
+      "license_files": [
+        "Licenties/_bjorn3_browser_wasi_shim/LICENSE-APACHE",
+        "Licenties/_bjorn3_browser_wasi_shim/LICENSE-MIT"
+      ],
+      "optional": false
+    },
+    {
+      "name": "@desert-ant-labs/core",
+      "version": "4.2.3",
+      "license": "SEE LICENSE IN LICENSE.md",
+      "source": "https://github.com/Desert-Ant-Labs/desert-ant-core.git",
+      "license_files": [
+        "Licenties/_desert-ant-labs_core/LICENSE.md"
+      ],
+      "optional": false
+    },
+    {
+      "name": "@desert-ant-labs/redact",
+      "version": "4.2.3",
+      "license": "SEE LICENSE IN LICENSE.md",
+      "source": "https://github.com/Desert-Ant-Labs/desert-ant-core.git",
+      "license_files": [
+        "Licenties/_desert-ant-labs_redact/LICENSE.md"
+      ],
+      "optional": false
+    },
+    {
+      "name": "@litertjs/core",
+      "version": "2.6.0",
+      "license": "Apache-2.0",
+      "source": "https://github.com/google-ai-edge/LiteRT.git",
+      "license_files": [
+        "Licenties/_litertjs_core/LICENSE-Apache-2.0.txt"
+      ],
+      "optional": false
+    },
+    {
+      "name": "@litertjs/wasm-utils",
+      "version": "2.6.0",
+      "license": "Apache-2.0",
+      "source": "https://github.com/google-ai-edge/LiteRT.git",
+      "license_files": [
+        "Licenties/_litertjs_wasm-utils/LICENSE-Apache-2.0.txt"
+      ],
+      "optional": false
+    },
+    {
+      "name": "@mixmark-io/domino",
+      "version": "2.2.0",
+      "license": "BSD-2-Clause",
+      "source": "https://github.com/mixmark-io/domino.git",
+      "license_files": [
+        "Licenties/_mixmark-io_domino/LICENSE"
+      ],
+      "optional": false
+    },
+    {
+      "name": "@napi-rs/canvas",
+      "version": "1.1.0",
+      "license": "MIT",
+      "source": "https://github.com/Brooooooklyn/canvas.git",
+      "license_files": [
+        "Licenties/_napi-rs_canvas/LICENSE"
+      ],
+      "optional": true
+    },
+    {
+      "name": "@napi-rs/canvas-darwin-arm64",
+      "version": "1.1.0",
+      "license": "MIT",
+      "source": "https://github.com/Brooooooklyn/canvas.git",
+      "license_files": [
+        "Licenties/_napi-rs_canvas-darwin-arm64/LICENSE-from-parent-package.txt"
+      ],
+      "optional": true
+    },
+    {
+      "name": "@xmldom/xmldom",
+      "version": "0.8.15",
+      "license": "MIT",
+      "source": "https://github.com/xmldom/xmldom.git",
+      "license_files": [
+        "Licenties/_xmldom_xmldom/LICENSE"
+      ],
+      "optional": false
+    },
+    {
+      "name": "argparse",
+      "version": "1.0.10",
+      "license": "MIT",
+      "source": "nodeca/argparse",
+      "license_files": [
+        "Licenties/argparse/LICENSE"
+      ],
+      "optional": false
+    },
+    {
+      "name": "base64-js",
+      "version": "1.5.1",
+      "license": "MIT",
+      "source": "https://github.com/beatgammit/base64-js.git",
+      "license_files": [
+        "Licenties/base64-js/LICENSE"
+      ],
+      "optional": false
+    },
+    {
+      "name": "core-util-is",
+      "version": "1.0.3",
+      "license": "MIT",
+      "source": "https://github.com/isaacs/core-util-is",
+      "license_files": [
+        "Licenties/core-util-is/LICENSE"
+      ],
+      "optional": false
+    },
+    {
+      "name": "diff",
+      "version": "8.0.4",
+      "license": "BSD-3-Clause",
+      "source": "https://github.com/kpdecker/jsdiff.git",
+      "license_files": [
+        "Licenties/diff/LICENSE"
+      ],
+      "optional": false
+    },
+    {
+      "name": "dingbat-to-unicode",
+      "version": "1.0.2",
+      "license": "BSD-2-Clause",
+      "source": "https://github.com/mwilliamson/dingbat-to-unicode.git",
+      "license_files": [
+        "Licenties/dingbat-to-unicode/LICENSE"
+      ],
+      "optional": false
+    },
+    {
+      "name": "duck",
+      "version": "0.1.12",
+      "license": "BSD",
+      "source": "https://github.com/mwilliamson/duck.js.git",
+      "license_files": [
+        "Licenties/duck/LICENSE"
+      ],
+      "optional": false
+    },
+    {
+      "name": "immediate",
+      "version": "3.0.6",
+      "license": "MIT",
+      "source": "https://github.com/calvinmetcalf/immediate.git",
+      "license_files": [
+        "Licenties/immediate/LICENSE.txt"
+      ],
+      "optional": false
+    },
+    {
+      "name": "inherits",
+      "version": "2.0.4",
+      "license": "ISC",
+      "source": "https://github.com/isaacs/inherits",
+      "license_files": [
+        "Licenties/inherits/LICENSE"
+      ],
+      "optional": false
+    },
+    {
+      "name": "isarray",
+      "version": "1.0.0",
+      "license": "MIT",
+      "source": "https://github.com/juliangruber/isarray.git",
+      "license_files": [
+        "Licenties/isarray/LICENSE-from-upstream-README.txt"
+      ],
+      "optional": false
+    },
+    {
+      "name": "jszip",
+      "version": "3.10.2",
+      "license": "(MIT OR GPL-3.0-or-later)",
+      "source": "https://github.com/Stuk/jszip.git",
+      "license_files": [
+        "Licenties/jszip/LICENSE.markdown"
+      ],
+      "optional": false
+    },
+    {
+      "name": "lie",
+      "version": "3.3.0",
+      "license": "MIT",
+      "source": "https://github.com/calvinmetcalf/lie.git",
+      "license_files": [
+        "Licenties/lie/license.md"
+      ],
+      "optional": false
+    },
+    {
+      "name": "lop",
+      "version": "0.4.2",
+      "license": "BSD-2-Clause",
+      "source": "https://github.com/mwilliamson/lop.git",
+      "license_files": [
+        "Licenties/lop/LICENSE"
+      ],
+      "optional": false
+    },
+    {
+      "name": "mammoth",
+      "version": "1.13.0",
+      "license": "BSD-2-Clause",
+      "source": "https://github.com/mwilliamson/mammoth.js.git",
+      "license_files": [
+        "Licenties/mammoth/LICENSE"
+      ],
+      "optional": false
+    },
+    {
+      "name": "option",
+      "version": "0.2.4",
+      "license": "BSD-2-Clause",
+      "source": "https://github.com/mwilliamson/node-options.git",
+      "license_files": [
+        "Licenties/option/LICENSE"
+      ],
+      "optional": false
+    },
+    {
+      "name": "pako",
+      "version": "1.0.11",
+      "license": "(MIT AND Zlib)",
+      "source": "nodeca/pako",
+      "license_files": [
+        "Licenties/pako/LICENSE"
+      ],
+      "optional": false
+    },
+    {
+      "name": "pdfjs-dist",
+      "version": "6.2.108",
+      "license": "Apache-2.0",
+      "source": "https://github.com/mozilla/pdf.js.git",
+      "license_files": [
+        "Licenties/pdfjs-dist/LICENSE"
+      ],
+      "optional": false
+    },
+    {
+      "name": "process-nextick-args",
+      "version": "2.0.1",
+      "license": "MIT",
+      "source": "https://github.com/calvinmetcalf/process-nextick-args.git",
+      "license_files": [
+        "Licenties/process-nextick-args/license.md"
+      ],
+      "optional": false
+    },
+    {
+      "name": "readable-stream",
+      "version": "2.3.8",
+      "license": "MIT",
+      "source": "https://github.com/nodejs/readable-stream",
+      "license_files": [
+        "Licenties/readable-stream/LICENSE"
+      ],
+      "optional": false
+    },
+    {
+      "name": "safe-buffer",
+      "version": "5.1.2",
+      "license": "MIT",
+      "source": "https://github.com/feross/safe-buffer.git",
+      "license_files": [
+        "Licenties/safe-buffer/LICENSE"
+      ],
+      "optional": false
+    },
+    {
+      "name": "setimmediate",
+      "version": "1.0.5",
+      "license": "MIT",
+      "source": "YuzuJS/setImmediate",
+      "license_files": [
+        "Licenties/setimmediate/LICENSE.txt"
+      ],
+      "optional": false
+    },
+    {
+      "name": "sprintf-js",
+      "version": "1.0.3",
+      "license": "BSD-3-Clause",
+      "source": "https://github.com/alexei/sprintf.js.git",
+      "license_files": [
+        "Licenties/sprintf-js/LICENSE"
+      ],
+      "optional": false
+    },
+    {
+      "name": "string_decoder",
+      "version": "1.1.1",
+      "license": "MIT",
+      "source": "https://github.com/nodejs/string_decoder.git",
+      "license_files": [
+        "Licenties/string_decoder/LICENSE"
+      ],
+      "optional": false
+    },
+    {
+      "name": "turndown",
+      "version": "7.2.4",
+      "license": "MIT",
+      "source": "https://github.com/mixmark-io/turndown.git",
+      "license_files": [
+        "Licenties/turndown/LICENSE"
+      ],
+      "optional": false
+    },
+    {
+      "name": "turndown-plugin-gfm",
+      "version": "1.0.2",
+      "license": "MIT",
+      "source": "https://github.com/domchristie/turndown-plugin-gfm.git",
+      "license_files": [
+        "Licenties/turndown-plugin-gfm/LICENSE"
+      ],
+      "optional": false
+    },
+    {
+      "name": "underscore",
+      "version": "1.13.8",
+      "license": "MIT",
+      "source": "https://github.com/jashkenas/underscore.git",
+      "license_files": [
+        "Licenties/underscore/LICENSE"
+      ],
+      "optional": false
+    },
+    {
+      "name": "util-deprecate",
+      "version": "1.0.2",
+      "license": "MIT",
+      "source": "https://github.com/TooTallNate/util-deprecate.git",
+      "license_files": [
+        "Licenties/util-deprecate/LICENSE"
+      ],
+      "optional": false
+    },
+    {
+      "name": "xmlbuilder",
+      "version": "10.1.1",
+      "license": "MIT",
+      "source": "https://github.com/oozcitak/xmlbuilder-js.git",
+      "license_files": [
+        "Licenties/xmlbuilder/LICENSE"
+      ],
+      "optional": false
+    },
+    {
+      "name": "yaml",
+      "version": "2.9.1",
+      "license": "ISC",
+      "source": "github:eemeli/yaml",
+      "license_files": [
+        "Licenties/yaml/LICENSE"
+      ],
+      "optional": false
+    }
+  ],
+  "license_files_relative_to": "Omvormen root (the parent directory of Licenties)"
+}

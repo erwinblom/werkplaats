@@ -173,6 +173,7 @@ window.SchrijfNotities = (() => {
   updateSourceSummary();sourceDetails.append(sourceSummary,sourcePanel);d.append(sourceDetails);
   const status=document.createElement('p');status.setAttribute('role','status');I18n.assign(status,I18n.ui("Bewaar slaat je notitie op.",'Bewaar slaat je notitie op.'),"textContent");d.append(status);
   let pending=Promise.resolve(),failed=false;
+  if(window.WerkplaatsDesktop){const confirmed=()=>{if(!failed&&d.open)status.textContent=I18n.t('Automatisch bewaard');};document.addEventListener('werkplaats-desktop-bewaard',confirmed);d.addEventListener('close',()=>document.removeEventListener('werkplaats-desktop-bewaard',confirmed),{once:true});}
   function save(){
    const values=Object.fromEntries(Object.entries(fields).map(([key,field])=>[key,field.value]));
    const sourceIds=[...selected],projectIds=[...selectedProjects];
@@ -187,7 +188,7 @@ window.SchrijfNotities = (() => {
     I18n.assign(status,I18n.ui("Notitie bewaren…",'Notitie bewaren…'),"textContent");
     try{await write(next,expected,false,projectChanged?{ids:projectIds,expected:expectedProjects}:null);if(projectChanged)expectedProjects=projectIds;note=next;expected=next.updatedAt;failed=false;I18n.assign(status,I18n.ui("Nog niet bewaard in je werkmap",'Nog niet bewaard in je werkmap'),"textContent");}
     catch(e){failed=true;status.textContent=e.message;}
-   });return pending;
+   });window.WerkplaatsDesktop?.track(pending.then(()=>{if(failed)throw Error(status.textContent);}));return pending;
   }
   let projectsLoaded=false,projectsLoading=false;
   projectDetails.addEventListener('toggle',async()=>{
