@@ -50,7 +50,7 @@ Bestaande gebruikers: bewaar eerst je actuele werk in de oude versie. Open na de
 | Abonnementen | Kosten, verlengdatums en opzegdatums bijhouden |
 | Boekhouding | Inkomsten, uitgaven, bonnen en export |
 
-Omvormen verwerkt documenten in je browser. Alleen als je zelf automatische persoonsgegevensherkenning inschakelt, haalt Omvormen modelbestanden op en stuurt de module een licentiesignaal. Deze module heeft eigen voorwaarden. De gewone omzetfuncties hebben geen AI nodig. [Herkomst en voorwaarden van Omvormen](app/Apps/Omvormen/THIRD_PARTY_NOTICES.md)
+Omvormen verwerkt documenten in je browser. Alleen als je zelf automatische persoonsgegevensherkenning inschakelt, haalt Omvormen modelbestanden op en stuurt de module een licentiesignaal. Deze module heeft eigen voorwaarden. Automatische herkenning is voor deze uitgave niet van begin tot eind getest. Controleer het resultaat voordat je het deelt. De gewone omzetfuncties hebben geen AI nodig. [Herkomst en voorwaarden van Omvormen](app/Apps/Omvormen/THIRD_PARTY_NOTICES.md)
 
 In Verzamelen kies je categorieën uit één menu. Open een bron en blader met Vorige/Volgende of de toetsenbordpijlen door je huidige selectie. De ster bewaart je persoonlijke shortlist.
 

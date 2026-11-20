@@ -1,3 +1,7 @@
+# Controle 0.36.20 — actuele download en workshopstart
+
+De gecontroleerde Master is intact. De bouwstap past versie 0.36.20 toe op de site en ZIP. De bestanden in beide uitgaven zijn bytegelijk. De echte Windows-proef gebruikte exact deze ZIP en toetste ook back-up en herstel. [Uitgave, hash en grenzen](UITGAVE-0.36.20.md).
+
 # Controle 0.36.19 — Ordenen en geïntegreerd zoeken
 
 61/61 brontestbestanden, 264 schone Master-bestanden; bron, website en ZIP gecontroleerd. Native macOS-Chrome-gebruikersroutes eerder in deze werkronde beproefd. Geen nieuwe Windows/Linux-ronde of echte beginnerstest. [Uitgave en grenzen](UITGAVE-0.36.19.md).
