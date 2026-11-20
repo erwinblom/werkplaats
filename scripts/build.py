@@ -25,6 +25,7 @@ with zipfile.ZipFile(dist/'Werkplaats.zip','w',zipfile.ZIP_DEFLATED) as archive:
  def add(name,content):
   info=zipfile.ZipInfo(name,date_time=(2026,10,8,0,0,0));info.compress_type=zipfile.ZIP_DEFLATED;archive.writestr(info,content)
  add('Werkplaats/Begin hier.html',launcher.encode())
+ add('Werkplaats/START-HIER.txt',(ROOT/'START-HIER.txt').read_bytes())
  appmaker=zipfile.ZipInfo('Werkplaats/Maak Werkplaats-app.command',date_time=(2026,10,8,0,0,0))
  appmaker.compress_type=zipfile.ZIP_DEFLATED;appmaker.external_attr=0o100755<<16
  archive.writestr(appmaker,(source/'App-iconen/Maak Werkplaats-app.command').read_bytes())

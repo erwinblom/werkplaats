@@ -38,7 +38,8 @@ for name in actual:
  assert (root/'docs'/name).read_bytes()==(root/'app'/name).read_bytes(),f'Website wijkt af: {name}'
 with zipfile.ZipFile(root/'dist/Werkplaats.zip') as z:
  assert z.testzip() is None
- assert {n.split('/')[1] for n in z.namelist()}=={'Begin hier.html','Bestanden','Maak Werkplaats-app.command'}
+ assert {n.split('/')[1] for n in z.namelist()}=={'Begin hier.html','Bestanden','Maak Werkplaats-app.command','START-HIER.txt'}
+ assert z.read('Werkplaats/START-HIER.txt')==(root/'START-HIER.txt').read_bytes()
  for name in actual:assert z.read('Werkplaats/Bestanden/'+name)==(root/'app'/name).read_bytes(),name
 print(f'OK: {len(actual)} Master-bestanden, lokale HTML-links, JavaScript, privacyuitsluitingen, actuele uitleg en ZIP gelijk aan bron.')
 

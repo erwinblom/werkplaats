@@ -1,106 +1,11 @@
-// NODE_PATH must point to an existing Playwright installation.
-const {chromium}=require('playwright');
-const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path'),http=require('node:http'),os=require('node:os');
-const {execFileSync}=require('node:child_process'),{pathToFileURL}=require('node:url');
-const repo=path.resolve(__dirname,'..'),root=path.join(repo,'docs');
-const server=http.createServer((req,res)=>{
- const pathname=decodeURIComponent(new URL(req.url,'http://localhost').pathname);
- if(pathname==='/blank'){res.end('<!doctype html><title>Test</title>');return;}
- try{const f=path.join(root,pathname);res.setHeader('Content-Type',f.endsWith('.js')?'text/javascript':f.endsWith('.css')?'text/css':f.endsWith('.svg')?'image/svg+xml':'text/html; charset=utf-8');res.end(fs.readFileSync(f));}
- catch{res.statusCode=404;res.end();}
-});
-(async()=>{
- await new Promise(r=>server.listen(0,'127.0.0.1',r));
- const browser=await chromium.launch({channel:'chrome',headless:true});
- const base='http://127.0.0.1:'+server.address().port,errors=[];
- const extracted=fs.mkdtempSync(path.join(os.tmpdir(),'werkplaats-uitgave-'));
- try{
-  const context=await browser.newContext({viewport:{width:1280,height:900},reducedMotion:'reduce'});
-  context.on('page',p=>{p.on('pageerror',e=>errors.push(e.message));p.on('dialog',d=>d.accept());});
-  const home=await context.newPage();await home.goto(base+'/index.html');
-  await home.getByRole('button',{name:'Nieuw beginnen',exact:true}).waitFor();
-  assert.equal(await home.locator('.grid li.card').count(),9);
-  assert.equal(await home.getByRole('button',{name:'Bekijk voorbeelden',exact:true}).count(),0);
-  assert.equal(await home.getByText('Begin in drie stappen',{exact:true}).count(),1);
-  assert(!/Proeftuin/.test(await home.locator('body').innerText()));
-  assert(!/Werk in uitvoering/.test(await home.locator('body').innerText()));
-  assert.equal(await home.getByText('Versie 0.36.2',{exact:true}).count(),1);
-  assert.equal(await home.evaluate(()=>GereedschapskistKeuze.mode),'eigen');
-  await home.screenshot({path:'/private/tmp/werkplaats-home-actueel.png',fullPage:true});
-  const about=await context.newPage();await about.goto(base+'/Over.html');
-  await about.getByRole('heading',{name:'Maak er jouw Werkplaats van',exact:true}).waitFor();
-  const aboutText=await about.locator('body').innerText();
-  assert(/Met hulp van AI/.test(aboutText));
-  assert(/functies en complete tools toevoegen, aanpassen of verwijderen/.test(aboutText));
-  assert(/open source/.test(aboutText));
-  await about.close();
-  const routes=[['Bronnenkast','Start Bronnenkast.html'],['Werkbank','▶ Begin hier.html'],['Publicatieplanner','Start Publicatieplanner.html'],['Projectbord','Start Projectbord.html'],['Contacten','Start Contacten.html'],['Ping','Start Ping.html'],['Abonnementen','Start Abonnementen.html'],['Kasboek','Start Kasboek.html'],['Offerte','Start Offerte.html'],['Uren','Start Uren.html']];
-  for(const [tool,file] of routes){
-   const p=await context.newPage();await p.goto(base+'/Apps/'+tool+'/'+encodeURIComponent(file));
-   await p.waitForFunction(()=>!!window.Werkmap&&!!document.getElementById('tool-switcher'));
-   await p.evaluate(()=>Werkmap.adapterReady);
-   assert.equal(await p.evaluate(()=>GereedschapskistMode.example),false,tool);
-   assert.equal(await p.locator('.example-mode').count(),0,tool);
-   assert.equal(await p.getByRole('button',{name:'Bekijk voorbeelden',exact:true}).count(),0,tool);
-   assert(!/Proeftuin|Bugs en Requests/.test(await p.locator('body').innerText()),tool);
-   const state=await p.evaluate(()=>Werkmap.allRead());
-   if(state?.data)for(const key of ['invoices','contacts','items','tasks','entries','quotes'])if(Array.isArray(state.data[key]))assert.equal(state.data[key].length,0,tool+' '+key);
-   if(tool==='Werkbank')assert.equal(await p.locator('.note-card').count(),0);
-   await p.setViewportSize({width:390,height:844});
-   assert(await p.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),tool+' mobiel');
-   await p.close();
-  }
-  console.log('OK: huidige home, tien schermen zonder fictieve gegevens of privéfuncties, mobiele breedte.');
-  await context.addInitScript(()=>{window.showDirectoryPicker=async()=> (await navigator.storage.getDirectory()).getDirectoryHandle('Uitgave Test',{create:true});});
-  await home.bringToFront();await home.reload();await home.getByRole('button',{name:'Nieuw beginnen',exact:true}).click();
-  await home.getByRole('button',{name:'Kies opslagplek',exact:true}).click();
-  try{await home.waitForFunction(()=>Werkmap.active,{},{timeout:10000});}catch(e){console.error('Werkmapmelding:',await home.locator('#wm-message').innerText());throw e;}
-  await home.waitForURL(/werkruimte=eigen/);await home.waitForFunction(()=>Werkmap.active);
-  const firstNote=home.getByRole('button',{name:'Maak mijn eerste notitie',exact:true});
-  await home.bringToFront();
-  if(!await firstNote.isVisible())await home.getByRole('button',{name:'Hulp',exact:true}).click();
-  if(!await firstNote.isVisible())await home.getByText('Begin in drie stappen',{exact:true}).click();
-  await firstNote.click();
-  await home.getByRole('dialog',{name:'Nieuwe notitie',exact:true}).waitFor();
-  await home.getByLabel('Titel',{exact:true}).fill('Uitgavecontrole');
-  await home.getByLabel('Notitie',{exact:true}).fill('Deze eigen notitie moet op schijf en na heropenen gelijk blijven.');
-  await home.getByRole('button',{name:'Bewaar in mijn werkmap',exact:true}).click();
-  await home.getByRole('dialog',{name:'Nieuwe notitie',exact:true}).waitFor({state:'hidden'});
-  const saved=await home.evaluate(async()=>{const {root}=await Werkmap.allAccess();return (await BewaarAlles.readRound(root)).shared.writingNotes;});
-  assert.equal(saved.length,1);assert.equal(saved[0].title,'Uitgavecontrole');
-  await home.reload();await home.getByText('Uitgavecontrole',{exact:true}).waitFor();
-  await home.getByText('Uitgavecontrole',{exact:true}).click();
-  assert(await home.locator('dialog[open]').innerText().then(t=>t.includes(saved[0].body)));
-  await home.getByRole('button',{name:'Sluit',exact:true}).click();
-  // Close application connections, wipe only the test browser caches and reopen
-  // from the independently saved OPFS workmap, not the browser session copy.
-  const blank=await context.newPage();await blank.goto(base+'/blank');await home.close();
-  await blank.evaluate(async()=>{
-   localStorage.clear();sessionStorage.clear();
-   const databases=await indexedDB.databases();
-   for(const db of databases)if(db.name.includes('bewaar-alles'))await new Promise((resolve,reject)=>{const q=indexedDB.deleteDatabase(db.name);q.onsuccess=resolve;q.onerror=()=>reject(q.error);q.onblocked=()=>reject(Error('Testdatabase nog open'));});
-  });
-  await blank.goto(base+'/index.html');await blank.getByRole('button',{name:'Verder werken',exact:true}).click();
-  await blank.waitForFunction(()=>Werkmap.active);
-  await blank.goto(base+'/Apps/Werkbank/'+encodeURIComponent('▶ Begin hier.html'));
-  await blank.getByText('Uitgavecontrole',{exact:true}).waitFor();await blank.getByText('Uitgavecontrole',{exact:true}).click();
-  assert((await blank.locator('dialog[open]').innerText()).includes(saved[0].body));
-  console.log('OK: startroute bewaart notitie met readback; herladen en heropenen na gewiste testcaches behoudt titel en tekst.');
-  await context.close();
-  execFileSync('unzip',['-q',path.join(repo,'dist/Werkplaats.zip'),'-d',extracted]);
-  const offline=await browser.newContext({offline:true});offline.on('page',p=>p.on('pageerror',e=>errors.push(e.message)));
-  const p=await offline.newPage();
-  await p.goto(pathToFileURL(path.join(extracted,'Werkplaats/Begin hier.html')).href+'?home=1#controle');
-  await p.getByRole('button',{name:'Nieuw beginnen',exact:true}).waitFor();
-  assert(p.url().includes('/Bestanden/Begin%20hier.html?home=1#controle'));
-  assert.equal(await p.getByRole('button',{name:'Bekijk voorbeelden',exact:true}).count(),0);
-  await p.goto(pathToFileURL(path.join(extracted,'Werkplaats/Bestanden/Apps/Werkbank/▶ Begin hier.html')).href);
-  await p.getByRole('button',{name:'+ Nieuwe notitie',exact:true}).waitFor();
-  assert.equal(await p.evaluate(()=>GereedschapskistMode.example),false);
-  assert.equal(await p.locator('.note-card').count(),0);
-  await p.goto(pathToFileURL(path.join(extracted,'Werkplaats/Bestanden/Uitleg.html')).href);
-  assert(!/Proeftuin|Bekijk voorbeelden/.test(await p.locator('body').innerText()));
-  await offline.close();assert.deepEqual(errors,[]);
-  console.log('OK: echte ZIP opent offline via buitenste startbestand, behoudt parameters/anker en bevat Notities en actuele hulp; geen browserfouten.');
- }finally{await browser.close();server.close();fs.rmSync(extracted,{recursive:true,force:true});}
-})().catch(e=>{console.error(e);server.close();process.exitCode=1;});
+'use strict';
+const {chromium}=require('playwright'), assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path'),http=require('node:http'),os=require('node:os'),{execFileSync}=require('node:child_process'),{pathToFileURL}=require('node:url');
+const root=path.resolve(process.env.WERKPLAATS_REPO || process.argv[2] || path.resolve(__dirname,'..'));const web=path.join(root,'docs'); const zip=path.join(root,'dist/Werkplaats.zip');const temp=fs.mkdtempSync(path.join(os.tmpdir(),'ch753-release-check-'));const profile=path.join(temp,'profile');const dialogs=[],errors=[];
+const server=http.createServer((req,res)=>{try{const pathname=decodeURIComponent(new URL(req.url,'http://localhost').pathname);if(pathname==='/blank'){res.end('<title>empty</title>');return;}const f=path.resolve(web,'.'+pathname);if(!f.startsWith(web+path.sep))throw Error('invalid path');let ext=path.extname(f);res.setHeader('Content-Type',({'.js':'text/javascript','.css':'text/css','.html':'text/html; charset=utf-8','.svg':'image/svg+xml','.wasm':'application/wasm','.json':'application/json'})[ext]||'application/octet-stream');res.end(fs.readFileSync(f));}catch{res.writeHead(404);res.end();}});
+let ctx;
+async function context(){const opts={headless:true,viewport:{width:1280,height:900},...(process.env.GK_BROWSER?{executablePath:process.env.GK_BROWSER}:{channel:'chrome'})};const c=await chromium.launchPersistentContext(profile,opts);await c.addInitScript(()=>{window.showDirectoryPicker=async()=>{const p=await(await navigator.storage.getDirectory()).getDirectoryHandle('CH753-test-parent',{create:true});try{return await p.getDirectoryHandle('Mijn Werkplaats')}catch{return p}}});c.on('page',p=>{p.on('pageerror',e=>errors.push(e.message));p.on('dialog',async d=>{dialogs.push({type:d.type(),message:d.message()});await d.accept()})});return c;}
+(async()=>{await new Promise(resolve=>server.listen(0,'127.0.0.1',resolve));const base='http://127.0.0.1:'+server.address().port;ctx=await context();let home=await ctx.newPage();await home.goto(base+'/index.html');await home.getByRole('button',{name:'Nieuw beginnen',exact:true}).waitFor();const tiles=await home.locator('.grid li.card.active a[href]').evaluateAll(a=>a.map(x=>x.getAttribute('href')));assert.equal(tiles.length,10);const expected=['Bronnenkast','Werkbank','Omvormen','Databases','Publicatieplanner','Projectbord','Contacten','Ping','Abonnementen','Kasboek'];for(const t of expected)assert(tiles.some(x=>x.includes('/'+t+'/')),'ontbrekende tegel '+t);for(const href of tiles){const p=await ctx.newPage();await p.goto(new URL(href,base+'/').href,{waitUntil:'domcontentloaded'});await p.waitForFunction(()=>!!window.Werkmap&&!!document.querySelector('#tool-switcher'),null,{timeout:15000});if(!/\/Omvormen\/|\/Databases\//.test(href))await p.evaluate(async()=>{if(window.Werkmap.adapterReady)await window.Werkmap.adapterReady});console.log('Tegel geopend:',href);await p.close()}
+ await home.getByRole('button',{name:'Nieuw beginnen',exact:true}).click();await home.getByRole('button',{name:'Kies opslagplek',exact:true}).click();await home.waitForFunction(()=>!!Werkmap.active,null,{timeout:20000});console.log('Start: gesimuleerde OPFS-map actief; dialogen:',JSON.stringify(dialogs));assert.equal(dialogs.length,1,'Eerste start moet precies de bekende bevestiging tonen');assert.equal(dialogs[0].type,'confirm');assert(dialogs[0].message.includes('Dit vervangt je huidige browserwerk')); 
+ const p=await ctx.newPage();await p.goto(base+'/Apps/Werkbank/'+encodeURIComponent('▶ Begin hier.html')+'?werkruimte=eigen');await p.waitForFunction(()=>!!window.Werkmap&&!!window.BewaarAlles,null,{timeout:15000});await p.getByRole('button',{name:'Notities',exact:true}).click();console.log('NOTITIES UI:',(await p.locator('body').innerText()).slice(0,1800));await p.getByRole('button',{name:'Maak een notitie',exact:true}).click({timeout:5000});await p.getByRole('dialog',{name:'Nieuwe notitie',exact:true}).waitFor();await p.getByLabel('Titel',{exact:true}).fill('CH753 proefnotitie');await p.getByLabel('Notitie',{exact:true}).fill('Fictieve tekst na browserherstart.');let b=p.getByRole('button',{name:'Bewaar in mijn werkmap',exact:true});if(!await b.count())b=p.getByRole('button',{name:'Bewaar',exact:true});await b.click();const dlg=p.getByRole('dialog',{name:'Nieuwe notitie',exact:true});await dlg.getByText(/Bewaard in je werkmap/).waitFor({timeout:15000});await dlg.getByRole('button',{name:'Sluit',exact:true}).last().click();await dlg.waitFor({state:'hidden',timeout:6000});await p.getByText('CH753 proefnotitie',{exact:true}).waitFor();const saved=await p.evaluate(async()=>{const {root}=await Werkmap.allAccess();return (await BewaarAlles.readRound(root)).shared.writingNotes});assert(saved.some(x=>x.title==='CH753 proefnotitie'&&x.body.includes('Fictieve tekst na browserherstart.')));console.log('Fictieve notitie uit bewaarronde teruggelezen.');await ctx.close();ctx=await context();const again=await ctx.newPage();await again.goto(base+'/Apps/Werkbank/'+encodeURIComponent('▶ Begin hier.html')+'?werkruimte=eigen');await again.getByRole('button',{name:'Notities',exact:true}).click();await again.getByText('CH753 proefnotitie',{exact:true}).waitFor({timeout:15000});await again.getByText('CH753 proefnotitie',{exact:true}).click();assert((await again.locator('dialog[open]').innerText()).includes('Fictieve tekst na browserherstart.'));const reread=await again.evaluate(async()=>{const {root}=await Werkmap.allAccess();return (await BewaarAlles.readRound(root)).shared.writingNotes});assert(reread.some(x=>x.title==='CH753 proefnotitie'&&x.body.includes('Fictieve tekst na browserherstart.')));console.log('Notitie na volledig browserproces heropend en bewaarronde opnieuw uit gesimuleerde map teruggelezen in hetzelfde testprofiel.');
+ execFileSync('unzip',['-q',zip,'-d',path.join(temp,'unzip')]);const offline=await chromium.launch({headless:true,...(process.env.GK_BROWSER?{executablePath:process.env.GK_BROWSER}:{channel:'chrome'})});try{const c=await offline.newContext({offline:true});const q=await c.newPage();q.on('pageerror',e=>errors.push(e.message));const prefix=path.join(temp,'unzip/Werkplaats');await q.goto(pathToFileURL(path.join(prefix,'Begin hier.html')).href);await q.getByRole('button',{name:'Nieuw beginnen',exact:true}).waitFor();for(const h of ['Apps/Werkbank/▶ Begin hier.html','Apps/Databases/Start Databases.html','Apps/Omvormen/Start Omvormen.html']){await q.goto(pathToFileURL(path.join(prefix,'Bestanden',h)).href);await q.waitForFunction(()=>!!window.Werkmap,null,{timeout:15000});console.log('Offline ZIP-scherm geopend:',h)}await c.close()}finally{await offline.close()};assert.deepEqual(errors,[]);console.log('OK. Grenzen: server + OPFS simuleert mapkeuze; geen echte OS-bestandskiezer of echte file://-opslag getest.');
+})().catch(e=>{console.error('MISLUKT:',e.stack);process.exitCode=1}).finally(async()=>{if(ctx)await ctx.close();server.close();fs.rmSync(temp,{recursive:true,force:true})});

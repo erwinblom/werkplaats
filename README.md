@@ -10,6 +10,8 @@ Gratis · Geen account · Je bestanden blijven op je computer · Werkt zonder AI
 
 > **Klaar voor gebruik, en te personaliseren.** Het werkt zoals het is. Wil je het naar je eigen hand zetten, dan kan dat ook. [Spring naar: maak het van jezelf](#maak-het-van-jezelf).
 
+Voor de eerste stappen en een opdracht om Werkplaats met AI naar eigen wens aan te passen, lees [START-HIER.txt](START-HIER.txt).
+
 **Voor bewaren in een map heb je Chrome of Edge op je computer nodig.** Safari, Firefox en ingebouwde browsers kunnen hier geen werkmap kiezen. Je hoeft geen broncode aan te passen.
 
 ## Beginnen

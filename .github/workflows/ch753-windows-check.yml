@@ -1,0 +1,34 @@
+name: CH753 Workshop candidate - real Windows browser
+on:
+  push:
+    branches: [codex/werkplaats-workshop-main]
+permissions:
+  contents: read
+jobs:
+  windows:
+    runs-on: windows-2022
+    timeout-minutes: 25
+    env:
+      RELEASE_ZIP: dist/Werkplaats.zip
+      EXPECTED_ZIP_SHA256: 1bb438415bab3352c8fec69d3bc4ef64ea41acfa010bbf44bfb7f5068c3b6134
+      CANDIDATE_COMMIT: ${{ github.sha }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22.16.0'
+      - name: Build candidate from the checked-in source
+        run: python scripts/build.py
+      - name: Verify exact ZIP and extract to disposable runner directory
+        run: python tests/ch753-extract.py
+      - name: Install pinned Playwright
+        run: npm install --no-save --package-lock=false playwright@1.56.1
+      - name: Test real Chrome, native folder selection, disk and restart
+        run: node tests/ch753-platform-check.cjs
+      - name: Save synthetic-only test evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ch753-windows-evidence
+          path: platform-evidence/
+          if-no-files-found: error
