@@ -2,7 +2,7 @@
 
 Bouw en pakketcontrole geslaagd. In Chrome op macOS is de exacte ZIP offline geopend. De complete map start automatisch en behoudt zoekparameters en anker. Een los startbestand toont de uitpakstappen. Zonder JavaScript werkt de handmatige link vanuit de volledig uitgepakte map. De browserproef opende ook alle tien gereedschappen en controleerde een fictieve notitie na herstart via gesimuleerde mapkeuze.
 
-Een bytevergelijking met 0.36.20 bevestigt dat de startpagina buiten de app en START-HIER.txt zijn aangepast. Binnen Bestanden verschilt alleen het versienummer. De Windows-systeempicker en opslagherstel zijn voor 0.36.20 gecontroleerd.
+Een bytevergelijking met 0.36.20 bevestigt dat de startpagina buiten de app en START-HIER.txt zijn aangepast. Binnen Bestanden verschilt alleen het versienummer. Dezelfde ZIP slaagde voor 24 controles in Chrome 157 op Windows Server 2022, met het browsernetwerk uit. Daarbij zijn beide startsituaties, de systeempicker, bewaren, heropenen en herstel vanuit een back-up gecontroleerd. [Test en pakketcontrole](UITGAVE-0.36.21.md).
 
 # Controle 0.36.20 — actuele download en workshopstart
 
