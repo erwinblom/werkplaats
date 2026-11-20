@@ -9,7 +9,7 @@ jobs:
     runs-on: windows-2022
     timeout-minutes: 25
     env:
-      RELEASE_ZIP: dist/Werkplaats.zip
+      RELEASE_ZIP: fixtures/CH753-Werkplaats.zip
       EXPECTED_ZIP_SHA256: 1bb438415bab3352c8fec69d3bc4ef64ea41acfa010bbf44bfb7f5068c3b6134
       CANDIDATE_COMMIT: ${{ github.sha }}
     steps:
@@ -17,8 +17,6 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22.16.0'
-      - name: Build candidate from the checked-in source
-        run: python scripts/build.py
       - name: Verify exact ZIP and extract to disposable runner directory
         run: python tests/ch753-extract.py
       - name: Install pinned Playwright
@@ -31,4 +29,5 @@ jobs:
         with:
           name: ch753-windows-evidence
           path: platform-evidence/
+          retention-days: 7
           if-no-files-found: error
