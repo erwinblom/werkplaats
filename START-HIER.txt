@@ -2,11 +2,16 @@ WERKPLAATS — START HIER
 
 Je eigen werkplek voor ideeën, teksten en projecten. Gebruik dit vertrekpunt en pas het aan jouw manier van werken aan.
 
-BEGINNEN OP WINDOWS OF MAC
-1. Pak het volledige ZIP-bestand uit. Laat de map Bestanden naast Begin hier.html staan.
-2. Open Werkplaats/Begin hier.html in Chrome of Edge. Op Windows: rechtsklik op Begin hier.html en kies Openen met → Chrome of Edge.
-3. Kies Nieuw beginnen → Kies opslagplek. Kies waar je werk mag staan en geef de gevraagde toestemming. Werkplaats maakt een map Mijn Werkplaats.
-Bij de eerste start kan een vraag verschijnen over het openen van bewaard werk en vervangen van browserwerk. Begin voor de workshop in een nieuwe, lege werkmap zonder bestaand browserwerk; kies dan OK. Heb je al werk in Werkplaats, bewaar dat eerst en maak een aparte back-up. Bij Annuleren kan de nieuwe map al zijn aangemaakt; kies dan Verder werken om die te openen, of kies een andere mapnaam.
+UITPAKKEN EN OPENEN
+• Windows: rechtsklik op Werkplaats.zip en kies Alles uitpakken. Open de uitgepakte map Werkplaats. Rechtsklik op Begin hier.html en kies Openen met → Google Chrome of Microsoft Edge.
+• Mac: dubbelklik in Finder op Werkplaats.zip. Open de uitgepakte map Werkplaats. Control-klik op Begin hier.html en kies Open met → Google Chrome of Microsoft Edge. Zo bepaal je zelf in welke browser dit bestand opent.
+
+Laat de map Bestanden naast Begin hier.html staan. Voor de workshop kun je Maak Werkplaats-app.command overslaan. Dat bestand is alleen voor een snelkoppeling aan het Dock en gebruikt Google Chrome.
+
+JE EERSTE NOTITIE
+1. Kies Nieuw beginnen → Kies opslagplek. Kies een map, bijvoorbeeld Documenten. Geef Chrome of Edge toegang tot die map als de browser of macOS erom vraagt.
+2. Werkplaats maakt daarin Mijn Werkplaats. Weigert de browser je opslagplek? Maak zelf een lege map en selecteer die via Zelf een lege hoofdmap kiezen.
+3. Werkplaats kan vragen of het opgeslagen werk mag openen en browserwerk mag vervangen. Werk je in een lege oefenmap en heb je geen werk in deze browser dat je wilt houden? Kies dan OK. Heb je al werk in de browser, kies dan Annuleren en bewaar het eerst. De oefenmap kan al zijn aangemaakt. Open die daarna via Verder werken.
 
 4. Vul in de eerste notitie een titel en tekst in, klik Bewaar en wacht op de bevestiging. Gebruik Bewaar alles voor de hele werkruimte.
 5. Sluit de browser. Open Werkplaats opnieuw, kies Verder werken en open zo nodig dezelfde map Mijn Werkplaats. Controleer of je notitie er nog staat.

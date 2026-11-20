@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="nl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Werkplaats openen</title>
+  <link rel="icon" href="Bestanden/App-iconen/app-icon.svg">
+  <script>document.documentElement.classList.add('opening');</script>
+  <style>
+    .opening main { visibility: hidden; }
+    body { margin: 0; padding: clamp(1.25rem, 5vw, 3rem); font: 1rem/1.55 system-ui, sans-serif; }
+    main { max-width: 36rem; }
+    h1 { line-height: 1.15; }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Pak Werkplaats eerst volledig uit</h1>
+    <p>Werkplaats kan de map <strong>Bestanden</strong> niet openen. Staat <strong>Begin hier.html</strong> nog in de ZIP of heb je alleen dit bestand gekopieerd?</p>
+    <ul>
+      <li><strong>Windows:</strong> klik met de rechtermuisknop op de ZIP en kies <strong>Alles uitpakken</strong>.</li>
+      <li><strong>Mac:</strong> dubbelklik op de ZIP om die uit te pakken.</li>
+    </ul>
+    <p>Open daarna <strong>Begin hier.html</strong> uit de uitgepakte map met <strong>Google Chrome</strong> of <strong>Microsoft Edge</strong>. Laat <strong>Bestanden</strong> ernaast staan.</p>
+    <noscript>
+      <p>Heb je alles uitgepakt? <a href="Bestanden/Begin%20hier.html">Open Werkplaats</a>.</p>
+    </noscript>
+  </main>
+  <script>
+    const destination = new URL('Bestanden/Begin%20hier.html', location.href);
+    destination.search = location.search;
+    destination.hash = location.hash;
+    // Loading a local image works from file:// without a fetch or a web server.
+    const icon = new Image();
+    icon.onload = () => location.replace(destination.href);
+    icon.onerror = () => document.documentElement.classList.remove('opening');
+    icon.src = new URL('App-iconen/app-icon.svg', destination).href;
+  </script>
+</body>
+</html>

@@ -1,3 +1,9 @@
+# Controle 0.36.21 — uitpakken en starten
+
+Bouw en pakketcontrole geslaagd. In Chrome op macOS is de exacte ZIP offline geopend. De complete map start automatisch en behoudt zoekparameters en anker. Een los startbestand toont de uitpakstappen. Zonder JavaScript werkt de handmatige link vanuit de volledig uitgepakte map. De browserproef opende ook alle tien gereedschappen en controleerde een fictieve notitie na herstart via gesimuleerde mapkeuze.
+
+Een bytevergelijking met 0.36.20 bevestigt dat de startpagina buiten de app en START-HIER.txt zijn aangepast. Binnen Bestanden verschilt alleen het versienummer. De Windows-systeempicker en opslagherstel zijn voor 0.36.20 gecontroleerd.
+
 # Controle 0.36.20 — actuele download en workshopstart
 
 De gecontroleerde Master is intact. De bouwstap past versie 0.36.20 toe op de site en ZIP. De bestanden in beide uitgaven zijn bytegelijk. De echte Windows-proef gebruikte exact deze ZIP en toetste ook back-up en herstel. [Uitgave, hash en grenzen](UITGAVE-0.36.20.md).

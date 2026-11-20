@@ -7,5 +7,60 @@ async function context(){const opts={headless:true,viewport:{width:1280,height:9
 (async()=>{await new Promise(resolve=>server.listen(0,'127.0.0.1',resolve));const base='http://127.0.0.1:'+server.address().port;ctx=await context();let home=await ctx.newPage();await home.goto(base+'/index.html');await home.getByRole('button',{name:'Nieuw beginnen',exact:true}).waitFor();assert.equal(await home.getByText('Versie '+releaseVersion,{exact:true}).count(),1);const tiles=await home.locator('.grid li.card.active a[href]').evaluateAll(a=>a.map(x=>x.getAttribute('href')));assert.equal(tiles.length,10);const expected=['Bronnenkast','Werkbank','Omvormen','Databases','Publicatieplanner','Projectbord','Contacten','Ping','Abonnementen','Kasboek'];for(const t of expected)assert(tiles.some(x=>x.includes('/'+t+'/')),'ontbrekende tegel '+t);for(const href of tiles){const p=await ctx.newPage();await p.goto(new URL(href,base+'/').href,{waitUntil:'domcontentloaded'});await p.waitForFunction(()=>!!window.Werkmap&&!!document.querySelector('#tool-switcher'),null,{timeout:15000});if(!/\/Omvormen\/|\/Databases\//.test(href))await p.evaluate(async()=>{if(window.Werkmap.adapterReady)await window.Werkmap.adapterReady});console.log('Tegel geopend:',href);await p.close()}
  await home.getByRole('button',{name:'Nieuw beginnen',exact:true}).click();await home.getByRole('button',{name:'Kies opslagplek',exact:true}).click();await home.waitForFunction(()=>!!Werkmap.active,null,{timeout:20000});console.log('Start: gesimuleerde OPFS-map actief; dialogen:',JSON.stringify(dialogs));assert.equal(dialogs.length,1,'Eerste start moet precies de bekende bevestiging tonen');assert.equal(dialogs[0].type,'confirm');assert(dialogs[0].message.includes('Dit vervangt je huidige browserwerk'));
  const p=await ctx.newPage();await p.goto(base+'/Apps/Werkbank/'+encodeURIComponent('▶ Begin hier.html')+'?werkruimte=eigen');await p.waitForFunction(()=>!!window.Werkmap&&!!window.BewaarAlles,null,{timeout:15000});await p.getByRole('button',{name:'Notities',exact:true}).click();console.log('NOTITIES UI:',(await p.locator('body').innerText()).slice(0,1800));await p.getByRole('button',{name:'Maak een notitie',exact:true}).click({timeout:5000});await p.getByRole('dialog',{name:'Nieuwe notitie',exact:true}).waitFor();await p.getByLabel('Titel',{exact:true}).fill('CH753 proefnotitie');await p.getByLabel('Notitie',{exact:true}).fill('Fictieve tekst na browserherstart.');let b=p.getByRole('button',{name:'Bewaar in mijn werkmap',exact:true});if(!await b.count())b=p.getByRole('button',{name:'Bewaar',exact:true});await b.click();const dlg=p.getByRole('dialog',{name:'Nieuwe notitie',exact:true});await dlg.getByText(/Bewaard in je werkmap/).waitFor({timeout:15000});await dlg.getByRole('button',{name:'Sluit',exact:true}).last().click();await dlg.waitFor({state:'hidden',timeout:6000});await p.getByText('CH753 proefnotitie',{exact:true}).waitFor();const saved=await p.evaluate(async()=>{const {root}=await Werkmap.allAccess();return (await BewaarAlles.readRound(root)).shared.writingNotes});assert(saved.some(x=>x.title==='CH753 proefnotitie'&&x.body.includes('Fictieve tekst na browserherstart.')));console.log('Fictieve notitie uit bewaarronde teruggelezen.');await ctx.close();ctx=await context();const again=await ctx.newPage();await again.goto(base+'/Apps/Werkbank/'+encodeURIComponent('▶ Begin hier.html')+'?werkruimte=eigen');await again.getByRole('button',{name:'Notities',exact:true}).click();await again.getByText('CH753 proefnotitie',{exact:true}).waitFor({timeout:15000});await again.getByText('CH753 proefnotitie',{exact:true}).click();assert((await again.locator('dialog[open]').innerText()).includes('Fictieve tekst na browserherstart.'));const reread=await again.evaluate(async()=>{const {root}=await Werkmap.allAccess();return (await BewaarAlles.readRound(root)).shared.writingNotes});assert(reread.some(x=>x.title==='CH753 proefnotitie'&&x.body.includes('Fictieve tekst na browserherstart.')));console.log('Notitie na volledig browserproces heropend en bewaarronde opnieuw uit gesimuleerde map teruggelezen in hetzelfde testprofiel.');
- execFileSync('unzip',['-q',zip,'-d',path.join(temp,'unzip')]);const offline=await chromium.launch({headless:true,...(process.env.GK_BROWSER?{executablePath:process.env.GK_BROWSER}:{channel:'chrome'})});try{const c=await offline.newContext({offline:true});const q=await c.newPage();q.on('pageerror',e=>errors.push(e.message));const prefix=path.join(temp,'unzip/Werkplaats');await q.goto(pathToFileURL(path.join(prefix,'Begin hier.html')).href);await q.getByRole('button',{name:'Nieuw beginnen',exact:true}).waitFor();assert.equal(await q.getByText('Versie '+releaseVersion,{exact:true}).count(),1);for(const h of ['Apps/Werkbank/▶ Begin hier.html','Apps/Databases/Start Databases.html','Apps/Omvormen/Start Omvormen.html']){await q.goto(pathToFileURL(path.join(prefix,'Bestanden',h)).href);await q.waitForFunction(()=>!!window.Werkmap,null,{timeout:15000});console.log('Offline ZIP-scherm geopend:',h)}await c.close()}finally{await offline.close()};assert.deepEqual(errors,[]);console.log('OK. Grenzen: server + OPFS simuleert mapkeuze; geen echte OS-bestandskiezer of echte file://-opslag getest.');
+
+ execFileSync('unzip', ['-q', zip, '-d', path.join(temp, 'unzip')]);
+ const prefix = path.join(temp, 'unzip/Werkplaats');
+ const launcher = path.join(prefix, 'Begin hier.html');
+ const offline = await chromium.launch({
+   headless: true,
+   ...(process.env.GK_BROWSER ? {executablePath: process.env.GK_BROWSER} : {channel: 'chrome'}),
+ });
+ try {
+   const context = await offline.newContext({offline: true});
+   const page = await context.newPage();
+   page.on('pageerror', error => errors.push(error.message));
+   const launcherURL = pathToFileURL(launcher).href;
+   const homeURL = pathToFileURL(path.join(prefix, 'Bestanden', 'Begin hier.html')).href;
+   const suffix = '?home=1#controle';
+   await page.goto(launcherURL + suffix);
+   await page.waitForURL(homeURL + suffix);
+   await page.getByRole('button', {name: 'Nieuw beginnen', exact: true}).waitFor();
+   assert.equal(await page.getByText('Versie ' + releaseVersion, {exact: true}).count(), 1);
+   console.log('De uitgepakte ZIP start offline en behoudt zoekparameters en anker.');
+
+   for (const file of [
+     'Apps/Werkbank/▶ Begin hier.html',
+     'Apps/Databases/Start Databases.html',
+     'Apps/Omvormen/Start Omvormen.html',
+   ]) {
+     await page.goto(pathToFileURL(path.join(prefix, 'Bestanden', file)).href);
+     await page.waitForFunction(() => !!window.Werkmap, null, {timeout: 15000});
+     console.log('Offline ZIP-scherm geopend:', file);
+   }
+
+   const looseFolder = path.join(temp, 'los-startbestand');
+   fs.mkdirSync(looseFolder);
+   const looseLauncher = path.join(looseFolder, 'Begin hier.html');
+   fs.copyFileSync(launcher, looseLauncher);
+   const looseURL = pathToFileURL(looseLauncher).href;
+   await page.goto(looseURL);
+   await page.getByRole('heading', {name: 'Pak Werkplaats eerst volledig uit'}).waitFor();
+   assert(await page.getByText('Alles uitpakken', {exact: true}).isVisible());
+   assert.equal(page.url(), looseURL, 'Los startbestand mag niet naar een ontbrekend bestand springen');
+   console.log('Een los startbestand toont de uitpakstappen en blijft geopend.');
+
+   const noScript = await offline.newContext({offline: true, javaScriptEnabled: false});
+   const manualPage = await noScript.newPage();
+   await manualPage.goto(launcherURL);
+   await manualPage.getByRole('link', {name: 'Open Werkplaats', exact: true}).click();
+   await manualPage.waitForURL(homeURL);
+   await noScript.close();
+   console.log('De handmatige link opent het uitgepakte bestand zonder JavaScript.');
+   await context.close();
+ } finally {
+   await offline.close();
+ }
+ assert.deepEqual(errors, []);
+ console.log('OK. Grenzen: de opslagproef simuleert mapkeuze via localhost. De systeempicker is niet getest.');
+
 })().catch(e=>{console.error('MISLUKT:',e.stack);process.exitCode=1}).finally(async()=>{if(ctx)await ctx.close();server.close();fs.rmSync(temp,{recursive:true,force:true})});

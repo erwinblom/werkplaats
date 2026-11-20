@@ -1,5 +1,11 @@
 # Wijzigingen
 
+## 0.36.21 · 20 november 2026
+
+- Als je het startbestand los uit de ZIP opent, laat Werkplaats zien hoe je het volledige pakket uitpakt.
+- De startkaart legt voor Windows en Mac uit hoe je de uitgepakte Werkplaats in Chrome of Edge opent. De Mac-snelkoppeling naar het Dock is optioneel.
+
+
 ## 0.36.20 · 20 november 2026
 
 - De offline download en GitHub Pages bevatten dezelfde tien gereedschappen, waaronder Omvormen en Ordenen.

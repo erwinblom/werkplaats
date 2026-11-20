@@ -14,20 +14,11 @@ for name in VERSION_FIELDS:
  (web/name).write_bytes(release_bytes(name, (source/name).read_bytes()))
 shutil.copyfile(web/'Begin hier.html',web/'index.html')
 (web/'.nojekyll').touch()
-launcher='''<!doctype html>
-<html lang="nl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Werkplaats openen</title><link rel="icon" type="image/svg+xml" href="Bestanden/App-iconen/app-icon.svg"></head>
-<body><p><a href="Bestanden/Begin%20hier.html">Open Werkplaats →</a></p>
-<script>
-const destination=new URL('Bestanden/Begin%20hier.html',location.href);
-destination.search=location.search;destination.hash=location.hash;
-location.replace(destination.href);
-</script></body></html>
-'''
 dist.mkdir(exist_ok=True)
 with zipfile.ZipFile(dist/'Werkplaats.zip','w',zipfile.ZIP_DEFLATED) as archive:
  def add(name,content):
   info=zipfile.ZipInfo(name,date_time=(2026,10,8,0,0,0));info.compress_type=zipfile.ZIP_DEFLATED;archive.writestr(info,content)
- add('Werkplaats/Begin hier.html',launcher.encode())
+ add('Werkplaats/Begin hier.html',(ROOT/'release/launcher.html').read_bytes())
  add('Werkplaats/START-HIER.txt',(ROOT/'START-HIER.txt').read_bytes())
  appmaker=zipfile.ZipInfo('Werkplaats/Maak Werkplaats-app.command',date_time=(2026,10,8,0,0,0))
  appmaker.compress_type=zipfile.ZIP_DEFLATED;appmaker.external_attr=0o100755<<16

@@ -23,7 +23,9 @@ Voor de eerste stappen en een opdracht om Werkplaats met AI naar eigen wens aan 
 <details>
 <summary>Offline gebruiken, bijwerken en overstappen</summary>
 
-Download de ZIP, pak hem volledig uit en open **Werkplaats → Begin hier.html**. Laat **Bestanden** intact en gebruik **START-HIER.txt** voor je eerste notitie en je eerste aanpassing.
+Download de ZIP en pak die volledig uit. Kies op Windows **Alles uitpakken** bij de ZIP. Dubbelklik op de Mac in Finder op de ZIP.
+
+Open **Werkplaats → Begin hier.html** in Chrome of Edge. Gebruik op Windows **rechtsklik → Openen met** en op de Mac **Control-klik → Open met**. Laat de map **Bestanden** ernaast staan. **START-HIER.txt** helpt je met je eerste notitie en je eerste aanpassing. Op de Mac kun je het optionele `.command`-bestand overslaan.
 
 Website en download worden uit dezelfde gecontroleerde Master gemaakt. Een gedownloade versie werkt zichzelf niet bij: download voor verbeteringen de nieuwe uitgave. Je werk wordt niet automatisch gesynchroniseerd tussen versies of browsers.
 

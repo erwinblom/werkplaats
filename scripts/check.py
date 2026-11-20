@@ -41,6 +41,7 @@ assert (root/'docs/index.html').read_bytes()==(root/'docs/Begin hier.html').read
 with zipfile.ZipFile(root/'dist/Werkplaats.zip') as z:
  assert z.testzip() is None
  assert {n.split('/')[1] for n in z.namelist()}=={'Begin hier.html','Bestanden','Maak Werkplaats-app.command','START-HIER.txt'}
+ assert z.read('Werkplaats/Begin hier.html')==(root/'release/launcher.html').read_bytes()
  assert z.read('Werkplaats/START-HIER.txt')==(root/'START-HIER.txt').read_bytes()
  expected_app_paths={'Werkplaats/Bestanden/'+name for name in actual}
  assert {name for name in z.namelist() if name.startswith('Werkplaats/Bestanden/')}==expected_app_paths
