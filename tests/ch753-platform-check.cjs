@@ -105,7 +105,7 @@ const sha=bytes=>crypto.createHash('sha256').update(bytes).digest('hex');
 const result={os:os.platform(),release:os.release(),arch:os.arch(),node:process.version,playwright:require('playwright/package.json').version,route:'file://',allPassed:false,checks:{},pageErrors:[],consoleErrors:[],requestFailures:[],limitations:['Automated real Chrome tests on disposable Windows Server 2022 and Ubuntu 24.04 runners; not a physical-PC beginner study.','No PDF/print/extension or arbitrary Linux distribution coverage.']};
 const save=()=>fs.writeFileSync(path.join(out,'result.json'),JSON.stringify(result,null,2));
 const pass=name=>{result.checks[name]=true;console.log(new Date().toISOString(),'PASS',name);save();};
-const required=['releaseFiles','realChrome','nativeNewWorkspace','databaseHomeTile','databaseCreate','tableCreate','rowSave','rowEdit','csvImport','sqliteDiskReadback','sqliteDownloadExact','databaseReload','noteSaveReload','completeBrowserClose','completeBrowserRestart','restartWorkspacePermission','restartSQLiteExact','restartUI','restartNote','workspaceBackup','cleanWorkspaceRestore','browserErrors'];
+const required=['releaseFiles','realChrome','standaloneLauncher','expandedLauncher','nativeNewWorkspace','databaseHomeTile','databaseCreate','tableCreate','rowSave','rowEdit','csvImport','sqliteDiskReadback','sqliteDownloadExact','databaseReload','noteSaveReload','completeBrowserClose','completeBrowserRestart','restartWorkspacePermission','restartSQLiteExact','restartUI','restartNote','workspaceBackup','cleanWorkspaceRestore','browserErrors'];
 const options={channel:'chrome',headless:false,acceptDownloads:true,viewport:{width:1440,height:1000},args:['--disable-features=Translate']};
 const uri=rel=>pathToFileURL(path.join(root,...rel.split('/'))).href;
 const databaseName='CH753-'+process.platform+'-'+Date.now();
@@ -139,8 +139,30 @@ async function databaseUIReadback(p){await p.locator('#database-table').selectOp
   const pickerParent=fs.mkdtempSync(path.join(parent,'werkplaats-ch535-')),folder=path.join(pickerParent,'Mijn Werkplaats'),profile=fs.mkdtempSync(path.join(os.tmpdir(),'ch535-profile-'));
   fs.mkdirSync(path.join(profile,'Default'),{recursive:true});fs.writeFileSync(path.join(profile,'Default','Preferences'),JSON.stringify({translate:{enabled:false}}));result.testFolder=folder;result.profile=profile;result.storage='native user-selected OS directory';
   ctx=await chromium.launchPersistentContext(profile,options);await ctx.setOffline(true);p=ctx.pages()[0]||await ctx.newPage();track(p);assert.equal(await p.evaluate(()=>navigator.onLine),false);result.browserUserAgent=await p.evaluate(()=>navigator.userAgent);assert.match(result.browserUserAgent,/Chrome\//);result.browserVersion=ctx.browser()?.version();result.browserProcesses=browserProcesses(profile);assert(result.browserProcesses.length>0,'Chrome OS process with exact disposable profile found');assert(result.browserProcesses.every(v=>/^chrome(?:\.exe)?$/i.test(path.basename(v.executable))),'actual Chrome executable path');pass('realChrome');
+  // A single extracted start file must stay open and explain how to unpack the ZIP.
+  const looseFolder=fs.mkdtempSync(path.join(os.tmpdir(),'ch753-standalone-'));
+  const looseLauncher=path.join(looseFolder,path.basename(launcher));
+  fs.copyFileSync(launcher,looseLauncher);
+  const looseURL=pathToFileURL(looseLauncher).href;
+  const loosePage=await ctx.newPage();
+  const loosePageErrors=[];
+  loosePage.on('pageerror',error=>loosePageErrors.push(error.message));
+  await loosePage.goto(looseURL);
+  await loosePage.getByRole('heading',{name:'Pak Werkplaats eerst volledig uit'}).waitFor();
+  assert(await loosePage.getByText('Alles uitpakken',{exact:true}).isVisible());
+  assert.equal(loosePage.url(),looseURL);
+  assert.deepEqual(loosePageErrors,[]);
+  await loosePage.close();
+  pass('standaloneLauncher');
+
   // Full normal first-run path: no fixture button, no injected FileSystem handles.
-  await p.goto(pathToFileURL(launcher).href);await p.getByRole('button',{name:'Nieuw beginnen',exact:true}).waitFor();await p.getByRole('button',{name:'Nieuw beginnen',exact:true}).click();
+  const suffix='?home=1#controle';
+  await p.goto(pathToFileURL(launcher).href+suffix);
+  await p.waitForURL(uri('Begin hier.html')+suffix);
+  await p.getByRole('button',{name:'Nieuw beginnen',exact:true}).waitFor();
+  assert.equal(await p.getByText('Versie 0.36.21',{exact:true}).count(),1);
+  pass('expandedLauncher');
+  await p.getByRole('button',{name:'Nieuw beginnen',exact:true}).click();
   await p.getByRole('button',{name:'Kies opslagplek',exact:true}).click();result.initialPickerExit=await nativeInput(pickerParent,'new');assert.equal(result.initialPickerExit,0);
   await p.waitForFunction(()=>window.Werkmap?.active,null,{timeout:30000});await p.waitForURL(/Apps\/Werkbank\//,{timeout:30000});
   assert(fs.existsSync(path.join(folder,'gereedschapskist-werkmap.json')));result.workspaceMetadata=JSON.parse(fs.readFileSync(path.join(folder,'gereedschapskist-werkmap.json'),'utf8'));
