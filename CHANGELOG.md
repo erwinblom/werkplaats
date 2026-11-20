@@ -1,5 +1,12 @@
 # Wijzigingen
 
+## 0.36.20 · 20 november 2026
+
+- De offline download en GitHub Pages bevatten dezelfde tien gereedschappen, waaronder Omvormen en Ordenen.
+- De ZIP bevat START-HIER.txt met de eerste stappen op Windows of Mac en een opdracht om Werkplaats in een eigen kopie aan te passen.
+- De browserproef gebruikt de huidige startpagina, opent alle gereedschappen en controleert een notitie na browserherstart.
+
+
 De volledige controles per uitgave staan in de map [release](release/).
 
 ## 0.36.19: Ordenen, ontdekken en je antwoorden controleren

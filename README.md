@@ -6,9 +6,11 @@
 
 **[Open Werkplaats](https://erwinblom.github.io/werkplaats/)** · [Bekijk de uitlegvideo](https://erwinblom.github.io/werkplaats/Video/Werkplaats-uitlegvideo.mp4) · [Download voor offline gebruik](https://github.com/erwinblom/werkplaats/releases/latest/download/Werkplaats.zip)
 
-Gratis · Geen account · Je bestanden blijven op je computer · Werkt zonder AI
+Gratis · Geen account · Lokaal bewaren · Dagelijks gebruik zonder AI
 
 > **Klaar voor gebruik, en te personaliseren.** Het werkt zoals het is. Wil je het naar je eigen hand zetten, dan kan dat ook. [Spring naar: maak het van jezelf](#maak-het-van-jezelf).
+
+Voor de eerste stappen en een opdracht om Werkplaats met AI naar eigen wens aan te passen, lees [START-HIER.txt](START-HIER.txt).
 
 **Voor bewaren in een map heb je Chrome of Edge op je computer nodig.** Safari, Firefox en ingebouwde browsers kunnen hier geen werkmap kiezen. Je hoeft geen broncode aan te passen.
 
@@ -21,7 +23,7 @@ Gratis · Geen account · Je bestanden blijven op je computer · Werkt zonder AI
 <details>
 <summary>Offline gebruiken, bijwerken en overstappen</summary>
 
-Download de ZIP, pak hem volledig uit en open **Werkplaats → Begin hier.html**. Alle overige bestanden staan in **Bestanden**; laat die map intact.
+Download de ZIP, pak hem volledig uit en open **Werkplaats → Begin hier.html**. Laat **Bestanden** intact en gebruik **START-HIER.txt** voor je eerste notitie en je eerste aanpassing.
 
 Website en download worden uit dezelfde gecontroleerde Master gemaakt. Een gedownloade versie werkt zichzelf niet bij: download voor verbeteringen de nieuwe uitgave. Je werk wordt niet automatisch gesynchroniseerd tussen versies of browsers.
 
@@ -47,6 +49,8 @@ Bestaande gebruikers: bewaar eerst je actuele werk in de oude versie. Open na de
 | Facturen | Facturen, offertes en uren; zelf controleren en delen |
 | Abonnementen | Kosten, verlengdatums en opzegdatums bijhouden |
 | Boekhouding | Inkomsten, uitgaven, bonnen en export |
+
+Omvormen verwerkt documenten in je browser. Alleen als je zelf automatische persoonsgegevensherkenning inschakelt, haalt Omvormen modelbestanden op en stuurt de module een licentiesignaal. Deze module heeft eigen voorwaarden. De gewone omzetfuncties hebben geen AI nodig. [Herkomst en voorwaarden van Omvormen](app/Apps/Omvormen/THIRD_PARTY_NOTICES.md)
 
 In Verzamelen kies je categorieën uit één menu. Open een bron en blader met Vorige/Volgende of de toetsenbordpijlen door je huidige selectie. De ster bewaart je persoonlijke shortlist.
 
@@ -203,6 +207,7 @@ De dagelijkse ontwikkelapp blijft de enige ontwikkelbron. De vaste Master-builde
 
 - `app/`: gecontroleerde publieksbron uit de Master.
 - `release/master-bestanden.json`: controlecodes en uitsluitingen van die import.
+- `release/VERSION`: het nummer dat de bouwstap op de website en in de download toont.
 - `docs/`: gegenereerde GitHub Pages-website.
 - `dist/Werkplaats.zip`: gegenereerde download, buiten Git opgeslagen.
 
@@ -214,7 +219,7 @@ python3 scripts/build.py
 python3 scripts/check.py
 ```
 
-Importeren controleert eerst de Master tegen het manifest. Bouwen maakt website en ZIP uit dezelfde bestanden, zonder een tweede versie van de appcode te onderhouden. GitHub Pages gebruikt `main` → `/docs`. Publiceer de ZIP en SHA256SUMS.txt bij dezelfde uitgave als de website; alleen een Git-push werkt de release-download niet bij.
+Importeren controleert eerst de Master tegen het manifest. De bouwstap past het uitgavenummer toe op de gecontroleerde Master. De website en ZIP delen daarna dezelfde appbestanden. GitHub Pages gebruikt `main` → `/docs`. Publiceer de ZIP en SHA256SUMS.txt bij dezelfde uitgave als de website; alleen een Git-push werkt de release-download niet bij.
 
 De browserproef voor deze uitgave staat in [tests/publieke-uitgave.cjs](tests/publieke-uitgave.cjs). Gebruik een bestaande Playwright-installatie via NODE_PATH. Zie [de controles en grenzen](release/CONTROLE.md). Oudere tests in tests/ stammen deels uit de vorige interface en zijn geen actuele acceptatieclaim.
 
