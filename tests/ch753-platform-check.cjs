@@ -105,7 +105,7 @@ const sha=bytes=>crypto.createHash('sha256').update(bytes).digest('hex');
 const result={os:os.platform(),release:os.release(),arch:os.arch(),node:process.version,playwright:require('playwright/package.json').version,route:'file://',allPassed:false,checks:{},pageErrors:[],consoleErrors:[],requestFailures:[],limitations:['Automated real Chrome tests on disposable Windows Server 2022 and Ubuntu 24.04 runners; not a physical-PC beginner study.','No PDF/print/extension or arbitrary Linux distribution coverage.']};
 const save=()=>fs.writeFileSync(path.join(out,'result.json'),JSON.stringify(result,null,2));
 const pass=name=>{result.checks[name]=true;console.log(new Date().toISOString(),'PASS',name);save();};
-const required=['releaseFiles','realChrome','nativeNewWorkspace','databaseHomeTile','databaseCreate','tableCreate','rowSave','rowEdit','csvImport','sqliteDiskReadback','sqliteDownloadExact','databaseReload','noteSaveReload','completeBrowserClose','completeBrowserRestart','restartWorkspacePermission','restartSQLiteExact','restartUI','restartNote','browserErrors'];
+const required=['releaseFiles','realChrome','nativeNewWorkspace','databaseHomeTile','databaseCreate','tableCreate','rowSave','rowEdit','csvImport','sqliteDiskReadback','sqliteDownloadExact','databaseReload','noteSaveReload','completeBrowserClose','completeBrowserRestart','restartWorkspacePermission','restartSQLiteExact','restartUI','restartNote','workspaceBackup','cleanWorkspaceRestore','browserErrors'];
 const options={channel:'chrome',headless:false,acceptDownloads:true,viewport:{width:1440,height:1000},args:['--disable-features=Translate']};
 const uri=rel=>pathToFileURL(path.join(root,...rel.split('/'))).href;
 const databaseName='CH753-'+process.platform+'-'+Date.now();
@@ -138,7 +138,7 @@ async function databaseUIReadback(p){await p.locator('#database-table').selectOp
   const parent=process.platform==='win32'?path.join(os.homedir(),'Documents','Werkplaats CH535'):os.tmpdir();fs.mkdirSync(parent,{recursive:true});
   const pickerParent=fs.mkdtempSync(path.join(parent,'werkplaats-ch535-')),folder=path.join(pickerParent,'Mijn Werkplaats'),profile=fs.mkdtempSync(path.join(os.tmpdir(),'ch535-profile-'));
   fs.mkdirSync(path.join(profile,'Default'),{recursive:true});fs.writeFileSync(path.join(profile,'Default','Preferences'),JSON.stringify({translate:{enabled:false}}));result.testFolder=folder;result.profile=profile;result.storage='native user-selected OS directory';
-  ctx=await chromium.launchPersistentContext(profile,options);p=ctx.pages()[0]||await ctx.newPage();track(p);result.browserUserAgent=await p.evaluate(()=>navigator.userAgent);assert.match(result.browserUserAgent,/Chrome\//);result.browserVersion=ctx.browser()?.version();result.browserProcesses=browserProcesses(profile);assert(result.browserProcesses.length>0,'Chrome OS process with exact disposable profile found');assert(result.browserProcesses.every(v=>/^chrome(?:\.exe)?$/i.test(path.basename(v.executable))),'actual Chrome executable path');pass('realChrome');
+  ctx=await chromium.launchPersistentContext(profile,options);await ctx.setOffline(true);p=ctx.pages()[0]||await ctx.newPage();track(p);assert.equal(await p.evaluate(()=>navigator.onLine),false);result.browserUserAgent=await p.evaluate(()=>navigator.userAgent);assert.match(result.browserUserAgent,/Chrome\//);result.browserVersion=ctx.browser()?.version();result.browserProcesses=browserProcesses(profile);assert(result.browserProcesses.length>0,'Chrome OS process with exact disposable profile found');assert(result.browserProcesses.every(v=>/^chrome(?:\.exe)?$/i.test(path.basename(v.executable))),'actual Chrome executable path');pass('realChrome');
   // Full normal first-run path: no fixture button, no injected FileSystem handles.
   await p.goto(pathToFileURL(launcher).href);await p.getByRole('button',{name:'Nieuw beginnen',exact:true}).waitFor();await p.getByRole('button',{name:'Nieuw beginnen',exact:true}).click();
   await p.getByRole('button',{name:'Kies opslagplek',exact:true}).click();result.initialPickerExit=await nativeInput(pickerParent,'new');assert.equal(result.initialPickerExit,0);
@@ -159,13 +159,71 @@ async function databaseUIReadback(p){await p.locator('#database-table').selectOp
   if(await p.locator('#note-new').isVisible())await p.locator('#note-new').click();else await p.getByRole('button',{name:'Maak een notitie',exact:true}).click();
   const nd=p.locator('dialog.note-dialog[open]');await nd.getByLabel('Titel',{exact:true}).fill(noteTitle);await nd.getByLabel('Notitie',{exact:true}).fill(noteBody);await nd.getByRole('button',{name:'Bewaar',exact:true}).click();await p.waitForFunction(()=>[...document.querySelectorAll('dialog.note-dialog [role="status"]')].some(e=>e.textContent.includes('Bewaard in je werkmap')));
   const note=await p.evaluate(async title=>{const {root}=await Werkmap.allAccess();const round=await BewaarAlles.readRound(root);return round.shared.writingNotes.find(n=>n.title===title);},noteTitle);assert.equal(note.body,noteBody);result.noteId=note.id;await p.reload();await p.waitForFunction(()=>window.SchrijfNotities);assert.equal(await p.evaluate(async id=>(await BewaarAlles.readShared()).writingNotes.find(n=>n.id===id).body,note.id),noteBody);pass('noteSaveReload');
+  // Verify the backup participants can download, then open it with a new profile.
+  await p.goto(uri('Begin hier.html')+'?home=1');
+  await p.getByRole('button',{name:'Instellingen',exact:true}).click();
+  await p.locator('#suite-settings summary').filter({hasText:'Back-up en herstel'}).click();
+  const backupEvent=p.waitForEvent('download');
+  await p.getByRole('button',{name:'Download back-up',exact:true}).click();
+  const backup=await backupEvent;
+  const archive=path.join(os.tmpdir(),path.basename(profile)+'-backup.zip');
+  await backup.saveAs(archive);
+  const restoreParent=fs.mkdtempSync(path.join(pickerParent,'restore-'));
+  const restoreFolder=path.join(restoreParent,path.basename(folder));
+  const verifyBackup=`from pathlib import Path
+import sys, zipfile
+folder, destination = map(Path, sys.argv[2:])
+files = {folder.name + '/' + p.relative_to(folder).as_posix(): p.read_bytes()
+         for p in folder.rglob('*') if p.is_file()}
+with zipfile.ZipFile(sys.argv[1]) as z:
+    assert z.testzip() is None
+    assert sorted(z.namelist()) == sorted(files)
+    for name, content in files.items():
+        assert z.read(name) == content, name
+    z.extractall(destination)
+print(len(files))
+`;
+  const extracted=spawnSync(process.platform==='win32'?'python':'python3',
+    ['-c',verifyBackup,archive,folder,restoreParent],{encoding:'utf8'});
+  assert.equal(extracted.status,0,extracted.stdout+'\n'+extracted.stderr);
+  result.backupFileCount=Number(extracted.stdout.trim());
+  assert(result.backupFileCount>0);
+  pass('workspaceBackup');
+
   const old=ctx.browser();await ctx.close();ctx=null;assert(!old||!old.isConnected());for(let attempt=0;attempt<50&&browserProcesses(profile).length;attempt++)await new Promise(resolve=>setTimeout(resolve,100));result.processesAfterClose=browserProcesses(profile);assert.deepEqual(result.processesAfterClose,[],'complete Chrome OS process terminated before relaunch');pass('completeBrowserClose');
-  ctx=await chromium.launchPersistentContext(profile,options);p=ctx.pages()[0]||await ctx.newPage();track(p);result.restartUserAgent=await p.evaluate(()=>navigator.userAgent);assert.equal(result.restartUserAgent,result.browserUserAgent);result.restartBrowserProcesses=browserProcesses(profile);assert(result.restartBrowserProcesses.length>0,'fresh Chrome process exists');assert(result.restartBrowserProcesses.every(v=>!result.browserProcesses.some(old=>old.pid===v.pid)),'new OS PID after complete restart');pass('completeBrowserRestart');
+  ctx=await chromium.launchPersistentContext(profile,options);await ctx.setOffline(true);p=ctx.pages()[0]||await ctx.newPage();track(p);assert.equal(await p.evaluate(()=>navigator.onLine),false);result.restartUserAgent=await p.evaluate(()=>navigator.userAgent);assert.equal(result.restartUserAgent,result.browserUserAgent);result.restartBrowserProcesses=browserProcesses(profile);assert(result.restartBrowserProcesses.length>0,'fresh Chrome process exists');assert(result.restartBrowserProcesses.every(v=>!result.browserProcesses.some(old=>old.pid===v.pid)),'new OS PID after complete restart');pass('completeBrowserRestart');
   await p.goto(pathToFileURL(launcher).href);await p.waitForFunction(()=>window.Werkmap);await p.evaluate(()=>Werkmap.recall());const permission=await p.evaluate(async()=>{const access=await Werkmap.allAccess(false);return access.root.queryPermission({mode:'readwrite'});});result.restartPermissionAtStart=permission;
   await p.getByRole('button',{name:'Verder werken',exact:true}).click();if(permission!=='granted'){result.restartPermissionHelperExit=await permissionInput('restart');assert.equal(result.restartPermissionHelperExit,0);}
   await p.waitForFunction(()=>window.Werkmap?.active,null,{timeout:30000});await p.waitForFunction(()=>/Werkmap geopend/.test(document.querySelector('#wm-message')?.textContent||''),null,{timeout:30000});assert.equal(await p.evaluate(async()=>{const {root}=await Werkmap.allAccess(false);return root.queryPermission({mode:'readwrite'});}), 'granted');pass('restartWorkspacePermission');
   assert.deepEqual(fs.readFileSync(dbFile),disk);result.restartSQLiteValidation=sqliteCheck(dbFile);pass('restartSQLiteExact');await databasePage(p);await openDatabase(p);await databaseUIReadback(p);pass('restartUI');await p.screenshot({path:path.join(out,'database-browser-restarted.png'),fullPage:true});
   await p.goto(uri('Apps/Werkbank/▶ Begin hier.html')+'?werkruimte=eigen');await p.waitForFunction(()=>window.SchrijfNotities&&window.BewaarAlles);await p.evaluate(async()=>{await Werkmap.suiteReady;await BewaarAlles.ready;});assert.equal(await p.evaluate(async id=>(await BewaarAlles.readShared()).writingNotes.find(n=>n.id===id).body,result.noteId),noteBody);pass('restartNote');
+  await ctx.close();
+  ctx=null;
+  const cleanProfile=fs.mkdtempSync(path.join(os.tmpdir(),'ch753-restore-profile-'));
+  fs.mkdirSync(path.join(cleanProfile,'Default'),{recursive:true});
+  fs.writeFileSync(path.join(cleanProfile,'Default','Preferences'),JSON.stringify({translate:{enabled:false}}));
+  ctx=await chromium.launchPersistentContext(cleanProfile,options);
+  await ctx.setOffline(true);
+  p=ctx.pages()[0]||await ctx.newPage();
+  track(p);
+  assert.equal(await p.evaluate(()=>navigator.onLine),false);
+  await p.goto(pathToFileURL(launcher).href);
+  await p.getByRole('button',{name:'Verder werken',exact:true}).click();
+  result.restorePickerExit=await nativeInput(restoreFolder,'restore');
+  assert.equal(result.restorePickerExit,0);
+  await p.waitForFunction(()=>window.Werkmap?.active,null,{timeout:30000});
+  await p.goto(uri('Apps/Werkbank/▶ Begin hier.html')+'?werkruimte=eigen');
+  await p.getByRole('button',{name:'Notities',exact:true}).click();
+  await p.getByText(noteTitle,{exact:true}).click();
+  assert.match(await p.locator('dialog.note-dialog[open]').innerText(),/Fictieve platformproef: café, € 12,50\./);
+  await databasePage(p);
+  await openDatabase(p);
+  await databaseUIReadback(p);
+  const restoredFile=path.join(restoreFolder,'Databases',databaseName+'.sqlite');
+  assert.deepEqual(fs.readFileSync(restoredFile),disk);
+  result.cleanRestoreSQLite=sqliteCheck(restoredFile);
+  pass('cleanWorkspaceRestore');
+
   assert.deepEqual(result.pageErrors,[],'JavaScript page errors');assert.deepEqual((result.jsDialogs||[]).filter(v=>!v.expected),[],'unexpected JS dialogs');
   const manifestUrl=pathToFileURL(path.join(root,'App-iconen','app.webmanifest')).href,isManifest=url=>{try{return new URL(url).href===manifestUrl;}catch{return false;}};
   const manifestFailures=result.requestFailures.filter(r=>isManifest(r.url)&&r.error==='net::ERR_FAILED');result.expectedManifestErrors=[];

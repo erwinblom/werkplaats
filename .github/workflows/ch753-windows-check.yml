@@ -10,7 +10,7 @@ jobs:
     timeout-minutes: 25
     env:
       RELEASE_ZIP: fixtures/CH753-Werkplaats.zip
-      EXPECTED_ZIP_SHA256: 1bb438415bab3352c8fec69d3bc4ef64ea41acfa010bbf44bfb7f5068c3b6134
+      EXPECTED_ZIP_SHA256: 6df664a1d3c6b739bcda7e56d28909dccb0c41b130517d0971caf74fe994b302
       CANDIDATE_COMMIT: ${{ github.sha }}
     steps:
       - uses: actions/checkout@v4
